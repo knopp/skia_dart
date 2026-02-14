@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:args/command_runner.dart';
 import 'package:crypto/crypto.dart';
@@ -84,11 +85,15 @@ class BuildConfig {
 
   Map<String, Object> optionsFull() {
     final options = Map<String, Object>.from(this.options);
+    options['is_clang'] = true;
     if (options.containsKey('is_debug') != true) {
       options['is_official_build'] = true;
       options['skia_enable_optimize_size'] = true;
     }
     final targetOs = options['target_os'] as String;
+    if (targetOs == 'win') {
+      options['clang_win'] = 'C:\\Program Files\\LLVM';
+    }
     if (targetOs == 'mac' || targetOs == 'ios') {
       options['skia_use_harfbuzz'] = false;
     }
@@ -249,10 +254,12 @@ class GenCommand extends Command<void> {
     Directory(outDir).createSync(recursive: true);
     File(argsGn).writeAsStringSync(argsContent.toString());
 
+    final exe = Platform.isWindows ? '.exe' : '';
     Process.runSync(
-      p.join('bin', 'gn'),
+      p.join('bin', 'gn$exe'),
       ['gen', p.join('..', 'out', config.name)],
       workingDirectory: p.join(workspaceRoot, 'skia'),
+      runInShell: true,
     );
   }
 }

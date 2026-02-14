@@ -1,6 +1,7 @@
 #include "wrapper/include/sk_dawn.h"
 
 #ifdef SK_DAWN
+  #include <mutex>
   #include "dawn/dawn_proc.h"
   #include "dawn/native/DawnNative.h"
   #include "dawn/webgpu.h"
@@ -371,7 +372,6 @@ void* sk_wgpu_device_copy_d3d11_device(sk_wgpu_device_t* device) {
 
   auto wgpuDevice = reinterpret_cast<WGPUDevice>(device);
   auto d3d11Device = dawn::native::d3d11::GetD3D11Device(wgpuDevice);
-  ___device = d3d11Device;
   return d3d11Device.Detach();
 #else
   (void)device;

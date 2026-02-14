@@ -171,6 +171,9 @@ source_set("skia_c_wrapper") {
       "Foundation.framework",
     ]
   }
+  if (is_linux) {
+    cflags = [ "-fPIC" ]
+  }
   if (is_win) {
     libs = [ "d3d12.lib" ]
   }

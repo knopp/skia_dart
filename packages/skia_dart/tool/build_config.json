@@ -141,8 +141,8 @@
         "skia_use_gl": true,
         "skia_use_vulkan": false
     },
-    "windows_x64_graphite_dx11": {
-        "target_os": "windows",
+    "win_x64_graphite_dx11": {
+        "target_os": "win",
         "target_cpu": "x64",
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,

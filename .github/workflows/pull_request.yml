@@ -1,0 +1,66 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            config: mac_arm64_graphite_metal
+          - os: windows-latest
+            config: win_x64_graphite_dx11
+          - os: ubuntu-latest
+            config: linux_x64_graphite_gl
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
+
+      - name: Force gcc → clang globally (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p $HOME/clang-wrap
+          ln -sf $(which clang) $HOME/clang-wrap/cc
+          ln -sf $(which clang++) $HOME/clang-wrap/c++
+          echo "$HOME/clang-wrap" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
+      - name: Check skia_dart hash
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
+
+      - name: Fetch Skia dependencies
+        working-directory: skia
+        run: python3 tools/git-sync-deps
+
+      - name: Generate GN files
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }}
+
+      - name: Print args.gn
+        working-directory: out/${{ matrix.config }}
+        run: cat args.gn
+
+      - name: Build Skia wrapper
+        working-directory: out/${{ matrix.config }}
+        run: ninja skia_dart
+
+      - name: Run tests
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart test
