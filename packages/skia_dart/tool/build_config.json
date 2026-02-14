@@ -1,0 +1,153 @@
+{
+    "mac_arm64_graphite_dawn": {
+        "target_os": "mac",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": false,
+        "skia_use_dawn": true
+    },
+    "mac_arm64_graphite_metal": {
+        "target_os": "mac",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": true,
+        "skia_use_dawn": false
+    },
+    "mac_x64_graphite_dawn": {
+        "target_os": "mac",
+        "target_cpu": "x64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": false,
+        "skia_use_dawn": true
+    },
+    "mac_x64_graphite_metal": {
+        "target_os": "mac",
+        "target_cpu": "x64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": true,
+        "skia_use_dawn": false
+    },
+    "ios_arm64_graphite_dawn": {
+        "target_os": "ios",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": false,
+        "skia_use_dawn": true
+    },
+    "ios_arm64_graphite_metal": {
+        "target_os": "ios",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": true,
+        "skia_use_dawn": false
+    },
+    "ios_sim_arm64_graphite_dawn": {
+        "target_os": "ios",
+        "target_cpu": "arm64",
+        "ios_use_simulator": true,
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": false,
+        "skia_use_dawn": true
+    },
+    "ios_sim_arm64_graphite_metal": {
+        "target_os": "ios",
+        "target_cpu": "arm64",
+        "ios_use_simulator": true,
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": true,
+        "skia_use_dawn": false
+    },
+    "ios_sim_x64_graphite_dawn": {
+        "target_os": "ios",
+        "target_cpu": "x64",
+        "ios_use_simulator": true,
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": false,
+        "skia_use_dawn": true
+    },
+    "ios_sim_x64_graphite_metal": {
+        "target_os": "ios",
+        "target_cpu": "x64",
+        "ios_use_simulator": true,
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_metal": true,
+        "skia_use_dawn": false
+    },
+    "android_arm64_graphite_gl": {
+        "target_os": "android",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_vulkan": false,
+        "dawn_enable_vulkan": false,
+        "dawn_enable_opengles": true
+    },
+    "android_arm_graphite_gl": {
+        "target_os": "android",
+        "target_cpu": "arm",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_vulkan": false,
+        "dawn_enable_vulkan": false,
+        "dawn_enable_opengles": true
+    },
+    "android_x64_graphite_gl": {
+        "target_os": "android",
+        "target_cpu": "x64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_vulkan": false,
+        "dawn_enable_vulkan": false,
+        "dawn_enable_opengles": true
+    },
+    "android_x86_graphite_gl": {
+        "target_os": "android",
+        "target_cpu": "x86",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_vulkan": false,
+        "dawn_enable_vulkan": false,
+        "dawn_enable_opengles": true
+    },
+    "linux_x64_graphite_gl": {
+        "target_os": "linux",
+        "target_cpu": "x64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_gl": true,
+        "skia_use_vulkan": false
+    },
+    "linux_arm64_graphite_gl": {
+        "target_os": "linux",
+        "target_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "skia_use_gl": true,
+        "skia_use_vulkan": false
+    },
+    "windows_x64_graphite_dx11": {
+        "target_os": "windows",
+        "target_cpu": "x64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "dawn_enable_dx11": true,
+        "dawn_enable_dx12": false
+    }
+}

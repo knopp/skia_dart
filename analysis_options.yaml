@@ -1,0 +1,4 @@
+analyzer:
+  exclude:
+    - skia/**
+    - flutter_zero/**

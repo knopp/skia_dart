@@ -1,0 +1,190 @@
+import("//gn/skia.gni")
+
+config("skia_host_debug_config") {
+  configs = [ "//:use_skia_vulkan_headers" ]
+
+  if (skia_use_dawn) {
+    configs += [ "//third_party/dawn:dawn_api_config" ]
+  }
+
+  defines = [ "SKIA_IMPLEMENTATION" ]
+}
+
+source_set("skia_c_wrapper") {
+  sources = [
+    "wrapper/gr_context.cpp",
+    "wrapper/include/gr_context.h",
+    "wrapper/include/sk_bitmap.h",
+    "wrapper/include/sk_blender.h",
+    "wrapper/include/sk_canvas.h",
+    "wrapper/include/sk_codec.h",
+    "wrapper/include/sk_colorfilter.h",
+    "wrapper/include/sk_colorspace.h",
+    "wrapper/include/sk_data.h",
+    "wrapper/include/sk_dawn.h",
+    "wrapper/include/sk_document.h",
+    "wrapper/include/sk_drawable.h",
+    "wrapper/include/sk_font.h",
+    "wrapper/include/sk_general.h",
+    "wrapper/include/sk_graphics.h",
+    "wrapper/include/sk_graphite.h",
+    "wrapper/include/sk_image.h",
+    "wrapper/include/sk_imagefilter.h",
+    "wrapper/include/sk_linker.h",
+    "wrapper/include/sk_maskfilter.h",
+    "wrapper/include/sk_matrix.h",
+    "wrapper/include/sk_paint.h",
+    "wrapper/include/sk_path.h",
+    "wrapper/include/sk_path_builder.h",
+    "wrapper/include/sk_patheffect.h",
+    "wrapper/include/sk_picture.h",
+    "wrapper/include/sk_pixmap.h",
+    "wrapper/include/sk_region.h",
+    "wrapper/include/sk_rrect.h",
+    "wrapper/include/sk_shader.h",
+    "wrapper/include/sk_stream.h",
+    "wrapper/include/sk_string.h",
+    "wrapper/include/sk_surface.h",
+    "wrapper/include/sk_svg.h",
+    "wrapper/include/sk_textblob.h",
+    "wrapper/include/sk_typeface.h",
+    "wrapper/include/sk_types.h",
+    "wrapper/include/sk_vertices.h",
+
+    # "wrapper/include/skottie_animation.h",
+    "wrapper/include/skresources_resource_provider.h",
+    "wrapper/include/sksg_invalidation_controller.h",
+    "wrapper/sk_bitmap.cpp",
+    "wrapper/sk_blender.cpp",
+    "wrapper/sk_canvas.cpp",
+    "wrapper/sk_codec.cpp",
+    "wrapper/sk_colorfilter.cpp",
+    "wrapper/sk_colorspace.cpp",
+    "wrapper/sk_data.cpp",
+    "wrapper/sk_dawn.cpp",
+    "wrapper/sk_document.cpp",
+    "wrapper/sk_drawable.cpp",
+    "wrapper/sk_enums.cpp",
+    "wrapper/sk_font.cpp",
+    "wrapper/sk_general.cpp",
+    "wrapper/sk_graphics.cpp",
+    "wrapper/sk_graphite.cpp",
+    "wrapper/sk_image.cpp",
+    "wrapper/sk_imagefilter.cpp",
+    "wrapper/sk_linker.cpp",
+    "wrapper/sk_maskfilter.cpp",
+    "wrapper/sk_matrix.cpp",
+    "wrapper/sk_paint.cpp",
+    "wrapper/sk_path.cpp",
+    "wrapper/sk_path_builder.cpp",
+    "wrapper/sk_patheffect.cpp",
+    "wrapper/sk_picture.cpp",
+    "wrapper/sk_pixmap.cpp",
+    "wrapper/sk_region.cpp",
+    "wrapper/sk_rrect.cpp",
+    "wrapper/sk_runtimeeffect.cpp",
+    "wrapper/sk_runtimeeffect.h",
+    "wrapper/sk_shader.cpp",
+    "wrapper/sk_stream.cpp",
+    "wrapper/sk_string.cpp",
+    "wrapper/sk_structs.cpp",
+    "wrapper/sk_surface.cpp",
+    "wrapper/sk_svg.cpp",
+    "wrapper/sk_textblob.cpp",
+    "wrapper/sk_typeface.cpp",
+    "wrapper/sk_types_priv.h",
+    "wrapper/sk_vertices.cpp",
+
+    # "wrapper/skottie_animation.cpp",
+    "wrapper/skresources_resource_provider.cpp",
+    "wrapper/sksg_invalidation_controller.cpp",
+  ]
+  public = [
+    "wrapper/include/gr_context.h",
+    "wrapper/include/sk_bitmap.h",
+    "wrapper/include/sk_blender.h",
+    "wrapper/include/sk_canvas.h",
+    "wrapper/include/sk_codec.h",
+    "wrapper/include/sk_colorfilter.h",
+    "wrapper/include/sk_colorspace.h",
+    "wrapper/include/sk_data.h",
+    "wrapper/include/sk_dawn.h",
+    "wrapper/include/sk_document.h",
+    "wrapper/include/sk_drawable.h",
+    "wrapper/include/sk_font.h",
+    "wrapper/include/sk_general.h",
+    "wrapper/include/sk_graphics.h",
+    "wrapper/include/sk_graphite.h",
+    "wrapper/include/sk_image.h",
+    "wrapper/include/sk_imagefilter.h",
+    "wrapper/include/sk_linker.h",
+    "wrapper/include/sk_maskfilter.h",
+    "wrapper/include/sk_matrix.h",
+    "wrapper/include/sk_paint.h",
+    "wrapper/include/sk_path.h",
+    "wrapper/include/sk_path_builder.h",
+    "wrapper/include/sk_patheffect.h",
+    "wrapper/include/sk_picture.h",
+    "wrapper/include/sk_pixmap.h",
+    "wrapper/include/sk_region.h",
+    "wrapper/include/sk_rrect.h",
+    "wrapper/include/sk_runtimeeffect.h",
+    "wrapper/include/sk_shader.h",
+    "wrapper/include/sk_stream.h",
+    "wrapper/include/sk_string.h",
+    "wrapper/include/sk_surface.h",
+    "wrapper/include/sk_svg.h",
+    "wrapper/include/sk_textblob.h",
+    "wrapper/include/sk_typeface.h",
+    "wrapper/include/sk_types.h",
+    "wrapper/include/sk_vertices.h",
+
+    # "wrapper/include/skottie_animation.h",
+    "wrapper/include/skresources_resource_provider.h",
+    "wrapper/include/sksg_invalidation_controller.h",
+  ]
+  include_dirs = [ "." ]
+  deps = [
+    "//:skia",
+    "//modules/jsonreader",
+    "//modules/skresources",
+
+    # "//modules/skottie",
+    "//modules/sksg",
+  ]
+  configs += [ ":skia_host_debug_config" ]
+
+  if (is_mac) {
+    sources += [
+      "wrapper/include/sk_metal.h",
+      "wrapper/sk_metal.mm",
+    ]
+    public += [ "wrapper/include/sk_metal.h" ]
+    cflags_objcc = [ "-fobjc-arc" ]
+
+    frameworks = [
+      "CoreFoundation.framework",
+      "CoreGraphics.framework",
+      "Metal.framework",
+      "CoreText.framework",
+      "CoreServices.framework",
+      "Foundation.framework",
+    ]
+  }
+  if (is_win) {
+    libs = [ "d3d12.lib" ]
+  }
+}
+
+shared_library("skia_dart") {
+  include_dirs = [ "." ]
+  deps = [ ":skia_c_wrapper" ]
+  if (is_mac) {
+    ldflags = [
+      "-flto=thin",
+
+      # Required for ld64 to store intermediate LTO objects
+      "-Wl,-object_path_lto,${root_out_dir}/lto_objects",
+    ]
+  }
+}

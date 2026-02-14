@@ -1,0 +1,8 @@
+{
+    "cSpell.enabled": false,
+    "clangd.path": "clangd",
+    "dart.flutterSdkPath": "flutter_zero",
+    "dart.addSdkToTerminalPath": true,
+    "python-envs.defaultEnvManager": "ms-python.python:system",
+    "python-envs.pythonProjects": [],
+}

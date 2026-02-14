@@ -1,0 +1,6 @@
+[submodule "skia"]
+	path = skia
+	url = https://github.com/knopp/skia.git
+[submodule "flutter_zero"]
+	path = flutter_zero
+	url = https://github.com/knopp/flutter_zero.git
