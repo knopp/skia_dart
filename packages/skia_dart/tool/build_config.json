@@ -135,19 +135,30 @@
     "linux_arm64_graphite_gl": {
         "target_os": "linux",
         "target_cpu": "arm64",
+        "host_cpu": "arm64",
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,
         "skia_use_dawn": true,
         "skia_use_gl": true,
         "skia_use_vulkan": false
     },
-    "win_x64_graphite_dx11": {
+    "win_x64_graphite_d3d11": {
         "target_os": "win",
         "target_cpu": "x64",
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,
         "skia_use_dawn": true,
-        "dawn_enable_dx11": true,
-        "dawn_enable_dx12": false
+        "dawn_enable_d3d11": true,
+        "dawn_enable_d3d12": false
+    },
+    "win_arm64_graphite_d3d11": {
+        "target_os": "win",
+        "target_cpu": "arm64",
+        "host_cpu": "arm64",
+        "skia_enable_ganesh": false,
+        "skia_enable_graphite": true,
+        "skia_use_dawn": true,
+        "dawn_enable_d3d11": true,
+        "dawn_enable_d3d12": false
     }
 }

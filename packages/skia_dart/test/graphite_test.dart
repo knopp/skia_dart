@@ -25,7 +25,7 @@ class DawnTestContext extends TestContext {
   DawnTestContext() {
     _instance = WgpuInstance.create();
     final backendType = switch (Platform.operatingSystem) {
-      'windows' => WgpuBackendType.d3d12,
+      'windows' => WgpuBackendType.d3d11,
       'linux' => WgpuBackendType.opengles,
       'macos' || 'ios' => WgpuBackendType.metal,
       _ => throw UnsupportedError(

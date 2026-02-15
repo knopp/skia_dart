@@ -85,7 +85,6 @@ class BuildConfig {
 
   Map<String, Object> optionsFull() {
     final options = Map<String, Object>.from(this.options);
-    options['is_clang'] = true;
     if (options.containsKey('is_debug') != true) {
       options['is_official_build'] = true;
       options['skia_enable_optimize_size'] = true;

@@ -312,6 +312,18 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
 class SkFontMgr with _NativeMixin<sk_fontmgr_t> {
   SkFontMgr.empty() : this._(sk_fontmgr_create_empty());
 
+  static SkFontMgr? createPlatformDefault() {
+    if (Platform.isMacOS || Platform.isIOS) {
+      return createCoreText();
+    } else if (Platform.isWindows) {
+      return createDirectWrite();
+    } else {
+      throw UnsupportedError(
+        'Implement createPlatformDefault for ${Platform.operatingSystem}',
+      );
+    }
+  }
+
   static SkFontMgr? createCoreText({
     Pointer<Void>? ctFontCollection,
   }) {

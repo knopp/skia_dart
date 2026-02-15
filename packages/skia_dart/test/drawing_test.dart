@@ -2036,7 +2036,8 @@ void main() {
         paint.color = SkColor(0xFFFF0000);
         canvas.drawPath(segment2Builder.detach(), paint);
 
-        verifyGolden(surface);
+        // For some reason this gives slightly different results on D3d11.
+        verifyGolden(surface, platformSpecific: true);
       });
     });
   });
@@ -2153,7 +2154,7 @@ void main() {
     late SkTypeface typeface;
 
     setUpAll(() {
-      fontMgr = SkFontMgr.createCoreText()!;
+      fontMgr = SkFontMgr.createPlatformDefault()!;
       typeface = fontMgr.createFromFile('test/NotoSans-ASCII.ttf')!;
     });
 
