@@ -29,13 +29,13 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
 
-      - name: Force gcc → clang globally (Linux)
+      - name: Select clang as default compiler (Linux)
         if: runner.os == 'Linux'
         run: |
-          mkdir -p $HOME/clang-wrap
-          ln -sf $(which clang) $HOME/clang-wrap/cc
-          ln -sf $(which clang++) $HOME/clang-wrap/c++
-          echo "$HOME/clang-wrap" >> $GITHUB_PATH
+          sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
+          sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
+          sudo update-alternatives --set cc /usr/bin/clang
+          sudo update-alternatives --set c++ /usr/bin/clang++
 
       - name: Install dependencies
         working-directory: packages/skia_dart
