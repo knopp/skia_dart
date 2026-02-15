@@ -2036,8 +2036,7 @@ void main() {
         paint.color = SkColor(0xFFFF0000);
         canvas.drawPath(segment2Builder.detach(), paint);
 
-        // For some reason this gives slightly different results on D3d11.
-        verifyGolden(surface, platformSpecific: true);
+        verifyGolden(surface);
       });
     });
   });
