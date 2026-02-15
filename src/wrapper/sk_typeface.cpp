@@ -11,11 +11,11 @@
 
 #include <memory>
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkFontMgr.h"
 #include "include/core/SkFontStyle.h"
 #include "include/core/SkStream.h"
 #include "include/core/SkTypeface.h"
+#include "wrapper/sk_types_priv.h"
 
 #ifdef SK_BUILD_FOR_MAC
   #include "include/ports/SkFontMgr_mac_ct.h"
@@ -23,6 +23,11 @@
 
 #ifdef SK_BUILD_FOR_WIN
   #include "include/ports/SkTypeface_win.h"
+#endif
+
+#ifdef SK_BUILD_FOR_UNIX
+  #include "include/ports/SkFontMgr_fontconfig.h"
+  #include "include/ports/SkFontScanner_FreeType.h"
 #endif
 
 sk_localized_string_t* sk_localized_string_new(void) {
@@ -207,6 +212,14 @@ sk_fontmgr_t* sk_fontmgr_create_core_text(void* ct_font_collection) {
 sk_fontmgr_t* sk_fontmgr_create_directwrite(void* factory, void* collection) {
 #ifdef SK_BUILD_FOR_WIN
   return ToFontMgr(SkFontMgr_New_DirectWrite((IDWriteFactory*)factory, (IDWriteFontCollection*)collection).release());
+#else
+  return nullptr;
+#endif
+}
+
+sk_fontmgr_t* sk_fontmgr_create_fontconfig(void* config) {
+#ifdef SK_BUILD_FOR_UNIX
+  return ToFontMgr(SkFontMgr_New_FontConfig(reinterpret_cast<FcConfig*>(config), SkFontScanner_Make_FreeType()).release());
 #else
   return nullptr;
 #endif

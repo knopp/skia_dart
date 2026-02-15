@@ -129,8 +129,9 @@
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,
         "skia_use_dawn": true,
-        "skia_use_gl": true,
-        "skia_use_vulkan": false
+        "skia_use_vulkan": false,
+        "dawn_enable_opengles": true,
+        "dawn_enable_vulkan": false
     },
     "linux_arm64_graphite_gl": {
         "target_os": "linux",
@@ -139,8 +140,9 @@
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,
         "skia_use_dawn": true,
-        "skia_use_gl": true,
-        "skia_use_vulkan": false
+        "skia_use_vulkan": false,
+        "dawn_enable_opengles": true,
+        "dawn_enable_vulkan": false
     },
     "win_x64_graphite_d3d11": {
         "target_os": "win",

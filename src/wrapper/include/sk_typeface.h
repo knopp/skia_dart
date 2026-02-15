@@ -63,6 +63,7 @@ SK_C_API sk_typeface_t* sk_fontmgr_create_from_file(sk_fontmgr_t*, const char* p
 
 SK_C_API sk_fontmgr_t* sk_fontmgr_create_core_text(void* ct_font_collection);
 SK_C_API sk_fontmgr_t* sk_fontmgr_create_directwrite(void* factory, void* collection);
+SK_C_API sk_fontmgr_t* sk_fontmgr_create_fontconfig(void* config);
 
 // font style
 

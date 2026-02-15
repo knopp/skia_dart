@@ -317,6 +317,8 @@ class SkFontMgr with _NativeMixin<sk_fontmgr_t> {
       return createCoreText();
     } else if (Platform.isWindows) {
       return createDirectWrite();
+    } else if (Platform.isLinux) {
+      return createFontConfig();
     } else {
       throw UnsupportedError(
         'Implement createPlatformDefault for ${Platform.operatingSystem}',
@@ -339,6 +341,13 @@ class SkFontMgr with _NativeMixin<sk_fontmgr_t> {
       factory ?? nullptr,
       collection ?? nullptr,
     );
+    return manager != nullptr ? SkFontMgr._(manager) : null;
+  }
+
+  static SkFontMgr? createFontConfig({
+    Pointer<Void>? config,
+  }) {
+    final manager = sk_fontmgr_create_fontconfig(config ?? nullptr);
     return manager != nullptr ? SkFontMgr._(manager) : null;
   }
 

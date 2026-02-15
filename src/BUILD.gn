@@ -171,9 +171,6 @@ source_set("skia_c_wrapper") {
       "Foundation.framework",
     ]
   }
-  if (is_linux) {
-    cflags = [ "-fPIC" ]
-  }
   if (is_win) {
     libs = [ "d3d12.lib" ]
   }
@@ -189,5 +186,8 @@ shared_library("skia_dart") {
       # Required for ld64 to store intermediate LTO objects
       "-Wl,-object_path_lto,${root_out_dir}/lto_objects",
     ]
+  }
+  if (is_linux) {
+    libs = ["EGL"]
   }
 }
