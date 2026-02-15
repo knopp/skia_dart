@@ -1,6 +1,7 @@
 #include "wrapper/include/sk_dawn.h"
 
 #ifdef SK_DAWN
+  #include <mutex>
   #include "dawn/dawn_proc.h"
   #include "dawn/native/DawnNative.h"
   #include "dawn/webgpu.h"
@@ -11,6 +12,13 @@
     #include "dawn/native/D3D11Backend.h"
     #include "dawn/native/D3D12Backend.h"
     #include "dawn/native/DawnNative.h"
+  #endif
+  #ifdef __linux__
+    #include <EGL/egl.h>
+    #include <EGL/eglext.h>
+    #include <unistd.h>
+
+    #include "dawn/native/OpenGLBackend.h"
   #endif
 #endif
 
@@ -75,6 +83,8 @@ void adapter_request_callback(WGPURequestAdapterStatus status, WGPUAdapter adapt
   auto* ctx = static_cast<AdapterRequestContext*>(userdata1);
   if (status == WGPURequestAdapterStatus_Success) {
     ctx->adapter = adapter;
+  } else {
+    fprintf(stderr, "Failed to request WGPU adapter: %.*s\n", (int)message.length, message.data);
   }
   ctx->done = true;
 }
@@ -93,6 +103,30 @@ sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance
   callbackInfo.mode = WGPUCallbackMode_AllowProcessEvents;
   callbackInfo.callback = adapter_request_callback;
   callbackInfo.userdata1 = &ctx;
+
+  #ifdef __linux__
+  dawn::native::opengl::RequestAdapterOptionsGetGLProc
+      adapter_options_get_gl_proc = {};
+  if (backend_type == SK_WGPU_BACKEND_TYPE_OPENGLES) {
+    options.featureLevel = WGPUFeatureLevel_Compatibility;
+    adapter_options_get_gl_proc.getProc = eglGetProcAddress;
+
+    // TODO(Knopp) This is to get tests to pass right now. It needs to be
+    // removed and only be called during testing.
+    EGLDisplay display = eglGetPlatformDisplay(
+        EGL_PLATFORM_SURFACELESS_MESA,
+        EGL_DEFAULT_DISPLAY,
+        NULL);
+
+    if (!eglInitialize(display, nullptr, nullptr)) {
+      fprintf(stderr, "Failed to initialize EGL display\n");
+      return nullptr;
+    }
+
+    adapter_options_get_gl_proc.display = display ? display : EGL_NO_DISPLAY;
+    options.nextInChain = reinterpret_cast<WGPUChainedStruct*>(&adapter_options_get_gl_proc);
+  }
+  #endif
 
   WGPUFuture future = wgpuInstanceRequestAdapter(wgpuInstance, &options, callbackInfo);
 
@@ -371,7 +405,6 @@ void* sk_wgpu_device_copy_d3d11_device(sk_wgpu_device_t* device) {
 
   auto wgpuDevice = reinterpret_cast<WGPUDevice>(device);
   auto d3d11Device = dawn::native::d3d11::GetD3D11Device(wgpuDevice);
-  ___device = d3d11Device;
   return d3d11Device.Detach();
 #else
   (void)device;

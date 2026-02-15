@@ -35,8 +35,8 @@ String getConfiguration(BuildInput input) {
     case OS.android:
       return '${platform}_${arch}_graphite_gl';
     case OS.windows:
-      // TODO(knopp): Use hook defines to allow switching between dx11 and dx12
-      return '${platform}_${arch}_graphite_dx11';
+      // TODO(knopp): Use hook defines to allow switching between d3d11 and d3d12
+      return '${platform}_${arch}_graphite_d3d11';
     case OS.linux:
       return '${platform}_${arch}_graphite_gl';
   }

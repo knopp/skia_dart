@@ -187,4 +187,7 @@ shared_library("skia_dart") {
       "-Wl,-object_path_lto,${root_out_dir}/lto_objects",
     ]
   }
+  if (is_linux) {
+    libs = ["EGL"]
+  }
 }

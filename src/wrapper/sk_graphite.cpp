@@ -188,7 +188,6 @@ static void read_pixels_callback(SkImage::ReadPixelsContext context, std::unique
   if (!result || result->count() == 0 || !result->data(0)) {
     rescale_context->callback(rescale_context->callback_context, false, nullptr);
     delete rescale_context;
-    return;
   } else {
     // Copy result data into a SkPixmap and pass to callback
     auto bitmap = new SkBitmap();
@@ -204,6 +203,7 @@ static void read_pixels_callback(SkImage::ReadPixelsContext context, std::unique
              rowSize);
     }
     rescale_context->callback(rescale_context->callback_context, true, ToBitmap(bitmap));
+    delete rescale_context;
   }
 }
 }  // namespace

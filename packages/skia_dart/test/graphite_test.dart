@@ -25,11 +25,12 @@ class DawnTestContext extends TestContext {
   DawnTestContext() {
     _instance = WgpuInstance.create();
     final backendType = switch (Platform.operatingSystem) {
-      'windows' => WgpuBackendType.d3d12,
-      'linux' => WgpuBackendType.vulkan,
+      'windows' => WgpuBackendType.d3d11,
+      'linux' => WgpuBackendType.opengles,
       'macos' || 'ios' => WgpuBackendType.metal,
       _ => throw UnsupportedError(
-          'Unsupported platform for Dawn: ${Platform.operatingSystem}'),
+        'Unsupported platform for Dawn: ${Platform.operatingSystem}',
+      ),
     };
     _device = _instance.requestAdapter(backendType)!.requestDevice()!;
     _queue = _device.getQueue();

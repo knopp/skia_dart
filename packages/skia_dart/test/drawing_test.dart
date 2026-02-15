@@ -2153,7 +2153,7 @@ void main() {
     late SkTypeface typeface;
 
     setUpAll(() {
-      fontMgr = SkFontMgr.createCoreText()!;
+      fontMgr = SkFontMgr.createPlatformDefault()!;
       typeface = fontMgr.createFromFile('test/NotoSans-ASCII.ttf')!;
     });
 
