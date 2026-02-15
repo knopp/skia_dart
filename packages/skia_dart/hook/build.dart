@@ -51,7 +51,7 @@ void main(List<String> args) async {
       return;
     }
 
-    final configuration = getConfiguration(input) + '_debug';
+    final configuration = getConfiguration(input);
     final outDir = input.packageRoot.resolve('../../out/$configuration/');
 
     if (Directory(outDir.toFilePath()).existsSync()) {
