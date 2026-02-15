@@ -29,6 +29,27 @@ jobs:
         if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
 
+      - name: Install EGL + Mesa (software) (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1-mesa \
+            libegl1-mesa-dev \
+            libgl1-mesa-dev \
+            libgles2-mesa-dev \
+            libgl1-mesa-dri \
+            mesa-utils \
+            mesa-utils-extra \
+            libgbm-dev
+
+      - name: Force software OpenGL (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          echo "LIBGL_ALWAYS_SOFTWARE=1" >> $GITHUB_ENV
+          echo "MESA_LOADER_DRIVER_OVERRIDE=llvmpipe" >> $GITHUB_ENV
+          echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
+
       - name: Select clang as default compiler (Linux)
         if: runner.os == 'Linux'
         run: |
