@@ -435,20 +435,14 @@ class SkPath with _NativeMixin<sk_path_t> {
   SkData serialize() => SkData._(sk_path_serialize(_ptr));
 
   static (SkPath, int)? readFromMemory(Uint8List data) {
-    final buffer = ffi.calloc<Uint8>(data.length);
     final bytesReadPtr = _Size.pool[0];
-    try {
-      buffer.asTypedList(data.length).setAll(0, data);
-      final ptr = sk_path_read_from_memory(
-        buffer.cast(),
-        data.length,
-        bytesReadPtr,
-      );
-      if (ptr.address == 0) return null;
-      return (SkPath._(ptr), bytesReadPtr.value);
-    } finally {
-      ffi.calloc.free(buffer);
-    }
+    final ptr = sk_path_read_from_memory(
+      data.address.cast(),
+      data.length,
+      bytesReadPtr,
+    );
+    if (ptr.address == 0) return null;
+    return (SkPath._(ptr), bytesReadPtr.value);
   }
 
   int get generationId => sk_path_get_generation_id(_ptr);

@@ -139,13 +139,7 @@ class SkWStream with _NativeMixin<sk_wstream_t> {
       sk_wstream_write(_ptr, buffer, size);
 
   bool writeBytes(Uint8List bytes) {
-    final buffer = ffi.calloc<Uint8>(bytes.length);
-    try {
-      buffer.asTypedList(bytes.length).setAll(0, bytes);
-      return sk_wstream_write(_ptr, buffer.cast(), bytes.length);
-    } finally {
-      ffi.calloc.free(buffer);
-    }
+    return sk_wstream_write(_ptr, bytes.address.cast(), bytes.length);
   }
 
   bool newline() => sk_wstream_newline(_ptr);

@@ -1,5 +1,6 @@
 library;
 
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:math';

@@ -185,17 +185,22 @@ class SkFont with _NativeMixin<sk_font_t> {
   int unicharToGlyph(int unichar) => sk_font_unichar_to_glyph(_ptr, unichar);
 
   Uint16List unicharsToGlyphs(List<int> unichars) {
+    final unichars32 = switch (unichars) {
+      Int32List() => unichars,
+      Uint32List() => Int32List.view(unichars.buffer),
+      _ => Int32List.fromList(unichars),
+    };
+
     final count = unichars.length;
-    final unicharsPtr = ffi.calloc<Int32>(count);
-    final glyphsPtr = ffi.calloc<Uint16>(count);
-    try {
-      unicharsPtr.asTypedList(count).setAll(0, unichars);
-      sk_font_unichars_to_glyphs(_ptr, unicharsPtr, count, glyphsPtr);
-      return Uint16List.fromList(glyphsPtr.asTypedList(count));
-    } finally {
-      ffi.calloc.free(unicharsPtr);
-      ffi.calloc.free(glyphsPtr);
-    }
+    final res = Uint16List(count);
+
+    sk_font_unichars_to_glyphs(
+      _ptr,
+      unichars32.address.cast(),
+      count,
+      res.address,
+    );
+    return res;
   }
 
   ({double advance, SkRect? bounds}) measureText(
