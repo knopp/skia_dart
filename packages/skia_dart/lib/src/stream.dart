@@ -27,13 +27,9 @@ class SkStream with _NativeMixin<sk_stream_t> {
       sk_stream_read(_ptr, buffer, size);
 
   Uint8List readBytes(int size) {
-    final buffer = ffi.calloc<Uint8>(size);
-    try {
-      final bytesRead = sk_stream_read(_ptr, buffer.cast(), size);
-      return Uint8List.fromList(buffer.asTypedList(bytesRead));
-    } finally {
-      ffi.calloc.free(buffer);
-    }
+    final buffer = Uint8List(size);
+    final bytesRead = sk_stream_read(_ptr, buffer.address.cast(), size);
+    return buffer.sublist(0, bytesRead);
   }
 
   int peek(Pointer<Void> buffer, int size) =>

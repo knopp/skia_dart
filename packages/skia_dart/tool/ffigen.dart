@@ -15,6 +15,12 @@ String findMacSdkPath() {
 }
 
 void main() {
+  const nonLeafFunctions = {
+    'sk_font_get_paths',
+    'skgpu_graphite_async_rescale_and_read_pixels_from_surface',
+    'skgpu_graphite_async_rescale_and_read_pixels_from_image',
+    'skgpu_graphite_context_submit',
+  };
   final packageRoot = Platform.script.resolve('../');
   final wrapperRoot = packageRoot.resolve('../../src/');
   final headerRoot = wrapperRoot.resolve('./wrapper/include');
@@ -48,7 +54,12 @@ void main() {
     ),
     enums: Enums.includeAll,
     structs: Structs.includeAll,
-    functions: Functions.includeAll,
+    functions: Functions(
+      include: Declarations.includeAll,
+      isLeaf: (declaration) {
+        return !nonLeafFunctions.contains(declaration.originalName);
+      },
+    ),
     unions: Unions.includeAll,
     globals: Globals.includeAll,
     typedefs: Typedefs.includeAll,
