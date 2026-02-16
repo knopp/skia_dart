@@ -11,6 +11,7 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       skia_dart_hash: ${{ steps.read-hash.outputs.hash }}
+      skia_dart_hash_short: ${{ steps.read-hash.outputs.hash_short }}
       should_build: ${{ steps.check-release.outputs.should_build }}
     steps:
       - name: Checkout repository
@@ -28,7 +29,10 @@ jobs:
 
       - name: Read skia_dart hash
         id: read-hash
-        run: echo "hash=$(cat packages/skia_dart/skia_dart_hash)" >> $GITHUB_OUTPUT
+        run: |
+          HASH=$(cat packages/skia_dart/skia_dart_hash)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+          echo "hash_short=${HASH:0:10}" >> $GITHUB_OUTPUT
 
       - name: Check if release already exists
         id: check-release
@@ -244,7 +248,7 @@ jobs:
         uses: softprops/action-gh-release@v2
         with:
           tag_name: skia_dart_${{ needs.generate-matrix.outputs.skia_dart_hash }}
-          name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash }}
+          name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash_short }}
           body: |
             Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
 
@@ -266,6 +270,9 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git fetch origin ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
           git add packages/skia_dart/prebuilt_hashes.json
           git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
-          git push
+          git push origin ${{ github.head_ref }}
