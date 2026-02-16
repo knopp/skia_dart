@@ -80,7 +80,7 @@ class SkFileStream extends SkStream {
     }
   }
 
-  late final Pointer<sk_stream_filestream_t> _filePtr;
+  Pointer<sk_stream_filestream_t> get _filePtr => _ptr.cast();
 
   bool get isValid => sk_filestream_is_valid(_filePtr);
 }
