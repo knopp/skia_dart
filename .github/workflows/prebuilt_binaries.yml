@@ -141,16 +141,9 @@ jobs:
           sudo update-alternatives --set cc /usr/bin/clang
           sudo update-alternatives --set c++ /usr/bin/clang++
 
-      - name: Install Android NDK
-        if: matrix.target_os == 'android'
-        uses: nttld/setup-ndk@v1
-        id: setup-ndk
-        with:
-          ndk-version: r26d
-
       - name: Set Android NDK environment
         if: matrix.target_os == 'android'
-        run: echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+        run: echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
 
       - name: Fetch Skia dependencies
         working-directory: skia
