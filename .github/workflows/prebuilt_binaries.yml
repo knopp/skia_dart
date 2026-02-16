@@ -14,17 +14,10 @@ jobs:
       skia_dart_hash_short: ${{ steps.read-hash.outputs.hash_short }}
       should_build: ${{ steps.check-release.outputs.should_build }}
     steps:
-      - uses: actions/create-github-app-token@v1
-        id: app-token
-        with:
-          app-id: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_ID }}
-          private-key: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_PRIVATE_KEY }}
-
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           submodules: recursive
-          token: ${{ steps.app-token.outputs.token }}
 
       - name: Install pub dependencies
         working-directory: packages/skia_dart
@@ -211,10 +204,16 @@ jobs:
       contents: write
 
     steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_ID }}
+          private-key: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Download all artifacts
         uses: actions/download-artifact@v4
