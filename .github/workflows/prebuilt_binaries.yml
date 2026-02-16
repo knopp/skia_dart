@@ -52,7 +52,7 @@ jobs:
           # Read the config and transform it into a matrix format
           # Each config maps to appropriate runner based on target_os
           matrix=$(cat packages/skia_dart/tool/build_config.json | jq -c '
-            to_entries | map({
+            to_entries | map(select(.value.__ignore__ != true)) | map({
               config: .key,
               target_os: .value.target_os,
               target_cpu: .value.target_cpu,
@@ -172,38 +172,11 @@ jobs:
         working-directory: out/${{ matrix.config }}
         run: ninja skia_dart
 
-      - name: Calculate SHA256 hash (Unix)
-        if: runner.os != 'Windows'
-        id: sha256-unix
-        run: |
-          hash=$(shasum -a 256 out/${{ matrix.config }}/${{ matrix.lib_name }} | cut -d ' ' -f 1)
-          echo "sha256=$hash" >> $GITHUB_OUTPUT
-
-      - name: Calculate SHA256 hash (Windows)
-        if: runner.os == 'Windows'
-        id: sha256-windows
-        shell: pwsh
-        run: |
-          $hash = (Get-FileHash -Path "out/${{ matrix.config }}/${{ matrix.lib_name }}" -Algorithm SHA256).Hash.ToLower()
-          echo "sha256=$hash" >> $env:GITHUB_OUTPUT
-
-      - name: Write hash to file (Unix)
-        if: runner.os != 'Windows'
-        run: echo "${{ steps.sha256-unix.outputs.sha256 }}" > out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256
-
-      - name: Write hash to file (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          "${{ steps.sha256-windows.outputs.sha256 }}" | Out-File -FilePath "out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256" -NoNewline
-
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.config }}
-          path: |
-            out/${{ matrix.config }}/${{ matrix.lib_name }}
-            out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256
+          path: out/${{ matrix.config }}/${{ matrix.lib_name }}
           retention-days: 1
 
   # Third job: Create release with all artifacts
@@ -228,41 +201,31 @@ jobs:
       - name: List downloaded artifacts
         run: find artifacts -type f
 
-      - name: Generate hashes JSON
+      - name: Generate hashes JSON and prepare release assets
         run: |
-          # Create a JSON object mapping config -> sha256
+          mkdir -p release_assets
           echo "{" > prebuilt_hashes.json
           first=true
           for config_dir in artifacts/*/; do
             config=$(basename "$config_dir")
-            hash_file=$(find "$config_dir" -name "*.sha256" | head -1)
-            if [ -f "$hash_file" ]; then
-              hash=$(cat "$hash_file")
+            lib_file=$(find "$config_dir" -type f | head -1)
+            if [ -f "$lib_file" ]; then
+              # Calculate SHA256 hash
+              hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
               if [ "$first" = true ]; then
                 first=false
               else
                 echo "," >> prebuilt_hashes.json
               fi
               printf '  "%s": "%s"' "$config" "$hash" >> prebuilt_hashes.json
+              # Copy to release assets with config prefix
+              lib_name=$(basename "$lib_file")
+              cp "$lib_file" "release_assets/${config}_${lib_name}"
             fi
           done
           echo "" >> prebuilt_hashes.json
           echo "}" >> prebuilt_hashes.json
           cat prebuilt_hashes.json
-
-      - name: Prepare release assets
-        run: |
-          mkdir -p release_assets
-          for config_dir in artifacts/*/; do
-            config=$(basename "$config_dir")
-            # Find the library file (not the .sha256 file)
-            lib_file=$(find "$config_dir" -type f ! -name "*.sha256" | head -1)
-            if [ -f "$lib_file" ]; then
-              lib_name=$(basename "$lib_file")
-              # Copy with config prefix to avoid naming collisions
-              cp "$lib_file" "release_assets/${config}_${lib_name}"
-            fi
-          done
           ls -la release_assets/
 
       - name: Create GitHub Release
