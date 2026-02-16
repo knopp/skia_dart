@@ -52,7 +52,7 @@ jobs:
           # Read the config and transform it into a matrix format
           # Each config maps to appropriate runner based on target_os
           matrix=$(cat packages/skia_dart/tool/build_config.json | jq -c '
-            to_entries | map(select(.value.__ignore__ != true)) | map({
+            to_entries | map(select((.value.__ignore__ // false) == false)) | map({
               config: .key,
               target_os: .value.target_os,
               target_cpu: .value.target_cpu,
