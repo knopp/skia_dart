@@ -97,7 +97,7 @@ jobs:
     needs: generate-matrix
     if: needs.generate-matrix.outputs.should_build == 'true'
     strategy:
-      fail-fast: false
+      fail-fast: true
       matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
