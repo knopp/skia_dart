@@ -59,7 +59,7 @@ jobs:
               # Map target_os to GitHub runner
               os: (
                 if .value.target_os == "mac" or .value.target_os == "ios" then
-                  "macos-latest" end
+                  "macos-latest"
                 elif .value.target_os == "win" then
                   if value.target_cpu == "arm64" then
                     "windows-11-arm64"
