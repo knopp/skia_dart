@@ -61,18 +61,20 @@ jobs:
                 if .value.target_os == "mac" or .value.target_os == "ios" then
                   "macos-latest"
                 elif .value.target_os == "win" then
-                  if value.target_cpu == "arm64" then
+                  if .value.target_cpu == "arm64" then
                     "windows-11-arm64"
                   else
                     "windows-2022"
                   end
                 elif .value.target_os == "linux" then
-                  if value.target_cpu == "arm64" then
+                  if .value.target_cpu == "arm64" then
                     "ubuntu-24.04-arm"
                   else
                     "ubuntu-latest"
                   end
                 elif .value.target_os == "android" then
+                  "ubuntu-latest"
+                else
                   "ubuntu-latest"
                 end
               ),
