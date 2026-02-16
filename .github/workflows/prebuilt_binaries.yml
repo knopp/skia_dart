@@ -1,0 +1,272 @@
+name: Prebuilt Binaries
+
+on:
+  push:
+    branches: ["master"]
+
+jobs:
+  # Generate matrix from build_config.json
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      skia_dart_hash: ${{ steps.read-hash.outputs.hash }}
+      skia_dart_hash_short: ${{ steps.read-hash.outputs.hash_short }}
+      should_build: ${{ steps.check-release.outputs.should_build }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install pub dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
+      - name: Check skia_dart hash
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
+
+      - name: Read skia_dart hash
+        id: read-hash
+        run: |
+          HASH=$(cat packages/skia_dart/skia_dart_hash)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+          echo "hash_short=${HASH:0:10}" >> $GITHUB_OUTPUT
+
+      - name: Check if release already exists
+        id: check-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HASH="${{ steps.read-hash.outputs.hash }}"
+          TAG="skia_dart_${HASH}"
+          if gh release view "$TAG" --repo ${{ github.repository }} > /dev/null 2>&1; then
+            echo "Release $TAG already exists, skipping build"
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          else
+            echo "Release $TAG does not exist, proceeding with build"
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Generate matrix from build_config.json
+        if: steps.check-release.outputs.should_build == 'true'
+        id: set-matrix
+        run: |
+          # Read the config and transform it into a matrix format
+          # Each config maps to appropriate runner based on target_os
+          matrix=$(cat packages/skia_dart/tool/build_config.json | jq -c '
+            to_entries | map(select(.value.__ignore__ != true)) | map({
+              config: .key,
+              target_os: .value.target_os,
+              target_cpu: .value.target_cpu,
+              # Map target_os to GitHub runner
+              os: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  "macos-latest"
+                elif .value.target_os == "win" then
+                  if .value.target_cpu == "arm64" then
+                    "windows-11-arm"
+                  else
+                    "windows-2022"
+                  end
+                elif .value.target_os == "linux" then
+                  if .value.target_cpu == "arm64" then
+                    "ubuntu-24.04-arm"
+                  else
+                    "ubuntu-latest"
+                  end
+                elif .value.target_os == "android" then
+                  "ubuntu-latest"
+                else
+                  "ubuntu-latest"
+                end
+              ),
+              # Determine library filename based on target_os
+              lib_name: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  "libskia_dart.dylib"
+                elif .value.target_os == "win" then
+                  "skia_dart.dll"
+                else
+                  "libskia_dart.so"
+                end
+              )
+            }) | {include: .}
+          ')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  # Second job: Build each configuration
+  build:
+    needs: generate-matrix
+    if: needs.generate-matrix.outputs.should_build == 'true'
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install system dependencies (Linux)
+        if: matrix.target_os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
+
+      - name: Install EGL + Mesa (software) (Linux)
+        if: matrix.target_os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libegl-dev \
+            libgl1-mesa-dev \
+            libgles2-mesa-dev \
+            libgl1-mesa-dri \
+            libgbm-dev \
+            mesa-utils \
+            mesa-utils-extra
+
+      - name: Force software OpenGL (Linux)
+        if: matrix.target_os == 'Linux'
+        run: |
+          echo "LIBGL_ALWAYS_SOFTWARE=1" >> $GITHUB_ENV
+          echo "MESA_LOADER_DRIVER_OVERRIDE=llvmpipe" >> $GITHUB_ENV
+          echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
+
+      - name: Select clang as default compiler (Linux)
+        if: matrix.target_os == 'Linux'
+        run: |
+          sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
+          sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
+          sudo update-alternatives --set cc /usr/bin/clang
+          sudo update-alternatives --set c++ /usr/bin/clang++
+
+      - name: Set Android NDK environment
+        if: matrix.target_os == 'android'
+        run: echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
+
+      - name: Patch fetch-gn for Windows ARM64
+        if: matrix.target_os == 'win' && matrix.target_cpu == 'arm64'
+        working-directory: skia
+        shell: bash
+        run: |
+          # GN doesn't have a Windows ARM64 build, so patch fetch-gn to always use amd64
+          sed -i "s/platform.machine().lower()/'amd64'/" bin/fetch-gn
+
+      - name: Fetch Skia dependencies
+        working-directory: skia
+        shell: bash
+        run: |
+          for i in 1 2 3; do
+            echo "Attempt $i of 3"
+            python3 tools/git-sync-deps && break
+            if [ $i -eq 3 ]; then
+              echo "Failed after 3 attempts"
+              exit 1
+            fi
+            echo "Retrying in 10 seconds..."
+            sleep 10
+          done
+
+      - name: Install pub dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
+      - name: Generate GN files
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }}
+
+      - name: Print args.gn
+        working-directory: out/${{ matrix.config }}
+        run: cat args.gn
+
+      - name: Build Skia wrapper
+        working-directory: out/${{ matrix.config }}
+        run: ninja skia_dart
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.config }}
+          path: out/${{ matrix.config }}/${{ matrix.lib_name }}
+          retention-days: 1
+
+  # Third job: Create release with all artifacts
+  release:
+    needs: [generate-matrix, build]
+    if: needs.generate-matrix.outputs.should_build == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List downloaded artifacts
+        run: find artifacts -type f
+
+      - name: Generate hashes JSON and prepare release assets
+        run: |
+          mkdir -p release_assets
+          echo "{" > prebuilt_hashes.json
+          first=true
+          for config_dir in artifacts/*/; do
+            config=$(basename "$config_dir")
+            lib_file=$(find "$config_dir" -type f | head -1)
+            if [ -f "$lib_file" ]; then
+              # Calculate SHA256 hash
+              hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo "," >> prebuilt_hashes.json
+              fi
+              printf '  "%s": "%s"' "$config" "$hash" >> prebuilt_hashes.json
+              # Copy to release assets with config prefix
+              lib_name=$(basename "$lib_file")
+              cp "$lib_file" "release_assets/${config}_${lib_name}"
+            fi
+          done
+          echo "" >> prebuilt_hashes.json
+          echo "}" >> prebuilt_hashes.json
+          cat prebuilt_hashes.json
+          ls -la release_assets/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: skia_dart_${{ needs.generate-matrix.outputs.skia_dart_hash }}
+          name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash_short }}
+          body: |
+            Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
+          files: |
+            release_assets/*
+            prebuilt_hashes.json
+          draft: false
+          prerelease: false
+
+      - name: Copy hashes JSON to packages directory
+        run: cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+
+      - name: Commit prebuilt_hashes.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git fetch origin ${{ github.head_ref }}
+          git checkout ${{ github.head_ref }}
+          cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+          git add packages/skia_dart/prebuilt_hashes.json
+          git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
+          git push origin ${{ github.head_ref }}
