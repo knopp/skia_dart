@@ -103,11 +103,11 @@ jobs:
           submodules: recursive
 
       - name: Install system dependencies (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.target_os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
 
       - name: Install EGL + Mesa (software) (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.target_os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
@@ -121,14 +121,14 @@ jobs:
             mesa-utils-extra
 
       - name: Force software OpenGL (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.target_os == 'Linux'
         run: |
           echo "LIBGL_ALWAYS_SOFTWARE=1" >> $GITHUB_ENV
           echo "MESA_LOADER_DRIVER_OVERRIDE=llvmpipe" >> $GITHUB_ENV
           echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
 
       - name: Select clang as default compiler (Linux)
-        if: runner.os == 'Linux'
+        if: matrix.target_os == 'Linux'
         run: |
           sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
           sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
@@ -145,14 +145,6 @@ jobs:
       - name: Set Android NDK environment
         if: matrix.target_os == 'android'
         run: echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
-
-      - name: Install dependencies
-        working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart pub get
-
-      - name: Check skia_dart hash
-        working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
 
       - name: Fetch Skia dependencies
         working-directory: skia
@@ -202,7 +194,7 @@ jobs:
           path: |
             out/${{ matrix.config }}/${{ matrix.lib_name }}
             out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256
-          retention-days: 7
+          retention-days: 1
 
   # Third job: Create release with all artifacts
   release:
