@@ -5,21 +5,42 @@ on:
     branches: [master]
 
 jobs:
-  # First job: Generate matrix from build_config.json
+  # Generate matrix from build_config.json
   generate-matrix:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
       skia_dart_hash: ${{ steps.read-hash.outputs.hash }}
+      should_build: ${{ steps.check-release.outputs.should_build }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Check skia_dart hash
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
 
       - name: Read skia_dart hash
         id: read-hash
         run: echo "hash=$(cat packages/skia_dart/skia_dart_hash)" >> $GITHUB_OUTPUT
 
+      - name: Check if release already exists
+        id: check-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HASH="${{ steps.read-hash.outputs.hash }}"
+          TAG="skia_dart-${HASH}"
+          if gh release view "$TAG" --repo ${{ github.repository }} > /dev/null 2>&1; then
+            echo "Release $TAG already exists, skipping build"
+            echo "should_build=false" >> $GITHUB_OUTPUT
+          else
+            echo "Release $TAG does not exist, proceeding with build"
+            echo "should_build=true" >> $GITHUB_OUTPUT
+          fi
+
       - name: Generate matrix from build_config.json
+        if: steps.check-release.outputs.should_build == 'true'
         id: set-matrix
         run: |
           # Read the config and transform it into a matrix format
@@ -32,12 +53,20 @@ jobs:
               # Map target_os to GitHub runner
               os: (
                 if .value.target_os == "mac" or .value.target_os == "ios" then
-                  if .value.target_cpu == "x64" then "macos-13" else "macos-latest" end
+                  "macos-latest" end
                 elif .value.target_os == "win" then
-                  "windows-latest"
-                elif .value.target_os == "linux" or .value.target_os == "android" then
-                  if .value.target_cpu == "arm64" and .value.host_cpu == "arm64" then "ubuntu-24.04-arm" else "ubuntu-latest" end
-                else
+                  if value.target_cpu == "arm64" then
+                    "windows-11-arm64"
+                  else
+                    "windows-2022"
+                  end
+                elif .value.target_os == "linux" then
+                  if value.target_cpu == "arm64" then
+                    "ubuntu-24.04-arm"
+                  else
+                    "ubuntu-latest"
+                  end
+                elif .value.target_os == "android" then
                   "ubuntu-latest"
                 end
               ),
@@ -58,6 +87,7 @@ jobs:
   # Second job: Build each configuration
   build:
     needs: generate-matrix
+    if: needs.generate-matrix.outputs.should_build == 'true'
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
@@ -175,6 +205,7 @@ jobs:
   # Third job: Create release with all artifacts
   release:
     needs: [generate-matrix, build]
+    if: needs.generate-matrix.outputs.should_build == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: write
