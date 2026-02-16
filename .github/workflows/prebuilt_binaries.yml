@@ -18,6 +18,10 @@ jobs:
         with:
           submodules: recursive
 
+      - name: Install dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
       - name: Check skia_dart hash
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
