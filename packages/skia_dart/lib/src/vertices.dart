@@ -68,6 +68,8 @@ class SkVertices with _NativeMixin<sk_vertices_t> {
       }
 
       int indexCount = 0;
+      // Can't use indices.address here because sk_vertices_make_copy is a proxy
+      // function that calls the actual native function.
       if (indices != null) {
         indexCount = indices.length;
         indicesPtr = ffi.calloc<Uint16>(indices.length);

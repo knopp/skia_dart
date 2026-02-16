@@ -56,24 +56,12 @@ class SkColorFilter with _NativeMixin<sk_colorfilter_t> {
 
   factory SkColorFilter.colorMatrix(Float32List matrix) {
     assert(matrix.length == 20);
-    final ptr = ffi.calloc<Float>(20);
-    try {
-      ptr.asTypedList(20).setAll(0, matrix);
-      return SkColorFilter._(sk_colorfilter_new_color_matrix(ptr));
-    } finally {
-      ffi.calloc.free(ptr);
-    }
+    return SkColorFilter._(sk_colorfilter_new_color_matrix(matrix.address));
   }
 
   factory SkColorFilter.hslaMatrix(Float32List matrix) {
     assert(matrix.length == 20);
-    final ptr = ffi.calloc<Float>(20);
-    try {
-      ptr.asTypedList(20).setAll(0, matrix);
-      return SkColorFilter._(sk_colorfilter_new_hsla_matrix(ptr));
-    } finally {
-      ffi.calloc.free(ptr);
-    }
+    return SkColorFilter._(sk_colorfilter_new_hsla_matrix(matrix.address));
   }
 
   factory SkColorFilter.linearToSRGBGamma() {
@@ -112,13 +100,7 @@ class SkColorFilter with _NativeMixin<sk_colorfilter_t> {
 
   factory SkColorFilter.table(Uint8List table) {
     assert(table.length == 256);
-    final ptr = ffi.calloc<Uint8>(256);
-    try {
-      ptr.asTypedList(256).setAll(0, table);
-      return SkColorFilter._(sk_colorfilter_new_table(ptr));
-    } finally {
-      ffi.calloc.free(ptr);
-    }
+    return SkColorFilter._(sk_colorfilter_new_table(table.address));
   }
 
   factory SkColorFilter.tableARGB(

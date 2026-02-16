@@ -38,8 +38,8 @@ class SkEncodedText {
       glyphsPtr.asTypedList(count).setAll(0, _glyphIds!);
       return (glyphsPtr.cast(), _glyphIds!.lengthInBytes);
     } else if (_string != null) {
-      final stringPtr = _string!.toNativeUtf8();
-      return (stringPtr.cast(), stringPtr.length);
+      final (stringPtr, length) = _string!._toNativeUtf8WithLength();
+      return (stringPtr.cast(), length);
     } else {
       throw StateError('Either glyphIds or string must be provided.');
     }
@@ -47,6 +47,20 @@ class SkEncodedText {
 
   Uint16List? _glyphIds;
   String? _string;
+}
+
+/// Extension method for converting a [String] to a `Pointer<Utf8>` and length;
+extension on String {
+  (Pointer<ffi.Utf8>, int) _toNativeUtf8WithLength({
+    Allocator allocator = ffi.malloc,
+  }) {
+    final units = utf8.encode(this);
+    final result = allocator<Uint8>(units.length + 1);
+    final nativeString = result.asTypedList(units.length + 1);
+    nativeString.setAll(0, units);
+    nativeString[units.length] = 0;
+    return (result.cast(), units.length);
+  }
 }
 
 class SkFontStyle with _NativeMixin<sk_fontstyle_t> {
@@ -202,19 +216,21 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
       sk_typeface_unichar_to_glyph(_ptr, unichar);
 
   Uint16List unicharsToGlyphs(List<int> unichars) {
+    final unichars32 = switch (unichars) {
+      Int32List() => unichars,
+      Uint32List() => Int32List.view(unichars.buffer),
+      _ => Int32List.fromList(unichars),
+    };
     final count = unichars.length;
-    final unicharsPtr = ffi.calloc<Int32>(count);
-    final glyphsPtr = ffi.calloc<Uint16>(count);
-    try {
-      for (int i = 0; i < count; i++) {
-        unicharsPtr[i] = unichars[i];
-      }
-      sk_typeface_unichars_to_glyphs(_ptr, unicharsPtr, count, glyphsPtr);
-      return Uint16List.fromList(glyphsPtr.asTypedList(count));
-    } finally {
-      ffi.calloc.free(unicharsPtr);
-      ffi.calloc.free(glyphsPtr);
-    }
+    final res = Uint16List(count);
+
+    sk_typeface_unichars_to_glyphs(
+      _ptr,
+      unichars32.address,
+      count,
+      res.address,
+    );
+    return res;
   }
 
   Uint16List textToGlyphs(

@@ -4,13 +4,7 @@ class SkData with _NativeMixin<sk_data_t> {
   SkData.empty() : this._(sk_data_new_empty());
 
   factory SkData.fromBytes(Uint8List bytes) {
-    final ptr = ffi.calloc<Uint8>(bytes.length);
-    try {
-      ptr.asTypedList(bytes.length).setAll(0, bytes);
-      return SkData._(sk_data_new_with_copy(ptr.cast(), bytes.length));
-    } finally {
-      ffi.calloc.free(ptr);
-    }
+    return SkData._(sk_data_new_with_copy(bytes.address.cast(), bytes.length));
   }
 
   static SkData? fromFile(String path) {

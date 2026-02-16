@@ -27,13 +27,9 @@ class SkStream with _NativeMixin<sk_stream_t> {
       sk_stream_read(_ptr, buffer, size);
 
   Uint8List readBytes(int size) {
-    final buffer = ffi.calloc<Uint8>(size);
-    try {
-      final bytesRead = sk_stream_read(_ptr, buffer.cast(), size);
-      return Uint8List.fromList(buffer.asTypedList(bytesRead));
-    } finally {
-      ffi.calloc.free(buffer);
-    }
+    final buffer = Uint8List(size);
+    final bytesRead = sk_stream_read(_ptr, buffer.address.cast(), size);
+    return buffer.sublist(0, bytesRead);
   }
 
   int peek(Pointer<Void> buffer, int size) =>
@@ -143,13 +139,7 @@ class SkWStream with _NativeMixin<sk_wstream_t> {
       sk_wstream_write(_ptr, buffer, size);
 
   bool writeBytes(Uint8List bytes) {
-    final buffer = ffi.calloc<Uint8>(bytes.length);
-    try {
-      buffer.asTypedList(bytes.length).setAll(0, bytes);
-      return sk_wstream_write(_ptr, buffer.cast(), bytes.length);
-    } finally {
-      ffi.calloc.free(buffer);
-    }
+    return sk_wstream_write(_ptr, bytes.address.cast(), bytes.length);
   }
 
   bool newline() => sk_wstream_newline(_ptr);

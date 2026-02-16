@@ -300,6 +300,8 @@ class SkImageFilter with _NativeMixin<sk_imagefilter_t> {
     try {
       kernelSizePtr.ref.w = kernelSize.width;
       kernelSizePtr.ref.h = kernelSize.height;
+      // Can't use kernel.address here because sk_imagefilter_new_matrix_convolution is a proxy
+      // function that calls the actual native function.
       kernelPtr.asTypedList(kernel.length).setAll(0, kernel);
       return SkImageFilter._(
         sk_imagefilter_new_matrix_convolution(
