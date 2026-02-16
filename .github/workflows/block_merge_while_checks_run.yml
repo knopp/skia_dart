@@ -18,8 +18,8 @@ jobs:
             const repo = context.repo.repo;
             const ref = 'master';
 
-            const pollInterval = 30000; // 30 seconds
-            const timeout = 3600000;    // 1 hour max
+            const pollInterval = 30000;  // 30 seconds
+            const timeout = 36000000;    // 10 hours max
             const start = Date.now();
 
             while (Date.now() - start < timeout) {
