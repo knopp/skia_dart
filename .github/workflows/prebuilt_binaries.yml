@@ -1,0 +1,261 @@
+name: Prebuilt Binaries
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  # First job: Generate matrix from build_config.json
+  generate-matrix:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      skia_dart_hash: ${{ steps.read-hash.outputs.hash }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Read skia_dart hash
+        id: read-hash
+        run: echo "hash=$(cat packages/skia_dart/skia_dart_hash)" >> $GITHUB_OUTPUT
+
+      - name: Generate matrix from build_config.json
+        id: set-matrix
+        run: |
+          # Read the config and transform it into a matrix format
+          # Each config maps to appropriate runner based on target_os
+          matrix=$(cat packages/skia_dart/tool/build_config.json | jq -c '
+            to_entries | map({
+              config: .key,
+              target_os: .value.target_os,
+              target_cpu: .value.target_cpu,
+              # Map target_os to GitHub runner
+              os: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  if .value.target_cpu == "x64" then "macos-13" else "macos-latest" end
+                elif .value.target_os == "win" then
+                  "windows-latest"
+                elif .value.target_os == "linux" or .value.target_os == "android" then
+                  if .value.target_cpu == "arm64" and .value.host_cpu == "arm64" then "ubuntu-24.04-arm" else "ubuntu-latest" end
+                else
+                  "ubuntu-latest"
+                end
+              ),
+              # Determine library filename based on target_os
+              lib_name: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  "libskia_dart.dylib"
+                elif .value.target_os == "win" then
+                  "skia_dart.dll"
+                else
+                  "libskia_dart.so"
+                end
+              )
+            }) | {include: .}
+          ')
+          echo "matrix=$matrix" >> $GITHUB_OUTPUT
+
+  # Second job: Build each configuration
+  build:
+    needs: generate-matrix
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.generate-matrix.outputs.matrix) }}
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install system dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
+
+      - name: Install EGL + Mesa (software) (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libegl1 \
+            libegl-dev \
+            libgl1-mesa-dev \
+            libgles2-mesa-dev \
+            libgl1-mesa-dri \
+            libgbm-dev \
+            mesa-utils \
+            mesa-utils-extra
+
+      - name: Force software OpenGL (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          echo "LIBGL_ALWAYS_SOFTWARE=1" >> $GITHUB_ENV
+          echo "MESA_LOADER_DRIVER_OVERRIDE=llvmpipe" >> $GITHUB_ENV
+          echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
+
+      - name: Select clang as default compiler (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
+          sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
+          sudo update-alternatives --set cc /usr/bin/clang
+          sudo update-alternatives --set c++ /usr/bin/clang++
+
+      - name: Install Android NDK
+        if: matrix.target_os == 'android'
+        uses: nttld/setup-ndk@v1
+        id: setup-ndk
+        with:
+          ndk-version: r26d
+
+      - name: Set Android NDK environment
+        if: matrix.target_os == 'android'
+        run: echo "ANDROID_NDK_HOME=${{ steps.setup-ndk.outputs.ndk-path }}" >> $GITHUB_ENV
+
+      - name: Install dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
+      - name: Check skia_dart hash
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
+
+      - name: Fetch Skia dependencies
+        working-directory: skia
+        run: python3 tools/git-sync-deps
+
+      - name: Generate GN files
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }}
+
+      - name: Print args.gn
+        working-directory: out/${{ matrix.config }}
+        run: cat args.gn
+
+      - name: Build Skia wrapper
+        working-directory: out/${{ matrix.config }}
+        run: ninja skia_dart
+
+      - name: Calculate SHA256 hash (Unix)
+        if: runner.os != 'Windows'
+        id: sha256-unix
+        run: |
+          hash=$(shasum -a 256 out/${{ matrix.config }}/${{ matrix.lib_name }} | cut -d ' ' -f 1)
+          echo "sha256=$hash" >> $GITHUB_OUTPUT
+
+      - name: Calculate SHA256 hash (Windows)
+        if: runner.os == 'Windows'
+        id: sha256-windows
+        shell: pwsh
+        run: |
+          $hash = (Get-FileHash -Path "out/${{ matrix.config }}/${{ matrix.lib_name }}" -Algorithm SHA256).Hash.ToLower()
+          echo "sha256=$hash" >> $env:GITHUB_OUTPUT
+
+      - name: Write hash to file (Unix)
+        if: runner.os != 'Windows'
+        run: echo "${{ steps.sha256-unix.outputs.sha256 }}" > out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256
+
+      - name: Write hash to file (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          "${{ steps.sha256-windows.outputs.sha256 }}" | Out-File -FilePath "out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256" -NoNewline
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.config }}
+          path: |
+            out/${{ matrix.config }}/${{ matrix.lib_name }}
+            out/${{ matrix.config }}/${{ matrix.lib_name }}.sha256
+          retention-days: 7
+
+  # Third job: Create release with all artifacts
+  release:
+    needs: [generate-matrix, build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List downloaded artifacts
+        run: find artifacts -type f
+
+      - name: Generate hashes JSON
+        run: |
+          # Create a JSON object mapping config -> sha256
+          echo "{" > prebuilt_hashes.json
+          first=true
+          for config_dir in artifacts/*/; do
+            config=$(basename "$config_dir")
+            hash_file=$(find "$config_dir" -name "*.sha256" | head -1)
+            if [ -f "$hash_file" ]; then
+              hash=$(cat "$hash_file")
+              if [ "$first" = true ]; then
+                first=false
+              else
+                echo "," >> prebuilt_hashes.json
+              fi
+              printf '  "%s": "%s"' "$config" "$hash" >> prebuilt_hashes.json
+            fi
+          done
+          echo "" >> prebuilt_hashes.json
+          echo "}" >> prebuilt_hashes.json
+          cat prebuilt_hashes.json
+
+      - name: Prepare release assets
+        run: |
+          mkdir -p release_assets
+          for config_dir in artifacts/*/; do
+            config=$(basename "$config_dir")
+            # Find the library file (not the .sha256 file)
+            lib_file=$(find "$config_dir" -type f ! -name "*.sha256" | head -1)
+            if [ -f "$lib_file" ]; then
+              lib_name=$(basename "$lib_file")
+              # Copy with config prefix to avoid naming collisions
+              cp "$lib_file" "release_assets/${config}_${lib_name}"
+            fi
+          done
+          ls -la release_assets/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: skia_dart-${{ needs.generate-matrix.outputs.skia_dart_hash }}
+          name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash }}
+          body: |
+            Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
+
+            ## Configurations
+            See `prebuilt_hashes.json` for SHA256 hashes of each binary.
+
+            ## Usage
+            Download the appropriate binary for your platform and verify its SHA256 hash.
+          files: |
+            release_assets/*
+            prebuilt_hashes.json
+          draft: false
+          prerelease: false
+
+      - name: Copy hashes JSON to packages directory
+        run: cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+
+      - name: Commit prebuilt_hashes.json
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add packages/skia_dart/prebuilt_hashes.json
+          git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
+          git push
