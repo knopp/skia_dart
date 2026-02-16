@@ -74,7 +74,8 @@
         "skia_enable_ganesh": false,
         "skia_enable_graphite": true,
         "skia_use_metal": false,
-        "skia_use_dawn": true
+        "skia_use_dawn": true,
+        "__ignore__" : true
     },
     "ios_sim_x64_graphite_metal": {
         "target_os": "ios",
