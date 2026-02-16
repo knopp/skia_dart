@@ -147,6 +147,7 @@ jobs:
 
       - name: Fetch Skia dependencies
         working-directory: skia
+        shell: bash
         run: |
           for i in 1 2 3; do
             echo "Attempt $i of 3"
