@@ -1,0 +1,54 @@
+name: Block merge while master checks run
+
+on:
+  pull_request:
+    branches: [master]
+  # Re-run periodically to pick up master status changes
+  workflow_dispatch:
+
+jobs:
+  check-master-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for master checks to complete
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const ref = 'master';
+
+            const pollInterval = 30000; // 30 seconds
+            const timeout = 3600000;    // 1 hour max
+            const start = Date.now();
+
+            while (Date.now() - start < timeout) {
+              const { data: combinedStatus } = await github.rest.repos.getCombinedStatusForRef({
+                owner,
+                repo,
+                ref,
+              });
+
+              // Also check GitHub Actions check runs
+              const { data: checkRuns } = await github.rest.checks.listForRef({
+                owner,
+                repo,
+                ref,
+              });
+
+              const hasInProgress = checkRuns.check_runs.some(
+                run => run.status === 'in_progress' || run.status === 'queued'
+              );
+
+              const hasPendingStatus = combinedStatus.state === 'pending' && combinedStatus.statuses.length > 0;
+
+              if (!hasInProgress && !hasPendingStatus) {
+                console.log(`Master checks are complete (combined status: ${combinedStatus.state}). PR is clear to merge.`);
+                return;
+              }
+
+              console.log(`Master checks still running. Waiting ${pollInterval / 1000}s...`);
+              await new Promise(r => setTimeout(r, pollInterval));
+            }
+
+            core.setFailed('Timed out waiting for master branch checks to complete.');
