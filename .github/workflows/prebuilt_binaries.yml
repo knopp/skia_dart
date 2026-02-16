@@ -251,12 +251,6 @@ jobs:
           name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash_short }}
           body: |
             Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
-
-            ## Configurations
-            See `prebuilt_hashes.json` for SHA256 hashes of each binary.
-
-            ## Usage
-            Download the appropriate binary for your platform and verify its SHA256 hash.
           files: |
             release_assets/*
             prebuilt_hashes.json

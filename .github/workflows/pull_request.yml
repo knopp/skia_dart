@@ -6,7 +6,6 @@ on:
 
 jobs:
   build:
-    if: false # DISABLED: This workflow is currently disabled to save CI resources. It can be re-enabled once the build times are optimized.
     strategy:
       fail-fast: false
       matrix:
