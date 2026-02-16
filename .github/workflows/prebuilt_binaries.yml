@@ -36,7 +36,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           HASH="${{ steps.read-hash.outputs.hash }}"
-          TAG="skia_dart-${HASH}"
+          TAG="skia_dart_${HASH}"
           if gh release view "$TAG" --repo ${{ github.repository }} > /dev/null 2>&1; then
             echo "Release $TAG already exists, skipping build"
             echo "should_build=false" >> $GITHUB_OUTPUT
@@ -62,7 +62,7 @@ jobs:
                   "macos-latest"
                 elif .value.target_os == "win" then
                   if .value.target_cpu == "arm64" then
-                    "windows-11-arm64"
+                    "windows-11-arm"
                   else
                     "windows-2022"
                   end
@@ -224,7 +224,7 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: skia_dart-${{ needs.generate-matrix.outputs.skia_dart_hash }}
+          tag_name: skia_dart_${{ needs.generate-matrix.outputs.skia_dart_hash }}
           name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash }}
           body: |
             Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
