@@ -145,6 +145,14 @@ jobs:
         if: matrix.target_os == 'android'
         run: echo "ANDROID_NDK_HOME=$ANDROID_NDK_LATEST_HOME" >> $GITHUB_ENV
 
+      - name: Patch fetch-gn for Windows ARM64
+        if: matrix.target_os == 'win' && matrix.target_cpu == 'arm64'
+        working-directory: skia
+        shell: bash
+        run: |
+          # GN doesn't have a Windows ARM64 build, so patch fetch-gn to always use amd64
+          sed -i "s/platform.machine().lower()/'amd64'/" bin/fetch-gn
+
       - name: Fetch Skia dependencies
         working-directory: skia
         shell: bash
