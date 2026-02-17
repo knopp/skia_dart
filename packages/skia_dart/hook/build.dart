@@ -1,7 +1,94 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:code_assets/code_assets.dart';
+import 'package:convert/convert.dart';
+import 'package:crypto/crypto.dart';
 import 'package:hooks/hooks.dart';
+
+const _releaseBaseUrl = 'https://github.com/knopp/skia_dart/releases/download';
+
+Future<Uri> downloadPrebuiltBinary({
+  required BuildInput input,
+  required String configuration,
+}) async {
+  String readFile(String packageRelativePath) {
+    final fileUri = input.packageRoot.resolve(packageRelativePath);
+    return File.fromUri(fileUri).readAsStringSync();
+  }
+
+  final hash = readFile('skia_dart_hash').trim();
+
+  final hashes =
+      jsonDecode(readFile('prebuilt_hashes.json')) as Map<String, dynamic>;
+
+  final expectedSha256 = hashes[configuration] as String?;
+  if (expectedSha256 == null) {
+    throw BuildError(
+      message: 'No prebuilt hash found for configuration: $configuration',
+    );
+  }
+
+  final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
+  final downloadFileName = '${configuration}_$dylibName';
+  final downloadUrl = Uri.parse(
+    '$_releaseBaseUrl/skia_dart_$hash/$downloadFileName',
+  );
+
+  final cacheDir = Directory.fromUri(
+    input.outputDirectoryShared.resolve('prebuilt_cache/$hash/'),
+  );
+  await cacheDir.create(recursive: true);
+
+  final cachedFile = File.fromUri(cacheDir.uri.resolve(dylibName));
+
+  if (cachedFile.existsSync()) {
+    return cachedFile.uri;
+  }
+
+  final tmpFile = File.fromUri(cacheDir.uri.resolve('$dylibName.tmp'));
+
+  final client = HttpClient();
+  try {
+    final request = await client.getUrl(downloadUrl);
+    final response = await request.close();
+
+    if (response.statusCode != 200) {
+      throw BuildError(
+        message:
+            'Failed to download prebuilt binary from $downloadUrl: ${response.statusCode}',
+      );
+    }
+
+    final digestSink = AccumulatorSink<Digest>();
+    final hashSink = sha256.startChunkedConversion(digestSink);
+    final fileSink = tmpFile.openWrite();
+
+    await for (final chunk in response) {
+      hashSink.add(chunk);
+      fileSink.add(chunk);
+    }
+
+    hashSink.close();
+    await fileSink.flush();
+    await fileSink.close();
+
+    final downloadedHash = digestSink.events.single.toString();
+    if (downloadedHash != expectedSha256) {
+      await tmpFile.delete();
+      throw BuildError(
+        message:
+            'SHA256 hash mismatch for $dylibName. Expected: $expectedSha256, got: $downloadedHash',
+      );
+    }
+
+    await tmpFile.rename(cachedFile.path);
+  } finally {
+    client.close();
+  }
+
+  return cachedFile.uri;
+}
 
 String getConfiguration(BuildInput input) {
   final code = input.config.code;
@@ -73,9 +160,18 @@ void main(List<String> args) async {
         ),
       );
     } else {
-      // TODO(knopp): Use precompiled binaries.
-      throw BuildError(
-        message: 'Expected output directory does not exist: $outDir',
+      final dylib = await downloadPrebuiltBinary(
+        input: input,
+        configuration: configuration,
+      );
+
+      output.assets.code.add(
+        CodeAsset(
+          package: input.packageName,
+          name: 'skia_dart',
+          linkMode: DynamicLoadingBundled(),
+          file: dylib,
+        ),
       );
     }
   });
