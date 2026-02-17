@@ -15,7 +15,7 @@ jobs:
       should_build: ${{ steps.check-release.outputs.should_build }}
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           submodules: recursive
 
@@ -108,7 +108,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           submodules: recursive
 
@@ -189,7 +189,7 @@ jobs:
         run: ninja skia_dart
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: ${{ matrix.config }}
           path: out/${{ matrix.config }}/${{ matrix.lib_name }}
@@ -204,19 +204,19 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/create-github-app-token@v1
+      - uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
         id: app-token
         with:
           app-id: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_ID }}
           private-key: ${{ secrets.SKIA_DART_CI_BYPASS_BOT_APP_PRIVATE_KEY }}
 
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           token: ${{ steps.app-token.outputs.token }}
 
       - name: Download all artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@fa0a91b85d4f404e444e00e005971372dc801d16 # v4.1.8
         with:
           path: artifacts
 
@@ -251,7 +251,7 @@ jobs:
           ls -la release_assets/
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@a06a81a03ee405af7f2048a818ed3f03bbf83c7b # v2.5.0
         with:
           tag_name: skia_dart_${{ needs.generate-matrix.outputs.skia_dart_hash }}
           name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash_short }}
