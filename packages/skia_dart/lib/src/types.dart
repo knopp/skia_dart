@@ -221,10 +221,32 @@ enum SkColorType {
   }
 }
 
+/// Describes how to interpret the alpha component of a pixel.
+///
+/// A pixel may be opaque, or alpha, describing multiple levels of
+/// transparency.
+///
+/// In simple blending, alpha weights the draw color and destination color to
+/// create a new color:
+/// `new color = draw color * alpha + destination color * (1 - alpha)`.
+///
+/// In practice alpha is encoded in two or more bits, where 1.0 equals all bits
+/// set.
+///
+/// RGB may have alpha included in each component value; the stored value is
+/// the original RGB multiplied by alpha. Premultiplied color components
+/// improve performance.
 enum SkAlphaType {
+  /// Alpha type is unknown or uninitialized.
   unknown(sk_alphatype_t.UNKNOWN_SK_ALPHATYPE),
+
+  /// Pixel is fully opaque.
   opaque(sk_alphatype_t.OPAQUE_SK_ALPHATYPE),
+
+  /// Pixel color components are premultiplied by alpha.
   premul(sk_alphatype_t.PREMUL_SK_ALPHATYPE),
+
+  /// Pixel color components are independent of alpha (unpremultiplied).
   unpremul(sk_alphatype_t.UNPREMUL_SK_ALPHATYPE),
   ;
 
