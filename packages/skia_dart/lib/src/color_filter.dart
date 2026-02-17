@@ -114,26 +114,14 @@ class SkColorFilter with _NativeMixin<sk_colorfilter_t> {
     assert(tableG.length == 256);
     assert(tableB.length == 256);
 
-    Pointer<Uint8> allocTable(Uint8List table) {
-      final ptr = ffi.calloc<Uint8>(256);
-      ptr.asTypedList(256).setAll(0, table);
-      return ptr;
-    }
-
-    final ptrA = allocTable(tableA);
-    final ptrR = allocTable(tableR);
-    final ptrG = allocTable(tableG);
-    final ptrB = allocTable(tableB);
-    try {
-      return SkColorFilter._(
-        sk_colorfilter_new_table_argb(ptrA, ptrR, ptrG, ptrB),
-      );
-    } finally {
-      ffi.calloc.free(ptrA);
-      ffi.calloc.free(ptrR);
-      ffi.calloc.free(ptrG);
-      ffi.calloc.free(ptrB);
-    }
+    return SkColorFilter._(
+      sk_colorfilter_new_table_argb(
+        tableA.address,
+        tableR.address,
+        tableG.address,
+        tableB.address,
+      ),
+    );
   }
 
   @override
