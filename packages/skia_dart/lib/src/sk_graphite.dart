@@ -100,13 +100,13 @@ class GraphiteRecorder with _NativeMixin<skgpu_graphite_recorder_t> {
   }
 
   SkSurface? wrapBackendTexture(
-    GraphiteBackendTexture backendTexture,
-    SkColorType colorType,
+    GraphiteBackendTexture backendTexture, {
+    required SkColorType colorType,
     SkColorSpace? colorSpace,
     SkSurfaceProps? props,
-    String label,
-  ) {
-    final labelPtr = label.toNativeUtf8();
+    String? label,
+  }) {
+    final labelPtr = label?.toNativeUtf8() ?? nullptr;
     final ptr = skgpu_graphite_surface_wrap_backend_texture(
       _ptr,
       backendTexture._ptr,
@@ -115,7 +115,9 @@ class GraphiteRecorder with _NativeMixin<skgpu_graphite_recorder_t> {
       props?._ptr ?? nullptr,
       labelPtr.cast(),
     );
-    ffi.malloc.free(labelPtr);
+    if (labelPtr != nullptr) {
+      ffi.malloc.free(labelPtr);
+    }
     if (ptr == nullptr) {
       return null;
     }
