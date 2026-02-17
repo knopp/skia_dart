@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       - name: Install dependencies
         working-directory: packages/skia_dart
@@ -53,10 +55,6 @@ jobs:
             echo "Release $TAG does not exist, proceeding with build"
             echo "release_exists=false" >> $GITHUB_OUTPUT
           fi
-
-      - name: Checkout submodules
-        if: steps.check-release.outputs.release_exists == 'false'
-        run: git submodule update --init --recursive
 
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux' && steps.check-release.outputs.release_exists == 'false'
