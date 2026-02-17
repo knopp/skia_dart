@@ -39,6 +39,7 @@ part 'src/point.dart';
 part 'src/rect.dart';
 part 'src/region.dart';
 part 'src/rrect.dart';
+part 'src/rsx_form.dart';
 part 'src/shader.dart';
 part 'src/sk_graphite.dart';
 part 'src/stream.dart';

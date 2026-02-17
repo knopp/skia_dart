@@ -1,20 +1,5 @@
 part of '../skia_dart.dart';
 
-class SkRSXForm {
-  SkRSXForm(this.scos, this.ssin, this.tx, this.ty);
-
-  SkRSXForm.identity() : scos = 1.0, ssin = 0.0, tx = 0.0, ty = 0.0;
-
-  bool rectStaysRect() {
-    return ssin == 0.0 || scos == 0.0;
-  }
-
-  final double scos;
-  final double ssin;
-  final double tx;
-  final double ty;
-}
-
 /// Describes how pixel bits encode color.
 ///
 /// A pixel may be an alpha mask, a grayscale, RGB, or ARGB.
