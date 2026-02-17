@@ -22,11 +22,44 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
+
+      - name: Install dependencies
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart pub get
+
+      - name: Check skia_dart hash
+        working-directory: packages/skia_dart
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
+
+      - name: Read skia_dart hash
+        id: read-hash
+        shell: bash
+        run: |
+          HASH=$(cat packages/skia_dart/skia_dart_hash)
+          echo "hash=$HASH" >> $GITHUB_OUTPUT
+
+      - name: Check if release already exists
+        id: check-release
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          HASH="${{ steps.read-hash.outputs.hash }}"
+          TAG="skia_dart_${HASH}"
+          if gh release view "$TAG" --repo ${{ github.repository }} > /dev/null 2>&1; then
+            echo "Release $TAG already exists, skipping build"
+            echo "release_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "Release $TAG does not exist, proceeding with build"
+            echo "release_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Checkout submodules
+        if: steps.check-release.outputs.release_exists == 'false'
+        run: git submodule update --init --recursive
 
       - name: Install system dependencies (Linux)
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && steps.check-release.outputs.release_exists == 'false'
         run: sudo apt-get update && sudo apt-get install -y libfontconfig1-dev
 
       - name: Install EGL + Mesa (software) (Linux)
@@ -51,34 +84,30 @@ jobs:
           echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
 
       - name: Select clang as default compiler (Linux)
-        if: runner.os == 'Linux'
+        if: runner.os == 'Linux' && steps.check-release.outputs.release_exists == 'false'
         run: |
           sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
           sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
           sudo update-alternatives --set cc /usr/bin/clang
           sudo update-alternatives --set c++ /usr/bin/clang++
 
-      - name: Install dependencies
-        working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart pub get
-
-      - name: Check skia_dart hash
-        working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart tool/build_tool.dart check-skia-hash
-
       - name: Fetch Skia dependencies
+        if: steps.check-release.outputs.release_exists == 'false'
         working-directory: skia
         run: python3 tools/git-sync-deps
 
       - name: Generate GN files
+        if: steps.check-release.outputs.release_exists == 'false'
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }}
 
       - name: Print args.gn
+        if: steps.check-release.outputs.release_exists == 'false'
         working-directory: out/${{ matrix.config }}
         run: cat args.gn
 
       - name: Build Skia wrapper
+        if: steps.check-release.outputs.release_exists == 'false'
         working-directory: out/${{ matrix.config }}
         run: ninja skia_dart
 

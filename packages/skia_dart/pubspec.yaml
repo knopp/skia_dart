@@ -11,6 +11,7 @@ dependencies:
   path: ^1.9.0
   ffi: ^2.1.5
   vector_math: ^2.2.0
+  convert: ^3.1.2
   crypto: ^3.0.6
   hooks: ^1.0.0
   code_assets: ^1.0.0
