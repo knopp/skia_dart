@@ -23,7 +23,7 @@ SK_C_API void sk_pixmap_reset(sk_pixmap_t* cpixmap);
 SK_C_API void sk_pixmap_reset_with_params(sk_pixmap_t* cpixmap, const sk_imageinfo_t* cinfo, const void* addr, size_t rowBytes);
 SK_C_API void sk_pixmap_set_colorspace(sk_pixmap_t* cpixmap, sk_colorspace_t* colorspace);
 SK_C_API bool sk_pixmap_extract_subset(const sk_pixmap_t* cpixmap, sk_pixmap_t* result, const sk_irect_t* subset);
-SK_C_API void sk_pixmap_get_info(const sk_pixmap_t* cpixmap, sk_imageinfo_t* cinfo);
+SK_C_API sk_imageinfo_t* sk_pixmap_get_info(const sk_pixmap_t* cpixmap);
 SK_C_API size_t sk_pixmap_get_row_bytes(const sk_pixmap_t* cpixmap);
 SK_C_API sk_colorspace_t* sk_pixmap_get_colorspace(const sk_pixmap_t* cpixmap);
 SK_C_API bool sk_pixmap_compute_is_opaque(const sk_pixmap_t* cpixmap);

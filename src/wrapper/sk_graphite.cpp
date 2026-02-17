@@ -168,7 +168,7 @@ SK_C_API void skgpu_graphite_backend_texture_delete(skgpu_graphite_backend_textu
 // Surface
 
 sk_surface_t* skgpu_graphite_surface_make_render_target(skgpu_graphite_recorder_t* recorder, const sk_imageinfo_t* imageInfo, bool mipmapped, const sk_surfaceprops_t* props) {
-  return SK_ONLY_GRAPHITE(ToSurface(SkSurfaces::RenderTarget(AsGraphiteRecorder(recorder), AsImageInfo(imageInfo), mipmapped ? skgpu::Mipmapped::kYes : skgpu::Mipmapped::kNo, AsSurfaceProps(props)).release()), nullptr);
+  return SK_ONLY_GRAPHITE(ToSurface(SkSurfaces::RenderTarget(AsGraphiteRecorder(recorder), *AsImageInfo(imageInfo), mipmapped ? skgpu::Mipmapped::kYes : skgpu::Mipmapped::kNo, AsSurfaceProps(props)).release()), nullptr);
 }
 
 sk_surface_t* skgpu_graphite_surface_wrap_backend_texture(skgpu_graphite_recorder_t* recorder, const skgpu_graphite_backend_texture_t* backendTexture, sk_colortype_t color_type, sk_colorspace_t* color_space, const sk_surfaceprops_t* props, const char* label) {
@@ -214,8 +214,8 @@ void skgpu_graphite_async_rescale_and_read_pixels_from_surface(skgpu_graphite_co
   auto rescale_context = new RescaleContext;
   rescale_context->callback = callback;
   rescale_context->callback_context = callback_context;
-  rescale_context->dstInfo = AsImageInfo(dst_info);
-  AsGraphiteContext(context)->asyncRescaleAndReadPixels(AsSurface(surface), AsImageInfo(dst_info), *AsIRect(src_rect), AsImageRescaleGamma(rescale_gamme), AsImageRescaleMode(rescale_mode), read_pixels_callback, rescale_context);
+  rescale_context->dstInfo = *AsImageInfo(dst_info);
+  AsGraphiteContext(context)->asyncRescaleAndReadPixels(AsSurface(surface), *AsImageInfo(dst_info), *AsIRect(src_rect), AsImageRescaleGamma(rescale_gamme), AsImageRescaleMode(rescale_mode), read_pixels_callback, rescale_context);
 #endif
 }
 
@@ -224,8 +224,8 @@ void skgpu_graphite_async_rescale_and_read_pixels_from_image(skgpu_graphite_cont
   auto rescale_context = new RescaleContext;
   rescale_context->callback = callback;
   rescale_context->callback_context = callback_context;
-  rescale_context->dstInfo = AsImageInfo(dst_info);
-  AsGraphiteContext(context)->asyncRescaleAndReadPixels(AsImage(image), AsImageInfo(dst_info), *AsIRect(src_rect), AsImageRescaleGamma(rescale_gamme), AsImageRescaleMode(rescale_mode), read_pixels_callback, rescale_context);
+  rescale_context->dstInfo = *AsImageInfo(dst_info);
+  AsGraphiteContext(context)->asyncRescaleAndReadPixels(AsImage(image), *AsImageInfo(dst_info), *AsIRect(src_rect), AsImageRescaleGamma(rescale_gamme), AsImageRescaleMode(rescale_mode), read_pixels_callback, rescale_context);
 #endif
 }
 

@@ -9,9 +9,9 @@
 
 #include "wrapper/include/sk_codec.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/codec/SkCodec.h"
 #include "include/core/SkStream.h"
+#include "wrapper/sk_types_priv.h"
 
 size_t sk_codec_min_buffered_bytes_needed(void) {
   return SkCodec::MinBufferedBytesNeeded();
@@ -30,8 +30,8 @@ void sk_codec_destroy(sk_codec_t* codec) {
   delete AsCodec(codec);
 }
 
-void sk_codec_get_info(sk_codec_t* codec, sk_imageinfo_t* info) {
-  *info = ToImageInfo(AsCodec(codec)->getInfo());
+SK_C_API sk_imageinfo_t* sk_codec_get_info(sk_codec_t* codec) {
+  return ToImageInfo(new SkImageInfo(AsCodec(codec)->getInfo()));
 }
 
 sk_encodedorigin_t sk_codec_get_origin(sk_codec_t* codec) {
@@ -51,11 +51,11 @@ sk_encoded_image_format_t sk_codec_get_encoded_format(sk_codec_t* codec) {
 }
 
 sk_codec_result_t sk_codec_get_pixels(sk_codec_t* codec, const sk_imageinfo_t* cinfo, void* pixels, size_t rowBytes, const sk_codec_options_t* coptions) {
-  return (sk_codec_result_t)AsCodec(codec)->getPixels(AsImageInfo(cinfo), pixels, rowBytes, AsCodecOptions(coptions));
+  return (sk_codec_result_t)AsCodec(codec)->getPixels(*AsImageInfo(cinfo), pixels, rowBytes, AsCodecOptions(coptions));
 }
 
 sk_codec_result_t sk_codec_start_incremental_decode(sk_codec_t* codec, const sk_imageinfo_t* cinfo, void* pixels, size_t rowBytes, const sk_codec_options_t* coptions) {
-  return (sk_codec_result_t)AsCodec(codec)->startIncrementalDecode(AsImageInfo(cinfo), pixels, rowBytes, AsCodecOptions(coptions));
+  return (sk_codec_result_t)AsCodec(codec)->startIncrementalDecode(*AsImageInfo(cinfo), pixels, rowBytes, AsCodecOptions(coptions));
 }
 
 sk_codec_result_t sk_codec_incremental_decode(sk_codec_t* codec, int* rowsDecoded) {
@@ -63,7 +63,7 @@ sk_codec_result_t sk_codec_incremental_decode(sk_codec_t* codec, int* rowsDecode
 }
 
 sk_codec_result_t sk_codec_start_scanline_decode(sk_codec_t* codec, const sk_imageinfo_t* cinfo, const sk_codec_options_t* coptions) {
-  return (sk_codec_result_t)AsCodec(codec)->startScanlineDecode(AsImageInfo(cinfo), AsCodecOptions(coptions));
+  return (sk_codec_result_t)AsCodec(codec)->startScanlineDecode(*AsImageInfo(cinfo), AsCodecOptions(coptions));
 }
 
 int sk_codec_get_scanlines(sk_codec_t* codec, void* dst, int countLines, size_t rowBytes) {

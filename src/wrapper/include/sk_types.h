@@ -199,6 +199,8 @@ typedef struct sk_data_t sk_data_t;
     drawing.
 */
 typedef struct sk_drawable_t sk_drawable_t;
+typedef struct sk_imageinfo_t sk_imageinfo_t;
+typedef struct sk_colorinfo_t sk_colorinfo_t;
 /**
     A sk_image_t is an abstraction for drawing a rectagle of pixels.
     The content of the image is always immutable, though the actual
@@ -409,11 +411,18 @@ typedef struct sk_wstream_dynamicmemorystream_t sk_wstream_dynamicmemorystream_t
 */
 typedef struct sk_document_t sk_document_t;
 
-typedef enum { POINTS_SK_POINT_MODE, LINES_SK_POINT_MODE, POLYGON_SK_POINT_MODE } sk_point_mode_t;
+typedef enum { POINTS_SK_POINT_MODE,
+               LINES_SK_POINT_MODE,
+               POLYGON_SK_POINT_MODE } sk_point_mode_t;
 
-typedef enum { LEFT_SK_TEXT_ALIGN, CENTER_SK_TEXT_ALIGN, RIGHT_SK_TEXT_ALIGN } sk_text_align_t;
+typedef enum { LEFT_SK_TEXT_ALIGN,
+               CENTER_SK_TEXT_ALIGN,
+               RIGHT_SK_TEXT_ALIGN } sk_text_align_t;
 
-typedef enum { UTF8_SK_TEXT_ENCODING, UTF16_SK_TEXT_ENCODING, UTF32_SK_TEXT_ENCODING, GLYPH_ID_SK_TEXT_ENCODING } sk_text_encoding_t;
+typedef enum { UTF8_SK_TEXT_ENCODING,
+               UTF16_SK_TEXT_ENCODING,
+               UTF32_SK_TEXT_ENCODING,
+               GLYPH_ID_SK_TEXT_ENCODING } sk_text_encoding_t;
 
 typedef enum {
   WINDING_SK_PATH_FILLTYPE,
@@ -516,7 +525,13 @@ typedef enum {
 } sk_codec_scanline_order_t;
 
 // The verbs that can be foudn on a path
-typedef enum { MOVE_SK_PATH_VERB, LINE_SK_PATH_VERB, QUAD_SK_PATH_VERB, CONIC_SK_PATH_VERB, CUBIC_SK_PATH_VERB, CLOSE_SK_PATH_VERB, DONE_SK_PATH_VERB } sk_path_verb_t;
+typedef enum { MOVE_SK_PATH_VERB,
+               LINE_SK_PATH_VERB,
+               QUAD_SK_PATH_VERB,
+               CONIC_SK_PATH_VERB,
+               CUBIC_SK_PATH_VERB,
+               CLOSE_SK_PATH_VERB,
+               DONE_SK_PATH_VERB } sk_path_verb_t;
 
 typedef struct sk_path_iterator_t sk_path_iterator_t;
 typedef struct sk_path_rawiterator_t sk_path_rawiterator_t;
@@ -546,9 +561,13 @@ typedef enum {
 
 typedef struct sk_path_effect_t sk_path_effect_t;
 
-typedef enum { BUTT_SK_STROKE_CAP, ROUND_SK_STROKE_CAP, SQUARE_SK_STROKE_CAP } sk_stroke_cap_t;
+typedef enum { BUTT_SK_STROKE_CAP,
+               ROUND_SK_STROKE_CAP,
+               SQUARE_SK_STROKE_CAP } sk_stroke_cap_t;
 
-typedef enum { MITER_SK_STROKE_JOIN, ROUND_SK_STROKE_JOIN, BEVEL_SK_STROKE_JOIN } sk_stroke_join_t;
+typedef enum { MITER_SK_STROKE_JOIN,
+               ROUND_SK_STROKE_JOIN,
+               BEVEL_SK_STROKE_JOIN } sk_stroke_join_t;
 
 typedef enum {
   CLAMP_SK_SHADER_TILEMODE,
@@ -814,14 +833,6 @@ typedef struct {
   bool fPDFA;
   int fEncodingQuality;
 } sk_document_pdf_metadata_t;
-
-typedef struct {
-  sk_colorspace_t* colorspace;
-  int32_t width;
-  int32_t height;
-  sk_colortype_t colorType;
-  sk_alphatype_t alphaType;
-} sk_imageinfo_t;
 
 typedef enum {
   KEEP_SK_CODEC_ANIMATION_DISPOSAL_METHOD = 1,

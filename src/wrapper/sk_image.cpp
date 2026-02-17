@@ -9,10 +9,10 @@
 
 #include "wrapper/include/sk_image.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkImage.h"
 #include "include/core/SkPicture.h"
 #include "include/gpu/ganesh/SkImageGanesh.h"
+#include "wrapper/sk_types_priv.h"
 
 void sk_image_ref(const sk_image_t* cimage) {
   AsImage(cimage)->ref();
@@ -22,13 +22,12 @@ void sk_image_unref(const sk_image_t* cimage) {
   SkSafeUnref(AsImage(cimage));
 }
 
-void sk_image_get_info(const sk_image_t* image, sk_imageinfo_t* info) {
-  SkImageInfo imageInfo = AsImage(image)->imageInfo();
-  *info = ToImageInfo(imageInfo);
+sk_imageinfo_t* sk_image_get_info(const sk_image_t* image) {
+  return ToImageInfo(new SkImageInfo(AsImage(image)->imageInfo()));
 }
 
 sk_image_t* sk_image_new_raster_copy(const sk_imageinfo_t* cinfo, const void* pixels, size_t rowBytes) {
-  return ToImage(SkImages::RasterFromPixmapCopy(SkPixmap(AsImageInfo(cinfo), pixels, rowBytes)).release());
+  return ToImage(SkImages::RasterFromPixmapCopy(SkPixmap(*AsImageInfo(cinfo), pixels, rowBytes)).release());
 }
 
 sk_image_t* sk_image_new_raster_copy_with_pixmap(const sk_pixmap_t* pixmap) {
@@ -36,7 +35,7 @@ sk_image_t* sk_image_new_raster_copy_with_pixmap(const sk_pixmap_t* pixmap) {
 }
 
 sk_image_t* sk_image_new_raster_data(const sk_imageinfo_t* cinfo, sk_data_t* pixels, size_t rowBytes) {
-  return ToImage(SkImages::RasterFromData(AsImageInfo(cinfo), sk_ref_sp(AsData(pixels)), rowBytes).release());
+  return ToImage(SkImages::RasterFromData(*AsImageInfo(cinfo), sk_ref_sp(AsData(pixels)), rowBytes).release());
 }
 
 sk_image_t* sk_image_new_raster(const sk_pixmap_t* pixmap, sk_image_raster_release_proc releaseProc, void* context) {
@@ -128,7 +127,7 @@ bool sk_image_is_valid(const sk_image_t* image, gr_recording_context_t* context)
 }
 
 bool sk_image_read_pixels(const sk_image_t* image, const sk_imageinfo_t* dstInfo, void* dstPixels, size_t dstRowBytes, int srcX, int srcY, sk_image_caching_hint_t cachingHint) {
-  return AsImage(image)->readPixels(AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY, (SkImage::CachingHint)cachingHint);
+  return AsImage(image)->readPixels(*AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY, (SkImage::CachingHint)cachingHint);
 }
 
 bool sk_image_read_pixels_into_pixmap(const sk_image_t* image, const sk_pixmap_t* dst, int srcX, int srcY, sk_image_caching_hint_t cachingHint) {

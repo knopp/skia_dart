@@ -37,11 +37,11 @@ sk_surface_t* sk_surface_new_null(int width, int height) {
 }
 
 sk_surface_t* sk_surface_new_raster(const sk_imageinfo_t* cinfo, size_t rowBytes, const sk_surfaceprops_t* props) {
-  return ToSurface(SkSurfaces::Raster(AsImageInfo(cinfo), rowBytes, AsSurfaceProps(props)).release());
+  return ToSurface(SkSurfaces::Raster(*AsImageInfo(cinfo), rowBytes, AsSurfaceProps(props)).release());
 }
 
 sk_surface_t* sk_surface_new_raster_direct(const sk_imageinfo_t* cinfo, void* pixels, size_t rowBytes, const sk_surface_raster_release_proc releaseProc, void* context, const sk_surfaceprops_t* props) {
-  return ToSurface(SkSurfaces::WrapPixels(AsImageInfo(cinfo), pixels, rowBytes, releaseProc, context, AsSurfaceProps(props)).release());
+  return ToSurface(SkSurfaces::WrapPixels(*AsImageInfo(cinfo), pixels, rowBytes, releaseProc, context, AsSurfaceProps(props)).release());
 }
 
 void sk_surface_unref(sk_surface_t* csurf) {
@@ -87,7 +87,7 @@ bool sk_surface_peek_pixels(sk_surface_t* surface, sk_pixmap_t* pixmap) {
 }
 
 bool sk_surface_read_pixels(sk_surface_t* surface, sk_imageinfo_t* dstInfo, void* dstPixels, size_t dstRowBytes, int srcX, int srcY) {
-  return AsSurface(surface)->readPixels(AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY);
+  return AsSurface(surface)->readPixels(*AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY);
 }
 
 const sk_surfaceprops_t* sk_surface_get_props(sk_surface_t* surface) {

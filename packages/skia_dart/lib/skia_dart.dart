@@ -26,6 +26,7 @@ part 'src/font.dart';
 part 'src/gr_backend.dart';
 part 'src/gr_context.dart';
 part 'src/image_filter.dart';
+part 'src/image_info.dart';
 part 'src/image.dart';
 part 'src/mask_filter.dart';
 part 'src/metal.dart';

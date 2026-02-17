@@ -30,6 +30,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_graphite.h",
     "wrapper/include/sk_image.h",
     "wrapper/include/sk_imagefilter.h",
+    "wrapper/include/sk_imageinfo.h",
     "wrapper/include/sk_linker.h",
     "wrapper/include/sk_maskfilter.h",
     "wrapper/include/sk_matrix.h",
@@ -71,6 +72,7 @@ source_set("skia_c_wrapper") {
     "wrapper/sk_graphite.cpp",
     "wrapper/sk_image.cpp",
     "wrapper/sk_imagefilter.cpp",
+    "wrapper/sk_imageinfo.cpp",
     "wrapper/sk_linker.cpp",
     "wrapper/sk_maskfilter.cpp",
     "wrapper/sk_matrix.cpp",
@@ -117,6 +119,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_graphite.h",
     "wrapper/include/sk_image.h",
     "wrapper/include/sk_imagefilter.h",
+    "wrapper/include/sk_imageinfo.h",
     "wrapper/include/sk_linker.h",
     "wrapper/include/sk_maskfilter.h",
     "wrapper/include/sk_matrix.h",
@@ -188,6 +191,6 @@ shared_library("skia_dart") {
     ]
   }
   if (is_linux) {
-    libs = ["EGL"]
+    libs = [ "EGL" ]
   }
 }
