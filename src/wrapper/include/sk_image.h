@@ -16,7 +16,7 @@ SK_C_PLUS_PLUS_BEGIN_GUARD
 
 SK_C_API void sk_image_ref(const sk_image_t* cimage);
 SK_C_API void sk_image_unref(const sk_image_t* cimage);
-SK_C_API void sk_image_get_info(const sk_image_t* image, sk_imageinfo_t* info);
+SK_C_API sk_imageinfo_t* sk_image_get_info(const sk_image_t* image);
 SK_C_API sk_image_t* sk_image_new_raster_copy(const sk_imageinfo_t* cinfo, const void* pixels, size_t rowBytes);
 SK_C_API sk_image_t* sk_image_new_raster_copy_with_pixmap(const sk_pixmap_t* pixmap);
 SK_C_API sk_image_t* sk_image_new_raster_data(const sk_imageinfo_t* cinfo, sk_data_t* pixels, size_t rowBytes);

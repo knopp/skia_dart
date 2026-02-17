@@ -9,13 +9,13 @@
 
 #include "wrapper/include/sk_canvas.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkAnnotation.h"
 #include "include/core/SkCanvas.h"
 #include "include/core/SkOverdrawCanvas.h"
 #include "include/core/SkSurface.h"
 #include "include/utils/SkNWayCanvas.h"
 #include "include/utils/SkNoDrawCanvas.h"
+#include "wrapper/sk_types_priv.h"
 
 void sk_canvas_destroy(sk_canvas_t *ccanvas) {
   delete AsCanvas(ccanvas);
@@ -214,7 +214,7 @@ sk_canvas_t *sk_canvas_new_from_bitmap(const sk_bitmap_t *bitmap) {
 }
 
 sk_canvas_t *sk_canvas_new_from_raster(const sk_imageinfo_t *cinfo, void *pixels, size_t rowBytes, const sk_surfaceprops_t *props) {
-  return ToCanvas(SkCanvas::MakeRasterDirect(AsImageInfo(cinfo), pixels, rowBytes, AsSurfaceProps(props)).release());
+  return ToCanvas(SkCanvas::MakeRasterDirect(*AsImageInfo(cinfo), pixels, rowBytes, AsSurfaceProps(props)).release());
 }
 
 void sk_canvas_draw_annotation(sk_canvas_t *t, const sk_rect_t *rect, const char *key, sk_data_t *value) {

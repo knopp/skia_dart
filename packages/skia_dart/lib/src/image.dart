@@ -27,7 +27,7 @@ class SkImage with _NativeMixin<sk_image_t> {
     int rowBytes,
   ) {
     final ptr = sk_image_new_raster_copy(
-      info.toNativePooled(0),
+      info._ptr,
       pixels,
       rowBytes,
     );
@@ -43,7 +43,7 @@ class SkImage with _NativeMixin<sk_image_t> {
 
   static SkImage? rasterData(SkImageInfo info, SkData pixels, int rowBytes) {
     final ptr = sk_image_new_raster_data(
-      info.toNativePooled(0),
+      info._ptr,
       pixels._ptr,
       rowBytes,
     );
@@ -88,9 +88,8 @@ class SkImage with _NativeMixin<sk_image_t> {
   // Properties
 
   SkImageInfo get imageInfo {
-    final infoPtr = _SkImageInfo.pool[0];
-    sk_image_get_info(_ptr, infoPtr);
-    return _SkImageInfo.fromNative(infoPtr);
+    final info = sk_image_get_info(_ptr);
+    return SkImageInfo._(info);
   }
 
   int get width => sk_image_get_width(_ptr);
@@ -179,7 +178,7 @@ class SkImage with _NativeMixin<sk_image_t> {
   }) {
     return sk_image_read_pixels(
       _ptr,
-      dstInfo.toNativePooled(0),
+      dstInfo._ptr,
       dstPixels,
       dstRowBytes,
       srcX,

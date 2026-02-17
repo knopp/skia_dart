@@ -71,7 +71,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
     SkSurfaceProps? props,
   }) {
     final ptr = sk_surface_new_raster(
-      info.toNativePooled(0),
+      info._ptr,
       rowBytes,
       props?._ptr ?? nullptr,
     );
@@ -139,7 +139,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
     final ptr = sk_surface_new_render_target(
       context._ptr,
       budgeted,
-      info.toNativePooled(0),
+      info._ptr,
       sampleCount,
       origin._value,
       props?._ptr ?? nullptr,
@@ -200,7 +200,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
   }) {
     return sk_surface_read_pixels(
       _ptr,
-      dstInfo.toNativePooled(0),
+      dstInfo._ptr,
       dstPixels,
       dstRowBytes,
       srcX,

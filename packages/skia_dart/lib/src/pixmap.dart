@@ -6,7 +6,7 @@ class SkPixmap with _NativeMixin<sk_pixmap_t> {
   SkPixmap.withParams(SkImageInfo info, Pointer<Void> pixels, int rowBytes)
     : this._(
         sk_pixmap_new_with_params(
-          info.toNativePooled(0),
+          info._ptr,
           pixels,
           rowBytes,
         ),
@@ -24,7 +24,7 @@ class SkPixmap with _NativeMixin<sk_pixmap_t> {
   void reset() => sk_pixmap_reset(_ptr);
 
   void resetWithParams(SkImageInfo info, Pointer<Void> pixels, int rowBytes) {
-    sk_pixmap_reset_with_params(_ptr, info.toNativePooled(0), pixels, rowBytes);
+    sk_pixmap_reset_with_params(_ptr, info._ptr, pixels, rowBytes);
   }
 
   set colorspace(SkColorSpace? colorspace) {
@@ -40,9 +40,8 @@ class SkPixmap with _NativeMixin<sk_pixmap_t> {
   }
 
   SkImageInfo get info {
-    final infoPtr = _SkImageInfo.pool[0];
-    sk_pixmap_get_info(_ptr, infoPtr);
-    return _SkImageInfo.fromNative(infoPtr);
+    final info = sk_pixmap_get_info(_ptr);
+    return SkImageInfo._(info);
   }
 
   int get rowBytes => sk_pixmap_get_row_bytes(_ptr);
@@ -85,7 +84,7 @@ class SkPixmap with _NativeMixin<sk_pixmap_t> {
   }) {
     return sk_pixmap_read_pixels(
       _ptr,
-      dstInfo.toNativePooled(0),
+      dstInfo._ptr,
       dstPixels,
       dstRowBytes,
       srcX,

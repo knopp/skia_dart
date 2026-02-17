@@ -217,7 +217,7 @@ void main() {
             final paint = SkPaint()
               ..color = SkColor(0xFF0000FF)
               ..style = SkPaintStyle.fill;
-            canvas.drawRect(SkRect(10, 10, 90, 90), paint);
+            canvas.drawRect(SkRect.fromLTRB(10, 10, 90, 90), paint);
 
             final recording = recorder.snap();
             expect(recording, isNotNull);

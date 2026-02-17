@@ -9,13 +9,13 @@
 
 #include "wrapper/include/sk_pixmap.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkPixmap.h"
 #include "include/core/SkSwizzle.h"
 #include "include/core/SkUnPreMultiply.h"
 #include "include/encode/SkJpegEncoder.h"
 #include "include/encode/SkPngEncoder.h"
 #include "include/encode/SkWebpEncoder.h"
+#include "wrapper/sk_types_priv.h"
 
 // SkPixmap
 
@@ -28,7 +28,7 @@ sk_pixmap_t* sk_pixmap_new(void) {
 }
 
 sk_pixmap_t* sk_pixmap_new_with_params(const sk_imageinfo_t* cinfo, const void* addr, size_t rowBytes) {
-  return ToPixmap(new SkPixmap(AsImageInfo(cinfo), addr, rowBytes));
+  return ToPixmap(new SkPixmap(*AsImageInfo(cinfo), addr, rowBytes));
 }
 
 void sk_pixmap_reset(sk_pixmap_t* cpixmap) {
@@ -36,7 +36,7 @@ void sk_pixmap_reset(sk_pixmap_t* cpixmap) {
 }
 
 void sk_pixmap_reset_with_params(sk_pixmap_t* cpixmap, const sk_imageinfo_t* cinfo, const void* addr, size_t rowBytes) {
-  AsPixmap(cpixmap)->reset(AsImageInfo(cinfo), addr, rowBytes);
+  AsPixmap(cpixmap)->reset(*AsImageInfo(cinfo), addr, rowBytes);
 }
 
 void sk_pixmap_set_colorspace(sk_pixmap_t* cpixmap, sk_colorspace_t* colorspace) {
@@ -47,8 +47,8 @@ bool sk_pixmap_extract_subset(const sk_pixmap_t* cpixmap, sk_pixmap_t* result, c
   return AsPixmap(cpixmap)->extractSubset(AsPixmap(result), *AsIRect(subset));
 }
 
-void sk_pixmap_get_info(const sk_pixmap_t* cpixmap, sk_imageinfo_t* cinfo) {
-  *cinfo = ToImageInfo(AsPixmap(cpixmap)->info());
+sk_imageinfo_t* sk_pixmap_get_info(const sk_pixmap_t* cpixmap) {
+  return ToImageInfo(new SkImageInfo(AsPixmap(cpixmap)->info()));
 }
 
 size_t sk_pixmap_get_row_bytes(const sk_pixmap_t* cpixmap) {
@@ -84,7 +84,7 @@ void* sk_pixmap_get_writeable_addr(const sk_pixmap_t* cpixmap, int x, int y) {
 }
 
 bool sk_pixmap_read_pixels(const sk_pixmap_t* cpixmap, const sk_imageinfo_t* dstInfo, void* dstPixels, size_t dstRowBytes, int srcX, int srcY) {
-  return AsPixmap(cpixmap)->readPixels(AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY);
+  return AsPixmap(cpixmap)->readPixels(*AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY);
 }
 
 bool sk_pixmap_scale_pixels(const sk_pixmap_t* cpixmap, const sk_pixmap_t* dst, const sk_sampling_options_t* sampling) {

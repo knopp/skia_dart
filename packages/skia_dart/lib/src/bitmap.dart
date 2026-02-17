@@ -13,9 +13,8 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
   }
 
   SkImageInfo get info {
-    final infoPtr = _SkImageInfo.pool[0];
-    sk_bitmap_get_info(_ptr, infoPtr);
-    return _SkImageInfo.fromNative(infoPtr);
+    final info = sk_bitmap_get_info(_ptr);
+    return SkImageInfo._(info);
   }
 
   ({Pointer<Void> pixels, int length}) getPixels() {
@@ -26,7 +25,7 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
 
   int get rowBytes => sk_bitmap_get_row_bytes(_ptr);
 
-  int get byteCount => sk_bitmap_get_byte_count(_ptr);
+  int computeByteSize() => sk_bitmap_compute_byte_size(_ptr);
 
   int get generationId => sk_bitmap_get_generation_id(_ptr);
 
@@ -82,7 +81,7 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
     pixelsCopy.asTypedList(pixels.length).setAll(0, pixels);
     sk_bitmap_install_pixels(
       _ptr,
-      info.toNativePooled(0),
+      info._ptr,
       pixelsCopy.cast(),
       rowBytes,
       ffi.malloc.nativeFree.cast(),
@@ -94,7 +93,7 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
     rowBytes ??= info.minRowBytes;
     return sk_bitmap_try_alloc_pixels(
       _ptr,
-      info.toNativePooled(0),
+      info._ptr,
       rowBytes,
     );
   }
@@ -102,7 +101,7 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
   bool tryAllocPixelsWithFlags(SkImageInfo info, int flags) {
     return sk_bitmap_try_alloc_pixels_with_flags(
       _ptr,
-      info.toNativePooled(0),
+      info._ptr,
       flags,
     );
   }

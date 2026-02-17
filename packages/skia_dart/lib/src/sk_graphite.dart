@@ -89,7 +89,7 @@ class GraphiteRecorder with _NativeMixin<skgpu_graphite_recorder_t> {
   }) {
     final ptr = skgpu_graphite_surface_make_render_target(
       _ptr,
-      info.toNativePooled(0),
+      info._ptr,
       mipmapped,
       props?._ptr ?? nullptr,
     );
@@ -236,7 +236,7 @@ class GraphiteContext with _NativeMixin<skgpu_graphite_context_t> {
       _ptr,
       srcRect.toNativePooled(0),
       surface._ptr,
-      dstInfo.toNativePooled(0),
+      dstInfo._ptr,
       rescaleGamma._value,
       rescaleMode._value,
       callbackFn,
@@ -262,7 +262,7 @@ class GraphiteContext with _NativeMixin<skgpu_graphite_context_t> {
       _ptr,
       srcRect.toNativePooled(0),
       image._ptr,
-      dstInfo.toNativePooled(0),
+      dstInfo._ptr,
       rescaleGamma._value,
       rescaleMode._value,
       callbackFn,

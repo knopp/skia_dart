@@ -28,7 +28,7 @@ extension _SkPoint on SkPoint {
 extension _SkRect on SkRect {
   static SkRect fromNative(Pointer<sk_rect_t> ptr) {
     final ref = ptr.ref;
-    return SkRect(
+    return SkRect.fromLTRB(
       ref.left,
       ref.top,
       ref.right,
@@ -57,7 +57,7 @@ extension _SkRect on SkRect {
 extension _SkIRect on SkIRect {
   static SkIRect fromNative(Pointer<sk_irect_t> ptr) {
     final ref = ptr.ref;
-    return SkIRect(
+    return SkIRect.fromLTRB(
       ref.left,
       ref.top,
       ref.right,
@@ -323,39 +323,6 @@ extension _SkColorspaceXYZ on SkColorspaceXYZ {
   static final List<Pointer<sk_colorspace_xyz_t>> pool = List.generate(
     10,
     (_) => ffi.calloc<sk_colorspace_xyz_t>(),
-    growable: false,
-  );
-}
-
-extension _SkImageInfo on SkImageInfo {
-  static SkImageInfo fromNative(Pointer<sk_imageinfo_t> ptr) {
-    final ref = ptr.ref;
-    return SkImageInfo(
-      width: ref.width,
-      height: ref.height,
-      colorType: SkColorType._fromNative(ref.colorType),
-      alphaType: SkAlphaType.fromNative(ref.alphaType),
-      colorspace: ref.colorspace == nullptr
-          ? null
-          : SkColorSpace._(ref.colorspace),
-    );
-  }
-
-  Pointer<sk_imageinfo_t> toNativePooled(int index) {
-    assert(index >= 0 && index < pool.length);
-    final ptr = pool[index];
-    final ref = ptr.ref;
-    ref.width = width;
-    ref.height = height;
-    ref.colorTypeAsInt = colorType._value.value;
-    ref.alphaTypeAsInt = alphaType._value.value;
-    ref.colorspace = colorspace?._ptr ?? nullptr;
-    return ptr;
-  }
-
-  static final List<Pointer<sk_imageinfo_t>> pool = List.generate(
-    10,
-    (_) => ffi.calloc<sk_imageinfo_t>(),
     growable: false,
   );
 }

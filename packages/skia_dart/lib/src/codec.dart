@@ -154,7 +154,7 @@ class SkCodecFrameInfo {
         ref.fDisposalMethod,
       ),
       blend: SkCodecAnimationBlend._fromNative(ref.fBlend),
-      frameRect: SkIRect(
+      frameRect: SkIRect.fromLTRB(
         ref.fFrameRect.left,
         ref.fFrameRect.top,
         ref.fFrameRect.right,
@@ -219,9 +219,8 @@ class SkCodec with _NativeMixin<sk_codec_t> {
   }
 
   SkImageInfo getInfo() {
-    final infoPtr = _SkImageInfo.pool[0];
-    sk_codec_get_info(_ptr, infoPtr);
-    return _SkImageInfo.fromNative(infoPtr);
+    final info = sk_codec_get_info(_ptr);
+    return SkImageInfo._(info);
   }
 
   SkEncodedOrigin getOrigin() {
@@ -262,7 +261,7 @@ class SkCodec with _NativeMixin<sk_codec_t> {
       return SkCodecResult._fromNative(
         sk_codec_get_pixels(
           _ptr,
-          info.toNativePooled(0),
+          info._ptr,
           pixels,
           rowBytes,
           optionsPtr,
@@ -284,7 +283,7 @@ class SkCodec with _NativeMixin<sk_codec_t> {
       return SkCodecResult._fromNative(
         sk_codec_start_incremental_decode(
           _ptr,
-          info.toNativePooled(0),
+          info._ptr,
           pixels,
           rowBytes,
           optionsPtr,
@@ -312,7 +311,7 @@ class SkCodec with _NativeMixin<sk_codec_t> {
       return SkCodecResult._fromNative(
         sk_codec_start_scanline_decode(
           _ptr,
-          info.toNativePooled(0),
+          info._ptr,
           optionsPtr,
         ),
       );

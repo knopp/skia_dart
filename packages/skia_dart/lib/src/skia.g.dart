@@ -977,12 +977,11 @@ external void sk_codec_destroy(
   ffi.Pointer<sk_codec_t> codec,
 );
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<sk_imageinfo_t>)
->(isLeaf: true)
-external void sk_codec_get_info(
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_codec_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_codec_get_info(
   ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
 );
 
 @ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
@@ -4435,6 +4434,320 @@ ffi.Pointer<sk_vertices_t> sk_vertices_make_copy(
   indices,
 );
 
+@ffi.Native<ffi.Int Function(ffi.UnsignedInt)>(
+  symbol: 'sk_colotype_bytes_per_pixel',
+  isLeaf: true,
+)
+external int _sk_colotype_bytes_per_pixel(
+  int ct,
+);
+
+int sk_colotype_bytes_per_pixel(
+  sk_colortype_t ct,
+) => _sk_colotype_bytes_per_pixel(
+  ct.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorinfo_t> Function(
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_colorinfo_new', isLeaf: true)
+external ffi.Pointer<sk_colorinfo_t> _sk_colorinfo_new(
+  int ct,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_colorinfo_t> sk_colorinfo_new(
+  sk_colortype_t ct,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_colorinfo_new(
+  ct.value,
+  at.value,
+  cs,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external void sk_colorinfo_delete(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
+  symbol: 'sk_colorinfo_get_colortype',
+  isLeaf: true,
+)
+external int _sk_colorinfo_get_colortype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+sk_colortype_t sk_colorinfo_get_colortype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+) => sk_colortype_t.fromValue(
+  _sk_colorinfo_get_colortype(
+    cinfo,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
+  symbol: 'sk_colorinfo_get_alphatype',
+  isLeaf: true,
+)
+external int _sk_colorinfo_get_alphatype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+sk_alphatype_t sk_colorinfo_get_alphatype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+) => sk_alphatype_t.fromValue(
+  _sk_colorinfo_get_alphatype(
+    cinfo,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorinfo_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_colorinfo_ref_colorspace(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external bool sk_colorinfo_is_opaque(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external bool sk_colorinfo_gamma_close_to_srgb(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>, ffi.Pointer<sk_colorinfo_t>)
+>(isLeaf: true)
+external bool sk_colorinfo_equals(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+  ffi.Pointer<sk_colorinfo_t> other,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external int sk_colorinfo_bytes_per_pixel(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external int sk_colorinfo_shift_per_pixel(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_imageinfo_new', isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new(
+  int width,
+  int height,
+  int ct,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new(
+  int width,
+  int height,
+  sk_colortype_t ct,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_imageinfo_new(
+  width,
+  height,
+  ct.value,
+  at.value,
+  cs,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_imageinfo_new_n32', isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new_n32(
+  int width,
+  int height,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32(
+  int width,
+  int height,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_imageinfo_new_n32(
+  width,
+  height,
+  at.value,
+  cs,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32_premul(
+  int width,
+  int height,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_a8(
+  int width,
+  int height,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_unknown(
+  int width,
+  int height,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_colorinfo_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_color_info(
+  int width,
+  int height,
+  ffi.Pointer<sk_colorinfo_t> color_info,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external void sk_imageinfo_delete(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_get_width(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_get_height(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
+  symbol: 'sk_imageinfo_get_colortype',
+  isLeaf: true,
+)
+external int _sk_imageinfo_get_colortype(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+sk_colortype_t sk_imageinfo_get_colortype(
+  ffi.Pointer<sk_imageinfo_t> info,
+) => sk_colortype_t.fromValue(
+  _sk_imageinfo_get_colortype(
+    info,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
+  symbol: 'sk_imageinfo_get_alphatype',
+  isLeaf: true,
+)
+external int _sk_imageinfo_get_alphatype(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+sk_alphatype_t sk_imageinfo_get_alphatype(
+  ffi.Pointer<sk_imageinfo_t> info,
+) => sk_alphatype_t.fromValue(
+  _sk_imageinfo_get_alphatype(
+    info,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_imageinfo_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_imageinfo_ref_colorspace(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_is_empty(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_is_opaque(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_gamma_close_to_srgb(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Pointer<sk_imageinfo_t>)
+>(isLeaf: true)
+external bool sk_imageinfo_equals(
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_imageinfo_t> other,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_bytes_per_pixel(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_shift_per_pixel(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_min_row_bytes(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Uint64 Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_compute_min_byte_size(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external bool sk_imageinfo_valid_row_bytes(
+  ffi.Pointer<sk_imageinfo_t> info,
+  int rowBytes,
+);
+
 @ffi.Native<ffi.Bool Function()>(isLeaf: true)
 external bool sk_wgpu_init();
 
@@ -4910,12 +5223,11 @@ external void sk_image_unref(
   ffi.Pointer<sk_image_t> cimage,
 );
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_imageinfo_t>)
->(isLeaf: true)
-external void sk_image_get_info(
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_image_get_info(
   ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_imageinfo_t> info,
 );
 
 @ffi.Native<
@@ -7477,12 +7789,11 @@ external void sk_bitmap_delete(
 @ffi.Native<ffi.Pointer<sk_bitmap_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_bitmap_t> sk_bitmap_new();
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_imageinfo_t>)
->(isLeaf: true)
-external void sk_bitmap_get_info(
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_bitmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_bitmap_get_info(
   ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_imageinfo_t> info,
 );
 
 @ffi.Native<
@@ -7502,7 +7813,7 @@ external int sk_bitmap_get_row_bytes(
 );
 
 @ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external int sk_bitmap_get_byte_count(
+external int sk_bitmap_compute_byte_size(
   ffi.Pointer<sk_bitmap_t> cbitmap,
 );
 
@@ -9902,20 +10213,6 @@ external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table_argb(
   ffi.Pointer<ffi.Uint8> tableB,
 );
 
-@ffi.Native<ffi.Int Function(ffi.UnsignedInt)>(
-  symbol: 'sk_colotype_bytes_per_pixel',
-  isLeaf: true,
-)
-external int _sk_colotype_bytes_per_pixel(
-  int ct,
-);
-
-int sk_colotype_bytes_per_pixel(
-  sk_colortype_t ct,
-) => _sk_colotype_bytes_per_pixel(
-  ct.value,
-);
-
 @ffi.Native<ffi.Pointer<sk_font_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_font_t> sk_font_new();
 
@@ -10689,12 +10986,11 @@ external bool sk_pixmap_extract_subset(
   ffi.Pointer<sk_irect_t> subset,
 );
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_imageinfo_t>)
->(isLeaf: true)
-external void sk_pixmap_get_info(
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_pixmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_pixmap_get_info(
   ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_imageinfo_t> cinfo,
 );
 
 @ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
@@ -11141,6 +11437,10 @@ final class sk_overdraw_canvas_t extends ffi.Opaque {}
 final class sk_data_t extends ffi.Opaque {}
 
 final class sk_drawable_t extends ffi.Opaque {}
+
+final class sk_imageinfo_t extends ffi.Opaque {}
+
+final class sk_colorinfo_t extends ffi.Opaque {}
 
 final class sk_image_t extends ffi.Opaque {}
 
@@ -12475,26 +12775,6 @@ final class sk_document_pdf_metadata_t extends ffi.Struct {
 
   @ffi.Int()
   external int fEncodingQuality;
-}
-
-final class sk_imageinfo_t extends ffi.Struct {
-  external ffi.Pointer<sk_colorspace_t> colorspace;
-
-  @ffi.Int32()
-  external int width;
-
-  @ffi.Int32()
-  external int height;
-
-  @ffi.UnsignedInt()
-  external int colorTypeAsInt;
-
-  sk_colortype_t get colorType => sk_colortype_t.fromValue(colorTypeAsInt);
-
-  @ffi.UnsignedInt()
-  external int alphaTypeAsInt;
-
-  sk_alphatype_t get alphaType => sk_alphatype_t.fromValue(alphaTypeAsInt);
 }
 
 enum sk_codecanimation_disposalmethod_t {

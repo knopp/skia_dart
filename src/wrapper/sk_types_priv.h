@@ -10,8 +10,8 @@
 #ifndef sk_types_priv_DEFINED
 #define sk_types_priv_DEFINED
 
-#include "wrapper/include/sk_types.h"
 #include "include/core/SkTypes.h"  // required to make sure SK_GANESH is defined
+#include "wrapper/include/sk_types.h"
 
 #define SK_SKIP_ARG__(keep, skip, ...) skip
 #define SK_SKIP_ARG_(args) SK_SKIP_ARG__ args
@@ -107,6 +107,8 @@ DEF_CLASS_MAP(SkBitmap, sk_bitmap_t, Bitmap)
 DEF_CLASS_MAP(SkCanvas, sk_canvas_t, Canvas)
 DEF_CLASS_MAP(SkCodec, sk_codec_t, Codec)
 DEF_CLASS_MAP(SkColorFilter, sk_colorfilter_t, ColorFilter)
+DEF_CLASS_MAP(SkImageInfo, sk_imageinfo_t, ImageInfo)
+DEF_CLASS_MAP(SkColorInfo, sk_colorinfo_t, ColorInfo)
 DEF_CLASS_MAP(SkBlender, sk_blender_t, Blender)
 DEF_CLASS_MAP(SkColorSpace, sk_colorspace_t, ColorSpace)
 DEF_CLASS_MAP(SkData, sk_data_t, Data)
@@ -293,10 +295,22 @@ static inline sk_matrix_t ToMatrix(const SkMatrix& matrix) {
 
 static inline SkM44 AsM44(const sk_matrix44_t* matrix) {
   SkScalar values[16] = {
-      static_cast<SkScalar>(matrix->values[0]),  static_cast<SkScalar>(matrix->values[1]),  static_cast<SkScalar>(matrix->values[2]),  static_cast<SkScalar>(matrix->values[3]),   //
-      static_cast<SkScalar>(matrix->values[4]),  static_cast<SkScalar>(matrix->values[5]),  static_cast<SkScalar>(matrix->values[6]),  static_cast<SkScalar>(matrix->values[7]),   //
-      static_cast<SkScalar>(matrix->values[8]),  static_cast<SkScalar>(matrix->values[9]),  static_cast<SkScalar>(matrix->values[10]), static_cast<SkScalar>(matrix->values[11]),  //
-      static_cast<SkScalar>(matrix->values[12]), static_cast<SkScalar>(matrix->values[13]), static_cast<SkScalar>(matrix->values[14]), static_cast<SkScalar>(matrix->values[15]),
+      static_cast<SkScalar>(matrix->values[0]),
+      static_cast<SkScalar>(matrix->values[1]),
+      static_cast<SkScalar>(matrix->values[2]),
+      static_cast<SkScalar>(matrix->values[3]),  //
+      static_cast<SkScalar>(matrix->values[4]),
+      static_cast<SkScalar>(matrix->values[5]),
+      static_cast<SkScalar>(matrix->values[6]),
+      static_cast<SkScalar>(matrix->values[7]),  //
+      static_cast<SkScalar>(matrix->values[8]),
+      static_cast<SkScalar>(matrix->values[9]),
+      static_cast<SkScalar>(matrix->values[10]),
+      static_cast<SkScalar>(matrix->values[11]),  //
+      static_cast<SkScalar>(matrix->values[12]),
+      static_cast<SkScalar>(matrix->values[13]),
+      static_cast<SkScalar>(matrix->values[14]),
+      static_cast<SkScalar>(matrix->values[15]),
   };
   return SkM44::ColMajor(values);
 }
@@ -317,22 +331,6 @@ static inline sk_matrix44_t ToM44(const SkM44* matrix) {
 
 static inline sk_matrix44_t ToM44(const SkM44& matrix) {
   return ToM44(&matrix);
-}
-
-#include "include/core/SkImageInfo.h"
-static inline SkImageInfo AsImageInfo(const sk_imageinfo_t* info) {
-  return SkImageInfo::Make(info->width, info->height, (SkColorType)info->colorType, (SkAlphaType)info->alphaType, sk_ref_sp(AsColorSpace(info->colorspace)));
-}
-static inline sk_imageinfo_t ToImageInfo(const SkImageInfo info) {
-  return {
-      ToColorSpace(info.refColorSpace().release()), info.width(), info.height(), (sk_colortype_t)info.colorType(), (sk_alphatype_t)info.alphaType(),
-  };
-}
-static inline const SkImageInfo* ToImageInfo(const sk_imageinfo_t* cinfo) {
-  return reinterpret_cast<const SkImageInfo*>(cinfo);
-}
-static inline sk_imageinfo_t* AsImageInfo(SkImageInfo* info) {
-  return reinterpret_cast<sk_imageinfo_t*>(info);
 }
 
 #include "include/core/SkImage.h"

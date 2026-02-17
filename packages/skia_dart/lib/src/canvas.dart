@@ -383,7 +383,7 @@ class SkCanvas with _NativeMixin<sk_canvas_t> {
     SkSurfaceProps? props,
   }) {
     final ptr = sk_canvas_new_from_raster(
-      info.toNativePooled(0),
+      info._ptr,
       pixels,
       rowBytes,
       props?._ptr ?? nullptr,

@@ -19,7 +19,7 @@ SK_C_API size_t sk_codec_min_buffered_bytes_needed(void);
 SK_C_API sk_codec_t* sk_codec_new_from_stream(sk_stream_t* stream, sk_codec_result_t* result);
 SK_C_API sk_codec_t* sk_codec_new_from_data(sk_data_t* data);
 SK_C_API void sk_codec_destroy(sk_codec_t* codec);
-SK_C_API void sk_codec_get_info(sk_codec_t* codec, sk_imageinfo_t* info);
+SK_C_API sk_imageinfo_t* sk_codec_get_info(sk_codec_t* codec);
 SK_C_API sk_encodedorigin_t sk_codec_get_origin(sk_codec_t* codec);
 SK_C_API void sk_codec_get_scaled_dimensions(sk_codec_t* codec, float desiredScale, sk_isize_t* dimensions);
 SK_C_API bool sk_codec_get_valid_subset(sk_codec_t* codec, sk_irect_t* desiredSubset);

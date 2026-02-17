@@ -22,8 +22,8 @@ sk_bitmap_t* sk_bitmap_new(void) {
   return ToBitmap(new SkBitmap());
 }
 
-void sk_bitmap_get_info(sk_bitmap_t* cbitmap, sk_imageinfo_t* info) {
-  *info = ToImageInfo(AsBitmap(cbitmap)->info());
+SK_C_API sk_imageinfo_t* sk_bitmap_get_info(sk_bitmap_t* cbitmap) {
+  return ToImageInfo(new SkImageInfo(AsBitmap(cbitmap)->info()));
 }
 
 void* sk_bitmap_get_pixels(sk_bitmap_t* cbitmap, size_t* length) {
@@ -36,7 +36,7 @@ size_t sk_bitmap_get_row_bytes(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->rowBytes();
 }
 
-size_t sk_bitmap_get_byte_count(sk_bitmap_t* cbitmap) {
+size_t sk_bitmap_compute_byte_size(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->computeByteSize();
 }
 
@@ -105,7 +105,7 @@ void sk_bitmap_get_pixel_colors(sk_bitmap_t* cbitmap, sk_color_t* colors) {
 }
 
 bool sk_bitmap_install_pixels(sk_bitmap_t* cbitmap, const sk_imageinfo_t* cinfo, void* pixels, size_t rowBytes, const sk_bitmap_release_proc releaseProc, void* context) {
-  return AsBitmap(cbitmap)->installPixels(AsImageInfo(cinfo), pixels, rowBytes, releaseProc, context);
+  return AsBitmap(cbitmap)->installPixels(*AsImageInfo(cinfo), pixels, rowBytes, releaseProc, context);
 }
 
 bool sk_bitmap_install_pixels_with_pixmap(sk_bitmap_t* cbitmap, const sk_pixmap_t* cpixmap) {
@@ -113,11 +113,11 @@ bool sk_bitmap_install_pixels_with_pixmap(sk_bitmap_t* cbitmap, const sk_pixmap_
 }
 
 bool sk_bitmap_try_alloc_pixels(sk_bitmap_t* cbitmap, const sk_imageinfo_t* requestedInfo, size_t rowBytes) {
-  return AsBitmap(cbitmap)->tryAllocPixels(AsImageInfo(requestedInfo), rowBytes);
+  return AsBitmap(cbitmap)->tryAllocPixels(*AsImageInfo(requestedInfo), rowBytes);
 }
 
 bool sk_bitmap_try_alloc_pixels_with_flags(sk_bitmap_t* cbitmap, const sk_imageinfo_t* requestedInfo, uint32_t flags) {
-  return AsBitmap(cbitmap)->tryAllocPixelsFlags(AsImageInfo(requestedInfo), flags);
+  return AsBitmap(cbitmap)->tryAllocPixelsFlags(*AsImageInfo(requestedInfo), flags);
 }
 
 void sk_bitmap_set_pixels(sk_bitmap_t* cbitmap, void* pixels) {

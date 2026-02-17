@@ -9,11 +9,11 @@
 
 #include "wrapper/include/sk_colorfilter.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkColorFilter.h"
 #include "include/effects/SkColorMatrixFilter.h"
 #include "include/effects/SkHighContrastFilter.h"
 #include "include/effects/SkLumaColorFilter.h"
+#include "wrapper/sk_types_priv.h"
 
 void sk_colorfilter_ref(sk_colorfilter_t* filter) {
   SkSafeRef(AsColorFilter(filter));
@@ -69,8 +69,4 @@ sk_colorfilter_t* sk_colorfilter_new_table(const uint8_t table[256]) {
 
 sk_colorfilter_t* sk_colorfilter_new_table_argb(const uint8_t tableA[256], const uint8_t tableR[256], const uint8_t tableG[256], const uint8_t tableB[256]) {
   return ToColorFilter(SkColorFilters::TableARGB(tableA, tableR, tableG, tableB).release());
-}
-
-int sk_colotype_bytes_per_pixel(sk_colortype_t ct) {
-  return SkColorTypeBytesPerPixel((SkColorType)ct);
 }

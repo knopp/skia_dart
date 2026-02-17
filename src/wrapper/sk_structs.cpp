@@ -48,7 +48,6 @@ static_assert(sizeof(sk_rect_t) == sizeof(SkRect), ASSERT_MSG(SkRect, sk_rect_t)
 static_assert(sizeof(sk_isize_t) == sizeof(SkISize), ASSERT_MSG(SkISize, sk_isize_t));
 static_assert(sizeof(sk_size_t) == sizeof(SkSize), ASSERT_MSG(SkSize, sk_size_t));
 static_assert(sizeof(sk_point3_t) == sizeof(SkPoint3), ASSERT_MSG(SkPoint3, sk_point3_t));
-static_assert(sizeof(sk_imageinfo_t) == sizeof(SkImageInfo), ASSERT_MSG(SkImageInfo, sk_imageinfo_t));
 static_assert(sizeof(sk_fontmetrics_t) == sizeof(SkFontMetrics), ASSERT_MSG(SkFontMetrics, sk_fontmetrics_t));
 static_assert(sizeof(sk_codec_options_t) == sizeof(SkCodec::Options), ASSERT_MSG(SkCodec::Options, sk_codec_options_t));
 static_assert(sizeof(sk_lattice_t) == sizeof(SkCanvas::Lattice), ASSERT_MSG(SkCanvas::Lattice, sk_lattice_t));

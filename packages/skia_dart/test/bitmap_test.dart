@@ -84,7 +84,7 @@ void main() {
 
         // RGBA8888 is 4 bytes per pixel
         expect(bitmap.rowBytes, greaterThanOrEqualTo(100 * 4));
-        expect(bitmap.byteCount, greaterThanOrEqualTo(100 * 50 * 4));
+        expect(bitmap.computeByteSize(), greaterThanOrEqualTo(100 * 50 * 4));
       });
     });
 
