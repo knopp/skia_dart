@@ -154,7 +154,7 @@ class SkCodecFrameInfo {
         ref.fDisposalMethod,
       ),
       blend: SkCodecAnimationBlend._fromNative(ref.fBlend),
-      frameRect: SkIRect(
+      frameRect: SkIRect.fromLTRB(
         ref.fFrameRect.left,
         ref.fFrameRect.top,
         ref.fFrameRect.right,

@@ -28,7 +28,7 @@ extension _SkPoint on SkPoint {
 extension _SkRect on SkRect {
   static SkRect fromNative(Pointer<sk_rect_t> ptr) {
     final ref = ptr.ref;
-    return SkRect(
+    return SkRect.fromLTRB(
       ref.left,
       ref.top,
       ref.right,
@@ -57,7 +57,7 @@ extension _SkRect on SkRect {
 extension _SkIRect on SkIRect {
   static SkIRect fromNative(Pointer<sk_irect_t> ptr) {
     final ref = ptr.ref;
-    return SkIRect(
+    return SkIRect.fromLTRB(
       ref.left,
       ref.top,
       ref.right,

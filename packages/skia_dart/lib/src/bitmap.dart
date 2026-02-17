@@ -26,7 +26,7 @@ class SkBitmap with _NativeMixin<sk_bitmap_t> {
 
   int get rowBytes => sk_bitmap_get_row_bytes(_ptr);
 
-  int get byteCount => sk_bitmap_get_byte_count(_ptr);
+  int computeByteSize() => sk_bitmap_compute_byte_size(_ptr);
 
   int get generationId => sk_bitmap_get_generation_id(_ptr);
 

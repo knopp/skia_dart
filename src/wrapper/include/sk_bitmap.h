@@ -19,7 +19,7 @@ SK_C_API sk_bitmap_t* sk_bitmap_new(void);
 SK_C_API void sk_bitmap_get_info(sk_bitmap_t* cbitmap, sk_imageinfo_t* info);
 SK_C_API void* sk_bitmap_get_pixels(sk_bitmap_t* cbitmap, size_t* length);
 SK_C_API size_t sk_bitmap_get_row_bytes(sk_bitmap_t* cbitmap);
-SK_C_API size_t sk_bitmap_get_byte_count(sk_bitmap_t* cbitmap);
+SK_C_API size_t sk_bitmap_compute_byte_size(sk_bitmap_t* cbitmap);
 SK_C_API uint32_t sk_bitmap_get_generation_id(sk_bitmap_t* cbitmap);
 SK_C_API void sk_bitmap_reset(sk_bitmap_t* cbitmap);
 SK_C_API bool sk_bitmap_is_null(sk_bitmap_t* cbitmap);

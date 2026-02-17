@@ -7502,7 +7502,7 @@ external int sk_bitmap_get_row_bytes(
 );
 
 @ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external int sk_bitmap_get_byte_count(
+external int sk_bitmap_compute_byte_size(
   ffi.Pointer<sk_bitmap_t> cbitmap,
 );
 

@@ -36,7 +36,7 @@ size_t sk_bitmap_get_row_bytes(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->rowBytes();
 }
 
-size_t sk_bitmap_get_byte_count(sk_bitmap_t* cbitmap) {
+size_t sk_bitmap_compute_byte_size(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->computeByteSize();
 }
 
