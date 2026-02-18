@@ -9,8 +9,8 @@
 
 #include "wrapper/include/sk_data.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkData.h"
+#include "wrapper/sk_types_priv.h"
 
 sk_data_t* sk_data_new_from_file(const char* path) {
   return ToData(SkData::MakeFromFileName(path).release());
@@ -24,6 +24,10 @@ const uint8_t* sk_data_get_bytes(const sk_data_t* cdata) {
   return AsData(cdata)->bytes();
 }
 
+size_t sk_data_copy_range(const sk_data_t* src, size_t offset, size_t length, void* buffer) {
+  return AsData(src)->copyRange(offset, length, buffer);
+}
+
 sk_data_t* sk_data_new_empty(void) {
   return ToData(SkData::MakeEmpty().release());
 }
@@ -32,8 +36,12 @@ sk_data_t* sk_data_new_with_copy(const void* src, size_t length) {
   return ToData(SkData::MakeWithCopy(src, length).release());
 }
 
-sk_data_t* sk_data_new_subset(const sk_data_t* csrc, size_t offset, size_t length) {
-  return ToData(SkData::MakeSubset(AsData(csrc), offset, length).release());
+sk_data_t* sk_data_new_share_subset(const sk_data_t* csrc, size_t offset, size_t length) {
+  return ToData(const_cast<SkData*>(AsData(csrc))->shareSubset(offset, length).release());
+}
+
+sk_data_t* sk_data_new_copy_subset(const sk_data_t* csrc, size_t offset, size_t length) {
+  return ToData(AsData(csrc)->copySubset(offset, length).release());
 }
 
 sk_data_t* sk_data_new_with_proc(const void* ptr, size_t length, sk_data_release_proc proc, void* ctx) {

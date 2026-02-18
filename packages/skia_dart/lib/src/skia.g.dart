@@ -5003,7 +5003,16 @@ external ffi.Pointer<sk_data_t> sk_data_new_with_copy(
 @ffi.Native<
   ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
 >(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_subset(
+external ffi.Pointer<sk_data_t> sk_data_new_share_subset(
+  ffi.Pointer<sk_data_t> src,
+  int offset,
+  int length,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_data_new_copy_subset(
   ffi.Pointer<sk_data_t> src,
   int offset,
   int length,
@@ -5044,6 +5053,21 @@ external ffi.Pointer<sk_data_t> sk_data_new_from_stream(
 )
 external ffi.Pointer<ffi.Uint8> sk_data_get_bytes(
   ffi.Pointer<sk_data_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Size Function(
+    ffi.Pointer<sk_data_t>,
+    ffi.Size,
+    ffi.Size,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external int sk_data_copy_range(
+  ffi.Pointer<sk_data_t> src,
+  int offset,
+  int length,
+  ffi.Pointer<ffi.Void> buffer,
 );
 
 @ffi.Native<
