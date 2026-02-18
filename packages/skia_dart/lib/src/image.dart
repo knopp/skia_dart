@@ -9,6 +9,26 @@ enum SkImageCachingHint {
   final sk_image_caching_hint_t _value;
 }
 
+enum SkImageRescaleGamma {
+  src(sk_image_rescale_gamma_t.SK_IMAGE_RESCALE_GAMMA_SRC),
+  linear(sk_image_rescale_gamma_t.SK_IMAGE_RESCALE_GAMMA_LINEAR),
+  ;
+
+  const SkImageRescaleGamma(this._value);
+  final sk_image_rescale_gamma_t _value;
+}
+
+enum SkImageRescaleMode {
+  nearest(sk_image_rescale_mode_t.SK_IMAGE_RESCALE_MODE_NEAREST),
+  linear(sk_image_rescale_mode_t.SK_IMAGE_RESCALE_MODE_LINEAR),
+  repeatedLinear(sk_image_rescale_mode_t.SK_IMAGE_RESCALE_MODE_REPEATED_LINEAR),
+  repeatedCubic(sk_image_rescale_mode_t.SK_IMAGE_RESCALE_MODE_REPEATED_CUBIC),
+  ;
+
+  const SkImageRescaleMode(this._value);
+  final sk_image_rescale_mode_t _value;
+}
+
 class SkImage with _NativeMixin<sk_image_t> {
   SkImage._(Pointer<sk_image_t> ptr) {
     _attach(ptr, _finalizer);

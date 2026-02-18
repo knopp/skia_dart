@@ -108,7 +108,7 @@ class SkPaint with _NativeMixin<sk_paint_t> {
       sk_paint_set_stroke_join(_ptr, value._value);
 
   SkBlendMode get blendMode =>
-      SkBlendMode.fromNative(sk_paint_get_blendmode(_ptr));
+      SkBlendMode._fromNative(sk_paint_get_blendmode(_ptr));
   set blendMode(SkBlendMode value) =>
       sk_paint_set_blendmode(_ptr, value._value);
 

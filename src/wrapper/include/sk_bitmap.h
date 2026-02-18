@@ -23,6 +23,7 @@ SK_C_API size_t sk_bitmap_compute_byte_size(sk_bitmap_t* cbitmap);
 SK_C_API uint32_t sk_bitmap_get_generation_id(sk_bitmap_t* cbitmap);
 SK_C_API void sk_bitmap_reset(sk_bitmap_t* cbitmap);
 SK_C_API bool sk_bitmap_is_null(sk_bitmap_t* cbitmap);
+SK_C_API bool sk_bitmap_empty(sk_bitmap_t* cbitmap);
 SK_C_API bool sk_bitmap_is_immutable(sk_bitmap_t* cbitmap);
 SK_C_API void sk_bitmap_set_immutable(sk_bitmap_t* cbitmap);
 SK_C_API void sk_bitmap_erase(sk_bitmap_t* cbitmap, sk_color_t color);
@@ -44,6 +45,7 @@ SK_C_API bool sk_bitmap_extract_subset(sk_bitmap_t* cbitmap, sk_bitmap_t* dst, s
 SK_C_API bool sk_bitmap_extract_alpha(sk_bitmap_t* cbitmap, sk_bitmap_t* dst, const sk_paint_t* paint, sk_ipoint_t* offset);
 SK_C_API void sk_bitmap_notify_pixels_changed(sk_bitmap_t* cbitmap);
 SK_C_API void sk_bitmap_swap(sk_bitmap_t* cbitmap, sk_bitmap_t* cother);
+SK_C_API bool sk_bitmap_compute_is_opaque(sk_bitmap_t* cbitmap);
 SK_C_API sk_shader_t* sk_bitmap_make_shader(sk_bitmap_t* cbitmap, sk_shader_tilemode_t tmx, sk_shader_tilemode_t tmy, sk_sampling_options_t* sampling, const sk_matrix_t* cmatrix);
 
 SK_C_PLUS_PLUS_END_GUARD

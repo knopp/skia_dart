@@ -7833,6 +7833,11 @@ external bool sk_bitmap_is_null(
 );
 
 @ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_empty(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
 external bool sk_bitmap_is_immutable(
   ffi.Pointer<sk_bitmap_t> cbitmap,
 );
@@ -8029,6 +8034,11 @@ external void sk_bitmap_notify_pixels_changed(
 external void sk_bitmap_swap(
   ffi.Pointer<sk_bitmap_t> cbitmap,
   ffi.Pointer<sk_bitmap_t> cother,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_compute_is_opaque(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
 );
 
 @ffi.Native<

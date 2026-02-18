@@ -28,8 +28,47 @@ void main() {
     test('constructor creates empty bitmap', () {
       SkAutoDisposeScope.run(() {
         final bitmap = SkBitmap();
+        expect(bitmap.empty, isTrue);
         expect(bitmap.isNull, isTrue);
         expect(bitmap.readyToDraw, isFalse);
+      });
+    });
+
+    test('empty reflects bitmap dimensions', () {
+      SkAutoDisposeScope.run(() {
+        final bitmap = SkBitmap();
+        final info = SkImageInfo(
+          width: 8,
+          height: 8,
+          colorType: SkColorType.rgba8888,
+          alphaType: SkAlphaType.premul,
+        );
+
+        expect(bitmap.empty, isTrue);
+        expect(bitmap.tryAllocPixels(info), isTrue);
+        expect(bitmap.empty, isFalse);
+
+        bitmap.reset();
+        expect(bitmap.empty, isTrue);
+      });
+    });
+
+    test('computeIsOpaque reflects pixel alpha', () {
+      SkAutoDisposeScope.run(() {
+        final bitmap = SkBitmap();
+        final info = SkImageInfo(
+          width: 4,
+          height: 4,
+          colorType: SkColorType.rgba8888,
+          alphaType: SkAlphaType.premul,
+        );
+
+        expect(bitmap.tryAllocPixels(info), isTrue);
+        bitmap.eraseColor(SkColor(0xFFFF0000));
+        expect(bitmap.computeIsOpaque(), isTrue);
+
+        bitmap.eraseColor(SkColor(0x80FF0000));
+        expect(bitmap.computeIsOpaque(), isFalse);
       });
     });
 

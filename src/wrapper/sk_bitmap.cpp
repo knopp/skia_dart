@@ -52,6 +52,10 @@ bool sk_bitmap_is_null(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->isNull();
 }
 
+bool sk_bitmap_empty(sk_bitmap_t* cbitmap) {
+  return AsBitmap(cbitmap)->empty();
+}
+
 bool sk_bitmap_is_immutable(sk_bitmap_t* cbitmap) {
   return AsBitmap(cbitmap)->isImmutable();
 }
@@ -142,6 +146,10 @@ void sk_bitmap_notify_pixels_changed(sk_bitmap_t* cbitmap) {
 
 void sk_bitmap_swap(sk_bitmap_t* cbitmap, sk_bitmap_t* cother) {
   AsBitmap(cbitmap)->swap(*AsBitmap(cother));
+}
+
+bool sk_bitmap_compute_is_opaque(sk_bitmap_t* cbitmap) {
+  return SkBitmap::ComputeIsOpaque(*AsBitmap(cbitmap));
 }
 
 sk_shader_t* sk_bitmap_make_shader(sk_bitmap_t* cbitmap, sk_shader_tilemode_t tmx, sk_shader_tilemode_t tmy, sk_sampling_options_t* sampling, const sk_matrix_t* cmatrix) {

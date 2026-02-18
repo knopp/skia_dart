@@ -1,5 +1,30 @@
 part of '../skia_dart.dart';
 
+enum GrBackend {
+  openGL(gr_backend_t.OPENGL_GR_BACKEND),
+  vulkan(gr_backend_t.VULKAN_GR_BACKEND),
+  metal(gr_backend_t.METAL_GR_BACKEND),
+  direct3D(gr_backend_t.DIRECT3D_GR_BACKEND),
+  unsupported(gr_backend_t.UNSUPPORTED_GR_BACKEND),
+  ;
+
+  const GrBackend(this._value);
+  final gr_backend_t _value;
+
+  static GrBackend _fromNative(gr_backend_t value) {
+    return values.firstWhere((e) => e._value == value);
+  }
+}
+
+enum GrSurfaceOrigin {
+  topLeft(gr_surfaceorigin_t.TOP_LEFT_GR_SURFACE_ORIGIN),
+  bottomLeft(gr_surfaceorigin_t.BOTTOM_LEFT_GR_SURFACE_ORIGIN),
+  ;
+
+  const GrSurfaceOrigin(this._value);
+  final gr_surfaceorigin_t _value;
+}
+
 class GrContextOptions {
   final bool avoidStencilBuffers;
   final int runtimeProgramCacheSize;
@@ -214,4 +239,110 @@ class GrDirectContext extends GrRecordingContext {
 
   Pointer<gr_direct_context_t> get _directContextPtr =>
       _ptr.cast<gr_direct_context_t>();
+}
+
+class GrBackendTexture with _NativeMixin<gr_backendtexture_t> {
+  GrBackendTexture._(Pointer<gr_backendtexture_t> ptr) {
+    _attach(ptr, _finalizer);
+  }
+
+  static GrBackendTexture? newMetal(
+    int width,
+    int height,
+    bool mipmapped,
+    Pointer<Void> texture,
+  ) {
+    final mtlInfo = ffi.calloc<gr_mtl_textureinfo_t>();
+    try {
+      mtlInfo.ref.fTexture = texture;
+      final ptr = gr_backendtexture_new_metal(
+        width,
+        height,
+        mipmapped,
+        mtlInfo,
+      );
+      if (ptr == nullptr) {
+        return null;
+      }
+      return GrBackendTexture._(ptr);
+    } finally {
+      ffi.calloc.free(mtlInfo);
+    }
+  }
+
+  @override
+  void dispose() {
+    _dispose(gr_backendtexture_delete, _finalizer);
+  }
+
+  static final _finalizer = _createFinalizer();
+
+  static NativeFinalizer _createFinalizer() {
+    final Pointer<NativeFunction<Void Function(Pointer<gr_backendtexture_t>)>>
+    ptr = Native.addressOf(gr_backendtexture_delete);
+    return NativeFinalizer(ptr.cast());
+  }
+
+  bool get isValid => gr_backendtexture_is_valid(_ptr);
+
+  int get width => gr_backendtexture_get_width(_ptr);
+
+  int get height => gr_backendtexture_get_height(_ptr);
+
+  bool get hasMipmaps => gr_backendtexture_has_mipmaps(_ptr);
+
+  GrBackend get backend =>
+      GrBackend._fromNative(gr_backendtexture_get_backend(_ptr));
+}
+
+class GrBackendRenderTarget with _NativeMixin<gr_backendrendertarget_t> {
+  GrBackendRenderTarget._(Pointer<gr_backendrendertarget_t> ptr) {
+    _attach(ptr, _finalizer);
+  }
+
+  static GrBackendRenderTarget? newMetal(
+    int width,
+    int height,
+    Pointer<Void> texture,
+  ) {
+    final mtlInfo = ffi.calloc<gr_mtl_textureinfo_t>();
+    try {
+      mtlInfo.ref.fTexture = texture;
+      final ptr = gr_backendrendertarget_new_metal(width, height, mtlInfo);
+      if (ptr == nullptr) {
+        return null;
+      }
+      return GrBackendRenderTarget._(ptr);
+    } finally {
+      ffi.calloc.free(mtlInfo);
+    }
+  }
+
+  @override
+  void dispose() {
+    _dispose(gr_backendrendertarget_delete, _finalizer);
+  }
+
+  static final _finalizer = _createFinalizer();
+
+  static NativeFinalizer _createFinalizer() {
+    final Pointer<
+      NativeFunction<Void Function(Pointer<gr_backendrendertarget_t>)>
+    >
+    ptr = Native.addressOf(gr_backendrendertarget_delete);
+    return NativeFinalizer(ptr.cast());
+  }
+
+  bool get isValid => gr_backendrendertarget_is_valid(_ptr);
+
+  int get width => gr_backendrendertarget_get_width(_ptr);
+
+  int get height => gr_backendrendertarget_get_height(_ptr);
+
+  int get samples => gr_backendrendertarget_get_samples(_ptr);
+
+  int get stencils => gr_backendrendertarget_get_stencils(_ptr);
+
+  GrBackend get backend =>
+      GrBackend._fromNative(gr_backendrendertarget_get_backend(_ptr));
 }
