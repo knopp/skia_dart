@@ -343,6 +343,14 @@ extension _Uint32 on Uint32 {
   );
 }
 
+extension _Int32 on Int32 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Int32>(),
+    growable: false,
+  );
+}
+
 extension _Int on Int {
   static final pool = List.generate(
     10,

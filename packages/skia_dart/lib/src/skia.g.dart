@@ -1221,6 +1221,17 @@ external int sk_codec_get_repetition_count(
   ffi.Pointer<sk_codec_t> codec,
 );
 
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_codec_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_codecs_deferred_image(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<ffi.UnsignedInt> alphaType,
+);
+
 @ffi.Native<ffi.Void Function()>(isLeaf: true)
 external void sk_graphics_init();
 
@@ -11934,7 +11945,8 @@ enum sk_codec_result_t {
   INVALID_INPUT_SK_CODEC_RESULT(6),
   COULD_NOT_REWIND_SK_CODEC_RESULT(7),
   INTERNAL_ERROR_SK_CODEC_RESULT(8),
-  UNIMPLEMENTED_SK_CODEC_RESULT(9)
+  UNIMPLEMENTED_SK_CODEC_RESULT(9),
+  OUT_OF_MEMORY_SK_CODEC_RESULT(10)
   ;
 
   final int value;
@@ -11951,6 +11963,7 @@ enum sk_codec_result_t {
     7 => COULD_NOT_REWIND_SK_CODEC_RESULT,
     8 => INTERNAL_ERROR_SK_CODEC_RESULT,
     9 => UNIMPLEMENTED_SK_CODEC_RESULT,
+    10 => OUT_OF_MEMORY_SK_CODEC_RESULT,
     _ => throw ArgumentError('Unknown value for sk_codec_result_t: $value'),
   };
 }

@@ -87,7 +87,7 @@ int sk_codec_output_scanline(sk_codec_t* codec, int inputScanline) {
 }
 
 int sk_codec_get_frame_count(sk_codec_t* codec) {
-  return AsCodec(codec)->getFrameInfo().size();
+  return AsCodec(codec)->getFrameCount();
 }
 
 void sk_codec_get_frame_info(sk_codec_t* codec, sk_codec_frameinfo_t* frameInfo) {
@@ -103,4 +103,14 @@ bool sk_codec_get_frame_info_for_index(sk_codec_t* codec, int index, sk_codec_fr
 
 int sk_codec_get_repetition_count(sk_codec_t* codec) {
   return AsCodec(codec)->getRepetitionCount();
+}
+
+sk_image_t* sk_codecs_deferred_image(sk_codec_t* codec, const sk_alphatype_t* alphaType) {
+  std::unique_ptr<SkCodec> skcodec(AsCodec(codec));
+  std::optional<SkAlphaType> alpha = std::nullopt;
+  if (alphaType != nullptr) {
+    alpha = (SkAlphaType)*alphaType;
+  }
+  sk_sp<SkImage> image = SkCodecs::DeferredImage(std::move(skcodec), alpha);
+  return ToImage(image.release());
 }
