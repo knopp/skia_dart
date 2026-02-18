@@ -3472,6 +3472,28 @@ external bool sk_colorspace_is_numerical_transfer_fn(
 );
 
 @ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_transfer_fn(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_inv_transfer_fn(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
   ffi.Bool Function(
     ffi.Pointer<sk_colorspace_t>,
     ffi.Pointer<sk_colorspace_xyz_t>,
@@ -3480,6 +3502,19 @@ external bool sk_colorspace_is_numerical_transfer_fn(
 external bool sk_colorspace_to_xyzd50(
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_gamut_transform_to(
+  ffi.Pointer<sk_colorspace_t> src,
+  ffi.Pointer<sk_colorspace_t> dst,
+  ffi.Pointer<sk_colorspace_xyz_t> src_to_dst,
 );
 
 @ffi.Native<
@@ -10134,16 +10169,16 @@ external void sk_colorfilter_unref(
 
 @ffi.Native<
   ffi.Pointer<sk_colorfilter_t> Function(sk_color_t, ffi.UnsignedInt)
->(symbol: 'sk_colorfilter_new_mode', isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_mode(
+>(symbol: 'sk_colorfilter_new_blend', isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend(
   int c,
   int mode,
 );
 
-ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_mode(
+ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend(
   Dartsk_color_t c,
   sk_blendmode_t mode,
-) => _sk_colorfilter_new_mode(
+) => _sk_colorfilter_new_blend(
   c,
   mode.value,
 );
@@ -10232,6 +10267,103 @@ external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table_argb(
   ffi.Pointer<ffi.Uint8> tableR,
   ffi.Pointer<ffi.Uint8> tableG,
   ffi.Pointer<ffi.Uint8> tableB,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_color_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external bool sk_colorfilter_as_a_color_mode(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_color_t> color,
+  ffi.Pointer<ffi.UnsignedInt> mode,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>, ffi.Pointer<ffi.Float>)
+>(isLeaf: true)
+external bool sk_colorfilter_as_a_color_matrix(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<ffi.Float> matrix,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
+external bool sk_colorfilter_is_alpha_unchanged(
+  ffi.Pointer<sk_colorfilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_color4f_t>,
+  )
+>(isLeaf: true)
+external void sk_colorfilter_filter_color4f(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_color4f_t> src,
+  ffi.Pointer<sk_colorspace_t> srcCS,
+  ffi.Pointer<sk_colorspace_t> dstCS,
+  ffi.Pointer<sk_color4f_t> result,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorfilter_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_make_composed(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_colorfilter_t> inner,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t>
+sk_colorfilter_make_with_working_colorspace(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_colorfilter_new_blend4f', isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend4f(
+  ffi.Pointer<sk_color4f_t> c,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  int mode,
+);
+
+ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend4f(
+  ffi.Pointer<sk_color4f_t> c,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  sk_blendmode_t mode,
+) => _sk_colorfilter_new_blend4f(
+  c,
+  colorspace,
+  mode.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>, ffi.Bool)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_color_matrix_clamped(
+  ffi.Pointer<ffi.Float> array,
+  bool clamp,
 );
 
 @ffi.Native<ffi.Pointer<sk_font_t> Function()>(isLeaf: true)

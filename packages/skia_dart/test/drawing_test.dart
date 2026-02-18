@@ -1354,7 +1354,7 @@ void main() {
           seed: 456,
         );
 
-        final colorFilter = SkColorFilter.mode(
+        final colorFilter = SkColorFilter.blend(
           SkColor(0xFF0000FF),
           SkBlendMode.multiply,
         );
@@ -1376,7 +1376,7 @@ void main() {
         canvas.clear(SkColor(0xFFFFFFFF));
 
         final path = SkPath.circle(50, 50, 40);
-        final filter = SkColorFilter.mode(
+        final filter = SkColorFilter.blend(
           SkColor(0xFF00FF00),
           SkBlendMode.srcIn,
         );
@@ -1414,11 +1414,11 @@ void main() {
         final canvas = surface.canvas;
         canvas.clear(SkColor(0xFFFFFFFF));
 
-        final outer = SkColorFilter.mode(
+        final outer = SkColorFilter.blend(
           SkColor(0xFF0000FF),
           SkBlendMode.srcOver,
         );
-        final inner = SkColorFilter.mode(
+        final inner = SkColorFilter.blend(
           SkColor(0x80FF0000),
           SkBlendMode.srcOver,
         );
@@ -1537,11 +1537,11 @@ void main() {
         final canvas = surface.canvas;
         canvas.clear(SkColor(0xFFFFFFFF));
 
-        final filter0 = SkColorFilter.mode(
+        final filter0 = SkColorFilter.blend(
           SkColor(0xFFFF0000),
           SkBlendMode.srcOver,
         );
-        final filter1 = SkColorFilter.mode(
+        final filter1 = SkColorFilter.blend(
           SkColor(0xFF0000FF),
           SkBlendMode.srcOver,
         );
