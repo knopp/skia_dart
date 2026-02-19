@@ -5518,6 +5518,34 @@ external ffi.Pointer<sk_image_t> sk_image_new_raster_data(
 
 @ffi.Native<
   ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_data_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_image_new_raster_from_compressed_texture_data', isLeaf: true)
+external ffi.Pointer<sk_image_t>
+_sk_image_new_raster_from_compressed_texture_data(
+  ffi.Pointer<sk_data_t> cdata,
+  int width,
+  int height,
+  int type,
+);
+
+ffi.Pointer<sk_image_t> sk_image_new_raster_from_compressed_texture_data(
+  ffi.Pointer<sk_data_t> cdata,
+  int width,
+  int height,
+  sk_texture_compression_type_t type,
+) => _sk_image_new_raster_from_compressed_texture_data(
+  cdata,
+  width,
+  height,
+  type.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
     ffi.Pointer<sk_pixmap_t>,
     sk_image_raster_release_proc,
     ffi.Pointer<ffi.Void>,
@@ -5701,6 +5729,11 @@ external bool sk_image_is_alpha_only(
   ffi.Pointer<sk_image_t> image,
 );
 
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_opaque(
+  ffi.Pointer<sk_image_t> image,
+);
+
 @ffi.Native<
   ffi.Pointer<sk_shader_t> Function(
     ffi.Pointer<sk_image_t>,
@@ -5776,20 +5809,22 @@ external bool sk_image_is_texture_backed(
   ffi.Pointer<sk_image_t> image,
 );
 
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external int sk_image_texture_size(
+  ffi.Pointer<sk_image_t> image,
+);
+
 @ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
 external bool sk_image_is_lazy_generated(
   ffi.Pointer<sk_image_t> image,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<gr_recording_context_t>,
-  )
+  ffi.Bool Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_recorder_t>)
 >(isLeaf: true)
 external bool sk_image_is_valid(
   ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<sk_recorder_t> recorder,
 );
 
 @ffi.Native<
@@ -5910,13 +5945,13 @@ external ffi.Pointer<sk_image_t> sk_image_make_subset_raster(
 @ffi.Native<
   ffi.Pointer<sk_image_t> Function(
     ffi.Pointer<sk_image_t>,
-    ffi.Pointer<gr_direct_context_t>,
+    ffi.Pointer<sk_recorder_t>,
     ffi.Pointer<sk_irect_t>,
   )
 >(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_image_make_subset(
   ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<gr_direct_context_t> context,
+  ffi.Pointer<sk_recorder_t> recorder,
   ffi.Pointer<sk_irect_t> subset,
 );
 
@@ -5947,6 +5982,97 @@ external ffi.Pointer<sk_image_t> sk_image_make_non_texture_image(
 )
 external ffi.Pointer<sk_image_t> sk_image_make_raster_image(
   ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_has_mipmaps(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_protected(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_with_default_mipmaps(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_reinterpret_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Bool,
+  )
+>(symbol: 'sk_image_make_color_type_and_color_space', isLeaf: true)
+external ffi.Pointer<sk_image_t> _sk_image_make_color_type_and_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  int colorType,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+);
+
+ffi.Pointer<sk_image_t> sk_image_make_color_type_and_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  sk_colortype_t colorType,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+) => _sk_image_make_color_type_and_color_space(
+  cimage,
+  recorder,
+  colorType.value,
+  colorSpace,
+  mipmapped,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_surfaceprops_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_scaled(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_surfaceprops_t> props,
 );
 
 @ffi.Native<
@@ -6074,6 +6200,19 @@ external void sk_paint_set_antialias(
   bool arg1,
 );
 
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external bool sk_paint_equals(
+  ffi.Pointer<sk_paint_t> a,
+  ffi.Pointer<sk_paint_t> b,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external int sk_paint_get_hash(
+  ffi.Pointer<sk_paint_t> paint,
+);
+
 @ffi.Native<sk_color_t Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
 external int sk_paint_get_color(
   ffi.Pointer<sk_paint_t> arg0,
@@ -6161,6 +6300,12 @@ void sk_paint_set_style(
 ) => _sk_paint_set_style(
   arg0,
   arg1.value,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
+external void sk_paint_set_stroke(
+  ffi.Pointer<sk_paint_t> arg0,
+  bool isStroke,
 );
 
 @ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
@@ -6400,6 +6545,42 @@ external bool sk_paint_get_fill_path(
   ffi.Pointer<sk_path_builder_t> dst,
   ffi.Pointer<sk_rect_t> cullRect,
   ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_nothing_to_draw(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_can_compute_fast_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_paint_compute_fast_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_rect_t> orig,
+  ffi.Pointer<sk_rect_t> result,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_paint_compute_fast_stroke_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_rect_t> orig,
+  ffi.Pointer<sk_rect_t> result,
 );
 
 @ffi.Native<ffi.Pointer<sksg_invalidation_controller_t> Function()>(
@@ -9540,6 +9721,13 @@ gr_recording_context_get_direct_context(
   ffi.Pointer<gr_recording_context_t> context,
 );
 
+@ffi.Native<
+  ffi.Pointer<sk_recorder_t> Function(ffi.Pointer<gr_recording_context_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_recorder_t> gr_recording_context_as_recorder(
+  ffi.Pointer<gr_recording_context_t> context,
+);
+
 @ffi.Native<ffi.Bool Function()>(isLeaf: true)
 external bool gr_context_is_supported();
 
@@ -11848,6 +12036,8 @@ final class sk_colorinfo_t extends ffi.Opaque {}
 
 final class sk_image_t extends ffi.Opaque {}
 
+final class sk_recorder_t extends ffi.Opaque {}
+
 final class sk_maskfilter_t extends ffi.Opaque {}
 
 final class sk_paint_t extends ffi.Opaque {}
@@ -13109,6 +13299,27 @@ enum sk_image_caching_hint_t {
     1 => DISALLOW_SK_IMAGE_CACHING_HINT,
     _ => throw ArgumentError(
       'Unknown value for sk_image_caching_hint_t: $value',
+    ),
+  };
+}
+
+enum sk_texture_compression_type_t {
+  NONE_SK_TEXTURE_COMPRESSION_TYPE(0),
+  ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(1),
+  BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(2),
+  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(3)
+  ;
+
+  final int value;
+  const sk_texture_compression_type_t(this.value);
+
+  static sk_texture_compression_type_t fromValue(int value) => switch (value) {
+    0 => NONE_SK_TEXTURE_COMPRESSION_TYPE,
+    1 => ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+    2 => BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+    3 => BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_texture_compression_type_t: $value',
     ),
   };
 }

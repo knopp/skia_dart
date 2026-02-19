@@ -39,6 +39,7 @@ part 'src/picture.dart';
 part 'src/pixmap.dart';
 part 'src/point.dart';
 part 'src/rect.dart';
+part 'src/recorder.dart';
 part 'src/region.dart';
 part 'src/rrect.dart';
 part 'src/rsx_form.dart';

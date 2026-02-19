@@ -13,6 +13,7 @@
 #include "include/core/SkClipOp.h"
 #include "include/core/SkImage.h"
 #include "include/core/SkImageFilter.h"
+#include "include/core/SkTextureCompressionType.h"
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkRRect.h"
@@ -322,6 +323,12 @@ static_assert((int)SkVertices::VertexMode::kTriangleFan_VertexMode == (int)TRIAN
 // sk_image_caching_hint_t
 static_assert((int)SkImage::CachingHint::kAllow_CachingHint == (int)ALLOW_SK_IMAGE_CACHING_HINT, ASSERT_MSG(SkImage::CachingHint, sk_image_caching_hint_t));
 static_assert((int)SkImage::CachingHint::kDisallow_CachingHint == (int)DISALLOW_SK_IMAGE_CACHING_HINT, ASSERT_MSG(SkImage::CachingHint, sk_image_caching_hint_t));
+
+// sk_texture_compression_type_t
+static_assert((int)SkTextureCompressionType::kNone == (int)NONE_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kETC2_RGB8_UNORM == (int)ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kBC1_RGB8_UNORM == (int)BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kBC1_RGBA8_UNORM == (int)BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
 
 // sk_highcontrastconfig_invertstyle_t
 static_assert((int)SkHighContrastConfig::InvertStyle::kNoInvert == (int)NO_INVERT_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE, ASSERT_MSG(SkHighContrastConfig::InvertStyle, sk_highcontrastconfig_invertstyle_t));

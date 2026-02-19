@@ -208,6 +208,7 @@ typedef struct sk_colorinfo_t sk_colorinfo_t;
     encoded data or other means.
 */
 typedef struct sk_image_t sk_image_t;
+typedef struct sk_recorder_t sk_recorder_t;
 /**
     A sk_maskfilter_t is an object that perform transformations on an
     alpha-channel mask before drawing it; it may be installed into a
@@ -804,6 +805,13 @@ typedef enum {
   ALLOW_SK_IMAGE_CACHING_HINT,
   DISALLOW_SK_IMAGE_CACHING_HINT,
 } sk_image_caching_hint_t;
+
+typedef enum {
+  NONE_SK_TEXTURE_COMPRESSION_TYPE,
+  ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+  BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+} sk_texture_compression_type_t;
 
 typedef enum {
   NONE_SK_BITMAP_ALLOC_FLAGS = 0,

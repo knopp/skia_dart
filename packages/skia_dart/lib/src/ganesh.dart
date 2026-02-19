@@ -113,6 +113,11 @@ class GrRecordingContext with _NativeMixin<gr_recording_context_t> {
   int get maxRenderTargetSize =>
       gr_recording_context_max_render_target_size(_ptr);
 
+  SkRecorder get recorder {
+    final ptr = gr_recording_context_as_recorder(_ptr);
+    return _GrRecorder._(ptr);
+  }
+
   GrDirectContext? asDirectContext() {
     final ptr = gr_recording_context_get_direct_context(_ptr);
     if (ptr == nullptr) {
@@ -126,6 +131,15 @@ class GrRecordingContext with _NativeMixin<gr_recording_context_t> {
     gr_direct_context_ref(ptr);
     return GrDirectContext._(ptr);
   }
+}
+
+class _GrRecorder extends SkRecorder {
+  _GrRecorder._(this._ptr);
+
+  final Pointer<sk_recorder_t> _ptr;
+
+  @override
+  Pointer<sk_recorder_t> get _recorderPtr => _ptr;
 }
 
 class GrDirectContext extends GrRecordingContext {

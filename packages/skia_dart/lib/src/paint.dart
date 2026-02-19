@@ -53,6 +53,15 @@ class SkPaint with _NativeMixin<sk_paint_t> {
     return SkPaint._(sk_paint_clone(_ptr));
   }
 
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is SkPaint && sk_paint_equals(_ptr, other._ptr);
+  }
+
+  @override
+  int get hashCode => sk_paint_get_hash(_ptr);
+
   void reset() {
     sk_paint_reset(_ptr);
   }
@@ -90,6 +99,8 @@ class SkPaint with _NativeMixin<sk_paint_t> {
 
   SkPaintStyle get style => SkPaintStyle.fromNative(sk_paint_get_style(_ptr));
   set style(SkPaintStyle value) => sk_paint_set_style(_ptr, value._value);
+
+  void setStroke(bool isStroke) => sk_paint_set_stroke(_ptr, isStroke);
 
   double get strokeWidth => sk_paint_get_stroke_width(_ptr);
   set strokeWidth(double value) => sk_paint_set_stroke_width(_ptr, value);
@@ -171,19 +182,36 @@ class SkPaint with _NativeMixin<sk_paint_t> {
     SkRect? cullRect,
     Matrix3? matrix,
   }) {
+    matrix ??= Matrix3.identity();
     final dst = SkPathBuilder();
     final result = sk_paint_get_fill_path(
       _ptr,
       src._ptr,
       dst._ptr,
       cullRect?.toNativePooled(0) ?? nullptr,
-      matrix?.toNativePooled(0) ?? nullptr,
+      matrix.toNativePooled(0),
     );
     if (!result) {
       dst.dispose();
       return null;
     }
     return dst;
+  }
+
+  bool get nothingToDraw => sk_paint_nothing_to_draw(_ptr);
+
+  bool get canComputeFastBounds => sk_paint_can_compute_fast_bounds(_ptr);
+
+  SkRect computeFastBounds(SkRect orig) {
+    final result = _SkRect.pool[0];
+    sk_paint_compute_fast_bounds(_ptr, orig.toNativePooled(1), result);
+    return _SkRect.fromNative(result);
+  }
+
+  SkRect computeFastStrokeBounds(SkRect orig) {
+    final result = _SkRect.pool[0];
+    sk_paint_compute_fast_stroke_bounds(_ptr, orig.toNativePooled(1), result);
+    return _SkRect.fromNative(result);
   }
 
   @override
