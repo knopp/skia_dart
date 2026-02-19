@@ -2936,6 +2936,112 @@ external void sk_imagefilter_unref(
 );
 
 @ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_imagefilter_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(symbol: 'sk_imagefilter_filter_bounds', isLeaf: true)
+external void _sk_imagefilter_filter_bounds(
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_irect_t> src,
+  ffi.Pointer<sk_matrix_t> ctm,
+  int mapDirection,
+  ffi.Pointer<sk_irect_t> inputRect,
+  ffi.Pointer<sk_irect_t> result,
+);
+
+void sk_imagefilter_filter_bounds(
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_irect_t> src,
+  ffi.Pointer<sk_matrix_t> ctm,
+  sk_imagefilter_map_direction_t mapDirection,
+  ffi.Pointer<sk_irect_t> inputRect,
+  ffi.Pointer<sk_irect_t> result,
+) => _sk_imagefilter_filter_bounds(
+  filter,
+  src,
+  ctm,
+  mapDirection.value,
+  inputRect,
+  result,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_imagefilter_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_imagefilter_is_color_filter_node(
+  ffi.Pointer<sk_imagefilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_imagefilter_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_imagefilter_as_a_color_filter(
+  ffi.Pointer<sk_imagefilter_t> filter,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imagefilter_t>)>(isLeaf: true)
+external int sk_imagefilter_count_inputs(
+  ffi.Pointer<sk_imagefilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imagefilter_t> Function(ffi.Pointer<sk_imagefilter_t>, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<sk_imagefilter_t> sk_imagefilter_get_input(
+  ffi.Pointer<sk_imagefilter_t> filter,
+  int index,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_imagefilter_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_imagefilter_compute_fast_bounds(
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_rect_t> result,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imagefilter_t>)>(isLeaf: true)
+external bool sk_imagefilter_can_compute_fast_bounds(
+  ffi.Pointer<sk_imagefilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imagefilter_t> Function(
+    ffi.Pointer<sk_imagefilter_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_imagefilter_t> sk_imagefilter_make_with_local_matrix(
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imagefilter_t> Function(ffi.Pointer<ffi.Void>, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_imagefilter_t> sk_imagefilter_deserialize(
+  ffi.Pointer<ffi.Void> data,
+  int size,
+);
+
+@ffi.Native<ffi.Pointer<sk_imagefilter_t> Function(ffi.Pointer<sk_data_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imagefilter_t> sk_imagefilter_deserialize_from_data(
+  ffi.Pointer<sk_data_t> data,
+);
+
+@ffi.Native<
   ffi.Pointer<sk_imagefilter_t> Function(
     ffi.Float,
     ffi.Float,
@@ -13637,6 +13743,23 @@ enum sk_mipmap_mode_t {
     1 => NEAREST_SK_MIPMAP_MODE,
     2 => LINEAR_SK_MIPMAP_MODE,
     _ => throw ArgumentError('Unknown value for sk_mipmap_mode_t: $value'),
+  };
+}
+
+enum sk_imagefilter_map_direction_t {
+  FORWARD_SK_IMAGEFILTER_MAP_DIRECTION(0),
+  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION(1)
+  ;
+
+  final int value;
+  const sk_imagefilter_map_direction_t(this.value);
+
+  static sk_imagefilter_map_direction_t fromValue(int value) => switch (value) {
+    0 => FORWARD_SK_IMAGEFILTER_MAP_DIRECTION,
+    1 => REVERSE_SK_IMAGEFILTER_MAP_DIRECTION,
+    _ => throw ArgumentError(
+      'Unknown value for sk_imagefilter_map_direction_t: $value',
+    ),
   };
 }
 

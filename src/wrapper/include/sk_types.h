@@ -1054,6 +1054,11 @@ typedef enum {
   LINEAR_SK_MIPMAP_MODE,
 } sk_mipmap_mode_t;
 
+typedef enum {
+  FORWARD_SK_IMAGEFILTER_MAP_DIRECTION,
+  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION,
+} sk_imagefilter_map_direction_t;
+
 typedef struct {
   float fB;
   float fC;

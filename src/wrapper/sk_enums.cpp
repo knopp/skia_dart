@@ -7,12 +7,12 @@
  * found in the LICENSE file.
  */
 
-#include "wrapper/sk_types_priv.h"
 #include "include/codec/SkCodecAnimation.h"
 #include "include/codec/SkEncodedImageFormat.h"
 #include "include/core/SkBitmap.h"
 #include "include/core/SkClipOp.h"
 #include "include/core/SkImage.h"
+#include "include/core/SkImageFilter.h"
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkRRect.h"
@@ -32,6 +32,7 @@
 #include "include/pathops/SkPathOps.h"
 #include "include/utils/SkTextUtils.h"
 #include "modules/skresources/include/SkResources.h"
+#include "wrapper/sk_types_priv.h"
 
 #if defined(SK_GANESH)
   #include "include/gpu/ganesh/GrTypes.h"
@@ -98,6 +99,10 @@ static_assert((int)SkFilterMode::kLinear == (int)LINEAR_SK_FILTER_MODE, ASSERT_M
 static_assert((int)SkMipmapMode::kNone == (int)NONE_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
 static_assert((int)SkMipmapMode::kNearest == (int)NEAREST_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
 static_assert((int)SkMipmapMode::kLinear == (int)LINEAR_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
+
+// sk_imagefilter_map_direction_t
+static_assert((int)SkImageFilter::MapDirection::kForward_MapDirection == (int)FORWARD_SK_IMAGEFILTER_MAP_DIRECTION, ASSERT_MSG(SkImageFilter::MapDirection, sk_imagefilter_map_direction_t));
+static_assert((int)SkImageFilter::MapDirection::kReverse_MapDirection == (int)REVERSE_SK_IMAGEFILTER_MAP_DIRECTION, ASSERT_MSG(SkImageFilter::MapDirection, sk_imagefilter_map_direction_t));
 
 // sk_blendmode_t
 static_assert((int)SkBlendMode::kClear == (int)CLEAR_SK_BLENDMODE, ASSERT_MSG(SkBlendMode, sk_blendmode_t));

@@ -18,6 +18,16 @@ SK_C_PLUS_PLUS_BEGIN_GUARD
 
 SK_C_API void sk_imagefilter_ref(sk_imagefilter_t* cfilter);
 SK_C_API void sk_imagefilter_unref(sk_imagefilter_t* cfilter);
+SK_C_API void sk_imagefilter_filter_bounds(const sk_imagefilter_t* filter, const sk_irect_t* src, const sk_matrix_t* ctm, sk_imagefilter_map_direction_t mapDirection, const sk_irect_t* inputRect, sk_irect_t* result);
+SK_C_API sk_colorfilter_t* sk_imagefilter_is_color_filter_node(const sk_imagefilter_t* filter);
+SK_C_API sk_colorfilter_t* sk_imagefilter_as_a_color_filter(const sk_imagefilter_t* filter);
+SK_C_API int sk_imagefilter_count_inputs(const sk_imagefilter_t* filter);
+SK_C_API sk_imagefilter_t* sk_imagefilter_get_input(const sk_imagefilter_t* filter, int index);
+SK_C_API void sk_imagefilter_compute_fast_bounds(const sk_imagefilter_t* filter, const sk_rect_t* bounds, sk_rect_t* result);
+SK_C_API bool sk_imagefilter_can_compute_fast_bounds(const sk_imagefilter_t* filter);
+SK_C_API sk_imagefilter_t* sk_imagefilter_make_with_local_matrix(const sk_imagefilter_t* filter, const sk_matrix_t* matrix);
+SK_C_API sk_imagefilter_t* sk_imagefilter_deserialize(const void* data, size_t size);
+SK_C_API sk_imagefilter_t* sk_imagefilter_deserialize_from_data(const sk_data_t* data);
 SK_C_API sk_imagefilter_t* sk_imagefilter_new_arithmetic(float k1, float k2, float k3, float k4, bool enforcePMColor, const sk_imagefilter_t* background, const sk_imagefilter_t* foreground, const sk_rect_t* cropRect);
 SK_C_API sk_imagefilter_t* sk_imagefilter_new_blend(sk_blendmode_t mode, const sk_imagefilter_t* background, const sk_imagefilter_t* foreground, const sk_rect_t* cropRect);
 SK_C_API sk_imagefilter_t* sk_imagefilter_new_blender(sk_blender_t* blender, const sk_imagefilter_t* background, const sk_imagefilter_t* foreground, const sk_rect_t* cropRect);
