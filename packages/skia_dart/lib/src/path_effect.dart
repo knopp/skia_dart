@@ -106,6 +106,26 @@ class SkPathEffect with _NativeMixin<sk_path_effect_t> {
     );
   }
 
+  bool filterPath(
+    SkPathBuilder dst,
+    SkPath src,
+    SkStrokeRec strokeRec, {
+    SkRect? cullRect,
+    Matrix3? ctm,
+  }) {
+    ctm ??= Matrix3.identity();
+    return sk_path_effect_filter_path(
+      _ptr,
+      dst._ptr,
+      src._ptr,
+      strokeRec._ptr,
+      cullRect?.toNativePooled(0) ?? nullptr,
+      ctm.toNativePooled(1),
+    );
+  }
+
+  bool get needsCTM => sk_path_effect_needs_ctm(_ptr);
+
   @override
   void dispose() {
     _dispose(sk_path_effect_unref, _finalizer);

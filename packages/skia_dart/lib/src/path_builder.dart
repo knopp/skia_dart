@@ -6,6 +6,9 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
   SkPathBuilder.withFillType(SkPathFillType fillType)
     : this._(sk_path_builder_new_with_filltype(fillType._value));
 
+  SkPathBuilder.fromPath(SkPath path)
+    : this._(sk_path_builder_new_from_path(path._ptr));
+
   SkPathBuilder._(Pointer<sk_path_builder_t> ptr) {
     _attach(ptr, _finalizer);
   }
@@ -54,6 +57,11 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
 
   void lineTo(double x, double y) {
     sk_path_builder_line_to(_ptr, x, y);
+  }
+
+  void addLine(SkPoint a, SkPoint b) {
+    moveTo(a.x, a.y);
+    lineTo(b.x, b.y);
   }
 
   void quadTo(double x0, double y0, double x1, double y1) {

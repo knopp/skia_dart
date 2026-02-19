@@ -17,6 +17,7 @@
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkRRect.h"
+#include "include/core/SkStrokeRec.h"
 #include "include/core/SkRegion.h"
 #include "include/core/SkShader.h"
 #include "include/core/SkSurface.h"
@@ -197,6 +198,16 @@ static_assert((int)SkPaint::Cap::kSquare_Cap == (int)SQUARE_SK_STROKE_CAP, ASSER
 static_assert((int)SkPaint::Join::kMiter_Join == (int)MITER_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
 static_assert((int)SkPaint::Join::kRound_Join == (int)ROUND_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
 static_assert((int)SkPaint::Join::kBevel_Join == (int)BEVEL_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
+
+// sk_stroke_rec_init_style_t
+static_assert((int)SkStrokeRec::InitStyle::kHairline_InitStyle == (int)HAIRLINE_SK_STROKE_REC_INIT_STYLE, ASSERT_MSG(SkStrokeRec::InitStyle, sk_stroke_rec_init_style_t));
+static_assert((int)SkStrokeRec::InitStyle::kFill_InitStyle == (int)FILL_SK_STROKE_REC_INIT_STYLE, ASSERT_MSG(SkStrokeRec::InitStyle, sk_stroke_rec_init_style_t));
+
+// sk_stroke_rec_style_t
+static_assert((int)SkStrokeRec::Style::kHairline_Style == (int)HAIRLINE_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kFill_Style == (int)FILL_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kStroke_Style == (int)STROKE_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kStrokeAndFill_Style == (int)STROKE_AND_FILL_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
 
 // sk_region_op_t
 static_assert((int)SkRegion::Op::kDifference_Op == (int)DIFFERENCE_SK_REGION_OP, ASSERT_MSG(SkRegion::Op, sk_region_op_t));

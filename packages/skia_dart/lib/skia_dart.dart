@@ -45,6 +45,7 @@ part 'src/rrect.dart';
 part 'src/rsx_form.dart';
 part 'src/shader.dart';
 part 'src/stream.dart';
+part 'src/stroke_rec.dart';
 part 'src/surface.dart';
 part 'src/text_blob.dart';
 part 'src/typeface.dart';

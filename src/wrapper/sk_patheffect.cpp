@@ -61,3 +61,11 @@ sk_path_effect_t* sk_path_effect_create_dash(const float intervals[], int count,
 sk_path_effect_t* sk_path_effect_create_trim(float start, float stop, sk_path_effect_trim_mode_t mode) {
   return ToPathEffect(SkTrimPathEffect::Make(start, stop, (SkTrimPathEffect::Mode)mode).release());
 }
+
+bool sk_path_effect_filter_path(const sk_path_effect_t* effect, sk_path_builder_t* dst, const sk_path_t* src, sk_stroke_rec_t* strokeRec, const sk_rect_t* cullRect, const sk_matrix_t* ctm) {
+  return AsPathEffect(effect)->filterPath(AsPathBuilder(dst), *AsPath(src), AsStrokeRec(strokeRec), AsRect(cullRect), AsMatrix(ctm));
+}
+
+bool sk_path_effect_needs_ctm(const sk_path_effect_t* effect) {
+  return AsPathEffect(effect)->needsCTM();
+}

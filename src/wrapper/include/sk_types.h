@@ -562,6 +562,19 @@ typedef enum {
 } sk_path_effect_trim_mode_t;
 
 typedef struct sk_path_effect_t sk_path_effect_t;
+typedef struct sk_stroke_rec_t sk_stroke_rec_t;
+
+typedef enum {
+  HAIRLINE_SK_STROKE_REC_INIT_STYLE,
+  FILL_SK_STROKE_REC_INIT_STYLE,
+} sk_stroke_rec_init_style_t;
+
+typedef enum {
+  HAIRLINE_SK_STROKE_REC_STYLE,
+  FILL_SK_STROKE_REC_STYLE,
+  STROKE_SK_STROKE_REC_STYLE,
+  STROKE_AND_FILL_SK_STROKE_REC_STYLE,
+} sk_stroke_rec_style_t;
 
 typedef enum { BUTT_SK_STROKE_CAP,
                ROUND_SK_STROKE_CAP,

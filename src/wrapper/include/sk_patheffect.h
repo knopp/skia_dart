@@ -25,6 +25,8 @@ SK_C_API sk_path_effect_t* sk_path_effect_create_2d_line(float width, const sk_m
 SK_C_API sk_path_effect_t* sk_path_effect_create_2d_path(const sk_matrix_t* matrix, const sk_path_t* path);
 SK_C_API sk_path_effect_t* sk_path_effect_create_dash(const float intervals[], int count, float phase);
 SK_C_API sk_path_effect_t* sk_path_effect_create_trim(float start, float stop, sk_path_effect_trim_mode_t mode);
+SK_C_API bool sk_path_effect_filter_path(const sk_path_effect_t* effect, sk_path_builder_t* dst, const sk_path_t* src, sk_stroke_rec_t* strokeRec, const sk_rect_t* cullRect, const sk_matrix_t* ctm);
+SK_C_API bool sk_path_effect_needs_ctm(const sk_path_effect_t* effect);
 
 SK_C_PLUS_PLUS_END_GUARD
 

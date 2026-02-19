@@ -6583,6 +6583,261 @@ external void sk_paint_compute_fast_stroke_bounds(
   ffi.Pointer<sk_rect_t> result,
 );
 
+@ffi.Native<ffi.Pointer<sk_stroke_rec_t> Function(ffi.UnsignedInt)>(
+  symbol: 'sk_stroke_rec_new_init_style',
+  isLeaf: true,
+)
+external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_init_style(
+  int style,
+);
+
+ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_init_style(
+  sk_stroke_rec_init_style_t style,
+) => _sk_stroke_rec_new_init_style(
+  style.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stroke_rec_t> Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.UnsignedInt,
+    ffi.Float,
+  )
+>(symbol: 'sk_stroke_rec_new_paint_style', isLeaf: true)
+external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  int style,
+  double resScale,
+);
+
+ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  sk_paint_style_t style,
+  double resScale,
+) => _sk_stroke_rec_new_paint_style(
+  paint,
+  style.value,
+  resScale,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stroke_rec_t> Function(ffi.Pointer<sk_paint_t>, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint(
+  ffi.Pointer<sk_paint_t> paint,
+  double resScale,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_delete(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_style',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_rec_style_t sk_stroke_rec_get_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_rec_style_t.fromValue(
+  _sk_stroke_rec_get_style(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_width(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_miter(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_cap',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_cap(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_cap_t sk_stroke_rec_get_cap(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_cap_t.fromValue(
+  _sk_stroke_rec_get_cap(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_join',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_join(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_join_t sk_stroke_rec_get_join(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_join_t.fromValue(
+  _sk_stroke_rec_get_join(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_is_hairline_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_is_fill_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_set_fill_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_set_hairline_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float, ffi.Bool)
+>(isLeaf: true)
+external void sk_stroke_rec_set_stroke_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  double width,
+  bool strokeAndFill,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Float,
+  )
+>(symbol: 'sk_stroke_rec_set_stroke_params', isLeaf: true)
+external void _sk_stroke_rec_set_stroke_params(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  int cap,
+  int join,
+  double miterLimit,
+);
+
+void sk_stroke_rec_set_stroke_params(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  sk_stroke_cap_t cap,
+  sk_stroke_join_t join,
+  double miterLimit,
+) => _sk_stroke_rec_set_stroke_params(
+  strokeRec,
+  cap.value,
+  join.value,
+  miterLimit,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_res_scale(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_stroke_rec_set_res_scale(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  double rs,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_need_to_apply(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Pointer<sk_path_t>,
+  )
+>(isLeaf: true)
+external bool sk_stroke_rec_apply_to_path(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_path_builder_t> dst,
+  ffi.Pointer<sk_path_t> src,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external void sk_stroke_rec_apply_to_paint(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_inflation_radius(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_stroke_rec_get_inflation_radius_for_paint_style',
+  isLeaf: true,
+)
+external double _sk_stroke_rec_get_inflation_radius_for_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  int style,
+);
+
+double sk_stroke_rec_get_inflation_radius_for_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  sk_paint_style_t style,
+) => _sk_stroke_rec_get_inflation_radius_for_paint_style(
+  paint,
+  style.value,
+);
+
+@ffi.Native<
+  ffi.Float Function(ffi.UnsignedInt, ffi.Float, ffi.UnsignedInt, ffi.Float)
+>(symbol: 'sk_stroke_rec_get_inflation_radius_for_params', isLeaf: true)
+external double _sk_stroke_rec_get_inflation_radius_for_params(
+  int join,
+  double miterLimit,
+  int cap,
+  double strokeWidth,
+);
+
+double sk_stroke_rec_get_inflation_radius_for_params(
+  sk_stroke_join_t join,
+  double miterLimit,
+  sk_stroke_cap_t cap,
+  double strokeWidth,
+) => _sk_stroke_rec_get_inflation_radius_for_params(
+  join.value,
+  miterLimit,
+  cap.value,
+  strokeWidth,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_stroke_rec_t>)
+>(isLeaf: true)
+external bool sk_stroke_rec_has_equal_effect(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_stroke_rec_t> other,
+);
+
 @ffi.Native<ffi.Pointer<sksg_invalidation_controller_t> Function()>(
   isLeaf: true,
 )
@@ -9654,6 +9909,30 @@ ffi.Pointer<sk_path_effect_t> sk_path_effect_create_trim(
   mode.value,
 );
 
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_path_effect_t>,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external bool sk_path_effect_filter_path(
+  ffi.Pointer<sk_path_effect_t> effect,
+  ffi.Pointer<sk_path_builder_t> dst,
+  ffi.Pointer<sk_path_t> src,
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_rect_t> cullRect,
+  ffi.Pointer<sk_matrix_t> ctm,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
+external bool sk_path_effect_needs_ctm(
+  ffi.Pointer<sk_path_effect_t> effect,
+);
+
 @ffi.Native<ffi.Void Function(ffi.Pointer<gr_recording_context_t>)>(
   isLeaf: true,
 )
@@ -12696,6 +12975,44 @@ enum sk_path_effect_trim_mode_t {
 }
 
 final class sk_path_effect_t extends ffi.Opaque {}
+
+final class sk_stroke_rec_t extends ffi.Opaque {}
+
+enum sk_stroke_rec_init_style_t {
+  HAIRLINE_SK_STROKE_REC_INIT_STYLE(0),
+  FILL_SK_STROKE_REC_INIT_STYLE(1)
+  ;
+
+  final int value;
+  const sk_stroke_rec_init_style_t(this.value);
+
+  static sk_stroke_rec_init_style_t fromValue(int value) => switch (value) {
+    0 => HAIRLINE_SK_STROKE_REC_INIT_STYLE,
+    1 => FILL_SK_STROKE_REC_INIT_STYLE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_stroke_rec_init_style_t: $value',
+    ),
+  };
+}
+
+enum sk_stroke_rec_style_t {
+  HAIRLINE_SK_STROKE_REC_STYLE(0),
+  FILL_SK_STROKE_REC_STYLE(1),
+  STROKE_SK_STROKE_REC_STYLE(2),
+  STROKE_AND_FILL_SK_STROKE_REC_STYLE(3)
+  ;
+
+  final int value;
+  const sk_stroke_rec_style_t(this.value);
+
+  static sk_stroke_rec_style_t fromValue(int value) => switch (value) {
+    0 => HAIRLINE_SK_STROKE_REC_STYLE,
+    1 => FILL_SK_STROKE_REC_STYLE,
+    2 => STROKE_SK_STROKE_REC_STYLE,
+    3 => STROKE_AND_FILL_SK_STROKE_REC_STYLE,
+    _ => throw ArgumentError('Unknown value for sk_stroke_rec_style_t: $value'),
+  };
+}
 
 enum sk_stroke_cap_t {
   BUTT_SK_STROKE_CAP(0),
