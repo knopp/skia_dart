@@ -1373,6 +1373,39 @@ external bool sk_typeface_is_fixed_pitch(
   ffi.Pointer<sk_typeface_t> typeface,
 );
 
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_bold(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_italic(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_synthetic_bold(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_synthetic_oblique(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_get_unique_id(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_typeface_t>)
+>(isLeaf: true)
+external bool sk_typeface_equal(
+  ffi.Pointer<sk_typeface_t> facea,
+  ffi.Pointer<sk_typeface_t> faceb,
+);
+
 @ffi.Native<ffi.Pointer<sk_typeface_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_typeface_t> sk_typeface_create_empty();
 
@@ -1504,13 +1537,15 @@ external int sk_typeface_get_units_per_em(
     ffi.Pointer<ffi.Uint16>,
     ffi.Int,
     ffi.Pointer<ffi.Int32>,
+    ffi.Int,
   )
 >(isLeaf: true)
 external bool sk_typeface_get_kerning_pair_adjustments(
   ffi.Pointer<sk_typeface_t> typeface,
   ffi.Pointer<ffi.Uint16> glyphs,
-  int count,
+  int glyphCount,
   ffi.Pointer<ffi.Int32> adjustments,
+  int adjustmentsCount,
 );
 
 @ffi.Native<
@@ -1536,6 +1571,14 @@ external ffi.Pointer<sk_string_t> sk_typeface_get_post_script_name(
 );
 
 @ffi.Native<
+  ffi.Int Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_string_t>)
+>(isLeaf: true)
+external int sk_typeface_get_resource_name(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<sk_string_t> resourceName,
+);
+
+@ffi.Native<
   ffi.Pointer<sk_stream_asset_t> Function(
     ffi.Pointer<sk_typeface_t>,
     ffi.Pointer<ffi.Int>,
@@ -1544,6 +1587,40 @@ external ffi.Pointer<sk_string_t> sk_typeface_get_post_script_name(
 external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_stream(
   ffi.Pointer<sk_typeface_t> typeface,
   ffi.Pointer<ffi.Int> ttcIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stream_asset_t> Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Int>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_existing_stream(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Int> ttcIndex,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_typeface_get_bounds(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_typeface_t>, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_typeface_serialize_to_data(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int serializeBehavior,
+);
+
+@ffi.Native<ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_data_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_typeface_t> sk_typeface_deserialize_from_data(
+  ffi.Pointer<sk_data_t> data,
 );
 
 @ffi.Native<ffi.Pointer<sk_fontmgr_t> Function()>(isLeaf: true)
@@ -10552,6 +10629,11 @@ external ffi.Pointer<sk_typeface_t> sk_font_get_typeface(
   ffi.Pointer<sk_font_t> font,
 );
 
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_font_t>)>(isLeaf: true)
+external int sk_font_get_typeface_unique_id(
+  ffi.Pointer<sk_font_t> font,
+);
+
 @ffi.Native<
   ffi.Void Function(ffi.Pointer<sk_font_t>, ffi.Pointer<sk_typeface_t>)
 >(isLeaf: true)
@@ -10771,6 +10853,45 @@ external void sk_font_get_paths(
 external double sk_font_get_metrics(
   ffi.Pointer<sk_font_t> font,
   ffi.Pointer<sk_fontmetrics_t> metrics,
+);
+
+@ffi.Native<ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_font_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_font_t> sk_font_make_with_size(
+  ffi.Pointer<sk_font_t> font,
+  double size,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_font_t>, ffi.Pointer<sk_font_t>)>(
+  isLeaf: true,
+)
+external bool sk_font_equals(
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<sk_font_t> other,
+);
+
+@ffi.Native<
+  ffi.Size Function(
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Int,
+    ffi.Pointer<sk_point_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<ffi.Float>,
+  )
+>(isLeaf: true)
+external int sk_font_get_intercepts(
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int glyphCount,
+  ffi.Pointer<sk_point_t> pos,
+  double top,
+  double bottom,
+  ffi.Pointer<sk_paint_t> paint,
+  ffi.Pointer<ffi.Float> intervals,
 );
 
 @ffi.Native<

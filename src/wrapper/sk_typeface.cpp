@@ -81,6 +81,30 @@ bool sk_typeface_is_fixed_pitch(const sk_typeface_t* typeface) {
   return AsTypeface(typeface)->isFixedPitch();
 }
 
+bool sk_typeface_is_bold(const sk_typeface_t* typeface) {
+  return AsTypeface(typeface)->isBold();
+}
+
+bool sk_typeface_is_italic(const sk_typeface_t* typeface) {
+  return AsTypeface(typeface)->isItalic();
+}
+
+bool sk_typeface_is_synthetic_bold(const sk_typeface_t* typeface) {
+  return AsTypeface(typeface)->isSyntheticBold();
+}
+
+bool sk_typeface_is_synthetic_oblique(const sk_typeface_t* typeface) {
+  return AsTypeface(typeface)->isSyntheticOblique();
+}
+
+uint32_t sk_typeface_get_unique_id(const sk_typeface_t* typeface) {
+  return AsTypeface(typeface)->uniqueID();
+}
+
+bool sk_typeface_equal(const sk_typeface_t* facea, const sk_typeface_t* faceb) {
+  return SkTypeface::Equal(AsTypeface(facea), AsTypeface(faceb));
+}
+
 sk_typeface_t* sk_typeface_create_empty(void) {
   return ToTypeface(SkTypeface::MakeEmpty().release());
 }
@@ -125,8 +149,8 @@ int sk_typeface_get_units_per_em(const sk_typeface_t* typeface) {
   return AsTypeface(typeface)->getUnitsPerEm();
 }
 
-bool sk_typeface_get_kerning_pair_adjustments(const sk_typeface_t* typeface, const uint16_t glyphs[], int count, int32_t adjustments[]) {
-  return AsTypeface(typeface)->getKerningPairAdjustments({glyphs, count}, {adjustments, count});
+bool sk_typeface_get_kerning_pair_adjustments(const sk_typeface_t* typeface, const uint16_t glyphs[], int glyphCount, int32_t adjustments[], int adjustmentsCount) {
+  return AsTypeface(typeface)->getKerningPairAdjustments({glyphs, glyphCount}, {adjustments, adjustmentsCount});
 }
 
 sk_localized_strings_t* sk_typeface_create_family_name_iterator(const sk_typeface_t* typeface) {
@@ -150,8 +174,32 @@ sk_string_t* sk_typeface_get_post_script_name(const sk_typeface_t* typeface) {
   }
 }
 
+int sk_typeface_get_resource_name(const sk_typeface_t* typeface, sk_string_t* resourceName) {
+  return AsTypeface(typeface)->getResourceName(AsString(resourceName));
+}
+
 sk_stream_asset_t* sk_typeface_open_stream(const sk_typeface_t* typeface, int* ttcIndex) {
   return ToStreamAsset(AsTypeface(typeface)->openStream(ttcIndex).release());
+}
+
+sk_stream_asset_t* sk_typeface_open_existing_stream(const sk_typeface_t* typeface, int* ttcIndex) {
+  return ToStreamAsset(AsTypeface(typeface)->openExistingStream(ttcIndex).release());
+}
+
+void sk_typeface_get_bounds(const sk_typeface_t* typeface, sk_rect_t* bounds) {
+  *bounds = ToRect(AsTypeface(typeface)->getBounds());
+}
+
+sk_data_t* sk_typeface_serialize_to_data(const sk_typeface_t* typeface, int serializeBehavior) {
+  return ToData(AsTypeface(typeface)->serialize((SkTypeface::SerializeBehavior)serializeBehavior).release());
+}
+
+sk_typeface_t* sk_typeface_deserialize_from_data(const sk_data_t* data) {
+  if (!data) {
+    return nullptr;
+  }
+  SkMemoryStream stream(sk_ref_sp(AsData(data)));
+  return ToTypeface(SkTypeface::MakeDeserialize(&stream, nullptr).release());
 }
 
 // font manager

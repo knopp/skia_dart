@@ -96,6 +96,13 @@ sk_typeface_t* sk_font_get_typeface(const sk_font_t* font) {
   return ToTypeface(AsFont(font)->refTypeface().release());
 }
 
+uint32_t sk_font_get_typeface_unique_id(const sk_font_t* font) {
+  if (const SkTypeface* typeface = AsFont(font)->getTypeface()) {
+    return typeface->uniqueID();
+  }
+  return 0;
+}
+
 void sk_font_set_typeface(sk_font_t* font, sk_typeface_t* value) {
   AsFont(font)->setTypeface(sk_ref_sp(AsTypeface(value)));
 }
@@ -141,7 +148,8 @@ float sk_font_measure_text(const sk_font_t* font, const void* text, size_t byteL
 }
 
 void sk_font_get_widths_bounds(const sk_font_t* font, const uint16_t glyphs[], int count, float widths[], sk_rect_t bounds[], const sk_paint_t* paint) {
-  AsFont(font)->getWidthsBounds({glyphs, count}, {widths, count}, {AsRect(bounds), count}, AsPaint(paint));
+  SkSpan<SkRect> boundsSpan = bounds ? SkSpan<SkRect>{AsRect(bounds), static_cast<size_t>(count)} : SkSpan<SkRect>{};
+  AsFont(font)->getWidthsBounds({glyphs, static_cast<size_t>(count)}, {widths, static_cast<size_t>(count)}, boundsSpan, AsPaint(paint));
 }
 
 void sk_font_get_pos(const sk_font_t* font, const uint16_t glyphs[], int count, sk_point_t pos[], sk_point_t* origin) {
@@ -181,6 +189,26 @@ void sk_font_get_paths(const sk_font_t* font, uint16_t glyphs[], int count, cons
 
 float sk_font_get_metrics(const sk_font_t* font, sk_fontmetrics_t* metrics) {
   return AsFont(font)->getMetrics(AsFontMetrics(metrics));
+}
+
+sk_font_t* sk_font_make_with_size(const sk_font_t* font, float size) {
+  SkFont result = AsFont(font)->makeWithSize(size);
+  return ToFont(new SkFont(result));
+}
+
+bool sk_font_equals(const sk_font_t* font, const sk_font_t* other) {
+  return *AsFont(font) == *AsFont(other);
+}
+
+size_t sk_font_get_intercepts(const sk_font_t* font, const uint16_t glyphs[], int glyphCount, const sk_point_t pos[], float top, float bottom, const sk_paint_t* paint, float intervals[]) {
+  std::vector<SkScalar> result = AsFont(font)->getIntercepts(
+    {glyphs, static_cast<size_t>(glyphCount)},
+    {AsPoint(pos), static_cast<size_t>(glyphCount)},
+    top, bottom, AsPaint(paint));
+  if (intervals != nullptr) {
+    std::copy(result.begin(), result.end(), intervals);
+  }
+  return result.size();
 }
 
 // sk_text_utils

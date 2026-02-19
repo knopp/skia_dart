@@ -49,7 +49,6 @@ class SkEncodedText {
   String? _string;
 }
 
-/// Extension method for converting a [String] to a `Pointer<Utf8>` and length;
 extension on String {
   (Pointer<ffi.Utf8>, int) _toNativeUtf8WithLength({
     Allocator allocator = ffi.malloc,
@@ -150,6 +149,18 @@ class SkFontStyleSet with _NativeMixin<sk_fontstyleset_t> {
 
 typedef SkFontTableTag = int;
 
+enum SkTypefaceSerializeBehavior {
+  doIncludeData(0),
+
+  dontIncludeData(1),
+
+  includeDataIfLocal(2),
+  ;
+
+  const SkTypefaceSerializeBehavior(this.value);
+  final int value;
+}
+
 class SkTypefaceLocalizedString {
   final String language;
   final String string;
@@ -162,6 +173,16 @@ class SkTypefaceLocalizedString {
 
 class SkTypeface with _NativeMixin<sk_typeface_t> {
   SkTypeface.empty() : this._(sk_typeface_create_empty());
+
+  static SkTypeface? deserializeFromData(SkData data) {
+    final ptr = sk_typeface_deserialize_from_data(data._ptr);
+    if (ptr == nullptr) return null;
+    return SkTypeface._(ptr);
+  }
+
+  static bool equal(SkTypeface? a, SkTypeface? b) {
+    return sk_typeface_equal(a?._ptr ?? nullptr, b?._ptr ?? nullptr);
+  }
 
   SkTypeface._(Pointer<sk_typeface_t> ptr) {
     _attach(ptr, _finalizer);
@@ -178,6 +199,16 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
 
   bool get isFixedPitch => sk_typeface_is_fixed_pitch(_ptr);
 
+  bool get isBold => sk_typeface_is_bold(_ptr);
+
+  bool get isItalic => sk_typeface_is_italic(_ptr);
+
+  bool get isSyntheticBold => sk_typeface_is_synthetic_bold(_ptr);
+
+  bool get isSyntheticOblique => sk_typeface_is_synthetic_oblique(_ptr);
+
+  int get uniqueId => sk_typeface_get_unique_id(_ptr);
+
   int get glyphCount => sk_typeface_count_glyphs(_ptr);
 
   int get tableCount => sk_typeface_count_tables(_ptr);
@@ -189,6 +220,21 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
 
   String? get postScriptName =>
       _stringFromSkString(sk_typeface_get_post_script_name(_ptr));
+
+  ({int resourceCount, String resourceName}) get resourceName {
+    final resourceNamePtr = sk_string_new_empty();
+    final resourceCount = sk_typeface_get_resource_name(_ptr, resourceNamePtr);
+    return (
+      resourceCount: resourceCount,
+      resourceName: _stringFromSkString(resourceNamePtr) ?? '',
+    );
+  }
+
+  SkRect get bounds {
+    final ptr = _SkRect.pool[0];
+    sk_typeface_get_bounds(_ptr, ptr);
+    return _SkRect.fromNative(ptr);
+  }
 
   List<SkTypefaceLocalizedString> get localizedFamilyNames {
     final iteratorPtr = sk_typeface_create_family_name_iterator(_ptr);
@@ -300,6 +346,40 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
     return SkData._(ptr);
   }
 
+  Int32List? getKerningPairAdjustments(Uint16List glyphs) {
+    final glyphCount = glyphs.length;
+    final adjustmentsCount = math.max(0, glyphCount - 1);
+    final res = Int32List(adjustmentsCount);
+    final ok = sk_typeface_get_kerning_pair_adjustments(
+      _ptr,
+      glyphs.address,
+      glyphCount,
+      res.address,
+      adjustmentsCount,
+    );
+    if (!ok) {
+      return null;
+    }
+    return res;
+  }
+
+  SkData? serializeToData({
+    SkTypefaceSerializeBehavior behavior =
+        SkTypefaceSerializeBehavior.includeDataIfLocal,
+  }) {
+    final ptr = sk_typeface_serialize_to_data(_ptr, behavior.value);
+    if (ptr == nullptr) return null;
+    return SkData._(ptr);
+  }
+
+  ({SkStream stream, int ttcIndex})? openStreamWithIndex() {
+    final ttcIndex = _Int.pool[0];
+    ttcIndex.value = 0;
+    final ptr = sk_typeface_open_stream(_ptr, ttcIndex);
+    if (ptr.address == 0) return null;
+    return (stream: SkStream._(ptr.cast()), ttcIndex: ttcIndex.value);
+  }
+
   SkStream? openStream(int? ttcIndex) {
     Pointer<Int> indexPointer = nullptr;
     if (ttcIndex != null) {
@@ -307,6 +387,20 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
       indexPointer.value = ttcIndex;
     }
     final ptr = sk_typeface_open_stream(_ptr, indexPointer);
+    if (ptr.address == 0) return null;
+    return SkStream._(ptr.cast());
+  }
+
+  ({SkStream stream, int ttcIndex})? openExistingStreamWithIndex() {
+    final ttcIndex = _Int.pool[0];
+    ttcIndex.value = 0;
+    final ptr = sk_typeface_open_existing_stream(_ptr, ttcIndex);
+    if (ptr.address == 0) return null;
+    return (stream: SkStream._(ptr.cast()), ttcIndex: ttcIndex.value);
+  }
+
+  SkStream? openExistingStream() {
+    final ptr = sk_typeface_open_existing_stream(_ptr, nullptr);
     if (ptr.address == 0) return null;
     return SkStream._(ptr.cast());
   }
