@@ -4800,6 +4800,24 @@ external void sk_vertices_ref(
   ffi.Pointer<sk_vertices_t> cvertices,
 );
 
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external int sk_vertices_get_unique_id(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_vertices_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_vertices_get_bounds(
+  ffi.Pointer<sk_vertices_t> cvertices,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external int sk_vertices_get_approximate_size(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
 @ffi.Native<
   ffi.Pointer<sk_vertices_t> Function(
     ffi.UnsignedInt,

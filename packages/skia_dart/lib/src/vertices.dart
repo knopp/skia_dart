@@ -17,6 +17,16 @@ class SkVertices with _NativeMixin<sk_vertices_t> {
     _attach(ptr, _finalizer);
   }
 
+  int get uniqueId => sk_vertices_get_unique_id(_ptr);
+
+  SkRect get bounds {
+    final rect = _SkRect.pool[0];
+    sk_vertices_get_bounds(_ptr, rect);
+    return _SkRect.fromNative(rect);
+  }
+
+  int get approximateSize => sk_vertices_get_approximate_size(_ptr);
+
   static SkVertices? copy(
     SkVerticesVertexMode mode,
     List<SkPoint> positions, {
