@@ -6,17 +6,30 @@ import 'package:test/test.dart';
 import 'goldens.dart';
 
 abstract class TestContextProvider {
-  TestContext createContext();
+  GraphiteTestContext createContext();
   bool get supported;
   String get name;
 }
 
-abstract class TestContext {
+abstract class GraphiteTestContext {
   GraphiteContext get context;
   void tearDown();
+
+  static GraphiteTestContext? any() {
+    final providers = [
+      MetalTestContextProvider(),
+      DawnTestContextProvider(),
+    ];
+    for (final provider in providers) {
+      if (provider.supported) {
+        return provider.createContext();
+      }
+    }
+    return null;
+  }
 }
 
-class DawnTestContext extends TestContext {
+class DawnTestContext extends GraphiteTestContext {
   late final WgpuInstance _instance;
   late final WgpuDevice _device;
   late final WgpuQueue _queue;
@@ -55,7 +68,7 @@ class DawnTestContext extends TestContext {
 
 class DawnTestContextProvider implements TestContextProvider {
   @override
-  TestContext createContext() {
+  GraphiteTestContext createContext() {
     return DawnTestContext();
   }
 
@@ -66,7 +79,7 @@ class DawnTestContextProvider implements TestContextProvider {
   String get name => 'dawn';
 }
 
-class MetalTestContext implements TestContext {
+class MetalTestContext implements GraphiteTestContext {
   late final MetalDevice _device;
   late final MetalCommandQueue _commandQueue;
   late final GraphiteContext _context;
@@ -93,7 +106,7 @@ class MetalTestContext implements TestContext {
 
 class MetalTestContextProvider implements TestContextProvider {
   @override
-  TestContext createContext() {
+  GraphiteTestContext createContext() {
     return MetalTestContext();
   }
 
@@ -116,7 +129,7 @@ void main() {
           ? 'Context not supported'
           : null,
       () {
-        late TestContext testContext;
+        late GraphiteTestContext testContext;
         late GraphiteContext context;
 
         setUp(() {

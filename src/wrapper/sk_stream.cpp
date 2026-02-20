@@ -9,8 +9,8 @@
 
 #include "wrapper/include/sk_stream.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkStream.h"
+#include "wrapper/sk_types_priv.h"
 
 // file stream
 
@@ -20,6 +20,10 @@ sk_stream_filestream_t* sk_filestream_new(const char* path) {
 
 bool sk_filestream_is_valid(sk_stream_filestream_t* cstream) {
   return AsFileStream(cstream)->isValid();
+}
+
+void sk_filestream_close(sk_stream_filestream_t* cstream) {
+  AsFileStream(cstream)->close();
 }
 
 // memory stream
@@ -42,6 +46,14 @@ sk_stream_memorystream_t* sk_memorystream_new_with_skdata(sk_data_t* data) {
 
 void sk_memorystream_set_memory(sk_stream_memorystream_t* cmemorystream, const void* data, size_t length, bool copyData) {
   AsMemoryStream(cmemorystream)->setMemory(data, length, copyData);
+}
+
+void sk_memorystream_set_data(sk_stream_memorystream_t* cmemorystream, sk_data_t* data) {
+  AsMemoryStream(cmemorystream)->setData(sk_ref_sp(AsData(data)));
+}
+
+const void* sk_memorystream_get_at_pos(sk_stream_memorystream_t* cmemorystream) {
+  return AsMemoryStream(cmemorystream)->getAtPos();
 }
 
 // stream
@@ -74,6 +86,10 @@ bool sk_stream_read_s32(sk_stream_t* cstream, int32_t* buffer) {
   return AsStream(cstream)->readS32(buffer);
 }
 
+bool sk_stream_read_s64(sk_stream_t* cstream, int64_t* buffer) {
+  return AsStream(cstream)->readS64(buffer);
+}
+
 bool sk_stream_read_u8(sk_stream_t* cstream, uint8_t* buffer) {
   return AsStream(cstream)->readU8(buffer);
 }
@@ -86,8 +102,20 @@ bool sk_stream_read_u32(sk_stream_t* cstream, uint32_t* buffer) {
   return AsStream(cstream)->readU32(buffer);
 }
 
+bool sk_stream_read_u64(sk_stream_t* cstream, uint64_t* buffer) {
+  return AsStream(cstream)->readU64(buffer);
+}
+
 bool sk_stream_read_bool(sk_stream_t* cstream, bool* buffer) {
   return AsStream(cstream)->readBool(buffer);
+}
+
+bool sk_stream_read_scalar(sk_stream_t* cstream, float* buffer) {
+  return AsStream(cstream)->readScalar(buffer);
+}
+
+bool sk_stream_read_packed_uint(sk_stream_t* cstream, size_t* buffer) {
+  return AsStream(cstream)->readPackedUInt(buffer);
 }
 
 bool sk_stream_rewind(sk_stream_t* cstream) {
@@ -144,6 +172,10 @@ bool sk_filewstream_is_valid(sk_wstream_filestream_t* cstream) {
   return AsFileWStream(cstream)->isValid();
 }
 
+void sk_filewstream_fsync(sk_wstream_filestream_t* cstream) {
+  AsFileWStream(cstream)->fsync();
+}
+
 // dynamic memory W stream
 
 sk_wstream_dynamicmemorystream_t* sk_dynamicmemorywstream_new(void) {
@@ -164,6 +196,22 @@ void sk_dynamicmemorywstream_copy_to(sk_wstream_dynamicmemorystream_t* cstream, 
 
 bool sk_dynamicmemorywstream_write_to_stream(sk_wstream_dynamicmemorystream_t* cstream, sk_wstream_t* dst) {
   return AsDynamicMemoryWStream(cstream)->writeToStream(AsWStream(dst));
+}
+
+bool sk_dynamicmemorywstream_read(sk_wstream_dynamicmemorystream_t* cstream, void* buffer, size_t offset, size_t size) {
+  return AsDynamicMemoryWStream(cstream)->read(buffer, offset, size);
+}
+
+void sk_dynamicmemorywstream_reset(sk_wstream_dynamicmemorystream_t* cstream) {
+  AsDynamicMemoryWStream(cstream)->reset();
+}
+
+void sk_dynamicmemorywstream_pad_to_align4(sk_wstream_dynamicmemorystream_t* cstream) {
+  AsDynamicMemoryWStream(cstream)->padToAlign4();
+}
+
+sk_wstream_t* sk_nullwstream_new(void) {
+  return ToWStream(new SkNullWStream());
 }
 
 // W stream
@@ -194,6 +242,10 @@ bool sk_wstream_write_16(sk_wstream_t* cstream, uint16_t value) {
 
 bool sk_wstream_write_32(sk_wstream_t* cstream, uint32_t value) {
   return AsWStream(cstream)->write32(value);
+}
+
+bool sk_wstream_write_64(sk_wstream_t* cstream, uint64_t value) {
+  return AsWStream(cstream)->write64(value);
 }
 
 bool sk_wstream_write_text(sk_wstream_t* cstream, const char* value) {

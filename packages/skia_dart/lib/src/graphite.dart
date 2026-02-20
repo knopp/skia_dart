@@ -43,7 +43,8 @@ class GraphiteRecording with _NativeMixin<skgpu_graphite_recording_t> {
   }
 }
 
-class GraphiteRecorder with _NativeMixin<skgpu_graphite_recorder_t> {
+class GraphiteRecorder extends SkRecorder
+    with _NativeMixin<skgpu_graphite_recorder_t> {
   GraphiteRecorder._(Pointer<skgpu_graphite_recorder_t> ptr) {
     _attach(ptr, _finalizer);
   }
@@ -123,6 +124,9 @@ class GraphiteRecorder with _NativeMixin<skgpu_graphite_recorder_t> {
     }
     return SkSurface._(ptr);
   }
+
+  @override
+  Pointer<sk_recorder_t> get _recorderPtr => _ptr.cast();
 }
 
 class GraphiteContextTransfer {

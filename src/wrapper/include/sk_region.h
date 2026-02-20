@@ -18,12 +18,16 @@ SK_C_PLUS_PLUS_BEGIN_GUARD
 // sk_region_t
 
 SK_C_API sk_region_t* sk_region_new(void);
+SK_C_API sk_region_t* sk_region_new_from_region(const sk_region_t* region);
+SK_C_API sk_region_t* sk_region_new_from_rect(const sk_irect_t* rect);
 SK_C_API void sk_region_delete(sk_region_t* r);
 SK_C_API bool sk_region_is_empty(const sk_region_t* r);
 SK_C_API bool sk_region_is_rect(const sk_region_t* r);
 SK_C_API bool sk_region_is_complex(const sk_region_t* r);
 SK_C_API void sk_region_get_bounds(const sk_region_t* r, sk_irect_t* rect);
 SK_C_API void sk_region_get_boundary_path(const sk_region_t* r, sk_path_t* path);
+SK_C_API bool sk_region_add_boundary_path(const sk_region_t* r, sk_path_builder_t* pathBuilder);
+SK_C_API int sk_region_compute_region_complexity(const sk_region_t* r);
 SK_C_API bool sk_region_set_empty(sk_region_t* r);
 SK_C_API bool sk_region_set_rect(sk_region_t* r, const sk_irect_t* rect);
 SK_C_API bool sk_region_set_rects(sk_region_t* r, const sk_irect_t* rects, int count);
@@ -40,6 +44,8 @@ SK_C_API bool sk_region_quick_reject(const sk_region_t* r, const sk_region_t* re
 SK_C_API void sk_region_translate(sk_region_t* r, int x, int y);
 SK_C_API bool sk_region_op_rect(sk_region_t* r, const sk_irect_t* rect, sk_region_op_t op);
 SK_C_API bool sk_region_op(sk_region_t* r, const sk_region_t* region, sk_region_op_t op);
+SK_C_API size_t sk_region_write_to_memory(const sk_region_t* r, void* buffer);
+SK_C_API size_t sk_region_read_from_memory(sk_region_t* r, const void* buffer, size_t length);
 
 // sk_region_iterator_t
 

@@ -9,10 +9,11 @@
 
 #include "wrapper/include/sk_imagefilter.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkColorFilter.h"
+#include "include/core/SkData.h"
 #include "include/core/SkImageFilter.h"
 #include "include/effects/SkImageFilters.h"
+#include "wrapper/sk_types_priv.h"
 
 // sk_imagefilter_t
 
@@ -22,6 +23,66 @@ void sk_imagefilter_ref(sk_imagefilter_t* cfilter) {
 
 void sk_imagefilter_unref(sk_imagefilter_t* cfilter) {
   SkSafeUnref(AsImageFilter(cfilter));
+}
+
+void sk_imagefilter_filter_bounds(const sk_imagefilter_t* filter, const sk_irect_t* src, const sk_matrix_t* ctm, sk_imagefilter_map_direction_t mapDirection, const sk_irect_t* inputRect, sk_irect_t* result) {
+  *result = ToIRect(AsImageFilter(filter)->filterBounds(
+      *AsIRect(src),
+      AsMatrix(ctm),
+      (SkImageFilter::MapDirection)mapDirection,
+      AsIRect(inputRect)));
+}
+
+sk_colorfilter_t* sk_imagefilter_is_color_filter_node(const sk_imagefilter_t* filter) {
+  SkColorFilter* colorFilter = nullptr;
+  if (!AsImageFilter(filter)->isColorFilterNode(&colorFilter)) {
+    return nullptr;
+  }
+  return ToColorFilter(colorFilter);
+}
+
+sk_colorfilter_t* sk_imagefilter_as_a_color_filter(const sk_imagefilter_t* filter) {
+  SkColorFilter* colorFilter = nullptr;
+  if (!AsImageFilter(filter)->asAColorFilter(&colorFilter)) {
+    return nullptr;
+  }
+  return ToColorFilter(colorFilter);
+}
+
+int sk_imagefilter_count_inputs(const sk_imagefilter_t* filter) {
+  return AsImageFilter(filter)->countInputs();
+}
+
+sk_imagefilter_t* sk_imagefilter_get_input(const sk_imagefilter_t* filter, int index) {
+  const SkImageFilter* input = AsImageFilter(filter)->getInput(index);
+  if (!input) {
+    return nullptr;
+  }
+  return ToImageFilter(sk_ref_sp(const_cast<SkImageFilter*>(input)).release());
+}
+
+void sk_imagefilter_compute_fast_bounds(const sk_imagefilter_t* filter, const sk_rect_t* bounds, sk_rect_t* result) {
+  *result = ToRect(AsImageFilter(filter)->computeFastBounds(*AsRect(bounds)));
+}
+
+bool sk_imagefilter_can_compute_fast_bounds(const sk_imagefilter_t* filter) {
+  return AsImageFilter(filter)->canComputeFastBounds();
+}
+
+sk_imagefilter_t* sk_imagefilter_make_with_local_matrix(const sk_imagefilter_t* filter, const sk_matrix_t* matrix) {
+  return ToImageFilter(AsImageFilter(filter)->makeWithLocalMatrix(AsMatrix(matrix)).release());
+}
+
+sk_imagefilter_t* sk_imagefilter_deserialize(const void* data, size_t size) {
+  return ToImageFilter(SkImageFilter::Deserialize(data, size).release());
+}
+
+sk_imagefilter_t* sk_imagefilter_deserialize_from_data(const sk_data_t* data) {
+  if (!data) {
+    return nullptr;
+  }
+  const SkData* skData = AsData(data);
+  return ToImageFilter(SkImageFilter::Deserialize(skData->data(), skData->size()).release());
 }
 
 sk_imagefilter_t* sk_imagefilter_new_arithmetic(float k1, float k2, float k3, float k4, bool enforcePMColor, const sk_imagefilter_t* background, const sk_imagefilter_t* foreground, const sk_rect_t* cropRect) {

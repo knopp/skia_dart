@@ -143,6 +143,11 @@ typedef enum {
 } sk_surfaceprops_flags_t;
 
 typedef enum {
+  DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE,
+  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE,
+} sk_surface_content_change_mode_t;
+
+typedef enum {
   IMAGE_DECODING_LAZY_DECODE,
   IMAGE_DECODING_PRE_DECODE,
 } sk_imagedecodingstrategy_t;
@@ -208,6 +213,7 @@ typedef struct sk_colorinfo_t sk_colorinfo_t;
     encoded data or other means.
 */
 typedef struct sk_image_t sk_image_t;
+typedef struct sk_recorder_t sk_recorder_t;
 /**
     A sk_maskfilter_t is an object that perform transformations on an
     alpha-channel mask before drawing it; it may be installed into a
@@ -504,6 +510,7 @@ typedef enum {
   COULD_NOT_REWIND_SK_CODEC_RESULT,
   INTERNAL_ERROR_SK_CODEC_RESULT,
   UNIMPLEMENTED_SK_CODEC_RESULT,
+  OUT_OF_MEMORY_SK_CODEC_RESULT,
 } sk_codec_result_t;
 
 typedef enum {
@@ -560,6 +567,19 @@ typedef enum {
 } sk_path_effect_trim_mode_t;
 
 typedef struct sk_path_effect_t sk_path_effect_t;
+typedef struct sk_stroke_rec_t sk_stroke_rec_t;
+
+typedef enum {
+  HAIRLINE_SK_STROKE_REC_INIT_STYLE,
+  FILL_SK_STROKE_REC_INIT_STYLE,
+} sk_stroke_rec_init_style_t;
+
+typedef enum {
+  HAIRLINE_SK_STROKE_REC_STYLE,
+  FILL_SK_STROKE_REC_STYLE,
+  STROKE_SK_STROKE_REC_STYLE,
+  STROKE_AND_FILL_SK_STROKE_REC_STYLE,
+} sk_stroke_rec_style_t;
 
 typedef enum { BUTT_SK_STROKE_CAP,
                ROUND_SK_STROKE_CAP,
@@ -805,6 +825,13 @@ typedef enum {
 } sk_image_caching_hint_t;
 
 typedef enum {
+  NONE_SK_TEXTURE_COMPRESSION_TYPE,
+  ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+  BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE,
+} sk_texture_compression_type_t;
+
+typedef enum {
   NONE_SK_BITMAP_ALLOC_FLAGS = 0,
   ZERO_PIXELS_SK_BITMAP_ALLOC_FLAGS = 1 << 0,
 } sk_bitmap_allocflags_t;
@@ -978,6 +1005,7 @@ typedef enum {
 
 typedef struct sk_textblob_t sk_textblob_t;
 typedef struct sk_textblob_builder_t sk_textblob_builder_t;
+typedef struct sk_textblob_iter_t sk_textblob_iter_t;
 
 typedef struct {
   void* glyphs;
@@ -985,6 +1013,12 @@ typedef struct {
   void* utf8text;
   void* clusters;
 } sk_textblob_builder_runbuffer_t;
+
+typedef struct {
+  sk_typeface_t* typeface;
+  int glyphCount;
+  const uint16_t* glyphIndices;
+} sk_textblob_iter_run_t;
 
 typedef struct {
   float fSCos;
@@ -1052,6 +1086,11 @@ typedef enum {
   NEAREST_SK_MIPMAP_MODE,
   LINEAR_SK_MIPMAP_MODE,
 } sk_mipmap_mode_t;
+
+typedef enum {
+  FORWARD_SK_IMAGEFILTER_MAP_DIRECTION,
+  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION,
+} sk_imagefilter_map_direction_t;
 
 typedef struct {
   float fB;

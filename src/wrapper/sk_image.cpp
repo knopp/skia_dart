@@ -11,6 +11,7 @@
 
 #include "include/core/SkImage.h"
 #include "include/core/SkPicture.h"
+#include "include/core/SkTextureCompressionType.h"
 #include "include/gpu/ganesh/SkImageGanesh.h"
 #include "wrapper/sk_types_priv.h"
 
@@ -36,6 +37,10 @@ sk_image_t* sk_image_new_raster_copy_with_pixmap(const sk_pixmap_t* pixmap) {
 
 sk_image_t* sk_image_new_raster_data(const sk_imageinfo_t* cinfo, sk_data_t* pixels, size_t rowBytes) {
   return ToImage(SkImages::RasterFromData(*AsImageInfo(cinfo), sk_ref_sp(AsData(pixels)), rowBytes).release());
+}
+
+sk_image_t* sk_image_new_raster_from_compressed_texture_data(const sk_data_t* cdata, int width, int height, sk_texture_compression_type_t type) {
+  return ToImage(SkImages::RasterFromCompressedTextureData(sk_ref_sp(AsData(cdata)), width, height, (SkTextureCompressionType)type).release());
 }
 
 sk_image_t* sk_image_new_raster(const sk_pixmap_t* pixmap, sk_image_raster_release_proc releaseProc, void* context) {
@@ -94,6 +99,10 @@ bool sk_image_is_alpha_only(const sk_image_t* image) {
   return AsImage(image)->isAlphaOnly();
 }
 
+bool sk_image_is_opaque(const sk_image_t* image) {
+  return AsImage(image)->isOpaque();
+}
+
 sk_shader_t* sk_image_make_shader(const sk_image_t* image, sk_shader_tilemode_t tileX, sk_shader_tilemode_t tileY, const sk_sampling_options_t* sampling, const sk_matrix_t* cmatrix) {
   SkMatrix m;
   if (cmatrix) {
@@ -118,12 +127,16 @@ bool sk_image_is_texture_backed(const sk_image_t* image) {
   return AsImage(image)->isTextureBacked();
 }
 
+size_t sk_image_texture_size(const sk_image_t* image) {
+  return AsImage(image)->textureSize();
+}
+
 bool sk_image_is_lazy_generated(const sk_image_t* image) {
   return AsImage(image)->isLazyGenerated();
 }
 
-bool sk_image_is_valid(const sk_image_t* image, gr_recording_context_t* context) {
-  return SK_ONLY_GPU(AsImage(image)->isValid(AsGrRecordingContext(context)->asRecorder()), false);
+bool sk_image_is_valid(const sk_image_t* image, sk_recorder_t* recorder) {
+  return AsImage(image)->isValid(AsRecorder(recorder));
 }
 
 bool sk_image_read_pixels(const sk_image_t* image, const sk_imageinfo_t* dstInfo, void* dstPixels, size_t dstRowBytes, int srcX, int srcY, sk_image_caching_hint_t cachingHint) {
@@ -147,9 +160,9 @@ sk_image_t* sk_image_make_subset_raster(const sk_image_t* cimage, const sk_irect
   return ToImage(AsImage(cimage)->makeSubset(nullptr, *AsIRect(subset), props).release());
 }
 
-sk_image_t* sk_image_make_subset(const sk_image_t* cimage, gr_direct_context_t* context, const sk_irect_t* subset) {
+sk_image_t* sk_image_make_subset(const sk_image_t* cimage, sk_recorder_t* recorder, const sk_irect_t* subset) {
   SkImage::RequiredProperties props;
-  return SK_ONLY_GPU(ToImage(AsImage(cimage)->makeSubset(AsGrDirectContext(context)->asRecorder(), *AsIRect(subset), props).release()), nullptr);
+  return SK_ONLY_GPU(ToImage(AsImage(cimage)->makeSubset(AsSkRecorder(recorder), *AsIRect(subset), props).release()), nullptr);
 }
 
 sk_image_t* sk_image_make_texture_image(const sk_image_t* cimage, gr_direct_context_t* context, bool mipmapped, bool budgeted) {
@@ -162,6 +175,41 @@ sk_image_t* sk_image_make_non_texture_image(const sk_image_t* cimage) {
 
 sk_image_t* sk_image_make_raster_image(const sk_image_t* cimage) {
   return ToImage(AsImage(cimage)->makeRasterImage().release());
+}
+
+bool sk_image_has_mipmaps(const sk_image_t* cimage) {
+  return AsImage(cimage)->hasMipmaps();
+}
+
+bool sk_image_is_protected(const sk_image_t* cimage) {
+  return AsImage(cimage)->isProtected();
+}
+
+sk_image_t* sk_image_with_default_mipmaps(const sk_image_t* cimage) {
+  return ToImage(AsImage(cimage)->withDefaultMipmaps().release());
+}
+
+sk_image_t* sk_image_reinterpret_color_space(const sk_image_t* cimage, const sk_colorspace_t* colorSpace) {
+  return ToImage(AsImage(cimage)->reinterpretColorSpace(sk_ref_sp(AsColorSpace(colorSpace))).release());
+}
+
+sk_image_t* sk_image_make_color_space(const sk_image_t* cimage, sk_recorder_t* recorder, const sk_colorspace_t* colorSpace, bool mipmapped) {
+  SkImage::RequiredProperties props;
+  props.fMipmapped = mipmapped;
+  return ToImage(AsImage(cimage)->makeColorSpace(AsRecorder(recorder), sk_ref_sp(AsColorSpace(colorSpace)), props).release());
+}
+
+sk_image_t* sk_image_make_color_type_and_color_space(const sk_image_t* cimage, sk_recorder_t* recorder, sk_colortype_t colorType, const sk_colorspace_t* colorSpace, bool mipmapped) {
+  SkImage::RequiredProperties props;
+  props.fMipmapped = mipmapped;
+  return ToImage(AsImage(cimage)->makeColorTypeAndColorSpace(AsRecorder(recorder), (SkColorType)colorType, sk_ref_sp(AsColorSpace(colorSpace)), props).release());
+}
+
+sk_image_t* sk_image_make_scaled(const sk_image_t* cimage, sk_recorder_t* recorder, const sk_imageinfo_t* info, const sk_sampling_options_t* sampling, const sk_surfaceprops_t* props) {
+  if (props) {
+    return ToImage(AsImage(cimage)->makeScaled(AsRecorder(recorder), *AsImageInfo(info), *AsSamplingOptions(sampling), *AsSurfaceProps(props)).release());
+  }
+  return ToImage(AsImage(cimage)->makeScaled(AsRecorder(recorder), *AsImageInfo(info), *AsSamplingOptions(sampling)).release());
 }
 
 sk_image_t* sk_image_make_with_filter_raster(const sk_image_t* cimage, const sk_imagefilter_t* filter, const sk_irect_t* subset, const sk_irect_t* clipBounds, sk_irect_t* outSubset, sk_ipoint_t* outOffset) {

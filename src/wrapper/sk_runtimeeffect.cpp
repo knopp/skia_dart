@@ -7,11 +7,35 @@
 
 #include "wrapper/include/sk_runtimeeffect.h"
 
-#include "wrapper/include/sk_types.h"
-#include "wrapper/sk_types_priv.h"
+#include <cstring>
+
 #include "include/core/SkColorFilter.h"
 #include "include/core/SkShader.h"
 #include "include/effects/SkRuntimeEffect.h"
+#include "wrapper/include/sk_types.h"
+#include "wrapper/sk_types_priv.h"
+
+namespace {
+void copy_uniform(
+    const SkRuntimeEffect::Uniform* uniform,
+    sk_runtimeeffect_uniform_t* out) {
+  out->fName = uniform->name.data();
+  out->fNameLength = uniform->name.size();
+  out->fOffset = uniform->offset;
+  out->fType = static_cast<sk_runtimeeffect_uniform_type_t>(uniform->type);
+  out->fCount = uniform->count;
+  out->fFlags = static_cast<sk_runtimeeffect_uniform_flags_t>(uniform->flags);
+}
+
+void copy_child(
+    const SkRuntimeEffect::Child* child,
+    sk_runtimeeffect_child_t* out) {
+  out->fName = child->name.data();
+  out->fNameLength = child->name.size();
+  out->fType = static_cast<sk_runtimeeffect_child_type_t>(child->type);
+  out->fIndex = child->index;
+}
+}  // namespace
 
 sk_runtimeeffect_t* sk_runtimeeffect_make_for_color_filter(sk_string_t* sksl, sk_string_t* error) {
   auto [effect, errorMessage] = SkRuntimeEffect::MakeForColorFilter(AsString(*sksl));
@@ -87,13 +111,11 @@ void sk_runtimeeffect_get_uniform_name(const sk_runtimeeffect_t* effect, int ind
 
 void sk_runtimeeffect_get_uniform_from_index(const sk_runtimeeffect_t* effect, int index, sk_runtimeeffect_uniform_t* cuniform) {
   auto uniforms = AsRuntimeEffect(effect)->uniforms();
-  auto uniform = uniforms.begin() + index;
-  *cuniform = *ToRuntimeEffectUniform(uniform);
-  // return ToRuntimeEffectUniform(&(*uniform));
+  copy_uniform(&uniforms[index], cuniform);
 }
 
 void sk_runtimeeffect_get_uniform_from_name(const sk_runtimeeffect_t* effect, const char* name, size_t len, sk_runtimeeffect_uniform_t* cuniform) {
-  *cuniform = *ToRuntimeEffectUniform(AsRuntimeEffect(effect)->findUniform(std::string_view(name, len)));
+  copy_uniform(AsRuntimeEffect(effect)->findUniform(std::string_view(name, len)), cuniform);
 }
 
 size_t sk_runtimeeffect_get_children_size(const sk_runtimeeffect_t* effect) {
@@ -108,11 +130,9 @@ void sk_runtimeeffect_get_child_name(const sk_runtimeeffect_t* effect, int index
 
 void sk_runtimeeffect_get_child_from_index(const sk_runtimeeffect_t* effect, int index, sk_runtimeeffect_child_t* cchild) {
   auto children = AsRuntimeEffect(effect)->children();
-  auto child = children.begin() + index;
-  *cchild = *ToRuntimeEffectChild(child);
-  // return ToRuntimeEffectUniform(&(*child));
+  copy_child(&children[index], cchild);
 }
 
 void sk_runtimeeffect_get_child_from_name(const sk_runtimeeffect_t* effect, const char* name, size_t len, sk_runtimeeffect_child_t* cchild) {
-  *cchild = *ToRuntimeEffectChild(AsRuntimeEffect(effect)->findChild(std::string_view(name, len)));
+  copy_child(AsRuntimeEffect(effect)->findChild(std::string_view(name, len)), cchild);
 }

@@ -253,6 +253,15 @@ enum SkAlphaType {
   const SkAlphaType(this._value);
   final sk_alphatype_t _value;
 
+  /// Returns true if SkAlphaType equals [SkAlphaType.opaque].
+  ///
+  /// [SkAlphaType.opaque] is a hint that the SkColorType is opaque, or that all
+  /// alpha values are set to their 1.0 equivalent. If SkAlphaType is
+  /// [SkAlphaType.opaque], and SkColorType is not opaque, then the result of
+  /// drawing any pixel with a alpha value less than 1.0 is undefined.
+
+  bool get isOpaque => this == opaque;
+
   static SkAlphaType fromNative(sk_alphatype_t value) {
     return values.firstWhere((e) => e._value == value);
   }

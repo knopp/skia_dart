@@ -30,6 +30,12 @@ SK_C_API sk_textblob_t* sk_textblob_make_from_pos_h_glyphs(const uint16_t* glyph
 SK_C_API sk_textblob_t* sk_textblob_make_from_pos_glyphs(const uint16_t* glyphs, size_t glyphCount, const sk_point_t* pos, size_t posCount, const sk_font_t* font);
 SK_C_API sk_textblob_t* sk_textblob_make_from_rsxform_glyphs(const uint16_t* glyphs, size_t glyphCount, const sk_rsxform_t* xform, size_t xformCount, const sk_font_t* font);
 
+// sk_textblob_iter_t
+
+SK_C_API sk_textblob_iter_t* sk_textblob_iter_new(const sk_textblob_t* blob);
+SK_C_API void sk_textblob_iter_delete(sk_textblob_iter_t* iter);
+SK_C_API bool sk_textblob_iter_next(sk_textblob_iter_t* iter, sk_textblob_iter_run_t* run);
+
 // sk_textblob_builder_t
 
 SK_C_API sk_textblob_builder_t* sk_textblob_builder_new(void);

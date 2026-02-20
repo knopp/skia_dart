@@ -17,6 +17,8 @@
 #include "include/core/SkPathUtils.h"
 #include "include/core/SkShader.h"
 
+#include <cstring>
+
 sk_paint_t* sk_paint_new(void) {
   return ToPaint(new SkPaint());
 }
@@ -39,6 +41,47 @@ bool sk_paint_is_antialias(const sk_paint_t* cpaint) {
 
 void sk_paint_set_antialias(sk_paint_t* cpaint, bool aa) {
   AsPaint(cpaint)->setAntiAlias(aa);
+}
+
+bool sk_paint_equals(const sk_paint_t* a, const sk_paint_t* b) {
+  return *AsPaint(a) == *AsPaint(b);
+}
+
+uint32_t sk_paint_get_hash(const sk_paint_t* paint) {
+  const SkPaint* p = AsPaint(paint);
+  uint64_t h = 1469598103934665603ull;
+  auto mix = [&h](uint64_t v) {
+    h ^= v;
+    h *= 1099511628211ull;
+  };
+  auto mix_f32 = [&mix](float f) {
+    uint32_t bits = 0;
+    std::memcpy(&bits, &f, sizeof(bits));
+    mix(bits);
+  };
+
+  mix(reinterpret_cast<uintptr_t>(p->getPathEffect()));
+  mix(reinterpret_cast<uintptr_t>(p->getShader()));
+  mix(reinterpret_cast<uintptr_t>(p->getMaskFilter()));
+  mix(reinterpret_cast<uintptr_t>(p->getColorFilter()));
+  mix(reinterpret_cast<uintptr_t>(p->getBlender()));
+  mix(reinterpret_cast<uintptr_t>(p->getImageFilter()));
+
+  const SkColor4f c = p->getColor4f();
+  mix_f32(c.fR);
+  mix_f32(c.fG);
+  mix_f32(c.fB);
+  mix_f32(c.fA);
+  mix_f32(p->getStrokeWidth());
+  mix_f32(p->getStrokeMiter());
+
+  mix(static_cast<uint8_t>(p->isAntiAlias()));
+  mix(static_cast<uint8_t>(p->isDither()));
+  mix(static_cast<uint8_t>(p->getStrokeCap()));
+  mix(static_cast<uint8_t>(p->getStrokeJoin()));
+  mix(static_cast<uint8_t>(p->getStyle()));
+
+  return static_cast<uint32_t>(h ^ (h >> 32));
 }
 
 sk_color_t sk_paint_get_color(const sk_paint_t* cpaint) {
@@ -87,6 +130,10 @@ sk_paint_style_t sk_paint_get_style(const sk_paint_t* cpaint) {
 
 void sk_paint_set_style(sk_paint_t* cpaint, sk_paint_style_t style) {
   AsPaint(cpaint)->setStyle((SkPaint::Style)style);
+}
+
+void sk_paint_set_stroke(sk_paint_t* cpaint, bool isStroke) {
+  AsPaint(cpaint)->setStroke(isStroke);
 }
 
 float sk_paint_get_stroke_width(const sk_paint_t* cpaint) {
@@ -179,4 +226,20 @@ void sk_paint_set_path_effect(sk_paint_t* cpaint, sk_path_effect_t* effect) {
 
 bool sk_paint_get_fill_path(const sk_paint_t* cpaint, const sk_path_t* src, sk_path_builder_t* dst, const sk_rect_t* cullRect, const sk_matrix_t* cmatrix) {
   return skpathutils::FillPathWithPaint(*AsPath(src), *AsPaint(cpaint), AsPathBuilder(dst), AsRect(cullRect), AsMatrix(cmatrix));
+}
+
+bool sk_paint_nothing_to_draw(const sk_paint_t* cpaint) {
+  return AsPaint(cpaint)->nothingToDraw();
+}
+
+bool sk_paint_can_compute_fast_bounds(const sk_paint_t* cpaint) {
+  return AsPaint(cpaint)->canComputeFastBounds();
+}
+
+void sk_paint_compute_fast_bounds(const sk_paint_t* cpaint, const sk_rect_t* orig, sk_rect_t* result) {
+  *result = ToRect(AsPaint(cpaint)->computeFastBounds(*AsRect(orig), AsRect(result)));
+}
+
+void sk_paint_compute_fast_stroke_bounds(const sk_paint_t* cpaint, const sk_rect_t* orig, sk_rect_t* result) {
+  *result = ToRect(AsPaint(cpaint)->computeFastStrokeBounds(*AsRect(orig), AsRect(result)));
 }

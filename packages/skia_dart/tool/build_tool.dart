@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:args/command_runner.dart';
 import 'package:crypto/crypto.dart';

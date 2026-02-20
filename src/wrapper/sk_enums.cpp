@@ -7,15 +7,17 @@
  * found in the LICENSE file.
  */
 
-#include "wrapper/sk_types_priv.h"
 #include "include/codec/SkCodecAnimation.h"
 #include "include/codec/SkEncodedImageFormat.h"
 #include "include/core/SkBitmap.h"
 #include "include/core/SkClipOp.h"
 #include "include/core/SkImage.h"
+#include "include/core/SkImageFilter.h"
+#include "include/core/SkTextureCompressionType.h"
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkRRect.h"
+#include "include/core/SkStrokeRec.h"
 #include "include/core/SkRegion.h"
 #include "include/core/SkShader.h"
 #include "include/core/SkSurface.h"
@@ -32,6 +34,7 @@
 #include "include/pathops/SkPathOps.h"
 #include "include/utils/SkTextUtils.h"
 #include "modules/skresources/include/SkResources.h"
+#include "wrapper/sk_types_priv.h"
 
 #if defined(SK_GANESH)
   #include "include/gpu/ganesh/GrTypes.h"
@@ -98,6 +101,10 @@ static_assert((int)SkFilterMode::kLinear == (int)LINEAR_SK_FILTER_MODE, ASSERT_M
 static_assert((int)SkMipmapMode::kNone == (int)NONE_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
 static_assert((int)SkMipmapMode::kNearest == (int)NEAREST_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
 static_assert((int)SkMipmapMode::kLinear == (int)LINEAR_SK_MIPMAP_MODE, ASSERT_MSG(SkMipmapMode, sk_mipmap_mode_t));
+
+// sk_imagefilter_map_direction_t
+static_assert((int)SkImageFilter::MapDirection::kForward_MapDirection == (int)FORWARD_SK_IMAGEFILTER_MAP_DIRECTION, ASSERT_MSG(SkImageFilter::MapDirection, sk_imagefilter_map_direction_t));
+static_assert((int)SkImageFilter::MapDirection::kReverse_MapDirection == (int)REVERSE_SK_IMAGEFILTER_MAP_DIRECTION, ASSERT_MSG(SkImageFilter::MapDirection, sk_imagefilter_map_direction_t));
 
 // sk_blendmode_t
 static_assert((int)SkBlendMode::kClear == (int)CLEAR_SK_BLENDMODE, ASSERT_MSG(SkBlendMode, sk_blendmode_t));
@@ -170,6 +177,10 @@ static_assert((int)SkPixelGeometry::kBGR_H_SkPixelGeometry == (int)BGR_H_SK_PIXE
 static_assert((int)SkPixelGeometry::kRGB_V_SkPixelGeometry == (int)RGB_V_SK_PIXELGEOMETRY, ASSERT_MSG(SkPixelGeometry, sk_pixelgeometry_t));
 static_assert((int)SkPixelGeometry::kBGR_V_SkPixelGeometry == (int)BGR_V_SK_PIXELGEOMETRY, ASSERT_MSG(SkPixelGeometry, sk_pixelgeometry_t));
 
+// sk_surface_content_change_mode_t
+static_assert((int)SkSurface::kDiscard_ContentChangeMode == (int)DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE, ASSERT_MSG(SkSurface::ContentChangeMode, sk_surface_content_change_mode_t));
+static_assert((int)SkSurface::kRetain_ContentChangeMode == (int)RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE, ASSERT_MSG(SkSurface::ContentChangeMode, sk_surface_content_change_mode_t));
+
 // sk_shader_tilemode_t
 static_assert((int)SkTileMode::kClamp == (int)CLAMP_SK_SHADER_TILEMODE, ASSERT_MSG(SkTileMode, sk_shader_tilemode_t));
 static_assert((int)SkTileMode::kRepeat == (int)REPEAT_SK_SHADER_TILEMODE, ASSERT_MSG(SkTileMode, sk_shader_tilemode_t));
@@ -191,6 +202,16 @@ static_assert((int)SkPaint::Cap::kSquare_Cap == (int)SQUARE_SK_STROKE_CAP, ASSER
 static_assert((int)SkPaint::Join::kMiter_Join == (int)MITER_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
 static_assert((int)SkPaint::Join::kRound_Join == (int)ROUND_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
 static_assert((int)SkPaint::Join::kBevel_Join == (int)BEVEL_SK_STROKE_JOIN, ASSERT_MSG(SkPaint::Join, sk_stroke_join_t));
+
+// sk_stroke_rec_init_style_t
+static_assert((int)SkStrokeRec::InitStyle::kHairline_InitStyle == (int)HAIRLINE_SK_STROKE_REC_INIT_STYLE, ASSERT_MSG(SkStrokeRec::InitStyle, sk_stroke_rec_init_style_t));
+static_assert((int)SkStrokeRec::InitStyle::kFill_InitStyle == (int)FILL_SK_STROKE_REC_INIT_STYLE, ASSERT_MSG(SkStrokeRec::InitStyle, sk_stroke_rec_init_style_t));
+
+// sk_stroke_rec_style_t
+static_assert((int)SkStrokeRec::Style::kHairline_Style == (int)HAIRLINE_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kFill_Style == (int)FILL_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kStroke_Style == (int)STROKE_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
+static_assert((int)SkStrokeRec::Style::kStrokeAndFill_Style == (int)STROKE_AND_FILL_SK_STROKE_REC_STYLE, ASSERT_MSG(SkStrokeRec::Style, sk_stroke_rec_style_t));
 
 // sk_region_op_t
 static_assert((int)SkRegion::Op::kDifference_Op == (int)DIFFERENCE_SK_REGION_OP, ASSERT_MSG(SkRegion::Op, sk_region_op_t));
@@ -317,6 +338,12 @@ static_assert((int)SkVertices::VertexMode::kTriangleFan_VertexMode == (int)TRIAN
 // sk_image_caching_hint_t
 static_assert((int)SkImage::CachingHint::kAllow_CachingHint == (int)ALLOW_SK_IMAGE_CACHING_HINT, ASSERT_MSG(SkImage::CachingHint, sk_image_caching_hint_t));
 static_assert((int)SkImage::CachingHint::kDisallow_CachingHint == (int)DISALLOW_SK_IMAGE_CACHING_HINT, ASSERT_MSG(SkImage::CachingHint, sk_image_caching_hint_t));
+
+// sk_texture_compression_type_t
+static_assert((int)SkTextureCompressionType::kNone == (int)NONE_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kETC2_RGB8_UNORM == (int)ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kBC1_RGB8_UNORM == (int)BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
+static_assert((int)SkTextureCompressionType::kBC1_RGBA8_UNORM == (int)BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE, ASSERT_MSG(SkTextureCompressionType, sk_texture_compression_type_t));
 
 // sk_highcontrastconfig_invertstyle_t
 static_assert((int)SkHighContrastConfig::InvertStyle::kNoInvert == (int)NO_INVERT_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE, ASSERT_MSG(SkHighContrastConfig::InvertStyle, sk_highcontrastconfig_invertstyle_t));

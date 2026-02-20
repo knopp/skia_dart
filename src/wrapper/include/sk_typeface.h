@@ -30,6 +30,12 @@ SK_C_API int sk_typeface_get_font_weight(const sk_typeface_t* typeface);
 SK_C_API int sk_typeface_get_font_width(const sk_typeface_t* typeface);
 SK_C_API sk_font_style_slant_t sk_typeface_get_font_slant(const sk_typeface_t* typeface);
 SK_C_API bool sk_typeface_is_fixed_pitch(const sk_typeface_t* typeface);
+SK_C_API bool sk_typeface_is_bold(const sk_typeface_t* typeface);
+SK_C_API bool sk_typeface_is_italic(const sk_typeface_t* typeface);
+SK_C_API bool sk_typeface_is_synthetic_bold(const sk_typeface_t* typeface);
+SK_C_API bool sk_typeface_is_synthetic_oblique(const sk_typeface_t* typeface);
+SK_C_API uint32_t sk_typeface_get_unique_id(const sk_typeface_t* typeface);
+SK_C_API bool sk_typeface_equal(const sk_typeface_t* facea, const sk_typeface_t* faceb);
 SK_C_API sk_typeface_t* sk_typeface_create_empty(void);
 SK_C_API void sk_typeface_unichars_to_glyphs(const sk_typeface_t* typeface, const int32_t unichars[], int count, uint16_t glyphs[]);
 SK_C_API uint16_t sk_typeface_unichar_to_glyph(const sk_typeface_t* typeface, const int32_t unichar);
@@ -41,11 +47,16 @@ SK_C_API size_t sk_typeface_get_table_size(const sk_typeface_t* typeface, sk_fon
 SK_C_API size_t sk_typeface_get_table_data(const sk_typeface_t* typeface, sk_font_table_tag_t tag, size_t offset, size_t length, void* data);
 SK_C_API sk_data_t* sk_typeface_copy_table_data(const sk_typeface_t* typeface, sk_font_table_tag_t tag);
 SK_C_API int sk_typeface_get_units_per_em(const sk_typeface_t* typeface);
-SK_C_API bool sk_typeface_get_kerning_pair_adjustments(const sk_typeface_t* typeface, const uint16_t glyphs[], int count, int32_t adjustments[]);
+SK_C_API bool sk_typeface_get_kerning_pair_adjustments(const sk_typeface_t* typeface, const uint16_t glyphs[], int glyphCount, int32_t adjustments[], int adjustmentsCount);
 SK_C_API sk_localized_strings_t* sk_typeface_create_family_name_iterator(const sk_typeface_t* typeface);
 SK_C_API sk_string_t* sk_typeface_get_family_name(const sk_typeface_t* typeface);
 SK_C_API sk_string_t* sk_typeface_get_post_script_name(const sk_typeface_t* typeface);
+SK_C_API int sk_typeface_get_resource_name(const sk_typeface_t* typeface, sk_string_t* resourceName);
 SK_C_API sk_stream_asset_t* sk_typeface_open_stream(const sk_typeface_t* typeface, int* ttcIndex);
+SK_C_API sk_stream_asset_t* sk_typeface_open_existing_stream(const sk_typeface_t* typeface, int* ttcIndex);
+SK_C_API void sk_typeface_get_bounds(const sk_typeface_t* typeface, sk_rect_t* bounds);
+SK_C_API sk_data_t* sk_typeface_serialize_to_data(const sk_typeface_t* typeface, int serializeBehavior);
+SK_C_API sk_typeface_t* sk_typeface_deserialize_from_data(const sk_data_t* data);
 
 // font manager
 

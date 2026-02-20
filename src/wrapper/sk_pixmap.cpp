@@ -55,6 +55,42 @@ size_t sk_pixmap_get_row_bytes(const sk_pixmap_t* cpixmap) {
   return AsPixmap(cpixmap)->rowBytes();
 }
 
+int sk_pixmap_get_width(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->width();
+}
+
+int sk_pixmap_get_height(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->height();
+}
+
+sk_colortype_t sk_pixmap_get_color_type(const sk_pixmap_t* cpixmap) {
+  return static_cast<sk_colortype_t>(AsPixmap(cpixmap)->colorType());
+}
+
+sk_alphatype_t sk_pixmap_get_alpha_type(const sk_pixmap_t* cpixmap) {
+  return static_cast<sk_alphatype_t>(AsPixmap(cpixmap)->alphaType());
+}
+
+bool sk_pixmap_is_opaque(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->isOpaque();
+}
+
+void sk_pixmap_get_bounds(const sk_pixmap_t* cpixmap, sk_irect_t* bounds) {
+  *bounds = ToIRect(AsPixmap(cpixmap)->bounds());
+}
+
+int sk_pixmap_get_row_bytes_as_pixels(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->rowBytesAsPixels();
+}
+
+int sk_pixmap_get_shift_per_pixel(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->shiftPerPixel();
+}
+
+size_t sk_pixmap_compute_byte_size(const sk_pixmap_t* cpixmap) {
+  return AsPixmap(cpixmap)->computeByteSize();
+}
+
 sk_colorspace_t* sk_pixmap_get_colorspace(const sk_pixmap_t* cpixmap) {
   return ToColorSpace(AsPixmap(cpixmap)->refColorSpace().release());
 }
@@ -79,12 +115,56 @@ const void* sk_pixmap_get_addr(const sk_pixmap_t* cpixmap, int x, int y) {
   return AsPixmap(cpixmap)->addr(x, y);
 }
 
+const uint8_t* sk_pixmap_get_addr8(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->addr8(x, y);
+}
+
+const uint16_t* sk_pixmap_get_addr16(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->addr16(x, y);
+}
+
+const uint32_t* sk_pixmap_get_addr32(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->addr32(x, y);
+}
+
+const uint64_t* sk_pixmap_get_addr64(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->addr64(x, y);
+}
+
+const uint16_t* sk_pixmap_get_addr_f16(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->addrF16(x, y);
+}
+
 void* sk_pixmap_get_writeable_addr(const sk_pixmap_t* cpixmap, int x, int y) {
   return AsPixmap(cpixmap)->writable_addr(x, y);
 }
 
+uint8_t* sk_pixmap_get_writeable_addr8(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->writable_addr8(x, y);
+}
+
+uint16_t* sk_pixmap_get_writeable_addr16(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->writable_addr16(x, y);
+}
+
+uint32_t* sk_pixmap_get_writeable_addr32(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->writable_addr32(x, y);
+}
+
+uint64_t* sk_pixmap_get_writeable_addr64(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->writable_addr64(x, y);
+}
+
+uint16_t* sk_pixmap_get_writeable_addr_f16(const sk_pixmap_t* cpixmap, int x, int y) {
+  return AsPixmap(cpixmap)->writable_addrF16(x, y);
+}
+
 bool sk_pixmap_read_pixels(const sk_pixmap_t* cpixmap, const sk_imageinfo_t* dstInfo, void* dstPixels, size_t dstRowBytes, int srcX, int srcY) {
   return AsPixmap(cpixmap)->readPixels(*AsImageInfo(dstInfo), dstPixels, dstRowBytes, srcX, srcY);
+}
+
+bool sk_pixmap_read_pixels_to_pixmap(const sk_pixmap_t* cpixmap, const sk_pixmap_t* dst, int srcX, int srcY) {
+  return AsPixmap(cpixmap)->readPixels(*AsPixmap(dst), srcX, srcY);
 }
 
 bool sk_pixmap_scale_pixels(const sk_pixmap_t* cpixmap, const sk_pixmap_t* dst, const sk_sampling_options_t* sampling) {
@@ -142,8 +222,8 @@ void sk_color_premultiply_array(const sk_color_t* colors, int size, sk_pmcolor_t
 }
 
 void sk_color_get_bit_shift(int* a, int* r, int* g, int* b) {
-  *a = (int)SK_A32_SHIFT;
-  *r = (int)SK_R32_SHIFT;
-  *g = (int)SK_G32_SHIFT;
-  *b = (int)SK_B32_SHIFT;
+  *a = static_cast<int>(SK_A32_SHIFT);
+  *r = static_cast<int>(SK_R32_SHIFT);
+  *g = static_cast<int>(SK_G32_SHIFT);
+  *b = static_cast<int>(SK_B32_SHIFT);
 }

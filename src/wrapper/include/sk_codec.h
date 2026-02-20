@@ -38,6 +38,8 @@ SK_C_API void sk_codec_get_frame_info(sk_codec_t* codec, sk_codec_frameinfo_t* f
 SK_C_API bool sk_codec_get_frame_info_for_index(sk_codec_t* codec, int index, sk_codec_frameinfo_t* frameInfo);
 SK_C_API int sk_codec_get_repetition_count(sk_codec_t* codec);
 
+SK_C_API sk_image_t* sk_codecs_deferred_image(sk_codec_t* codec, const sk_alphatype_t* alphaType);
+
 SK_C_PLUS_PLUS_END_GUARD
 
 #endif

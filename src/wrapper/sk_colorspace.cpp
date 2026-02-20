@@ -50,8 +50,20 @@ bool sk_colorspace_is_numerical_transfer_fn(const sk_colorspace_t* colorspace, s
   return AsColorSpace(colorspace)->isNumericalTransferFn(AsColorSpaceTransferFn(transferFn));
 }
 
+void sk_colorspace_transfer_fn(const sk_colorspace_t* colorspace, sk_colorspace_transfer_fn_t* transferFn) {
+  AsColorSpace(colorspace)->transferFn(AsColorSpaceTransferFn(transferFn));
+}
+
+void sk_colorspace_inv_transfer_fn(const sk_colorspace_t* colorspace, sk_colorspace_transfer_fn_t* transferFn) {
+  AsColorSpace(colorspace)->invTransferFn(AsColorSpaceTransferFn(transferFn));
+}
+
 bool sk_colorspace_to_xyzd50(const sk_colorspace_t* colorspace, sk_colorspace_xyz_t* toXYZD50) {
   return AsColorSpace(colorspace)->toXYZD50(AsColorSpaceXyz(toXYZD50));
+}
+
+void sk_colorspace_gamut_transform_to(const sk_colorspace_t* src, const sk_colorspace_t* dst, sk_colorspace_xyz_t* src_to_dst) {
+  AsColorSpace(src)->gamutTransformTo(AsColorSpace(dst), AsColorSpaceXyz(src_to_dst));
 }
 
 sk_colorspace_t* sk_colorspace_make_linear_gamma(const sk_colorspace_t* colorspace) {

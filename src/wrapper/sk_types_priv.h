@@ -123,6 +123,7 @@ DEF_CLASS_MAP(SkFontMgr, sk_fontmgr_t, FontMgr)
 DEF_CLASS_MAP(SkFontStyle, sk_fontstyle_t, FontStyle)
 DEF_CLASS_MAP(SkFontStyleSet, sk_fontstyleset_t, FontStyleSet)
 DEF_CLASS_MAP(SkImage, sk_image_t, Image)
+DEF_CLASS_MAP(SkRecorder, sk_recorder_t, Recorder)
 DEF_CLASS_MAP(SkImageFilter, sk_imagefilter_t, ImageFilter)
 DEF_CLASS_MAP(SkMaskFilter, sk_maskfilter_t, MaskFilter)
 DEF_CLASS_MAP(SkMemoryStream, sk_stream_memorystream_t, MemoryStream)
@@ -134,6 +135,7 @@ DEF_CLASS_MAP(SkPaint, sk_paint_t, Paint)
 DEF_CLASS_MAP(SkPath, sk_path_t, Path)
 DEF_CLASS_MAP(SkPathBuilder, sk_path_builder_t, PathBuilder)
 DEF_CLASS_MAP(SkPathEffect, sk_path_effect_t, PathEffect)
+DEF_CLASS_MAP(SkStrokeRec, sk_stroke_rec_t, StrokeRec)
 DEF_CLASS_MAP(SkPathMeasure, sk_pathmeasure_t, PathMeasure)
 DEF_CLASS_MAP(SkPicture, sk_picture_t, Picture)
 DEF_CLASS_MAP(SkPictureRecorder, sk_picture_recorder_t, PictureRecorder)
@@ -338,6 +340,7 @@ DEF_MAP(SkImage::RescaleGamma, sk_image_rescale_gamma_t, ImageRescaleGamma);
 DEF_MAP(SkImage::RescaleMode, sk_image_rescale_mode_t, ImageRescaleMode);
 
 #include "include/core/SkTextBlob.h"
+DEF_MAP(SkTextBlob::Iter, sk_textblob_iter_t, TextBlobIter)
 static inline SkTextBlobBuilder::RunBuffer AsTextBlobBuilderRunBuffer(const sk_textblob_builder_runbuffer_t* runbuffer) {
   return {
       (SkGlyphID*)runbuffer->glyphs,

@@ -18,8 +18,11 @@ SK_C_PLUS_PLUS_BEGIN_GUARD
 
 SK_C_API void sk_shader_ref(sk_shader_t* shader);
 SK_C_API void sk_shader_unref(sk_shader_t* shader);
+SK_C_API bool sk_shader_is_opaque(const sk_shader_t* shader);
+SK_C_API sk_image_t* sk_shader_is_a_image(const sk_shader_t* shader, sk_matrix_t* localMatrix, sk_shader_tilemode_t* tileModeX, sk_shader_tilemode_t* tileModeY);
 SK_C_API sk_shader_t* sk_shader_with_local_matrix(const sk_shader_t* shader, const sk_matrix_t* localMatrix);
 SK_C_API sk_shader_t* sk_shader_with_color_filter(const sk_shader_t* shader, const sk_colorfilter_t* filter);
+SK_C_API sk_shader_t* sk_shader_make_with_working_colorspace(const sk_shader_t* shader, const sk_colorspace_t* inputCS, const sk_colorspace_t* outputCS);
 
 // SkShaders
 
@@ -28,6 +31,7 @@ SK_C_API sk_shader_t* sk_shader_new_color(sk_color_t color);
 SK_C_API sk_shader_t* sk_shader_new_color4f(const sk_color4f_t* color, const sk_colorspace_t* colorspace);
 SK_C_API sk_shader_t* sk_shader_new_blend(sk_blendmode_t mode, const sk_shader_t* dst, const sk_shader_t* src);
 SK_C_API sk_shader_t* sk_shader_new_blender(sk_blender_t* blender, const sk_shader_t* dst, const sk_shader_t* src);
+SK_C_API sk_shader_t* sk_shader_new_coord_clamp(const sk_shader_t* shader, const sk_rect_t* subset);
 
 // SkGradientShader
 

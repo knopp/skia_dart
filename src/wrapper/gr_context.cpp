@@ -50,6 +50,10 @@ gr_direct_context_t *gr_recording_context_get_direct_context(gr_recording_contex
   return SK_ONLY_GPU(ToGrDirectContext(GrAsDirectContext(AsGrRecordingContext(context))), nullptr);
 }
 
+sk_recorder_t *gr_recording_context_as_recorder(gr_recording_context_t *context) {
+  return SK_ONLY_GPU(ToRecorder(AsGrRecordingContext(context)->asRecorder()), nullptr);
+}
+
 // GrDirectContext
 
 bool gr_context_is_supported(void) {

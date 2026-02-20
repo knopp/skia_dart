@@ -65,6 +65,34 @@ sk_textblob_t* sk_textblob_make_from_rsxform_glyphs(const uint16_t* glyphs, size
   return ToTextBlob(SkTextBlob::MakeFromRSXformGlyphs(SkSpan<const SkGlyphID>(glyphs, glyphCount), SkSpan<const SkRSXform>(AsRSXform(xform), xformCount), AsFont(*font)).release());
 }
 
+sk_textblob_iter_t* sk_textblob_iter_new(const sk_textblob_t* blob) {
+  return ToTextBlobIter(new SkTextBlob::Iter(*AsTextBlob(blob)));
+}
+
+void sk_textblob_iter_delete(sk_textblob_iter_t* iter) {
+  delete AsTextBlobIter(iter);
+}
+
+bool sk_textblob_iter_next(sk_textblob_iter_t* iter, sk_textblob_iter_run_t* run) {
+  SkTextBlob::Iter::Run skRun;
+  const bool hasNext = AsTextBlobIter(iter)->next(&skRun);
+  if (!run) {
+    return hasNext;
+  }
+
+  if (!hasNext) {
+    run->typeface = nullptr;
+    run->glyphCount = 0;
+    run->glyphIndices = nullptr;
+    return false;
+  }
+
+  run->typeface = ToTypeface(SkSafeRef(skRun.fTypeface));
+  run->glyphCount = skRun.fGlyphCount;
+  run->glyphIndices = skRun.fGlyphIndices;
+  return true;
+}
+
 sk_textblob_builder_t* sk_textblob_builder_new(void) {
   return ToTextBlobBuilder(new SkTextBlobBuilder());
 }
