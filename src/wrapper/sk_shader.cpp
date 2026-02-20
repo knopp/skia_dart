@@ -12,6 +12,7 @@
 #include "wrapper/sk_types_priv.h"
 #include "include/core/SkBitmap.h"
 #include "include/core/SkColorFilter.h"
+#include "include/core/SkImage.h"
 #include "include/core/SkShader.h"
 #include "include/effects/SkPerlinNoiseShader.h"
 
@@ -25,12 +26,46 @@ void sk_shader_unref(sk_shader_t* shader) {
   SkSafeUnref(AsShader(shader));
 }
 
+bool sk_shader_is_opaque(const sk_shader_t* shader) {
+  return AsShader(shader)->isOpaque();
+}
+
+sk_image_t* sk_shader_is_a_image(const sk_shader_t* shader, sk_matrix_t* localMatrix, sk_shader_tilemode_t* tileModeX, sk_shader_tilemode_t* tileModeY) {
+  SkMatrix matrix;
+  SkMatrix* matrixPtr = localMatrix ? &matrix : nullptr;
+
+  SkTileMode tileModes[2];
+  SkTileMode* tileModesPtr = (tileModeX || tileModeY) ? tileModes : nullptr;
+
+  SkImage* image = AsShader(shader)->isAImage(matrixPtr, tileModesPtr);
+  if (!image) {
+    return nullptr;
+  }
+
+  if (localMatrix) {
+    *localMatrix = ToMatrix(matrix);
+  }
+  if (tileModeX) {
+    *tileModeX = static_cast<sk_shader_tilemode_t>(tileModes[0]);
+  }
+  if (tileModeY) {
+    *tileModeY = static_cast<sk_shader_tilemode_t>(tileModes[1]);
+  }
+
+  image->ref();
+  return ToImage(image);
+}
+
 sk_shader_t* sk_shader_with_local_matrix(const sk_shader_t* shader, const sk_matrix_t* localMatrix) {
   return ToShader(AsShader(shader)->makeWithLocalMatrix(AsMatrix(localMatrix)).release());
 }
 
 sk_shader_t* sk_shader_with_color_filter(const sk_shader_t* shader, const sk_colorfilter_t* filter) {
   return ToShader(AsShader(shader)->makeWithColorFilter(sk_ref_sp(AsColorFilter(filter))).release());
+}
+
+sk_shader_t* sk_shader_make_with_working_colorspace(const sk_shader_t* shader, const sk_colorspace_t* inputCS, const sk_colorspace_t* outputCS) {
+  return ToShader(AsShader(shader)->makeWithWorkingColorSpace(sk_ref_sp(AsColorSpace(inputCS)), sk_ref_sp(AsColorSpace(outputCS))).release());
 }
 
 // SkShaders
@@ -53,6 +88,10 @@ sk_shader_t* sk_shader_new_blend(sk_blendmode_t mode, const sk_shader_t* dst, co
 
 sk_shader_t* sk_shader_new_blender(sk_blender_t* blender, const sk_shader_t* dst, const sk_shader_t* src) {
   return ToShader(SkShaders::Blend(sk_ref_sp(AsBlender(blender)), sk_ref_sp(AsShader(dst)), sk_ref_sp(AsShader(src))).release());
+}
+
+sk_shader_t* sk_shader_new_coord_clamp(const sk_shader_t* shader, const sk_rect_t* subset) {
+  return ToShader(SkShaders::CoordClamp(sk_ref_sp(AsShader(shader)), *AsRect(subset)).release());
 }
 
 // SkGradientShader

@@ -42,6 +42,25 @@ class SkShader with _NativeMixin<sk_shader_t> {
     );
   }
 
+  factory SkShader.blendWithBlender(
+    SkBlender blender,
+    SkShader dst,
+    SkShader src,
+  ) {
+    return SkShader._(
+      sk_shader_new_blender(blender._ptr, dst._ptr, src._ptr),
+    );
+  }
+
+  factory SkShader.coordClamp(SkShader shader, SkRect subset) {
+    return SkShader._(
+      sk_shader_new_coord_clamp(
+        shader._ptr,
+        subset.toNativePooled(0),
+      ),
+    );
+  }
+
   factory SkShader.perlinNoiseFractalNoise({
     required double baseFrequencyX,
     required double baseFrequencyY,
@@ -103,6 +122,58 @@ class SkShader with _NativeMixin<sk_shader_t> {
 
   SkShader withColorFilter(SkColorFilter filter) {
     return SkShader._(sk_shader_with_color_filter(_ptr, filter._ptr));
+  }
+
+  bool get isOpaque => sk_shader_is_opaque(_ptr);
+
+  ({
+    SkImage image,
+    Matrix3 localMatrix,
+    SkShaderTileMode tileModeX,
+    SkShaderTileMode tileModeY,
+  })?
+  isAImage() {
+    final localMatrixPtr = _Matrix3.pool[0];
+    final tileModeXPtr = _UnsignedInt.pool[0];
+    final tileModeYPtr = _UnsignedInt.pool[1];
+
+    final imagePtr = sk_shader_is_a_image(
+      _ptr,
+      localMatrixPtr,
+      tileModeXPtr,
+      tileModeYPtr,
+    );
+    if (imagePtr == nullptr) return null;
+    return (
+      image: SkImage._(imagePtr),
+      localMatrix: _Matrix3.fromNative(localMatrixPtr),
+      tileModeX: SkShaderTileMode.fromNative(
+        sk_shader_tilemode_t.fromValue(tileModeXPtr.value),
+      ),
+      tileModeY: SkShaderTileMode.fromNative(
+        sk_shader_tilemode_t.fromValue(tileModeYPtr.value),
+      ),
+    );
+  }
+
+  SkShader makeWithWorkingColorSpace(
+    SkColorSpace? inputCS, [
+    SkColorSpace? outputCS,
+  ]) {
+    return SkShader._(
+      sk_shader_make_with_working_colorspace(
+        _ptr,
+        inputCS?._ptr ?? nullptr,
+        outputCS?._ptr ?? nullptr,
+      ),
+    );
+  }
+
+  SkShader makeWithWorkingColorpsace(
+    SkColorSpace? inputCS, [
+    SkColorSpace? outputCS,
+  ]) {
+    return makeWithWorkingColorSpace(inputCS, outputCS);
   }
 
   @override

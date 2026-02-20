@@ -4490,6 +4490,26 @@ external void sk_shader_unref(
   ffi.Pointer<sk_shader_t> shader,
 );
 
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
+external bool sk_shader_is_opaque(
+  ffi.Pointer<sk_shader_t> shader,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_shader_is_a_image(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+  ffi.Pointer<ffi.UnsignedInt> tileModeX,
+  ffi.Pointer<ffi.UnsignedInt> tileModeY,
+);
+
 @ffi.Native<
   ffi.Pointer<sk_shader_t> Function(
     ffi.Pointer<sk_shader_t>,
@@ -4510,6 +4530,19 @@ external ffi.Pointer<sk_shader_t> sk_shader_with_local_matrix(
 external ffi.Pointer<sk_shader_t> sk_shader_with_color_filter(
   ffi.Pointer<sk_shader_t> shader,
   ffi.Pointer<sk_colorfilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_make_with_working_colorspace(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_colorspace_t> inputCS,
+  ffi.Pointer<sk_colorspace_t> outputCS,
 );
 
 @ffi.Native<ffi.Pointer<sk_shader_t> Function()>(isLeaf: true)
@@ -4565,6 +4598,17 @@ external ffi.Pointer<sk_shader_t> sk_shader_new_blender(
   ffi.Pointer<sk_blender_t> blender,
   ffi.Pointer<sk_shader_t> dst,
   ffi.Pointer<sk_shader_t> src,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_coord_clamp(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_rect_t> subset,
 );
 
 @ffi.Native<
