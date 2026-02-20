@@ -94,7 +94,7 @@ void main() {
         expect(fromEncoded, isNotNull);
 
         final picture = _makePicture();
-        final fromPicture = SkImage.fromPicture(
+        final fromPicture = SkImage.deferredFromPicture(
           picture,
           const SkISize(16, 16),
           useFloatingPointBitDepth: false,

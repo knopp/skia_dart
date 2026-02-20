@@ -246,7 +246,7 @@ class SkImage with _NativeMixin<sk_image_t> {
   ///   instead of 8-bit unsigned int.
   /// - [colorSpace]: Range of colors. May be null.
   /// - [props]: Surface properties for rasterizing the picture.
-  static SkImage? fromPicture(
+  static SkImage? deferredFromPicture(
     SkPicture picture,
     SkISize dimensions, {
     Matrix3? matrix,
