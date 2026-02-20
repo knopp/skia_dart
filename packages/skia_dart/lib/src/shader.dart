@@ -67,7 +67,9 @@ enum SkShaderTileMode {
 ///
 /// gradientShader.dispose();
 /// ```
-class SkShader with _NativeMixin<sk_shader_t> {
+class SkShader
+    with _NativeMixin<sk_shader_t>
+    implements SkRuntimeEffectChildInput {
   SkShader._(Pointer<sk_shader_t> ptr) {
     _attach(ptr, _finalizer);
   }
@@ -329,4 +331,11 @@ class SkShader with _NativeMixin<sk_shader_t> {
         Native.addressOf(sk_shader_unref);
     return NativeFinalizer(ptr.cast());
   }
+
+  @override
+  Pointer<sk_flattenable_t> get _flattenablePtr => _ptr.cast();
+
+  @override
+  SkRuntimeEffectChildType get _runtimeEffectChildType =>
+      SkRuntimeEffectChildType.shader;
 }

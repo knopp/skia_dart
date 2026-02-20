@@ -43,6 +43,7 @@ part 'src/recorder.dart';
 part 'src/region.dart';
 part 'src/rrect.dart';
 part 'src/rsx_form.dart';
+part 'src/runtime_effect.dart';
 part 'src/shader.dart';
 part 'src/stream.dart';
 part 'src/stroke_rec.dart';

@@ -3,7 +3,9 @@ part of '../skia_dart.dart';
 /// [SkBlender] represents a custom blend function in the Skia pipeline. A
 /// blender combines a source color (the result of our paint) and destination
 /// color (from the canvas) into a final color.
-class SkBlender with _NativeMixin<sk_blender_t> {
+class SkBlender
+    with _NativeMixin<sk_blender_t>
+    implements SkRuntimeEffectChildInput {
   /// Creates a blender that implements the specified [SkBlendMode].
   factory SkBlender.mode(SkBlendMode mode) {
     return SkBlender._(sk_blender_new_mode(mode._value));
@@ -47,4 +49,11 @@ class SkBlender with _NativeMixin<sk_blender_t> {
         Native.addressOf(sk_blender_unref);
     return NativeFinalizer(ptr.cast());
   }
+
+  @override
+  Pointer<sk_flattenable_t> get _flattenablePtr => _ptr.cast();
+
+  @override
+  SkRuntimeEffectChildType get _runtimeEffectChildType =>
+      SkRuntimeEffectChildType.blender;
 }

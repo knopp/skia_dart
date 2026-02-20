@@ -50,7 +50,9 @@ class SkHighContrastConfig {
 ///
 /// All instances are reentrant-safe: it is legal to share the same instance
 /// between several threads.
-class SkColorFilter with _NativeMixin<sk_colorfilter_t> {
+class SkColorFilter
+    with _NativeMixin<sk_colorfilter_t>
+    implements SkRuntimeEffectChildInput {
   SkColorFilter._(Pointer<sk_colorfilter_t> ptr) {
     _attach(ptr, _finalizer);
   }
@@ -308,4 +310,11 @@ class SkColorFilter with _NativeMixin<sk_colorfilter_t> {
     ptr = Native.addressOf(sk_colorfilter_unref);
     return NativeFinalizer(ptr.cast());
   }
+
+  @override
+  Pointer<sk_flattenable_t> get _flattenablePtr => _ptr.cast();
+
+  @override
+  SkRuntimeEffectChildType get _runtimeEffectChildType =>
+      SkRuntimeEffectChildType.colorFilter;
 }
