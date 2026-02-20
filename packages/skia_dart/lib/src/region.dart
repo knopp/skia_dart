@@ -1,11 +1,35 @@
 part of '../skia_dart.dart';
 
+/// The logical operations that can be performed when combining two regions.
 enum SkRegionOp {
+  /// Target minus operand.
+  ///
+  /// Returns the area in this region but not in the operand.
   difference(sk_region_op_t.DIFFERENCE_SK_REGION_OP),
+
+  /// Target intersected with operand.
+  ///
+  /// Returns the area common to both regions.
   intersect(sk_region_op_t.INTERSECT_SK_REGION_OP),
+
+  /// Target unioned with operand.
+  ///
+  /// Returns the combined area of both regions.
   union(sk_region_op_t.UNION_SK_REGION_OP),
+
+  /// Target exclusive or with operand.
+  ///
+  /// Returns the area in either region but not in both.
   xor(sk_region_op_t.XOR_SK_REGION_OP),
+
+  /// Operand minus target.
+  ///
+  /// Returns the area in the operand but not in this region.
   reverseDifference(sk_region_op_t.REVERSE_DIFFERENCE_SK_REGION_OP),
+
+  /// Replace target with operand.
+  ///
+  /// Discards this region and uses the operand instead.
   replace(sk_region_op_t.REPLACE_SK_REGION_OP),
   ;
 
@@ -15,6 +39,10 @@ enum SkRegionOp {
 
 class SkRegion with _NativeMixin<sk_region_t> {
   SkRegion() : this._(sk_region_new());
+  SkRegion.copy(SkRegion region)
+    : this._(sk_region_new_from_region(region._ptr));
+  SkRegion.fromRect(SkIRect rect)
+    : this._(sk_region_new_from_rect(rect.toNativePooled(0)));
 
   SkRegion._(Pointer<sk_region_t> ptr) {
     _attach(ptr, _finalizer);
@@ -37,6 +65,11 @@ class SkRegion with _NativeMixin<sk_region_t> {
     sk_region_get_boundary_path(_ptr, path._ptr);
     return path;
   }
+
+  bool addBoundaryPath(SkPathBuilder pathBuilder) =>
+      sk_region_add_boundary_path(_ptr, pathBuilder._ptr);
+
+  int computeRegionComplexity() => sk_region_compute_region_complexity(_ptr);
 
   bool setEmpty() => sk_region_set_empty(_ptr);
 
@@ -95,6 +128,27 @@ class SkRegion with _NativeMixin<sk_region_t> {
 
   bool op(SkRegion region, SkRegionOp op) =>
       sk_region_op(_ptr, region._ptr, op._value);
+
+  Uint8List writeToMemory() {
+    final size = sk_region_write_to_memory(_ptr, nullptr);
+    if (size == 0) {
+      return Uint8List(0);
+    }
+    final buffer = ffi.calloc<Uint8>(size);
+    try {
+      final bytesWritten = sk_region_write_to_memory(_ptr, buffer.cast());
+      return Uint8List.fromList(buffer.asTypedList(bytesWritten));
+    } finally {
+      ffi.calloc.free(buffer);
+    }
+  }
+
+  int readFromMemory(Uint8List data) {
+    if (data.isEmpty) {
+      return 0;
+    }
+    return sk_region_read_from_memory(_ptr, data.address.cast(), data.length);
+  }
 
   @override
   void dispose() {

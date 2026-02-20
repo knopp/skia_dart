@@ -19,6 +19,14 @@ sk_region_t* sk_region_new(void) {
   return ToRegion(new SkRegion());
 }
 
+sk_region_t* sk_region_new_from_region(const sk_region_t* region) {
+  return ToRegion(new SkRegion(*AsRegion(region)));
+}
+
+sk_region_t* sk_region_new_from_rect(const sk_irect_t* rect) {
+  return ToRegion(new SkRegion(*AsIRect(rect)));
+}
+
 void sk_region_delete(sk_region_t* r) {
   delete AsRegion(r);
 }
@@ -42,6 +50,14 @@ void sk_region_get_bounds(const sk_region_t* r, sk_irect_t* rect) {
 void sk_region_get_boundary_path(const sk_region_t* r, sk_path_t* path) {
   SkPath res = AsRegion(r)->getBoundaryPath();
   AsPath(path)->swap(res);
+}
+
+bool sk_region_add_boundary_path(const sk_region_t* r, sk_path_builder_t* pathBuilder) {
+  return AsRegion(r)->addBoundaryPath(AsPathBuilder(pathBuilder));
+}
+
+int sk_region_compute_region_complexity(const sk_region_t* r) {
+  return AsRegion(r)->computeRegionComplexity();
 }
 
 bool sk_region_set_empty(sk_region_t* r) {
@@ -106,6 +122,14 @@ bool sk_region_op_rect(sk_region_t* r, const sk_irect_t* rect, sk_region_op_t op
 
 bool sk_region_op(sk_region_t* r, const sk_region_t* region, sk_region_op_t op) {
   return AsRegion(r)->op(*AsRegion(region), (SkRegion::Op)op);
+}
+
+size_t sk_region_write_to_memory(const sk_region_t* r, void* buffer) {
+  return AsRegion(r)->writeToMemory(buffer);
+}
+
+size_t sk_region_read_from_memory(sk_region_t* r, const void* buffer, size_t length) {
+  return AsRegion(r)->readFromMemory(buffer, length);
 }
 
 // sk_region_iterator_t

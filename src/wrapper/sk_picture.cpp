@@ -96,6 +96,10 @@ sk_picture_t* sk_picture_deserialize_from_memory(void* buffer, size_t length) {
   return ToPicture(SkPicture::MakeFromData(buffer, length).release());
 }
 
+sk_picture_t* sk_picture_make_placeholder(const sk_rect_t* cull) {
+  return ToPicture(SkPicture::MakePlaceholder(*AsRect(cull)).release());
+}
+
 void sk_picture_playback(const sk_picture_t* picture, sk_canvas_t* canvas) {
   AsPicture(picture)->playback(AsCanvas(canvas));
 }

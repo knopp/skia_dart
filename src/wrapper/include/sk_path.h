@@ -84,6 +84,7 @@ SK_C_API bool sk_path_is_rrect(sk_path_t* cpath, sk_rrect_t* bounds);
 SK_C_API bool sk_path_is_line(sk_path_t* cpath, sk_point_t line[2]);
 SK_C_API bool sk_path_is_rect(sk_path_t* cpath, sk_rect_t* rect, bool* isClosed, sk_path_direction_t* direction);
 SK_C_API bool sk_path_is_convex(const sk_path_t* cpath);
+SK_C_API bool sk_path_is_valid(const sk_path_t* cpath);
 
 SK_C_API bool sk_path_write_to_memory(const sk_path_t* path, void* buffer, size_t* size);
 SK_C_API sk_data_t* sk_path_serialize(const sk_path_t* path);

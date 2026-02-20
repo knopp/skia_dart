@@ -2562,6 +2562,11 @@ external bool sk_path_is_convex(
   ffi.Pointer<sk_path_t> cpath,
 );
 
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_valid(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
 @ffi.Native<
   ffi.Bool Function(
     ffi.Pointer<sk_path_t>,
@@ -8128,6 +8133,13 @@ external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_memory(
   int length,
 );
 
+@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_picture_t> sk_picture_make_placeholder(
+  ffi.Pointer<sk_rect_t> cull,
+);
+
 @ffi.Native<
   ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_canvas_t>)
 >(isLeaf: true)
@@ -8157,6 +8169,20 @@ external void sk_rtree_factory_delete(
 
 @ffi.Native<ffi.Pointer<sk_region_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_region_t> sk_region_new();
+
+@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_region_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_region_t> sk_region_new_from_region(
+  ffi.Pointer<sk_region_t> region,
+);
+
+@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_irect_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_region_t> sk_region_new_from_rect(
+  ffi.Pointer<sk_irect_t> rect,
+);
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
 external void sk_region_delete(
@@ -8192,6 +8218,19 @@ external void sk_region_get_bounds(
 external void sk_region_get_boundary_path(
   ffi.Pointer<sk_region_t> r,
   ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_path_builder_t>)
+>(isLeaf: true)
+external bool sk_region_add_boundary_path(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_path_builder_t> pathBuilder,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external int sk_region_compute_region_complexity(
+  ffi.Pointer<sk_region_t> r,
 );
 
 @ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
@@ -8355,6 +8394,23 @@ bool sk_region_op(
   r,
   region,
   op.value,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>)>(
+  isLeaf: true,
+)
+external int sk_region_write_to_memory(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<ffi.Void> buffer,
+);
+
+@ffi.Native<
+  ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>, ffi.Size)
+>(isLeaf: true)
+external int sk_region_read_from_memory(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<ffi.Void> buffer,
+  int length,
 );
 
 @ffi.Native<
@@ -11869,6 +11925,76 @@ external int sk_pixmap_get_row_bytes(
   ffi.Pointer<sk_pixmap_t> cpixmap,
 );
 
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_width(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_height(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
+  symbol: 'sk_pixmap_get_color_type',
+  isLeaf: true,
+)
+external int _sk_pixmap_get_color_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+sk_colortype_t sk_pixmap_get_color_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+) => sk_colortype_t.fromValue(
+  _sk_pixmap_get_color_type(
+    cpixmap,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
+  symbol: 'sk_pixmap_get_alpha_type',
+  isLeaf: true,
+)
+external int _sk_pixmap_get_alpha_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+sk_alphatype_t sk_pixmap_get_alpha_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+) => sk_alphatype_t.fromValue(
+  _sk_pixmap_get_alpha_type(
+    cpixmap,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external bool sk_pixmap_is_opaque(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external void sk_pixmap_get_bounds(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_irect_t> bounds,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_row_bytes_as_pixels(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_shift_per_pixel(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_compute_byte_size(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
 @ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_pixmap_t>)>(
   isLeaf: true,
 )
@@ -11924,9 +12050,99 @@ external ffi.Pointer<ffi.Void> sk_pixmap_get_addr(
 );
 
 @ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_pixmap_get_addr8(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint32> sk_pixmap_get_addr32(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint64> sk_pixmap_get_addr64(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr_f16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
   ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
 >(isLeaf: true)
 external ffi.Pointer<ffi.Void> sk_pixmap_get_writeable_addr(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_pixmap_get_writeable_addr8(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint32> sk_pixmap_get_writeable_addr32(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint64> sk_pixmap_get_writeable_addr64(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr_f16(
   ffi.Pointer<sk_pixmap_t> cpixmap,
   int x,
   int y,
@@ -11947,6 +12163,21 @@ external bool sk_pixmap_read_pixels(
   ffi.Pointer<sk_imageinfo_t> dstInfo,
   ffi.Pointer<ffi.Void> dstPixels,
   int dstRowBytes,
+  int srcX,
+  int srcY,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Int,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_read_pixels_to_pixmap(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_pixmap_t> dst,
   int srcX,
   int srcY,
 );
