@@ -154,7 +154,9 @@ void main() {
       SkAutoDisposeScope.run(() {
         final data = loadTestPng(width: 100, height: 100);
         final codec = SkCodec.fromData(data)!;
-        final bitmap = codec.decodeToBitmap()!;
+        final bitmap = codec.decodeToBitmap(
+          info: codec.getInfo().copyWith(colorType: SkColorType.rgba8888),
+        )!;
         final pixmap = SkPixmap();
         expect(bitmap.peekPixels(pixmap), isTrue);
         expect(Goldens.verify(pixmap), isTrue);
