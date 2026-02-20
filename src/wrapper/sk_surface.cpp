@@ -52,12 +52,36 @@ sk_canvas_t* sk_surface_get_canvas(sk_surface_t* csurf) {
   return ToCanvas(AsSurface(csurf)->getCanvas());
 }
 
+int sk_surface_get_width(sk_surface_t* surface) {
+  return AsSurface(surface)->width();
+}
+
+int sk_surface_get_height(sk_surface_t* surface) {
+  return AsSurface(surface)->height();
+}
+
+sk_imageinfo_t* sk_surface_get_image_info(sk_surface_t* surface) {
+  return ToImageInfo(new SkImageInfo(AsSurface(surface)->imageInfo()));
+}
+
+uint32_t sk_surface_get_generation_id(sk_surface_t* surface) {
+  return AsSurface(surface)->generationID();
+}
+
+void sk_surface_notify_content_will_change(sk_surface_t* surface, sk_surface_content_change_mode_t mode) {
+  AsSurface(surface)->notifyContentWillChange(static_cast<SkSurface::ContentChangeMode>(mode));
+}
+
 sk_image_t* sk_surface_new_image_snapshot(sk_surface_t* csurf) {
   return ToImage(AsSurface(csurf)->makeImageSnapshot().release());
 }
 
 sk_image_t* sk_surface_new_image_snapshot_with_crop(sk_surface_t* surface, const sk_irect_t* bounds) {
   return ToImage(AsSurface(surface)->makeImageSnapshot(*AsIRect(bounds)).release());
+}
+
+sk_image_t* sk_surface_make_temporary_image(sk_surface_t* surface) {
+  return ToImage(AsSurface(surface)->makeTemporaryImage().release());
 }
 
 sk_surface_t* sk_surface_new_backend_render_target(gr_recording_context_t* context, const gr_backendrendertarget_t* target, gr_surfaceorigin_t origin, sk_colortype_t colorType, sk_colorspace_t* colorspace, const sk_surfaceprops_t* props) {
@@ -72,14 +96,16 @@ sk_surface_t* sk_surface_new_render_target(gr_recording_context_t* context, bool
   return SK_ONLY_GPU(ToSurface(SkSurfaces::RenderTarget(AsGrRecordingContext(context), (skgpu::Budgeted)budgeted, AsImageInfo(cinfo), sampleCount, (GrSurfaceOrigin)origin, AsSurfaceProps(props), shouldCreateWithMips).release()), nullptr);
 }
 
-sk_surface_t* sk_surface_new_metal_layer(gr_recording_context_t* context, gr_mtl_handle_t layer, gr_surfaceorigin_t origin, int sampleCount, sk_colortype_t colorType, sk_colorspace_t* colorspace, const sk_surfaceprops_t* props, gr_mtl_handle_t* drawable) {
-  // TODO(knopp)
-  // return SK_ONLY_METAL(ToSurface(SkSurfaces::WrapCAMetalLayer(AsGrRecordingContext(context), layer, (GrSurfaceOrigin)origin, sampleCount, (SkColorType)colorType, sk_ref_sp(AsColorSpace(colorspace)), AsSurfaceProps(props), drawable).release()), nullptr);
-  return nullptr;
+void sk_surface_draw(sk_surface_t* surface, sk_canvas_t* canvas, float x, float y, const sk_sampling_options_t* sampling, const sk_paint_t* paint) {
+  SkSamplingOptions samplingOptions;
+  if (sampling) {
+    samplingOptions = *AsSamplingOptions(sampling);
+  }
+  AsSurface(surface)->draw(AsCanvas(canvas), x, y, samplingOptions, AsPaint(paint));
 }
 
-void sk_surface_draw(sk_surface_t* surface, sk_canvas_t* canvas, float x, float y, const sk_paint_t* paint) {
-  AsSurface(surface)->draw(AsCanvas(canvas), x, y, AsPaint(paint));
+sk_surface_t* sk_surface_make_surface(sk_surface_t* surface, const sk_imageinfo_t* imageInfo) {
+  return ToSurface(AsSurface(surface)->makeSurface(*AsImageInfo(imageInfo)).release());
 }
 
 bool sk_surface_peek_pixels(sk_surface_t* surface, sk_pixmap_t* pixmap) {

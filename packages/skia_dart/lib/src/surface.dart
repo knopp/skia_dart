@@ -21,6 +21,19 @@ class SkSurfacePropsFlags {
   static const int useDeviceIndependentFonts = 1;
 }
 
+enum SkSurfaceContentChangeMode {
+  discard(
+    sk_surface_content_change_mode_t.DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE,
+  ),
+  retain(
+    sk_surface_content_change_mode_t.RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE,
+  ),
+  ;
+
+  const SkSurfaceContentChangeMode(this._value);
+  final sk_surface_content_change_mode_t _value;
+}
+
 class SkSurfaceProps with _NativeMixin<sk_surfaceprops_t> {
   SkSurfaceProps({
     int flags = SkSurfacePropsFlags.none,
@@ -73,6 +86,28 @@ class SkSurface with _NativeMixin<sk_surface_t> {
     final ptr = sk_surface_new_raster(
       info._ptr,
       rowBytes,
+      props?._ptr ?? nullptr,
+    );
+    if (ptr == nullptr) {
+      return null;
+    }
+    return SkSurface._(ptr);
+  }
+
+  static SkSurface? rasterDirect(
+    SkImageInfo info,
+    Pointer<Void> pixels,
+    int rowBytes, {
+    sk_surface_raster_release_proc? releaseProc,
+    Pointer<Void>? context,
+    SkSurfaceProps? props,
+  }) {
+    final ptr = sk_surface_new_raster_direct(
+      info._ptr,
+      pixels,
+      rowBytes,
+      releaseProc ?? nullptr.cast(),
+      context ?? nullptr,
       props?._ptr ?? nullptr,
     );
     if (ptr == nullptr) {
@@ -158,6 +193,20 @@ class SkSurface with _NativeMixin<sk_surface_t> {
 
   SkCanvas? _canvas;
 
+  int get width => sk_surface_get_width(_ptr);
+
+  int get height => sk_surface_get_height(_ptr);
+
+  SkISize get dimensions => SkISize(width, height);
+
+  SkImageInfo get imageInfo => SkImageInfo._(sk_surface_get_image_info(_ptr));
+
+  int get generationId => sk_surface_get_generation_id(_ptr);
+
+  void notifyContentWillChange(SkSurfaceContentChangeMode mode) {
+    sk_surface_notify_content_will_change(_ptr, mode._value);
+  }
+
   SkImage? makeImageSnapshot() {
     final ptr = sk_surface_new_image_snapshot(_ptr);
     if (ptr == nullptr) {
@@ -177,14 +226,52 @@ class SkSurface with _NativeMixin<sk_surface_t> {
     return SkImage._(ptr);
   }
 
-  void draw(SkCanvas canvas, double x, double y, {SkPaint? paint}) {
-    sk_surface_draw(
-      _ptr,
-      canvas._ptr,
-      x,
-      y,
-      paint?._ptr ?? nullptr,
+  SkImage? makeTemporaryImage() {
+    final ptr = sk_surface_make_temporary_image(_ptr);
+    if (ptr == nullptr) {
+      return null;
+    }
+    return SkImage._(ptr);
+  }
+
+  SkSurface? makeSurface(SkImageInfo imageInfo) {
+    final ptr = sk_surface_make_surface(_ptr, imageInfo._ptr);
+    if (ptr == nullptr) {
+      return null;
+    }
+    return SkSurface._(ptr);
+  }
+
+  SkSurface? makeSurfaceWithDimensions(int width, int height) {
+    return makeSurface(
+      imageInfo.copyWith(width: width, height: height),
     );
+  }
+
+  void draw(
+    SkCanvas canvas,
+    double x,
+    double y, {
+    SkSamplingOptions? sampling,
+    SkPaint? paint,
+  }) {
+    final samplingPtr = sampling == null
+        ? nullptr
+        : _samplingOptionsPtr(sampling);
+    try {
+      sk_surface_draw(
+        _ptr,
+        canvas._ptr,
+        x,
+        y,
+        samplingPtr,
+        paint?._ptr ?? nullptr,
+      );
+    } finally {
+      if (samplingPtr != nullptr) {
+        _freeSamplingOptionsPtr(samplingPtr);
+      }
+    }
   }
 
   bool peekPixels(SkPixmap pixmap) {

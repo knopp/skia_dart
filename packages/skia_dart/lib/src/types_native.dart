@@ -335,6 +335,38 @@ extension _Size on Size {
   );
 }
 
+extension _Uint8 on Uint8 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Uint8>(),
+    growable: false,
+  );
+}
+
+extension _Int8 on Int8 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Int8>(),
+    growable: false,
+  );
+}
+
+extension _Uint16 on Uint16 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Uint16>(),
+    growable: false,
+  );
+}
+
+extension _Int16 on Int16 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Int16>(),
+    growable: false,
+  );
+}
+
 extension _Uint32 on Uint32 {
   static final pool = List.generate(
     10,
@@ -347,6 +379,38 @@ extension _Int32 on Int32 {
   static final pool = List.generate(
     10,
     (_) => ffi.calloc<Int32>(),
+    growable: false,
+  );
+}
+
+extension _Uint64 on Uint64 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Uint64>(),
+    growable: false,
+  );
+}
+
+extension _Int64 on Int64 {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Int64>(),
+    growable: false,
+  );
+}
+
+extension _Float on Float {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Float>(),
+    growable: false,
+  );
+}
+
+extension _Bool on Bool {
+  static final pool = List.generate(
+    10,
+    (_) => ffi.calloc<Bool>(),
     growable: false,
   );
 }

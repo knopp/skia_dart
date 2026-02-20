@@ -177,6 +177,10 @@ static_assert((int)SkPixelGeometry::kBGR_H_SkPixelGeometry == (int)BGR_H_SK_PIXE
 static_assert((int)SkPixelGeometry::kRGB_V_SkPixelGeometry == (int)RGB_V_SK_PIXELGEOMETRY, ASSERT_MSG(SkPixelGeometry, sk_pixelgeometry_t));
 static_assert((int)SkPixelGeometry::kBGR_V_SkPixelGeometry == (int)BGR_V_SK_PIXELGEOMETRY, ASSERT_MSG(SkPixelGeometry, sk_pixelgeometry_t));
 
+// sk_surface_content_change_mode_t
+static_assert((int)SkSurface::kDiscard_ContentChangeMode == (int)DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE, ASSERT_MSG(SkSurface::ContentChangeMode, sk_surface_content_change_mode_t));
+static_assert((int)SkSurface::kRetain_ContentChangeMode == (int)RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE, ASSERT_MSG(SkSurface::ContentChangeMode, sk_surface_content_change_mode_t));
+
 // sk_shader_tilemode_t
 static_assert((int)SkTileMode::kClamp == (int)CLAMP_SK_SHADER_TILEMODE, ASSERT_MSG(SkTileMode, sk_shader_tilemode_t));
 static_assert((int)SkTileMode::kRepeat == (int)REPEAT_SK_SHADER_TILEMODE, ASSERT_MSG(SkTileMode, sk_shader_tilemode_t));

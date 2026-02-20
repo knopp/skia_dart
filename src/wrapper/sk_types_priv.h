@@ -340,6 +340,7 @@ DEF_MAP(SkImage::RescaleGamma, sk_image_rescale_gamma_t, ImageRescaleGamma);
 DEF_MAP(SkImage::RescaleMode, sk_image_rescale_mode_t, ImageRescaleMode);
 
 #include "include/core/SkTextBlob.h"
+DEF_MAP(SkTextBlob::Iter, sk_textblob_iter_t, TextBlobIter)
 static inline SkTextBlobBuilder::RunBuffer AsTextBlobBuilderRunBuffer(const sk_textblob_builder_runbuffer_t* runbuffer) {
   return {
       (SkGlyphID*)runbuffer->glyphs,

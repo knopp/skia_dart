@@ -143,6 +143,11 @@ typedef enum {
 } sk_surfaceprops_flags_t;
 
 typedef enum {
+  DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE,
+  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE,
+} sk_surface_content_change_mode_t;
+
+typedef enum {
   IMAGE_DECODING_LAZY_DECODE,
   IMAGE_DECODING_PRE_DECODE,
 } sk_imagedecodingstrategy_t;
@@ -1000,6 +1005,7 @@ typedef enum {
 
 typedef struct sk_textblob_t sk_textblob_t;
 typedef struct sk_textblob_builder_t sk_textblob_builder_t;
+typedef struct sk_textblob_iter_t sk_textblob_iter_t;
 
 typedef struct {
   void* glyphs;
@@ -1007,6 +1013,12 @@ typedef struct {
   void* utf8text;
   void* clusters;
 } sk_textblob_builder_runbuffer_t;
+
+typedef struct {
+  sk_typeface_t* typeface;
+  int glyphCount;
+  const uint16_t* glyphIndices;
+} sk_textblob_iter_run_t;
 
 typedef struct {
   float fSCos;

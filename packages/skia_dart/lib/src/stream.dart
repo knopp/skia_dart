@@ -26,6 +26,72 @@ class SkStream with _NativeMixin<sk_stream_t> {
   int read(Pointer<Void> buffer, int size) =>
       sk_stream_read(_ptr, buffer, size);
 
+  int? readS8() {
+    final value = _Int8.pool[0];
+    if (!sk_stream_read_s8(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readS16() {
+    final value = _Int16.pool[0];
+    if (!sk_stream_read_s16(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readS32() {
+    final value = _Int32.pool[0];
+    if (!sk_stream_read_s32(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readS64() {
+    final value = _Int64.pool[0];
+    if (!sk_stream_read_s64(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readU8() {
+    final value = _Uint8.pool[0];
+    if (!sk_stream_read_u8(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readU16() {
+    final value = _Uint16.pool[0];
+    if (!sk_stream_read_u16(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readU32() {
+    final value = _Uint32.pool[0];
+    if (!sk_stream_read_u32(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readU64() {
+    final value = _Uint64.pool[0];
+    if (!sk_stream_read_u64(_ptr, value)) return null;
+    return value.value;
+  }
+
+  bool? readBool() {
+    final value = _Bool.pool[0];
+    if (!sk_stream_read_bool(_ptr, value)) return null;
+    return value.value;
+  }
+
+  double? readScalar() {
+    final value = _Float.pool[0];
+    if (!sk_stream_read_scalar(_ptr, value)) return null;
+    return value.value;
+  }
+
+  int? readPackedUInt() {
+    final value = _Size.pool[0];
+    if (!sk_stream_read_packed_uint(_ptr, value)) return null;
+    return value.value;
+  }
+
   Uint8List readBytes(int size) {
     final buffer = Uint8List(size);
     final bytesRead = sk_stream_read(_ptr, buffer.address.cast(), size);
@@ -83,6 +149,10 @@ class SkFileStream extends SkStream {
   Pointer<sk_stream_filestream_t> get _filePtr => _ptr.cast();
 
   bool get isValid => sk_filestream_is_valid(_filePtr);
+
+  void close() {
+    sk_filestream_close(_filePtr);
+  }
 }
 
 class SkMemoryStream extends SkStream {
@@ -115,6 +185,12 @@ class SkMemoryStream extends SkStream {
   void setMemory(Pointer<Void> data, int length, {bool copyData = true}) {
     sk_memorystream_set_memory(_ptr.cast(), data, length, copyData);
   }
+
+  void setData(SkData data) {
+    sk_memorystream_set_data(_ptr.cast(), data._ptr);
+  }
+
+  Pointer<Void> get atPos => sk_memorystream_get_at_pos(_ptr.cast());
 }
 
 class SkWStream with _NativeMixin<sk_wstream_t> {
@@ -154,6 +230,8 @@ class SkWStream with _NativeMixin<sk_wstream_t> {
 
   bool write32(int value) => sk_wstream_write_32(_ptr, value);
 
+  bool write64(int value) => sk_wstream_write_64(_ptr, value);
+
   bool writeText(String text) {
     final textPtr = text.toNativeUtf8();
     try {
@@ -168,6 +246,12 @@ class SkWStream with _NativeMixin<sk_wstream_t> {
   bool writeScalar(double value) => sk_wstream_write_scalar(_ptr, value);
 
   bool writeDecAsText(int value) => sk_wstream_write_dec_as_text(_ptr, value);
+
+  bool writeBigDecAsText(int value, {int minDigits = 0}) =>
+      sk_wstream_write_bigdec_as_text(_ptr, value, minDigits);
+
+  bool writeHexAsText(int value, {int minDigits = 0}) =>
+      sk_wstream_write_hex_as_text(_ptr, value, minDigits);
 
   bool writeScalarAsText(double value) =>
       sk_wstream_write_scalar_as_text(_ptr, value);
@@ -198,6 +282,10 @@ class SkFileWStream extends SkWStream {
   Pointer<sk_wstream_filestream_t> get _filePtr => _ptr.cast();
 
   bool get isValid => sk_filewstream_is_valid(_filePtr);
+
+  void fsync() {
+    sk_filewstream_fsync(_filePtr);
+  }
 }
 
 class SkDynamicMemoryWStream extends SkWStream {
@@ -207,6 +295,12 @@ class SkDynamicMemoryWStream extends SkWStream {
     : super._(ptr.cast());
 
   Pointer<sk_wstream_dynamicmemorystream_t> get _memPtr => _ptr.cast();
+
+  SkStream? detachAsStream() {
+    final streamPtr = sk_dynamicmemorywstream_detach_as_stream(_memPtr);
+    if (streamPtr == nullptr) return null;
+    return SkStream._(streamPtr.cast());
+  }
 
   SkData detachAsData() {
     final dataPtr = sk_dynamicmemorywstream_detach_as_data(_memPtr);
@@ -231,4 +325,27 @@ class SkDynamicMemoryWStream extends SkWStream {
 
   bool writeToStream(SkWStream dst) =>
       sk_dynamicmemorywstream_write_to_stream(_memPtr, dst._ptr);
+
+  bool read(Pointer<Void> buffer, {required int offset, required int size}) {
+    return sk_dynamicmemorywstream_read(
+      _memPtr,
+      buffer,
+      offset,
+      size,
+    );
+  }
+
+  Uint8List detachAsVector() => detachAsData().toUint8List();
+
+  void reset() {
+    sk_dynamicmemorywstream_reset(_memPtr);
+  }
+
+  void padToAlign4() {
+    sk_dynamicmemorywstream_pad_to_align4(_memPtr);
+  }
+}
+
+class SkNullWStream extends SkWStream {
+  SkNullWStream() : super._(sk_nullwstream_new());
 }
