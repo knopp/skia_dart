@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ffigen/ffigen.dart';
+import 'package:test/test.dart';
 
 String findMacSdkPath() {
   final result = Process.runSync('xcrun', [
@@ -15,12 +16,6 @@ String findMacSdkPath() {
 }
 
 void main() {
-  const nonLeafFunctions = {
-    'sk_font_get_paths',
-    'skgpu_graphite_async_rescale_and_read_pixels_from_surface',
-    'skgpu_graphite_async_rescale_and_read_pixels_from_image',
-    'skgpu_graphite_context_submit',
-  };
   final packageRoot = Platform.script.resolve('../');
   final wrapperRoot = packageRoot.resolve('../../src/');
   final headerRoot = wrapperRoot.resolve('./wrapper/include');
@@ -31,38 +26,27 @@ void main() {
   FfiGenerator(
     // Required. Output path for the generated bindings.
     output: Output(
-      dartFile: packageRoot.resolve('lib/src/skia.g.dart'),
+      dartFile: packageRoot.resolve('lib/src/dawn.g.dart'),
       format: true,
       preamble: '// ignore_for_file: unused_field',
-      style: NativeExternalBindings(assetId: 'package:skia_dart/skia_dart'),
+      style: NativeExternalBindings(assetId: 'package:dawn_dart/dawn_dart'),
     ),
     // Optional. Where to look for header files.
     headers: Headers(
       entryPoints: headers,
       compilerOptions: [
         "-I${wrapperRoot.toFilePath()}",
-        if (Platform.isMacOS) ...[
-          "-std=c11",
-          "-isysroot",
-          findMacSdkPath(),
-        ],
+        if (Platform.isMacOS) ...["-std=c11", "-isysroot", findMacSdkPath()],
       ],
       include: (header) {
         // Include all headers in the header root.
-        final path = header.toFilePath();
-        final name = path.split(Platform.pathSeparator).last;
-        return path.startsWith(headerRoot.toFilePath()) &&
-            (name.startsWith('sk_') || name.startsWith('gr_'));
+        return header.toFilePath().startsWith(headerRoot.toFilePath()) &&
+            header.toFilePath().endsWith('dawn.h');
       },
     ),
     enums: Enums.includeAll,
     structs: Structs.includeAll,
-    functions: Functions(
-      include: Declarations.includeAll,
-      isLeaf: (declaration) {
-        return !nonLeafFunctions.contains(declaration.originalName);
-      },
-    ),
+    functions: Functions(include: Declarations.includeAll),
     unions: Unions.includeAll,
     globals: Globals.includeAll,
     typedefs: Typedefs.includeAll,

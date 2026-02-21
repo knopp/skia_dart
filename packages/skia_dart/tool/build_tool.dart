@@ -288,9 +288,11 @@ class UpdateHashCommand extends Command<void> {
   void run() {
     final workspaceRoot = getWorkspaceRoot();
     final hash = generateSkiaDartHash(workspaceRoot);
-    final packageRoot = p.join(workspaceRoot, 'packages', 'skia_dart');
-    final hashFile = p.join(packageRoot, 'skia_dart_hash');
-    File(hashFile).writeAsStringSync(hash);
+    final packagesRoot = p.join(workspaceRoot, 'packages');
+    final hashFile1 = p.join(packagesRoot, 'skia_dart', 'skia_dart_hash');
+    File(hashFile1).writeAsStringSync(hash);
+    final hashFile2 = p.join(packagesRoot, 'dawn_dart', 'dawn_dart_hash');
+    File(hashFile2).writeAsStringSync(hash);
   }
 }
 
@@ -305,17 +307,29 @@ class CheckHashCommand extends Command<void> {
   void run() {
     final workspaceRoot = getWorkspaceRoot();
     final expectedHash = generateSkiaDartHash(workspaceRoot);
-    final packageRoot = p.join(workspaceRoot, 'packages', 'skia_dart');
-    final hashFile = p.join(packageRoot, 'skia_dart_hash');
-    if (!File(hashFile).existsSync()) {
+    final packagesRoot = p.join(workspaceRoot, 'packages');
+    final hashFile1 = p.join(packagesRoot, 'skia_dart', 'skia_dart_hash');
+    if (!File(hashFile1).existsSync()) {
       throw Exception(
         'skia_dart_hash file does not exist. Please run update-skia-hash command.',
       );
     }
-    final actualHash = File(hashFile).readAsStringSync().trim();
+    final actualHash = File(hashFile1).readAsStringSync().trim();
     if (expectedHash != actualHash) {
       throw Exception(
         'skia_dart_hash is out of date. Please run update-skia-hash command.',
+      );
+    }
+    final hashFile2 = p.join(packagesRoot, 'dawn_dart', 'dawn_dart_hash');
+    if (!File(hashFile2).existsSync()) {
+      throw Exception(
+        'dawn_dart_hash file does not exist. Please run update-skia-hash command.',
+      );
+    }
+    final actualHash2 = File(hashFile2).readAsStringSync().trim();
+    if (expectedHash != actualHash2) {
+      throw Exception(
+        'dawn_dart_hash is out of date. Please run update-skia-hash command.',
       );
     }
     print('skia_dart_hash is up to date.');

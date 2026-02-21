@@ -3,10 +3,6 @@ import("//gn/skia.gni")
 config("skia_host_debug_config") {
   configs = [ "//:use_skia_vulkan_headers" ]
 
-  if (skia_use_dawn) {
-    configs += [ "//third_party/dawn:dawn_api_config" ]
-  }
-
   defines = [ "SKIA_IMPLEMENTATION" ]
 }
 
@@ -21,7 +17,6 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_colorfilter.h",
     "wrapper/include/sk_colorspace.h",
     "wrapper/include/sk_data.h",
-    "wrapper/include/sk_dawn.h",
     "wrapper/include/sk_document.h",
     "wrapper/include/sk_drawable.h",
     "wrapper/include/sk_font.h",
@@ -63,7 +58,6 @@ source_set("skia_c_wrapper") {
     "wrapper/sk_colorfilter.cpp",
     "wrapper/sk_colorspace.cpp",
     "wrapper/sk_data.cpp",
-    "wrapper/sk_dawn.cpp",
     "wrapper/sk_document.cpp",
     "wrapper/sk_drawable.cpp",
     "wrapper/sk_enums.cpp",
@@ -112,7 +106,6 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_colorfilter.h",
     "wrapper/include/sk_colorspace.h",
     "wrapper/include/sk_data.h",
-    "wrapper/include/sk_dawn.h",
     "wrapper/include/sk_document.h",
     "wrapper/include/sk_drawable.h",
     "wrapper/include/sk_font.h",
@@ -196,4 +189,14 @@ shared_library("skia_dart") {
   if (is_linux) {
     libs = [ "EGL" ]
   }
+}
+
+shared_library("dart_dawn") {
+  sources = [
+    "wrapper/dawn.cpp",
+    "wrapper/include/dawn.h",
+  ]
+  include_dirs = [ "." ]
+  defines = [ "SK_DAWN" ]
+  deps = [ "//third_party/dawn" ]
 }

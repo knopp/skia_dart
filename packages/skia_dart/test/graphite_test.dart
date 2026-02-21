@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dawn_dart/dawn_dart.dart';
 import 'package:skia_dart/skia_dart.dart';
 import 'package:test/test.dart';
 
