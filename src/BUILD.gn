@@ -142,7 +142,11 @@ source_set("skia_c_wrapper") {
     "wrapper/include/skresources_resource_provider.h",
     "wrapper/include/sksg_invalidation_controller.h",
   ]
-  include_dirs = [ "." ]
+  include_dirs = [
+    ".",
+    "$root_out_dir/gen/third_party/dawn/include/",
+    "//third_party/externals/dawn/include/",
+  ]
   deps = [
     "//:skia",
     "//modules/jsonreader",
