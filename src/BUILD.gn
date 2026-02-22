@@ -195,7 +195,7 @@ shared_library("skia_dart") {
   }
 }
 
-shared_library("dart_dawn") {
+shared_library("dawn_dart") {
   sources = [
     "wrapper/dawn.cpp",
     "wrapper/include/dawn.h",

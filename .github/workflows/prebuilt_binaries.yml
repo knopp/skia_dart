@@ -1,8 +1,10 @@
 name: Prebuilt Binaries
 
+# on:
+#   push:
+#     branches: ["master"]
 on:
-  push:
-    branches: ["master"]
+  pull_request:
 
 jobs:
   # Generate matrix from build_config.json
@@ -60,6 +62,7 @@ jobs:
               config: .key,
               target_os: .value.target_os,
               target_cpu: .value.target_cpu,
+              skia_use_dawn: (.value.skia_use_dawn // false),
               # Map target_os to GitHub runner
               os: (
                 if .value.target_os == "mac" or .value.target_os == "ios" then
@@ -82,14 +85,24 @@ jobs:
                   "ubuntu-latest"
                 end
               ),
-              # Determine library filename based on target_os
-              lib_name: (
+              # Determine skia library filename based on target_os
+              skia_lib_name: (
                 if .value.target_os == "mac" or .value.target_os == "ios" then
                   "libskia_dart.dylib"
                 elif .value.target_os == "win" then
                   "skia_dart.dll"
                 else
                   "libskia_dart.so"
+                end
+              ),
+              # Determine dawn library filename based on target_os
+              dawn_lib_name: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  "libdawn_dart.dylib"
+                elif .value.target_os == "win" then
+                  "dawn_dart.dll"
+                else
+                  "libdawn_dart.so"
                 end
               )
             }) | {include: .}
@@ -188,11 +201,24 @@ jobs:
         working-directory: out/${{ matrix.config }}
         run: ninja skia_dart
 
-      - name: Upload artifact
+      - name: Build Dawn wrapper
+        if: matrix.skia_use_dawn == true
+        working-directory: out/${{ matrix.config }}
+        run: ninja dawn_dart
+
+      - name: Upload Skia artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          name: ${{ matrix.config }}
-          path: out/${{ matrix.config }}/${{ matrix.lib_name }}
+          name: skia_${{ matrix.config }}
+          path: out/${{ matrix.config }}/${{ matrix.skia_lib_name }}
+          retention-days: 1
+
+      - name: Upload Dawn artifact
+        if: matrix.skia_use_dawn == true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dawn_${{ matrix.config }}
+          path: out/${{ matrix.config }}/${{ matrix.dawn_lib_name }}
           retention-days: 1
 
   # Third job: Create release with all artifacts
@@ -226,28 +252,60 @@ jobs:
       - name: Generate hashes JSON and prepare release assets
         run: |
           mkdir -p release_assets
-          echo "{" > prebuilt_hashes.json
+
+          # Generate skia prebuilt_hashes.json
+          echo "{" > skia_prebuilt_hashes.json
           first=true
-          for config_dir in artifacts/*/; do
-            config=$(basename "$config_dir")
-            lib_file=$(find "$config_dir" -type f | head -1)
-            if [ -f "$lib_file" ]; then
-              # Calculate SHA256 hash
-              hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
-              if [ "$first" = true ]; then
-                first=false
-              else
-                echo "," >> prebuilt_hashes.json
+          for config_dir in artifacts/skia_*/; do
+            if [ -d "$config_dir" ]; then
+              # Extract config name by removing "skia_" prefix
+              config=$(basename "$config_dir" | sed 's/^skia_//')
+              lib_file=$(find "$config_dir" -type f | head -1)
+              if [ -f "$lib_file" ]; then
+                hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                if [ "$first" = true ]; then
+                  first=false
+                else
+                  echo "," >> skia_prebuilt_hashes.json
+                fi
+                printf '  "%s": "%s"' "$config" "$hash" >> skia_prebuilt_hashes.json
+                lib_name=$(basename "$lib_file")
+                cp "$lib_file" "release_assets/${config}_${lib_name}"
               fi
-              printf '  "%s": "%s"' "$config" "$hash" >> prebuilt_hashes.json
-              # Copy to release assets with config prefix
-              lib_name=$(basename "$lib_file")
-              cp "$lib_file" "release_assets/${config}_${lib_name}"
             fi
           done
-          echo "" >> prebuilt_hashes.json
-          echo "}" >> prebuilt_hashes.json
-          cat prebuilt_hashes.json
+          echo "" >> skia_prebuilt_hashes.json
+          echo "}" >> skia_prebuilt_hashes.json
+          echo "=== Skia hashes ==="
+          cat skia_prebuilt_hashes.json
+
+          # Generate dawn prebuilt_hashes.json
+          echo "{" > dawn_prebuilt_hashes.json
+          first=true
+          for config_dir in artifacts/dawn_*/; do
+            if [ -d "$config_dir" ]; then
+              # Extract config name by removing "dawn_" prefix
+              config=$(basename "$config_dir" | sed 's/^dawn_//')
+              lib_file=$(find "$config_dir" -type f | head -1)
+              if [ -f "$lib_file" ]; then
+                hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                if [ "$first" = true ]; then
+                  first=false
+                else
+                  echo "," >> dawn_prebuilt_hashes.json
+                fi
+                printf '  "%s": "%s"' "$config" "$hash" >> dawn_prebuilt_hashes.json
+                lib_name=$(basename "$lib_file")
+                cp "$lib_file" "release_assets/${config}_${lib_name}"
+              fi
+            fi
+          done
+          echo "" >> dawn_prebuilt_hashes.json
+          echo "}" >> dawn_prebuilt_hashes.json
+          echo "=== Dawn hashes ==="
+          cat dawn_prebuilt_hashes.json
+
+          echo "=== Release assets ==="
           ls -la release_assets/
 
       - name: Create GitHub Release
@@ -256,15 +314,19 @@ jobs:
           tag_name: skia_dart_${{ needs.generate-matrix.outputs.skia_dart_hash }}
           name: skia_dart ${{ needs.generate-matrix.outputs.skia_dart_hash_short }}
           body: |
-            Prebuilt skia_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
+            Prebuilt skia_dart and dawn_dart binaries for commit hash: `${{ needs.generate-matrix.outputs.skia_dart_hash }}`
           files: |
             release_assets/*
-            prebuilt_hashes.json
+            skia_prebuilt_hashes.json
+            dawn_prebuilt_hashes.json
           draft: false
           prerelease: false
 
       - name: Copy hashes JSON to packages directory
-        run: cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+        run: |
+          cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+          mkdir -p packages/dawn_dart
+          cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
 
       - name: Commit prebuilt_hashes.json
         run: |
@@ -272,7 +334,9 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git fetch origin ${{ github.head_ref }}
           git checkout ${{ github.head_ref }}
-          cp prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
-          git add packages/skia_dart/prebuilt_hashes.json
+          cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
+          mkdir -p packages/dawn_dart
+          cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
+          git add packages/skia_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
           git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
           git push origin ${{ github.head_ref }}
