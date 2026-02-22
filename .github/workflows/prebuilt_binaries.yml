@@ -206,6 +206,16 @@ jobs:
         working-directory: out/${{ matrix.config }}
         run: ninja dawn_dart
 
+      - name: Strip Android libraries
+        if: matrix.target_os == 'android'
+        working-directory: out/${{ matrix.config }}
+        run: |
+          STRIP="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip"
+          $STRIP --strip-unneeded ${{ matrix.skia_lib_name }}
+          if [ -f "${{ matrix.dawn_lib_name }}" ]; then
+            $STRIP --strip-unneeded ${{ matrix.dawn_lib_name }}
+          fi
+
       - name: Upload Skia artifact
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
