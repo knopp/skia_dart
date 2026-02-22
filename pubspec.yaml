@@ -1,0 +1,7 @@
+name: dart_skia
+environment:
+  sdk: "^3.12.0-117.0.dev"
+workspace:
+  - packages/dawn_dart
+  - packages/dawn_dart_api
+  - packages/skia_dart

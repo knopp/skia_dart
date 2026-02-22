@@ -11,11 +11,11 @@ jobs:
       matrix:
         include:
           - os: macos-latest
-            config: mac_arm64_graphite_metal
+            config: mac_arm64_graphite
           - os: windows-latest
-            config: win_x64_graphite_d3d11
+            config: win_x64_graphite
           - os: ubuntu-latest
-            config: linux_x64_graphite_gl
+            config: linux_x64_graphite
 
     runs-on: ${{ matrix.os }}
 
@@ -108,6 +108,11 @@ jobs:
         if: steps.check-release.outputs.release_exists == 'false'
         working-directory: out/${{ matrix.config }}
         run: ninja skia_dart
+
+      - name: Build Dawn wrapper
+        if: steps.check-release.outputs.release_exists == 'false'
+        working-directory: out/${{ matrix.config }}
+        run: ninja dawn_dart
 
       - name: Run tests
         working-directory: packages/skia_dart

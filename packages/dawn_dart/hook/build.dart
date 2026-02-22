@@ -18,7 +18,7 @@ Future<Uri> downloadPrebuiltBinary({
     return File.fromUri(fileUri).readAsStringSync();
   }
 
-  final hash = readFile('skia_dart_hash').trim();
+  final hash = readFile('dawn_dart_hash').trim();
 
   final hashes =
       jsonDecode(readFile('prebuilt_hashes.json')) as Map<String, dynamic>;
@@ -27,7 +27,7 @@ Future<Uri> downloadPrebuiltBinary({
   final expectedSha256 = hashes[downloadFileName] as String?;
   if (expectedSha256 == null) {
     throw BuildError(
-      message: 'No prebuilt hash found for file1: $downloadFileName',
+      message: 'No prebuilt hash found for file: $downloadFileName',
     );
   }
 
@@ -99,9 +99,7 @@ String getConfiguration(BuildInput input) {
     OS.android => 'android',
     OS.iOS when code.iOS.targetSdk == IOSSdk.iPhoneOS => 'ios',
     OS.iOS when code.iOS.targetSdk == IOSSdk.iPhoneSimulator => 'ios_sim',
-    _ => throw BuildError(
-      message: 'Unsupported target OS: ${code.targetOS}',
-    ),
+    _ => throw BuildError(message: 'Unsupported target OS: ${code.targetOS}'),
   };
   final arch = switch (code.targetArchitecture) {
     Architecture.x64 => 'x64',
@@ -114,11 +112,11 @@ String getConfiguration(BuildInput input) {
   };
 
   switch (code.targetOS) {
+    // TODO(knopp): Use hook defines to allow switching between metal and dawn builds
     case OS.macOS:
       return '${platform}_${arch}_graphite';
     case OS.iOS:
-      // Until dawn builds on iOS
-      return '${platform}_${arch}_graphite_metal';
+      return '${platform}_${arch}_graphite';
     case OS.android:
       return '${platform}_${arch}_graphite';
     case OS.windows:
@@ -141,7 +139,7 @@ void main(List<String> args) async {
     final configuration = getConfiguration(input);
     final outDir = input.packageRoot.resolve('../../out/$configuration/');
 
-    final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
+    final dylibName = input.config.code.targetOS.dylibFileName('dawn_dart');
     if (Directory(outDir.toFilePath()).existsSync()) {
       final dylib = outDir.resolve(dylibName);
 
@@ -154,7 +152,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),
@@ -169,7 +167,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),

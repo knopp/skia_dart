@@ -201,11 +201,19 @@ class GraphiteContext with _NativeMixin<skgpu_graphite_context_t> {
     return GraphiteContext._(ptr);
   }
 
+  static bool _didSetProcTable = false;
+
   static GraphiteContext? makeDawn({
+    required WgpuProcTable procTable,
     required WgpuInstance instance,
     required WgpuDevice device,
     required WgpuQueue queue,
   }) {
+    if (!_didSetProcTable) {
+      skgpu_set_dawn_proc_table(procTable.handle);
+      _didSetProcTable = true;
+    }
+
     final ptr = skgpu_graphite_context_make_dawn(
       instance.handle.cast(),
       device.handle.cast(),

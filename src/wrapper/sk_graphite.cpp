@@ -1,5 +1,7 @@
 #include "wrapper/include/sk_graphite.h"
 
+#include <cstdio>
+
 #include "wrapper/sk_types_priv.h"
 
 #ifdef SK_GRAPHITE
@@ -13,12 +15,19 @@
     #include "include/gpu/graphite/mtl/MtlGraphiteTypes_cpp.h"
   #endif
   #ifdef SK_DAWN
+    #include "dawn/dawn_proc.h"
     #include "include/gpu/graphite/dawn/DawnBackendContext.h"
     #include "include/gpu/graphite/dawn/DawnGraphiteTypes.h"
   #endif
 #endif
 
 // Context
+
+void skgpu_set_dawn_proc_table(void* procs) {
+#if defined(SK_GRAPHITE) && defined(SK_DAWN)
+  dawnProcSetProcs(reinterpret_cast<DawnProcTable*>(procs));
+#endif
+}
 
 bool skgpu_graphite_is_supported(void) {
   return SK_ONLY_GRAPHITE(true, false);
@@ -39,6 +48,7 @@ skgpu_graphite_context_t* skgpu_graphite_context_make_metal(void* device, void* 
 
 skgpu_graphite_context_t* skgpu_graphite_context_make_dawn(void* instance, void* device, void* queue) {
 #if defined(SK_GRAPHITE) && defined(SK_DAWN)
+  wgpuInstanceAddRef(static_cast<WGPUInstance>(instance));
   skgpu::graphite::DawnBackendContext backendContext;
   backendContext.fInstance = wgpu::Instance(static_cast<WGPUInstance>(instance));
   backendContext.fDevice = wgpu::Device(static_cast<WGPUDevice>(device));

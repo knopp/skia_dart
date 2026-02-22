@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dawn_dart/dawn_dart.dart';
 import 'package:skia_dart/skia_dart.dart';
 import 'package:test/test.dart';
 
@@ -48,6 +49,7 @@ class DawnTestContext extends GraphiteTestContext {
     _device = _instance.requestAdapter(backendType)!.requestDevice()!;
     _queue = _device.getQueue();
     _context = GraphiteContext.makeDawn(
+      procTable: WgpuProcTable.instance,
       instance: _instance,
       device: _device,
       queue: _queue,

@@ -1,0 +1,22 @@
+{
+  "android_arm64_graphite_libdawn_dart.so": "86e1183bbf73820e9457a381aa8788c9655e813b926613e3747cc1c70fc2b128",
+  "android_arm_graphite_libdawn_dart.so": "b55af826a914c0ee607da61f5dddb8603327cb6b75fc521156beb50ac07b3ed0",
+  "android_x64_graphite_libdawn_dart.so": "637b7c7dfdee895960802bf57278ff07973d1c2fd9a14eb8f30b19fd5084e52c",
+  "android_x86_graphite_libdawn_dart.so": "4ba3981fbcc88701c01aefdde7f6efb533a9c08480caed61e36dcd2aae03ad27",
+  "linux_arm64_graphite_libdawn_dart.so": "79004fa081ea19d68996e6065f2879ce826f7831a464a2a0f9dfef85389bdfdc",
+  "linux_x64_graphite_libdawn_dart.so": "ff43e32e5893f1ec388ce1c6c3e35350cca91774108c4304c8997094502729cd",
+  "mac_arm64_graphite_libdawn_dart.dylib": "c9231ddb8c30ddac9997e558c568d6448559c8aa2aa72500631cdf9b70267f62",
+  "mac_x64_graphite_libdawn_dart.dylib": "c683bf7045326439ec3200434f2cb07bddb83abcb7642f4feda0019f57c478bb",
+  "win_arm64_graphite_dawn_dart.dll": "4c1e00abdb45a53a634bf2c1a7996b18db723b25feb99370ccc602246042c3f7",
+  "win_x64_graphite_dawn_dart.dll": "4689cab675aed379e947ed997181d15afc8affda6d1d30b77c208c01398a8759",
+  "android_arm64_graphite_libdawn_dart_stub.so": "5d498feed11082b7789b391b4d31c4924f026ef71815ee87a97901437f145886",
+  "android_arm_graphite_libdawn_dart_stub.so": "56eedaf59d5cdc21c2eeb628f7f553a67b69664b7b0f9f003c60b22c6a102af0",
+  "android_x64_graphite_libdawn_dart_stub.so": "bd081ac834e8bcc5b8ac10a5248d755fc0b77d74a30fcac658df0576437e9c12",
+  "android_x86_graphite_libdawn_dart_stub.so": "1547eb2bed69e09f62c7f1b12c7b9f34d0752893e2dc0f9469bc8f66c1b528ae",
+  "linux_arm64_graphite_libdawn_dart_stub.so": "c242a9229df443765c6bef34190bf336067a3434c8d9389c3401ab49388d3ebb",
+  "linux_x64_graphite_libdawn_dart_stub.so": "079ac07c52224050d3f41e8b7c7af712091c44c95b13968460f87145d7b02b6a",
+  "mac_arm64_graphite_libdawn_dart_stub.dylib": "b952e0a970c92ef11569b4264024b64abb9745fd0b0ebffaec991a2387e1cd4b",
+  "mac_x64_graphite_libdawn_dart_stub.dylib": "31c519f6d1df78eb2e5d992c4bd032e6b0e1543731554b6d0bf6c2cc4c2e942c",
+  "win_arm64_graphite_dawn_dart_stub.dll": "10d2f7fb99ca92865a8429a9cd227e2139594e187d629204c331150350af70ad",
+  "win_x64_graphite_dawn_dart_stub.dll": "2107535534fcbd8be6d941eed31c182fdf3d2b8fe9f6a2ed0bf46a8770b22dcc"
+}
