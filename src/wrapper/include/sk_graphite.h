@@ -7,6 +7,8 @@ SK_C_PLUS_PLUS_BEGIN_GUARD
 
 // Context
 
+SK_C_API void skgpu_set_dawn_proc_table(void* procs);
+
 SK_C_API bool skgpu_graphite_is_supported(void);
 SK_C_API skgpu_graphite_context_t* skgpu_graphite_context_make_metal(void* device, void* queue);
 SK_C_API skgpu_graphite_context_t* skgpu_graphite_context_make_dawn(void* instance, void* device, void* queue);

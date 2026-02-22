@@ -1,19 +1,16 @@
-name: skia_dart
-description: Skia bindings for Dart.
-version: 0.0.1
-# repository: https://github.com/my_org/my_repo
+name: dawn_dart
+description: A sample command-line application.
+version: 0.1.0
+repository: https://github.com/knopp/skia_dart
 
 environment:
-  sdk: ^3.11.0-0.dev
+  sdk: ^3.12.0-117.0.dev
 
 resolution: workspace
 
-# Add regular dependencies here.
 dependencies:
   dawn_dart_api: ^0.1.0
-  path: ^1.9.0
   ffi: ^2.1.5
-  vector_math: ^2.2.0
   convert: ^3.1.2
   crypto: ^3.0.6
   hooks: ^1.0.0
@@ -24,8 +21,6 @@ hooks:
     entrypoint: hook/build.dart
 
 dev_dependencies:
-  args: ^2.7.0
   lints: ^6.0.0
   test: ^1.25.6
   ffigen: ^20.1.1
-  dawn_dart: ^0.1.0

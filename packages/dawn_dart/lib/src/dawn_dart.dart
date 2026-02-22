@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of '../dawn_dart.dart';
 
 enum WgpuBackendType {
   undefined(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_UNDEFINED),
@@ -9,14 +9,27 @@ enum WgpuBackendType {
   metal(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_METAL),
   vulkan(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_VULKAN),
   opengl(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_OPENGL),
-  opengles(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_OPENGLES),
-  ;
+  opengles(sk_wgpu_backend_type_t.SK_WGPU_BACKEND_TYPE_OPENGLES);
 
   const WgpuBackendType(this._value);
   final sk_wgpu_backend_type_t _value;
 }
 
-class WgpuInstance with _NativeMixin<sk_wgpu_instance_t> {
+class WgpuProcTable extends api.WgpuProcTable {
+  static final WgpuProcTable instance = WgpuProcTable._(
+    sk_wgpu_dawn_proc_table(),
+  );
+
+  WgpuProcTable._(this._handle);
+
+  @override
+  Pointer<Void> get handle => _handle;
+
+  final Pointer<Void> _handle;
+}
+
+class WgpuInstance extends api.WgpuInstance
+    with _NativeMixin<sk_wgpu_instance_t> {
   WgpuInstance._() {
     final ptr = sk_wgpu_create_instance();
     if (ptr == nullptr) {
@@ -27,7 +40,6 @@ class WgpuInstance with _NativeMixin<sk_wgpu_instance_t> {
 
   factory WgpuInstance.create() => WgpuInstance._();
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_instance_release, _finalizer);
   }
@@ -44,7 +56,8 @@ class WgpuInstance with _NativeMixin<sk_wgpu_instance_t> {
     return WgpuAdapter._(ptr, this);
   }
 
-  Pointer<sk_wgpu_instance_t> get handle => _ptr;
+  @override
+  Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
 
@@ -62,7 +75,6 @@ class WgpuAdapter with _NativeMixin<sk_wgpu_adapter_t> {
 
   final WgpuInstance _instance;
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_adapter_release, _finalizer);
   }
@@ -86,12 +98,11 @@ class WgpuAdapter with _NativeMixin<sk_wgpu_adapter_t> {
   }
 }
 
-class WgpuDevice with _NativeMixin<sk_wgpu_device_t> {
+class WgpuDevice extends api.WgpuDevice with _NativeMixin<sk_wgpu_device_t> {
   WgpuDevice._(Pointer<sk_wgpu_device_t> ptr) {
     _attach(ptr, _finalizer);
   }
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_device_release, _finalizer);
   }
@@ -104,7 +115,7 @@ class WgpuDevice with _NativeMixin<sk_wgpu_device_t> {
     return WgpuQueue._(ptr);
   }
 
-  Pointer<sk_wgpu_device_t> get handle => _ptr;
+  Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
 
@@ -207,17 +218,16 @@ extension Win32 on WgpuDevice {
   }
 }
 
-class WgpuQueue with _NativeMixin<sk_wgpu_queue_t> {
+class WgpuQueue extends api.WgpuQueue with _NativeMixin<sk_wgpu_queue_t> {
   WgpuQueue._(Pointer<sk_wgpu_queue_t> ptr) {
     _attach(ptr, _finalizer);
   }
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_queue_release, _finalizer);
   }
 
-  Pointer<sk_wgpu_queue_t> get handle => _ptr;
+  Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
 
@@ -227,13 +237,6 @@ class WgpuQueue with _NativeMixin<sk_wgpu_queue_t> {
     return NativeFinalizer(ptr.cast());
   }
 }
-
-@Native<Pointer<Void> Function()>(
-  assetId: 'package:skia_dart/dawn_native',
-  isLeaf: true,
-)
-// ignore: non_constant_identifier_names
-external Pointer<Void> sk_dawn_native_get_procs();
 
 /// Initializes native dawn library. Returns true if dawn is available and was
 /// successfully initialized, false otherwise.
@@ -247,7 +250,6 @@ class WgpuSharedTextureMemory
     _attach(ptr, _finalizer);
   }
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_shared_texture_memory_release, _finalizer);
   }
@@ -305,17 +307,17 @@ class WgpuSharedTextureMemoryTransfer {
   Pointer<sk_wgpu_shared_texture_memory_t> _ptr;
 }
 
-class WgpuTexture with _NativeMixin<sk_wgpu_texture_t> {
+class WgpuTexture extends api.WgpuTexture with _NativeMixin<sk_wgpu_texture_t> {
   WgpuTexture._(Pointer<sk_wgpu_texture_t> ptr) {
     _attach(ptr, _finalizer);
   }
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_texture_release, _finalizer);
   }
 
-  Pointer<sk_wgpu_texture_t> get handle => _ptr;
+  @override
+  Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
 
@@ -341,9 +343,7 @@ class WgpuTextureTransfer {
     return res;
   }
 
-  WgpuTextureTransfer._(
-    Pointer<sk_wgpu_texture_t> ptr,
-  ) : _ptr = ptr;
+  WgpuTextureTransfer._(Pointer<sk_wgpu_texture_t> ptr) : _ptr = ptr;
 
   Pointer<sk_wgpu_texture_t> _ptr;
 }
@@ -358,7 +358,6 @@ class ComObject with _NativeMixin<Void> {
     return comObject;
   }
 
-  @override
   void dispose() {
     _dispose(sk_wgpu_com_release, _finalizer);
   }
