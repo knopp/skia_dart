@@ -1,15 +1,15 @@
 {
-  "android_arm64_graphite": "54868ef3d8b6e6002a27a57771a6a7f3daf897637d73f6384b645b3736cf7efc",
-  "android_arm_graphite": "f3c543a4aa718ea1cbd9e2e0dbd9048d9a58b02a6d881b807eb91681e5dca52e",
-  "android_x64_graphite": "5eb82c5588aa1236d8a43a9b9dfe7209b8dbaf9c5c890cc41227e50ea126630b",
-  "android_x86_graphite": "cd879d7cd07a2c8679b05e642bd83f5b46542118f6ba1a6465a461121b75d761",
-  "ios_arm64_graphite_metal": "ac1feffbe0f550836b46eac1a2951aa64c38cc9adfc7898d365791944de71f1c",
-  "ios_sim_arm64_graphite_metal": "873c14e79eb6f9dcab9eb3d6e7e3cccb03393cd79482bc2cf5a6c943a5aa1633",
-  "ios_sim_x64_graphite_metal": "176d577a668bea143e64781ae6b469c4790ec730a8dd54009e72d5feb0a21d24",
-  "linux_arm64_graphite": "8b85badac473a291d1e5d7fc18e1609ce40ff155419b3acf2c8e1f04984c2eef",
-  "linux_x64_graphite": "f4159e856833a3b7cae6139562d6b1e258c69c2e9763ae4301d110b0a991d40b",
-  "mac_arm64_graphite": "bf5fea94e7c8b35e8f25c02f1cd2a9b06ce17bfd6de4f27dd1b5ac7f2ea42389",
-  "mac_x64_graphite": "b1d023a4de0d654c5609a770a261a209d49858019073dd0c318fdda608088017",
-  "win_arm64_graphite": "89b06daba1e58f74f8a7a149afbb85c503fed2a72642f9e96567eea720a7ae98",
-  "win_x64_graphite": "c008483bf4a546cdac55ebfb88b0b6512f9014e4cb4746b5e83f55510c95d2d5"
+  "android_arm64_graphite_libskia_dart.so": "ca56404fc0d83a773d33c0468181097f502a464ab592adfac31a9fa148682a31",
+  "android_arm_graphite_libskia_dart.so": "36f815b9a81c07defc61a7360de03a0e8b26f12e6e7c2a7fb3f54251e64b3279",
+  "android_x64_graphite_libskia_dart.so": "f83619d6a6aa4d600749fe106d50f624dbee479c7d711d5f687a556ebaeaea0c",
+  "android_x86_graphite_libskia_dart.so": "d52acf292730b67763b4a40465b46cb6d6ddfe8e9f7edd66c10aaf73c259a813",
+  "ios_arm64_graphite_metal_libskia_dart.dylib": "42c6c321b3ecb4c89284d7bd1f64c4fc74278bdff9e2cf6a0e89a109699bfbc7",
+  "ios_sim_arm64_graphite_metal_libskia_dart.dylib": "a7ae88349ed6fc482508a26d99148d5db87e131898d2940494063a088c1353c8",
+  "ios_sim_x64_graphite_metal_libskia_dart.dylib": "0b3669424bff323b0f250bc68281548d4e7558793ba3118b4325a7a6028e0a15",
+  "linux_arm64_graphite_libskia_dart.so": "707fdd93bcde8a39a46e9ce9c6dd681d56f5b1f44df9964184225b6df335a11f",
+  "linux_x64_graphite_libskia_dart.so": "03725ea39cd37f83409579c87b7fdd23bf8a2f9c67f4ec56de0d2a6b2bb58be1",
+  "mac_arm64_graphite_libskia_dart.dylib": "76bae2751d86a3d8fde457689ca9a2e36058c30275c2d581f5de6beb7ea59342",
+  "mac_x64_graphite_libskia_dart.dylib": "6eaff205ad4b39e8db60ecabd52a2ecb5cd35eb0f4497b34bf480f0ef7e7a62e",
+  "win_arm64_graphite_skia_dart.dll": "82a53be33e52e84d54634d4ba7a152bb6a5c60b6568ceaf54b4380099588f81a",
+  "win_x64_graphite_skia_dart.dll": "8cf274c015b9e42bab172ad586bf03b02c557903918431a5aca90acba10e9012"
 }
