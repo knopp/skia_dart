@@ -104,6 +104,16 @@ jobs:
                 else
                   "libdawn_dart.so"
                 end
+              ),
+              # Determine dawn stub library filename based on target_os
+              dawn_stub_lib_name: (
+                if .value.target_os == "mac" or .value.target_os == "ios" then
+                  "libdawn_dart_stub.dylib"
+                elif .value.target_os == "win" then
+                  "dawn_dart_stub.dll"
+                else
+                  "libdawn_dart_stub.so"
+                end
               )
             }) | {include: .}
           ')
@@ -204,7 +214,7 @@ jobs:
       - name: Build Dawn wrapper
         if: matrix.skia_use_dawn == true
         working-directory: out/${{ matrix.config }}
-        run: ninja dawn_dart
+        run: ninja dawn_dart dawn_dart_stub
 
       - name: Strip Android libraries
         if: matrix.target_os == 'android'
@@ -214,6 +224,9 @@ jobs:
           $STRIP --strip-unneeded ${{ matrix.skia_lib_name }}
           if [ -f "${{ matrix.dawn_lib_name }}" ]; then
             $STRIP --strip-unneeded ${{ matrix.dawn_lib_name }}
+          fi
+          if [ -f "${{ matrix.dawn_stub_lib_name }}" ]; then
+            $STRIP --strip-unneeded ${{ matrix.dawn_stub_lib_name }}
           fi
 
       - name: Upload Skia artifact
@@ -229,6 +242,14 @@ jobs:
         with:
           name: dawn_${{ matrix.config }}
           path: out/${{ matrix.config }}/${{ matrix.dawn_lib_name }}
+          retention-days: 1
+
+      - name: Upload Dawn stub artifact
+        if: matrix.skia_use_dawn == true
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: dawn_stub_${{ matrix.config }}
+          path: out/${{ matrix.config }}/${{ matrix.dawn_stub_lib_name }}
           retention-days: 1
 
   # Third job: Create release with all artifacts
@@ -294,8 +315,13 @@ jobs:
           first=true
           for config_dir in artifacts/dawn_*/; do
             if [ -d "$config_dir" ]; then
+              dir_name=$(basename "$config_dir")
+              # Skip dawn_stub_ directories
+              if [[ "$dir_name" == dawn_stub_* ]]; then
+                continue
+              fi
               # Extract config name by removing "dawn_" prefix
-              config=$(basename "$config_dir" | sed 's/^dawn_//')
+              config=$(echo "$dir_name" | sed 's/^dawn_//')
               lib_file=$(find "$config_dir" -type f | head -1)
               if [ -f "$lib_file" ]; then
                 hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
@@ -315,6 +341,32 @@ jobs:
           echo "=== Dawn hashes ==="
           cat dawn_prebuilt_hashes.json
 
+          # Generate dawn_stub prebuilt_hashes.json
+          echo "{" > dawn_stub_prebuilt_hashes.json
+          first=true
+          for config_dir in artifacts/dawn_stub_*/; do
+            if [ -d "$config_dir" ]; then
+              # Extract config name by removing "dawn_stub_" prefix
+              config=$(basename "$config_dir" | sed 's/^dawn_stub_//')
+              lib_file=$(find "$config_dir" -type f | head -1)
+              if [ -f "$lib_file" ]; then
+                hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                if [ "$first" = true ]; then
+                  first=false
+                else
+                  echo "," >> dawn_stub_prebuilt_hashes.json
+                fi
+                printf '  "%s": "%s"' "$config" "$hash" >> dawn_stub_prebuilt_hashes.json
+                lib_name=$(basename "$lib_file")
+                cp "$lib_file" "release_assets/${config}_${lib_name}"
+              fi
+            fi
+          done
+          echo "" >> dawn_stub_prebuilt_hashes.json
+          echo "}" >> dawn_stub_prebuilt_hashes.json
+          echo "=== Dawn stub hashes ==="
+          cat dawn_stub_prebuilt_hashes.json
+
           echo "=== Release assets ==="
           ls -la release_assets/
 
@@ -329,6 +381,7 @@ jobs:
             release_assets/*
             skia_prebuilt_hashes.json
             dawn_prebuilt_hashes.json
+            dawn_stub_prebuilt_hashes.json
           draft: false
           prerelease: false
 
@@ -337,6 +390,7 @@ jobs:
           cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
           mkdir -p packages/dawn_dart
           cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
+          cp dawn_stub_prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
 
       - name: Commit prebuilt_hashes.json
         run: |
@@ -347,6 +401,7 @@ jobs:
           cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
           mkdir -p packages/dawn_dart
           cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
-          git add packages/skia_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
+          cp dawn_stub_prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
+          git add packages/skia_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
           git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
           git push origin ${{ github.head_ref }}

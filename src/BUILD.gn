@@ -201,6 +201,18 @@ shared_library("dawn_dart") {
     "wrapper/include/dawn.h",
   ]
   include_dirs = [ "." ]
-  defines = [ "SK_DAWN", "SKIA_IMPLEMENTATION" ]
+  defines = [
+    "SK_DAWN",
+    "SKIA_IMPLEMENTATION",
+  ]
   deps = [ "//third_party/dawn" ]
+}
+
+shared_library("dawn_dart_stub") {
+  sources = [
+    "wrapper/dawn.cpp",
+    "wrapper/include/dawn.h",
+  ]
+  include_dirs = [ "." ]
+  defines = [ "SKIA_IMPLEMENTATION" ]
 }
