@@ -190,9 +190,6 @@ shared_library("skia_dart") {
       "-Wl,-object_path_lto,${root_out_dir}/lto_objects",
     ]
   }
-  if (is_linux) {
-    libs = [ "EGL" ]
-  }
 }
 
 shared_library("dawn_dart") {
@@ -206,6 +203,9 @@ shared_library("dawn_dart") {
     "SKIA_IMPLEMENTATION",
   ]
   deps = [ "//third_party/dawn" ]
+  if (is_linux) {
+    libs = [ "EGL" ]
+  }
 }
 
 shared_library("dawn_dart_stub") {
