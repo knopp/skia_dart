@@ -11,6 +11,7 @@ const _releaseBaseUrl = 'https://github.com/knopp/skia_dart/releases/download';
 Future<Uri> downloadPrebuiltBinary({
   required BuildInput input,
   required String configuration,
+  required String dylibName,
 }) async {
   String readFile(String packageRelativePath) {
     final fileUri = input.packageRoot.resolve(packageRelativePath);
@@ -22,15 +23,14 @@ Future<Uri> downloadPrebuiltBinary({
   final hashes =
       jsonDecode(readFile('prebuilt_hashes.json')) as Map<String, dynamic>;
 
-  final expectedSha256 = hashes[configuration] as String?;
+  final downloadFileName = '${configuration}_$dylibName';
+  final expectedSha256 = hashes[downloadFileName] as String?;
   if (expectedSha256 == null) {
     throw BuildError(
-      message: 'No prebuilt hash found for configuration: $configuration',
+      message: 'No prebuilt hash found for file1: $downloadFileName',
     );
   }
 
-  final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
-  final downloadFileName = '${configuration}_$dylibName';
   final downloadUrl = Uri.parse(
     '$_releaseBaseUrl/skia_dart_$hash/$downloadFileName',
   );
@@ -114,11 +114,11 @@ String getConfiguration(BuildInput input) {
   };
 
   switch (code.targetOS) {
-    // TODO(knopp): Use hook defines to allow switching between metal and dawn builds
     case OS.macOS:
       return '${platform}_${arch}_graphite';
     case OS.iOS:
-      return '${platform}_${arch}_graphite';
+      // Until dawn builds on iOS
+      return '${platform}_${arch}_graphite_metal';
     case OS.android:
       return '${platform}_${arch}_graphite';
     case OS.windows:
@@ -141,8 +141,8 @@ void main(List<String> args) async {
     final configuration = getConfiguration(input);
     final outDir = input.packageRoot.resolve('../../out/$configuration/');
 
+    final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
     if (Directory(outDir.toFilePath()).existsSync()) {
-      final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
       final dylib = outDir.resolve(dylibName);
 
       if (!File(dylib.toFilePath()).existsSync()) {
@@ -163,6 +163,7 @@ void main(List<String> args) async {
       final dylib = await downloadPrebuiltBinary(
         input: input,
         configuration: configuration,
+        dylibName: dylibName,
       );
 
       output.assets.code.add(

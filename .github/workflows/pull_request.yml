@@ -109,6 +109,11 @@ jobs:
         working-directory: out/${{ matrix.config }}
         run: ninja skia_dart
 
+      - name: Build Dawn wrapper
+        if: steps.check-release.outputs.release_exists == 'false'
+        working-directory: out/${{ matrix.config }}
+        run: ninja dawn_dart
+
       - name: Run tests
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart test
