@@ -294,13 +294,13 @@ jobs:
               lib_file=$(find "$config_dir" -type f | head -1)
               if [ -f "$lib_file" ]; then
                 hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                lib_name=$(basename "$lib_file")
                 if [ "$first" = true ]; then
                   first=false
                 else
                   echo "," >> skia_prebuilt_hashes.json
                 fi
-                printf '  "%s": "%s"' "$config" "$hash" >> skia_prebuilt_hashes.json
-                lib_name=$(basename "$lib_file")
+                printf '  "%s": "%s"' "${config}_${lib_name}" "$hash" >> skia_prebuilt_hashes.json
                 cp "$lib_file" "release_assets/${config}_${lib_name}"
               fi
             fi
@@ -310,13 +310,15 @@ jobs:
           echo "=== Skia hashes ==="
           cat skia_prebuilt_hashes.json
 
-          # Generate dawn prebuilt_hashes.json
+          # Generate dawn prebuilt_hashes.json (includes both dawn and dawn_stub)
           echo "{" > dawn_prebuilt_hashes.json
           first=true
+
+          # Process dawn artifacts
           for config_dir in artifacts/dawn_*/; do
             if [ -d "$config_dir" ]; then
               dir_name=$(basename "$config_dir")
-              # Skip dawn_stub_ directories
+              # Skip dawn_stub_ directories (processed separately)
               if [[ "$dir_name" == dawn_stub_* ]]; then
                 continue
               fi
@@ -325,25 +327,19 @@ jobs:
               lib_file=$(find "$config_dir" -type f | head -1)
               if [ -f "$lib_file" ]; then
                 hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                lib_name=$(basename "$lib_file")
                 if [ "$first" = true ]; then
                   first=false
                 else
                   echo "," >> dawn_prebuilt_hashes.json
                 fi
-                printf '  "%s": "%s"' "$config" "$hash" >> dawn_prebuilt_hashes.json
-                lib_name=$(basename "$lib_file")
+                printf '  "%s": "%s"' "${config}_${lib_name}" "$hash" >> dawn_prebuilt_hashes.json
                 cp "$lib_file" "release_assets/${config}_${lib_name}"
               fi
             fi
           done
-          echo "" >> dawn_prebuilt_hashes.json
-          echo "}" >> dawn_prebuilt_hashes.json
-          echo "=== Dawn hashes ==="
-          cat dawn_prebuilt_hashes.json
 
-          # Generate dawn_stub prebuilt_hashes.json
-          echo "{" > dawn_stub_prebuilt_hashes.json
-          first=true
+          # Process dawn_stub artifacts
           for config_dir in artifacts/dawn_stub_*/; do
             if [ -d "$config_dir" ]; then
               # Extract config name by removing "dawn_stub_" prefix
@@ -351,21 +347,22 @@ jobs:
               lib_file=$(find "$config_dir" -type f | head -1)
               if [ -f "$lib_file" ]; then
                 hash=$(shasum -a 256 "$lib_file" | cut -d ' ' -f 1)
+                lib_name=$(basename "$lib_file")
                 if [ "$first" = true ]; then
                   first=false
                 else
-                  echo "," >> dawn_stub_prebuilt_hashes.json
+                  echo "," >> dawn_prebuilt_hashes.json
                 fi
-                printf '  "%s": "%s"' "$config" "$hash" >> dawn_stub_prebuilt_hashes.json
-                lib_name=$(basename "$lib_file")
+                printf '  "%s": "%s"' "${config}_${lib_name}" "$hash" >> dawn_prebuilt_hashes.json
                 cp "$lib_file" "release_assets/${config}_${lib_name}"
               fi
             fi
           done
-          echo "" >> dawn_stub_prebuilt_hashes.json
-          echo "}" >> dawn_stub_prebuilt_hashes.json
-          echo "=== Dawn stub hashes ==="
-          cat dawn_stub_prebuilt_hashes.json
+
+          echo "" >> dawn_prebuilt_hashes.json
+          echo "}" >> dawn_prebuilt_hashes.json
+          echo "=== Dawn hashes ==="
+          cat dawn_prebuilt_hashes.json
 
           echo "=== Release assets ==="
           ls -la release_assets/
@@ -381,7 +378,6 @@ jobs:
             release_assets/*
             skia_prebuilt_hashes.json
             dawn_prebuilt_hashes.json
-            dawn_stub_prebuilt_hashes.json
           draft: false
           prerelease: false
 
@@ -390,7 +386,6 @@ jobs:
           cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
           mkdir -p packages/dawn_dart
           cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
-          cp dawn_stub_prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
 
       - name: Commit prebuilt_hashes.json
         run: |
@@ -401,7 +396,6 @@ jobs:
           cp skia_prebuilt_hashes.json packages/skia_dart/prebuilt_hashes.json
           mkdir -p packages/dawn_dart
           cp dawn_prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
-          cp dawn_stub_prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
-          git add packages/skia_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_stub_hashes.json
+          git add packages/skia_dart/prebuilt_hashes.json packages/dawn_dart/prebuilt_hashes.json
           git diff --staged --quiet || git commit -m "Update prebuilt_hashes.json for ${{ needs.generate-matrix.outputs.skia_dart_hash }}"
           git push origin ${{ github.head_ref }}

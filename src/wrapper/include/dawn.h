@@ -27,6 +27,8 @@ typedef enum {
 
 typedef void sk_dawn_proctable_t;
 
+SK_C_API void* sk_wgpu_dawn_proc_table();
+
 SK_C_API bool sk_wgpu_init();
 
 // Instance

@@ -49,6 +49,7 @@ class DawnTestContext extends GraphiteTestContext {
     _device = _instance.requestAdapter(backendType)!.requestDevice()!;
     _queue = _device.getQueue();
     _context = GraphiteContext.makeDawn(
+      procTable: WgpuProcTable.instance,
       instance: _instance,
       device: _device,
       queue: _queue,

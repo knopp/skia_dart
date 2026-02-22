@@ -11,6 +11,14 @@ resolution: workspace
 dependencies:
   dawn_dart_api: ^0.1.0
   ffi: ^2.1.5
+  convert: ^3.1.2
+  crypto: ^3.0.6
+  hooks: ^1.0.0
+  code_assets: ^1.0.0
+
+hooks:
+  build:
+    entrypoint: hook/build.dart
 
 dev_dependencies:
   lints: ^6.0.0

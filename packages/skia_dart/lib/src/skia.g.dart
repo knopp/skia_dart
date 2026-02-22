@@ -4095,6 +4095,11 @@ external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_shader(
   ffi.Pointer<sk_shader_t> cshader,
 );
 
+@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external void skgpu_set_dawn_proc_table(
+  ffi.Pointer<ffi.Void> procs,
+);
+
 @ffi.Native<ffi.Bool Function()>(isLeaf: true)
 external bool skgpu_graphite_is_supported();
 

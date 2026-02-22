@@ -2,6 +2,7 @@
 
 #ifdef SK_DAWN
   #include <mutex>
+
   #include "dawn/dawn_proc.h"
   #include "dawn/native/DawnNative.h"
   #include "dawn/webgpu.h"
@@ -24,7 +25,15 @@
 
 // Instance
 
-SK_C_API bool sk_wgpu_init() {
+void* sk_wgpu_dawn_proc_table() {
+#ifdef SK_DAWN
+  return const_cast<void*>(reinterpret_cast<const void*>(&dawn::native::GetProcs()));
+#else
+  return nullptr;
+#endif
+}
+
+bool sk_wgpu_init() {
 #ifdef SK_DAWN
   static std::once_flag initFlag;
   std::call_once(initFlag, []() {

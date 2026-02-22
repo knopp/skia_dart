@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:ffigen/ffigen.dart';
-import 'package:test/test.dart';
 
 String findMacSdkPath() {
   final result = Process.runSync('xcrun', [

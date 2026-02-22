@@ -15,6 +15,19 @@ enum WgpuBackendType {
   final sk_wgpu_backend_type_t _value;
 }
 
+class WgpuProcTable extends api.WgpuProcTable {
+  static final WgpuProcTable instance = WgpuProcTable._(
+    sk_wgpu_dawn_proc_table(),
+  );
+
+  WgpuProcTable._(this._handle);
+
+  @override
+  Pointer<Void> get handle => _handle;
+
+  final Pointer<Void> _handle;
+}
+
 class WgpuInstance extends api.WgpuInstance
     with _NativeMixin<sk_wgpu_instance_t> {
   WgpuInstance._() {
@@ -224,13 +237,6 @@ class WgpuQueue extends api.WgpuQueue with _NativeMixin<sk_wgpu_queue_t> {
     return NativeFinalizer(ptr.cast());
   }
 }
-
-@Native<Pointer<Void> Function()>(
-  assetId: 'package:skia_dart/dawn_native',
-  isLeaf: true,
-)
-// ignore: non_constant_identifier_names
-external Pointer<Void> sk_dawn_native_get_procs();
 
 /// Initializes native dawn library. Returns true if dawn is available and was
 /// successfully initialized, false otherwise.

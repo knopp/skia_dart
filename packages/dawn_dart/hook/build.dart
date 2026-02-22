@@ -17,7 +17,7 @@ Future<Uri> downloadPrebuiltBinary({
     return File.fromUri(fileUri).readAsStringSync();
   }
 
-  final hash = readFile('skia_dart_hash').trim();
+  final hash = readFile('dawn_dart_hash').trim();
 
   final hashes =
       jsonDecode(readFile('prebuilt_hashes.json')) as Map<String, dynamic>;
@@ -29,7 +29,7 @@ Future<Uri> downloadPrebuiltBinary({
     );
   }
 
-  final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
+  final dylibName = input.config.code.targetOS.dylibFileName('dart_dart');
   final downloadFileName = '${configuration}_$dylibName';
   final downloadUrl = Uri.parse(
     '$_releaseBaseUrl/skia_dart_$hash/$downloadFileName',
@@ -142,7 +142,7 @@ void main(List<String> args) async {
     final outDir = input.packageRoot.resolve('../../out/$configuration/');
 
     if (Directory(outDir.toFilePath()).existsSync()) {
-      final dylibName = input.config.code.targetOS.dylibFileName('skia_dart');
+      final dylibName = input.config.code.targetOS.dylibFileName('dawn_dart');
       final dylib = outDir.resolve(dylibName);
 
       if (!File(dylib.toFilePath()).existsSync()) {
@@ -154,7 +154,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),
@@ -168,7 +168,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),

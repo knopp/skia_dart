@@ -8,6 +8,9 @@ library;
 
 import 'dart:ffi' as ffi;
 
+@ffi.Native<ffi.Pointer<ffi.Void> Function()>()
+external ffi.Pointer<ffi.Void> sk_wgpu_dawn_proc_table();
+
 @ffi.Native<ffi.Bool Function()>()
 external bool sk_wgpu_init();
 

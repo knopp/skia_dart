@@ -92,9 +92,6 @@ class BuildConfig {
     if (targetOs == 'win') {
       options['clang_win'] = 'C:\\Program Files\\LLVM';
     }
-    if (targetOs == 'mac' || targetOs == 'ios') {
-      options['skia_use_harfbuzz'] = false;
-    }
     if (options['skia_use_harfbuzz'] != false) {
       options['skia_use_system_harfbuzz'] = false;
     }
