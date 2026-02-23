@@ -1,0 +1,13 @@
+name: dawn_dart_api
+description: Common API for Dawn bindings.
+version: 0.1.0
+repository: https://github.com/knopp/skia_dart
+
+environment:
+  sdk: ^3.12.0-117.0.dev
+
+resolution: workspace
+
+dev_dependencies:
+  lints: ^6.0.0
+  test: ^1.25.6

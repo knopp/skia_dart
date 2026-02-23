@@ -2,3 +2,5 @@ compile_commands.json
 .cache
 out
 .DS_Store
+.dart_tool/
+pubspec.lock

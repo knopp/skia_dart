@@ -1,5 +1,7 @@
 library;
 
+import 'package:dawn_dart_api/dawn_dart_api.dart';
+
 import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
@@ -19,7 +21,6 @@ part 'src/color_filter.dart';
 part 'src/color.dart';
 part 'src/colorspace.dart';
 part 'src/data.dart';
-part 'src/dawn.dart';
 part 'src/dispose_scope.dart';
 part 'src/drawable.dart';
 part 'src/encoder.dart';

@@ -18,7 +18,7 @@ Future<Uri> downloadPrebuiltBinary({
     return File.fromUri(fileUri).readAsStringSync();
   }
 
-  final hash = readFile('skia_dart_hash').trim();
+  final hash = readFile('dawn_dart_hash').trim();
 
   final hashes =
       jsonDecode(readFile('prebuilt_hashes.json')) as Map<String, dynamic>;
@@ -27,7 +27,7 @@ Future<Uri> downloadPrebuiltBinary({
   final expectedSha256 = hashes[downloadFileName] as String?;
   if (expectedSha256 == null) {
     throw BuildError(
-      message: 'No prebuilt hash found for file1: $downloadFileName',
+      message: 'No prebuilt hash found for file: $downloadFileName',
     );
   }
 
@@ -99,9 +99,7 @@ String getConfiguration(BuildInput input) {
     OS.android => 'android',
     OS.iOS when code.iOS.targetSdk == IOSSdk.iPhoneOS => 'ios',
     OS.iOS when code.iOS.targetSdk == IOSSdk.iPhoneSimulator => 'ios_sim',
-    _ => throw BuildError(
-      message: 'Unsupported target OS: ${code.targetOS}',
-    ),
+    _ => throw BuildError(message: 'Unsupported target OS: ${code.targetOS}'),
   };
   final arch = switch (code.targetArchitecture) {
     Architecture.x64 => 'x64',
@@ -112,23 +110,7 @@ String getConfiguration(BuildInput input) {
       message: 'Unsupported target architecture: ${code.targetArchitecture}',
     ),
   };
-
-  switch (code.targetOS) {
-    case OS.macOS:
-      return '${platform}_${arch}_graphite';
-    case OS.iOS:
-      // Until dawn builds on iOS
-      return '${platform}_${arch}_graphite_metal';
-    case OS.android:
-      return '${platform}_${arch}_graphite';
-    case OS.windows:
-      return '${platform}_${arch}_graphite';
-    case OS.linux:
-      return '${platform}_${arch}_graphite';
-  }
-  throw BuildError(
-    message: 'Could not determine build configration for ${input.config.code}',
-  );
+  return '${platform}_${arch}_graphite';
 }
 
 void main(List<String> args) async {
@@ -140,12 +122,7 @@ void main(List<String> args) async {
     final configuration = getConfiguration(input);
     final outDir = input.packageRoot.resolve('../../out/$configuration/');
 
-    final os = input.config.code.targetOS.toString();
-    final enableDawnValue = input.userDefines['enable_dawn_$os'];
-    final enableDawn = enableDawnValue != false && enableDawnValue != 'false';
-    final dylibName = input.config.code.targetOS.dylibFileName(
-      enableDawn ? 'skia_dart' : 'skia_dart_stub',
-    );
+    final dylibName = input.config.code.targetOS.dylibFileName('dawn_dart');
     if (Directory(outDir.toFilePath()).existsSync()) {
       final dylib = outDir.resolve(dylibName);
 
@@ -158,7 +135,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),
@@ -173,7 +150,7 @@ void main(List<String> args) async {
       output.assets.code.add(
         CodeAsset(
           package: input.packageName,
-          name: 'skia_dart',
+          name: 'dawn_dart',
           linkMode: DynamicLoadingBundled(),
           file: dylib,
         ),
