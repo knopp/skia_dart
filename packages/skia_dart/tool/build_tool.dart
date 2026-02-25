@@ -84,11 +84,13 @@ class BuildConfig {
 
   Map<String, Object> optionsFull() {
     final options = Map<String, Object>.from(this.options);
+    final targetOs = options['target_os'] as String;
     if (options.containsKey('is_debug') != true) {
       options['is_official_build'] = true;
-      options['skia_enable_optimize_size'] = true;
+      // if (targetOs == 'mac' || targetOs == 'win') {
+      //   options['skia_enable_optimize_size'] = true;
+      // }
     }
-    final targetOs = options['target_os'] as String;
     if (targetOs == 'win') {
       options['clang_win'] = 'C:\\Program Files\\LLVM';
     }
