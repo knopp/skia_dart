@@ -87,9 +87,10 @@ class BuildConfig {
     final targetOs = options['target_os'] as String;
     if (options.containsKey('is_debug') != true) {
       options['is_official_build'] = true;
-      // if (targetOs == 'mac' || targetOs == 'win') {
-      //   options['skia_enable_optimize_size'] = true;
-      // }
+      // For some reason on 'linux' -Os regresses binary size.
+      if (targetOs != 'linux') {
+        options['skia_enable_optimize_size'] = true;
+      }
     }
     if (targetOs == 'win') {
       options['clang_win'] = 'C:\\Program Files\\LLVM';
