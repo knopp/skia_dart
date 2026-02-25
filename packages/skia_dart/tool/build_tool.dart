@@ -112,7 +112,7 @@ class BuildConfig {
       }
     }
     if (targetOs == 'linux') {
-      final linuxSysroot = options['linux_sysroot'] as String?;
+      final linuxSysroot = Platform.environment['LINUX_SYSROOT'];
       if (linuxSysroot != null) {
         options['linux_sysroot'] = linuxSysroot;
       }

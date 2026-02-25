@@ -158,13 +158,22 @@ jobs:
           echo "MESA_LOADER_DRIVER_OVERRIDE=llvmpipe" >> $GITHUB_ENV
           echo "EGL_PLATFORM=surfaceless" >> $GITHUB_ENV
 
-      - name: Select clang as default compiler (Linux)
-        if: matrix.target_os == 'Linux'
+      - name: Install clang from CIPD (Linux)
+        if: matrix.target_os == 'linux'
         run: |
-          sudo update-alternatives --install /usr/bin/cc cc /usr/bin/clang 100
-          sudo update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++ 100
-          sudo update-alternatives --set cc /usr/bin/clang
-          sudo update-alternatives --set c++ /usr/bin/clang++
+          ARCH=$(uname -m)
+          if [ "$ARCH" = "x86_64" ]; then
+            CIPD_OS_ARCH="linux-amd64"
+          elif [ "$ARCH" = "aarch64" ]; then
+            CIPD_OS_ARCH="linux-arm64"
+          fi
+          curl -L "https://chrome-infra-packages.appspot.com/dl/infra/tools/cipd/${CIPD_OS_ARCH}/+/latest" -o /tmp/cipd
+          chmod +x /tmp/cipd
+          /tmp/cipd ensure -ensure-file - -root /opt/clang <<EOF
+          @Subdir .
+          chromium/third_party/llvm-build/Release+Asserts ${CIPD_OS_ARCH} latest
+          EOF
+          echo "/opt/clang/bin" >> $GITHUB_PATH
 
       - name: Set Android NDK environment
         if: matrix.target_os == 'android'
@@ -196,6 +205,17 @@ jobs:
       - name: Install pub dependencies
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart pub get
+
+      - name: Install sysroot (Linux)
+        if: matrix.target_os == 'linux'
+        run: |
+          if [ "${{ matrix.target_cpu }}" = "x64" ]; then
+            ARCH="amd64"
+          else
+            ARCH="arm64"
+          fi
+          python3 scripts/install-sysroot.py --arch=$ARCH
+          echo "LINUX_SYSROOT=$GITHUB_WORKSPACE/out/sysroot/debian_bullseye_${ARCH}-sysroot" >> $GITHUB_ENV
 
       - name: Generate GN files
         working-directory: packages/skia_dart
