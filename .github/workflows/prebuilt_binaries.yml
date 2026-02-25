@@ -1,8 +1,9 @@
 name: Prebuilt Binaries
 
 on:
-  push:
-    branches: ["master"]
+  # push:
+  #   branches: ["master"]
+  pull_request:
 
 jobs:
   # Generate matrix from build_config.json
