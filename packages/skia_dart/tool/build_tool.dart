@@ -121,7 +121,7 @@ class BuildConfig {
       }
       options['target_cc'] = 'clang';
       options['target_cxx'] = 'clang++';
-      options['target_link'] = 'clang';
+      options['target_link'] = 'clang++';
     }
 
     return options;
