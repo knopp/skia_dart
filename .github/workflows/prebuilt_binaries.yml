@@ -170,9 +170,7 @@ jobs:
           fi
           curl -L "https://chrome-infra-packages.appspot.com/client?platform=${CIPD_OS_ARCH}&version=latest" -o /tmp/cipd
           chmod +x /tmp/cipd
-          /tmp/cipd ensure -ensure-file - -root /opt/clang <<EOF
-          chromium/third_party/llvm-build/Release+Asserts ${CIPD_OS_ARCH} latest
-          EOF
+          /tmp/cipd install fuchsia/third_party/clang/${CIPD_OS_ARCH} latest -root /opt/clang
           echo "/opt/clang/bin" >> $GITHUB_PATH
 
       - name: Set Android NDK environment
