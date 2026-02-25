@@ -168,7 +168,7 @@ jobs:
           elif [ "$ARCH" = "aarch64" ]; then
             CIPD_OS_ARCH="linux-arm64"
           fi
-          curl -L "https://chrome-infra-packages.appspot.com/dl/infra/tools/cipd/${CIPD_OS_ARCH}/+/latest" -o /tmp/cipd
+          curl -L "https://chrome-infra-packages.appspot.com/client?platform=${CIPD_OS_ARCH}&version=latest" -o /tmp/cipd
           chmod +x /tmp/cipd
           /tmp/cipd ensure -ensure-file - -root /opt/clang <<EOF
           @Subdir .
