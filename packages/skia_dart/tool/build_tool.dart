@@ -111,6 +111,15 @@ class BuildConfig {
         options['ndk'] = ndkFromEnv;
       }
     }
+    if (targetOs == 'linux') {
+      final linuxSysroot = options['linux_sysroot'] as String?;
+      if (linuxSysroot != null) {
+        options['linux_sysroot'] = linuxSysroot;
+      }
+      options['target_cc'] = 'clang';
+      options['target_cxx'] = 'clang++';
+      options['target_link'] = 'clang';
+    }
 
     return options;
   }
