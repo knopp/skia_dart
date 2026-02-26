@@ -117,8 +117,7 @@ String getConfiguration(BuildInput input) {
     case OS.macOS:
       return '${platform}_${arch}_graphite';
     case OS.iOS:
-      // Until dawn builds on iOS
-      return '${platform}_${arch}_graphite_metal';
+      return '${platform}_${arch}_graphite';
     case OS.android:
       return '${platform}_${arch}_graphite';
     case OS.windows:
