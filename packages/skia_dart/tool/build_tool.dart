@@ -84,11 +84,14 @@ class BuildConfig {
 
   Map<String, Object> optionsFull() {
     final options = Map<String, Object>.from(this.options);
+    final targetOs = options['target_os'] as String;
     if (options.containsKey('is_debug') != true) {
       options['is_official_build'] = true;
-      options['skia_enable_optimize_size'] = true;
+      // For some reason on 'linux' -Os regresses binary size.
+      if (targetOs != 'linux') {
+        options['skia_enable_optimize_size'] = true;
+      }
     }
-    final targetOs = options['target_os'] as String;
     if (targetOs == 'win') {
       options['clang_win'] = 'C:\\Program Files\\LLVM';
     }
@@ -110,6 +113,15 @@ class BuildConfig {
       if (ndkFromEnv != null) {
         options['ndk'] = ndkFromEnv;
       }
+    }
+    if (targetOs == 'linux') {
+      final linuxSysroot = Platform.environment['LINUX_SYSROOT'];
+      if (linuxSysroot != null) {
+        options['linux_sysroot'] = linuxSysroot;
+      }
+      options['target_cc'] = 'clang';
+      options['target_cxx'] = 'clang++';
+      options['target_link'] = 'clang++';
     }
 
     return options;
