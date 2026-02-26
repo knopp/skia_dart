@@ -3,13 +3,13 @@
   "android_arm_graphite_libskia_dart.so": "36f815b9a81c07defc61a7360de03a0e8b26f12e6e7c2a7fb3f54251e64b3279",
   "android_x64_graphite_libskia_dart.so": "f83619d6a6aa4d600749fe106d50f624dbee479c7d711d5f687a556ebaeaea0c",
   "android_x86_graphite_libskia_dart.so": "d52acf292730b67763b4a40465b46cb6d6ddfe8e9f7edd66c10aaf73c259a813",
-  "ios_arm64_graphite_metal_libskia_dart.dylib": "42c6c321b3ecb4c89284d7bd1f64c4fc74278bdff9e2cf6a0e89a109699bfbc7",
-  "ios_sim_arm64_graphite_metal_libskia_dart.dylib": "a7ae88349ed6fc482508a26d99148d5db87e131898d2940494063a088c1353c8",
-  "ios_sim_x64_graphite_metal_libskia_dart.dylib": "0b3669424bff323b0f250bc68281548d4e7558793ba3118b4325a7a6028e0a15",
-  "linux_arm64_graphite_libskia_dart.so": "0d4cf0e1800bcfd73afceb397ebcb1b911cdbba9282e59bd268f92aed534bd63",
-  "linux_x64_graphite_libskia_dart.so": "8f74e1196871e57b098eef4074ba3580c1584370bc572408a7e04e28f5f1eb93",
-  "mac_arm64_graphite_libskia_dart.dylib": "76bae2751d86a3d8fde457689ca9a2e36058c30275c2d581f5de6beb7ea59342",
-  "mac_x64_graphite_libskia_dart.dylib": "6eaff205ad4b39e8db60ecabd52a2ecb5cd35eb0f4497b34bf480f0ef7e7a62e",
-  "win_arm64_graphite_skia_dart.dll": "196a6202f56216bdebf01fb3d73ab3c24a0035867d8dc8a51b42a9ad826e0b97",
-  "win_x64_graphite_skia_dart.dll": "746978459af5bba5c23a57ffb2c07c04ea71e25b31c756f511213d8d7178260b"
+  "ios_arm64_graphite_libskia_dart.dylib": "4fcb112ff3944c91f7b7f7610fdd2ad6b11157de9810afc0183e6582da3f2666",
+  "ios_sim_arm64_graphite_libskia_dart.dylib": "3d6e2808e8344724f99b1776fd368c5f8be17e13999dbdb27d20f34a14a440b1",
+  "ios_sim_x64_graphite_libskia_dart.dylib": "ea989592f5fee7b28a18e202295f75d3250832dcd5ab49dd23c61f53c21c0baa",
+  "linux_arm64_graphite_libskia_dart.so": "21b95c9b8e8d5663a91168e204913e3874822369649b13834d749940c015c819",
+  "linux_x64_graphite_libskia_dart.so": "b8a5ffedd5cc7281e888b24e4c621aa0433ac58bdfb3a1d4cde4d6ee5029dd75",
+  "mac_arm64_graphite_libskia_dart.dylib": "b7301596c9eba7b97570d84cd9e7e8dedddae3bddad609ddcf562ec86249f567",
+  "mac_x64_graphite_libskia_dart.dylib": "0e7cc3f8266564973267c065ee935681cbe5279b5f919b04a1fb6247860daf82",
+  "win_arm64_graphite_skia_dart.dll": "f6b11fb121167e269dccf7359c407022d59ab64d7e819c82f4c16dce8f04ccb1",
+  "win_x64_graphite_skia_dart.dll": "7c0b37ad24b6470064497af511f9025050921b5d69aae95d83b0f175b5965557"
 }
