@@ -336,7 +336,6 @@ void main() {
 
         final shaper = SkShaper.harfbuzzShaperDrivenWrapper(unicode);
         if (shaper == null) {
-          unicode.dispose();
           return;
         }
         final font = SkFont(typeface: typeface, size: 24);
@@ -495,7 +494,6 @@ void main() {
           expect(run!.glyphIndices.length, greaterThan(0));
         }
         expect(runCount, 3); // Three shape() calls = three runs
-        iterator.dispose();
       });
     });
 
@@ -543,108 +541,96 @@ void main() {
 
   group('SkShaperRunHandler', () {
     test('custom handler receives callbacks in order', () {
-      final shaper = SkShaper.primitive();
-      if (shaper == null) return;
+      SkAutoDisposeScope.run(() {
+        final shaper = SkShaper.primitive();
+        if (shaper == null) return;
 
-      final font = SkFont(typeface: typeface, size: 24);
-      const text = 'Hi';
+        final font = SkFont(typeface: typeface, size: 24);
+        const text = 'Hi';
 
-      final fontIterator = SkFontRunIterator.trivial(
-        font,
-        utf8Bytes: text.length,
-      );
-      final bidiIterator = SkBiDiRunIterator.trivial(
-        bidiLevel: 0,
-        utf8Bytes: text.length,
-      );
-      final scriptIterator = SkScriptRunIterator.trivial(
-        script: 0x4C61746E,
-        utf8Bytes: text.length,
-      );
-      final languageIterator = SkLanguageRunIterator.trivial(
-        'en',
-        utf8Bytes: text.length,
-      );
+        final fontIterator = SkFontRunIterator.trivial(
+          font,
+          utf8Bytes: text.length,
+        );
+        final bidiIterator = SkBiDiRunIterator.trivial(
+          bidiLevel: 0,
+          utf8Bytes: text.length,
+        );
+        final scriptIterator = SkScriptRunIterator.trivial(
+          script: 0x4C61746E,
+          utf8Bytes: text.length,
+        );
+        final languageIterator = SkLanguageRunIterator.trivial(
+          'en',
+          utf8Bytes: text.length,
+        );
 
-      final handler = _TestRunHandler();
+        final handler = _TestRunHandler();
 
-      shaper.shape(
-        text,
-        fontIterator: fontIterator,
-        bidiIterator: bidiIterator,
-        scriptIterator: scriptIterator,
-        languageIterator: languageIterator,
-        width: 1000,
-        handler: handler,
-      );
+        shaper.shape(
+          text,
+          fontIterator: fontIterator,
+          bidiIterator: bidiIterator,
+          scriptIterator: scriptIterator,
+          languageIterator: languageIterator,
+          width: 1000,
+          handler: handler,
+        );
 
-      expect(handler.callLog, [
-        'beginLine',
-        'runInfo',
-        'commitRunInfo',
-        'runBuffer',
-        'commitRunBuffer',
-        'commitLine',
-      ]);
+        expect(handler.callLog, [
+          'beginLine',
+          'runInfo',
+          'commitRunInfo',
+          'runBuffer',
+          'commitRunBuffer',
+          'commitLine',
+        ]);
 
-      expect(handler.runInfos, hasLength(1));
-      expect(handler.runInfos[0].glyphCount, 2);
-
-      handler.dispose();
-      fontIterator.dispose();
-      bidiIterator.dispose();
-      scriptIterator.dispose();
-      languageIterator.dispose();
-      font.dispose();
-      shaper.dispose();
+        expect(handler.runInfos, hasLength(1));
+        expect(handler.runInfos[0].glyphCount, 2);
+      });
     });
 
     test('runInfo contains correct font size', () {
-      final shaper = SkShaper.primitive();
-      if (shaper == null) return;
+      SkAutoDisposeScope.run(() {
+        final shaper = SkShaper.primitive();
+        if (shaper == null) return;
 
-      final font = SkFont(typeface: typeface, size: 32);
-      const text = 'A';
+        final font = SkFont(typeface: typeface, size: 32);
+        const text = 'A';
 
-      final fontIterator = SkFontRunIterator.trivial(
-        font,
-        utf8Bytes: text.length,
-      );
-      final bidiIterator = SkBiDiRunIterator.trivial(
-        bidiLevel: 0,
-        utf8Bytes: text.length,
-      );
-      final scriptIterator = SkScriptRunIterator.trivial(
-        script: 0x4C61746E,
-        utf8Bytes: text.length,
-      );
-      final languageIterator = SkLanguageRunIterator.trivial(
-        'en',
-        utf8Bytes: text.length,
-      );
+        final fontIterator = SkFontRunIterator.trivial(
+          font,
+          utf8Bytes: text.length,
+        );
+        final bidiIterator = SkBiDiRunIterator.trivial(
+          bidiLevel: 0,
+          utf8Bytes: text.length,
+        );
+        final scriptIterator = SkScriptRunIterator.trivial(
+          script: 0x4C61746E,
+          utf8Bytes: text.length,
+        );
+        final languageIterator = SkLanguageRunIterator.trivial(
+          'en',
+          utf8Bytes: text.length,
+        );
 
-      final handler = _TestRunHandler();
+        final handler = _TestRunHandler();
 
-      shaper.shape(
-        text,
-        fontIterator: fontIterator,
-        bidiIterator: bidiIterator,
-        scriptIterator: scriptIterator,
-        languageIterator: languageIterator,
-        width: 1000,
-        handler: handler,
-      );
+        shaper.shape(
+          text,
+          fontIterator: fontIterator,
+          bidiIterator: bidiIterator,
+          scriptIterator: scriptIterator,
+          languageIterator: languageIterator,
+          width: 1000,
+          handler: handler,
+        );
 
-      expect(handler.runInfos[0].font.size, 32.0);
-      expect(handler.runInfos[0].bidiLevel, 0);
-
-      handler.dispose();
-      fontIterator.dispose();
-      bidiIterator.dispose();
-      scriptIterator.dispose();
-      languageIterator.dispose();
-      font.dispose();
-      shaper.dispose();
+        expect(handler.runInfos[0].font.size, 32.0);
+        expect(handler.runInfos[0].bidiLevel, 0);
+      });
     });
   });
 }
