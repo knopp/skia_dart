@@ -2,13 +2,13 @@ part of '../skia_dart.dart';
 
 /// A range within UTF-8 text.
 class SkShaperUtf8Range {
+  const SkShaperUtf8Range(this.begin, this.size);
+
   /// Offset to the start (utf8) element of the range.
   final int begin;
 
   /// Size of the range in bytes.
   final int size;
-
-  const SkShaperUtf8Range(this.begin, this.size);
 
   /// Offset to one past the last (utf8) element in the range.
   int get end => begin + size;
