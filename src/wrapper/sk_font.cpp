@@ -24,6 +24,10 @@ sk_font_t* sk_font_new_with_values(sk_typeface_t* typeface, float size, float sc
   return ToFont(new SkFont(sk_ref_sp(AsTypeface(typeface)), size, scaleX, skewX));
 }
 
+sk_font_t* sk_font_clone(const sk_font_t* font) {
+  return ToFont(new SkFont(AsFont(*font)));
+}
+
 void sk_font_delete(sk_font_t* font) {
   delete AsFont(font);
 }

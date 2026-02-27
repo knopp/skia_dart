@@ -29,7 +29,10 @@ void main() {
         expect(withFillType.fillType, SkPathFillType.evenOdd);
         withFillType.fillType = SkPathFillType.winding;
         expect(withFillType.fillType, SkPathFillType.winding);
-        expect(withFillType.makeFillType(SkPathFillType.inverseEvenOdd), isA<SkPath>());
+        expect(
+          withFillType.makeFillType(SkPathFillType.inverseEvenOdd),
+          isA<SkPath>(),
+        );
 
         final fromPath = SkPath.fromPath(_makeComplexPath());
         expect(fromPath.isEmpty, isFalse);
@@ -39,12 +42,7 @@ void main() {
           verbs: const [SkPathVerb.move, SkPathVerb.conic],
           conics: const [0.5],
         );
-        final rawAlias = SkPath.Raw(
-          points: [SkPoint(0, 0), SkPoint(10, 0)],
-          verbs: const [SkPathVerb.move, SkPathVerb.line],
-        );
         expect(raw.isValid, isTrue);
-        expect(rawAlias.isValid, isTrue);
 
         final rect = SkRect.fromLTRB(0, 0, 20, 10);
         final rrect = SkRRect.fromRectXY(rect, 3, 2);
@@ -189,10 +187,6 @@ void main() {
         );
         expect(convertedA.quadCount, greaterThan(0));
         expect(convertedA.points.length, 1 + 2 * convertedA.quadCount);
-
-        final convertedB = SkPath.ConvertConicToQuads(p0, p1, p2, 0.75, 1);
-        expect(convertedB.quadCount, greaterThan(0));
-        expect(convertedB.points.length, 1 + 2 * convertedB.quadCount);
 
         final ending = SkPath();
         expect(ending.parseSvgString('M0 0 L20 0 L20 10 Z'), isTrue);

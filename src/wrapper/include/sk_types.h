@@ -1156,6 +1156,31 @@ typedef struct skresources_external_track_asset_t skresources_external_track_ass
 
 typedef struct skresources_resource_provider_t skresources_resource_provider_t;
 
+/*
+ * SkUnicode types
+ */
+typedef struct sk_unicode_t sk_unicode_t;
+
+/*
+ * SkShaper types
+ */
+typedef struct sk_shaper_t sk_shaper_t;
+typedef struct sk_shaper_factory_t sk_shaper_factory_t;
+typedef struct sk_shaper_run_handler_t sk_shaper_run_handler_t;
+typedef struct sk_shaper_run_iterator_t sk_shaper_run_iterator_t;
+typedef struct sk_shaper_font_run_iterator_t sk_shaper_font_run_iterator_t;
+typedef struct sk_shaper_bidi_run_iterator_t sk_shaper_bidi_run_iterator_t;
+typedef struct sk_shaper_script_run_iterator_t sk_shaper_script_run_iterator_t;
+typedef struct sk_shaper_language_run_iterator_t sk_shaper_language_run_iterator_t;
+typedef struct sk_textblob_builder_run_handler_t sk_textblob_builder_run_handler_t;
+
+typedef struct {
+    uint32_t tag;
+    uint32_t value;
+    size_t start;
+    size_t end;
+} sk_shaper_feature_t;
+
 SK_C_PLUS_PLUS_END_GUARD
 
 typedef struct d3d_dxgi_adapter_t d3d_dxgi_adapter_t;

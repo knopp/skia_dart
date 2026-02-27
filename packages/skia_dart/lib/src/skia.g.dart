@@ -3057,6 +3057,25 @@ external bool sk_pathmeasure_next_contour(
   ffi.Pointer<sk_pathmeasure_t> pathMeasure,
 );
 
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
+external void sk_unicode_ref(
+  ffi.Pointer<sk_unicode_t> unicode,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
+external void sk_unicode_unref(
+  ffi.Pointer<sk_unicode_t> unicode,
+);
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu();
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu4x();
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_libgrapheme();
+
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_imagefilter_t>)>(isLeaf: true)
 external void sk_imagefilter_ref(
   ffi.Pointer<sk_imagefilter_t> cfilter,
@@ -5043,6 +5062,348 @@ external int sk_imageinfo_compute_min_byte_size(
 external bool sk_imageinfo_valid_row_bytes(
   ffi.Pointer<sk_imageinfo_t> info,
   int rowBytes,
+);
+
+@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_primitive();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_t>)>(isLeaf: true)
+external void sk_shaper_delete(
+  ffi.Pointer<sk_shaper_t> shaper,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shaper_driven_wrapper(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_then_wrap(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_dont_wrap_or_reorder(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_shaper_hb_purge_caches();
+
+@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_coretext();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_run_iterator_consume(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_run_iterator_end_of_current_run(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external bool sk_shaper_run_iterator_at_end(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_font_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<sk_shaper_language_run_iterator_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_font_run_iterator_new_with_style(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+  ffi.Pointer<ffi.Char> requestName,
+  ffi.Pointer<sk_fontstyle_t> requestStyle,
+  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<sk_font_t>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_trivial_font_run_iterator_new(
+  ffi.Pointer<sk_font_t> font,
+  int utf8Bytes,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_font_run_iterator_delete(
+  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_font_t> sk_shaper_font_run_iterator_current_font(
+  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(ffi.Uint8, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
+sk_shaper_trivial_bidi_run_iterator_new(
+  int bidiLevel,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Uint8,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
+sk_shaper_unicode_bidi_run_iterator_new(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  int bidiLevel,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_bidi_run_iterator_delete(
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Uint8 Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_bidi_run_iterator_current_level(
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(ffi.Uint32, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_trivial_script_run_iterator_new(
+  int script,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_hb_script_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Uint32,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_hb_script_run_iterator_new_with_script(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  int script,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_script_run_iterator_delete(
+  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_script_run_iterator_current_script(
+  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_language_run_iterator_t>
+sk_shaper_std_language_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_language_run_iterator_t>
+sk_shaper_trivial_language_run_iterator_new(
+  ffi.Pointer<ffi.Char> language,
+  int utf8Bytes,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_language_run_iterator_delete(
+  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Char> sk_shaper_language_run_iterator_current_language(
+  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_run_handler_t> Function(
+    ffi.Pointer<sk_shaper_run_handler_procs_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_run_handler_t> sk_shaper_run_handler_new(
+  ffi.Pointer<sk_shaper_run_handler_procs_t> procs,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_handler_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_run_handler_delete(
+  ffi.Pointer<sk_shaper_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_builder_run_handler_t> Function(
+    ffi.Pointer<ffi.Char>,
+    sk_point_t,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_builder_run_handler_t>
+sk_textblob_builder_run_handler_new(
+  ffi.Pointer<ffi.Char> utf8Text,
+  sk_point_t offset,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_builder_run_handler_t>)>(
+  isLeaf: true,
+)
+external void sk_textblob_builder_run_handler_delete(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<sk_textblob_builder_run_handler_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_t> sk_textblob_builder_run_handler_make_blob(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_run_handler_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_run_handler_end_point(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+  ffi.Pointer<sk_point_t> endPoint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_shaper_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_shaper_font_run_iterator_t>,
+    ffi.Pointer<sk_shaper_bidi_run_iterator_t>,
+    ffi.Pointer<sk_shaper_script_run_iterator_t>,
+    ffi.Pointer<sk_shaper_language_run_iterator_t>,
+    ffi.Pointer<sk_shaper_feature_t>,
+    ffi.Size,
+    ffi.Float,
+    ffi.Pointer<sk_shaper_run_handler_t>,
+  )
+>()
+external void sk_shaper_shape(
+  ffi.Pointer<sk_shaper_t> shaper,
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_shaper_font_run_iterator_t> fontIterator,
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> bidiIterator,
+  ffi.Pointer<sk_shaper_script_run_iterator_t> scriptIterator,
+  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
+  ffi.Pointer<sk_shaper_feature_t> features,
+  int featuresCount,
+  double width,
+  ffi.Pointer<sk_shaper_run_handler_t> handler,
 );
 
 @ffi.Native<ffi.Pointer<sk_data_t> Function()>(isLeaf: true)
@@ -10673,6 +11034,13 @@ external ffi.Pointer<sk_font_t> sk_font_new_with_values(
   double skewX,
 );
 
+@ffi.Native<ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_font_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_font_t> sk_font_clone(
+  ffi.Pointer<sk_font_t> font,
+);
+
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_font_t>)>(isLeaf: true)
 external void sk_font_delete(
   ffi.Pointer<sk_font_t> font,
@@ -14250,6 +14618,40 @@ final class skresources_external_track_asset_t extends ffi.Opaque {}
 
 final class skresources_resource_provider_t extends ffi.Opaque {}
 
+final class sk_unicode_t extends ffi.Opaque {}
+
+final class sk_shaper_t extends ffi.Opaque {}
+
+final class sk_shaper_factory_t extends ffi.Opaque {}
+
+final class sk_shaper_run_handler_t extends ffi.Opaque {}
+
+final class sk_shaper_run_iterator_t extends ffi.Opaque {}
+
+final class sk_shaper_font_run_iterator_t extends ffi.Opaque {}
+
+final class sk_shaper_bidi_run_iterator_t extends ffi.Opaque {}
+
+final class sk_shaper_script_run_iterator_t extends ffi.Opaque {}
+
+final class sk_shaper_language_run_iterator_t extends ffi.Opaque {}
+
+final class sk_textblob_builder_run_handler_t extends ffi.Opaque {}
+
+final class sk_shaper_feature_t extends ffi.Struct {
+  @ffi.Uint32()
+  external int tag;
+
+  @ffi.Uint32()
+  external int value;
+
+  @ffi.Size()
+  external int start;
+
+  @ffi.Size()
+  external int end;
+}
+
 final class d3d_dxgi_adapter_t extends ffi.Opaque {}
 
 final class d3d_d12_device_t extends ffi.Opaque {}
@@ -14380,3 +14782,107 @@ typedef skgpu_graphite_async_rescale_and_read_pixels_callback =
         skgpu_graphite_async_rescale_and_read_pixels_callbackFunction
       >
     >;
+
+final class sk_shaper_run_handler_range_t extends ffi.Struct {
+  @ffi.Size()
+  external int fBegin;
+
+  @ffi.Size()
+  external int fSize;
+}
+
+final class sk_shaper_run_handler_run_info_t extends ffi.Struct {
+  external ffi.Pointer<sk_font_t> fFont;
+
+  @ffi.Uint8()
+  external int fBidiLevel;
+
+  @ffi.Uint32()
+  external int fScript;
+
+  external ffi.Pointer<ffi.Char> fLanguage;
+
+  external sk_vector_t fAdvance;
+
+  @ffi.Size()
+  external int glyphCount;
+
+  external sk_shaper_run_handler_range_t utf8Range;
+}
+
+final class sk_shaper_run_handler_buffer_t extends ffi.Struct {
+  external ffi.Pointer<ffi.Uint16> glyphs;
+
+  external ffi.Pointer<sk_point_t> positions;
+
+  external ffi.Pointer<sk_point_t> offsets;
+
+  external ffi.Pointer<ffi.Uint32> clusters;
+
+  external sk_point_t point;
+}
+
+typedef sk_shaper_run_handler_begin_line_procFunction = ffi.Void Function();
+typedef Dartsk_shaper_run_handler_begin_line_procFunction = void Function();
+typedef sk_shaper_run_handler_begin_line_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_begin_line_procFunction>
+    >;
+typedef sk_shaper_run_handler_run_info_procFunction =
+    ffi.Void Function(ffi.Pointer<sk_shaper_run_handler_run_info_t> info);
+typedef Dartsk_shaper_run_handler_run_info_procFunction =
+    void Function(ffi.Pointer<sk_shaper_run_handler_run_info_t> info);
+typedef sk_shaper_run_handler_run_info_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_run_info_procFunction>
+    >;
+typedef sk_shaper_run_handler_commit_run_info_procFunction =
+    ffi.Void Function();
+typedef Dartsk_shaper_run_handler_commit_run_info_procFunction =
+    void Function();
+typedef sk_shaper_run_handler_commit_run_info_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_commit_run_info_procFunction>
+    >;
+typedef sk_shaper_run_handler_run_buffer_procFunction =
+    ffi.Void Function(
+      ffi.Pointer<sk_shaper_run_handler_run_info_t> info,
+      ffi.Pointer<sk_shaper_run_handler_buffer_t> buffer,
+    );
+typedef Dartsk_shaper_run_handler_run_buffer_procFunction =
+    void Function(
+      ffi.Pointer<sk_shaper_run_handler_run_info_t> info,
+      ffi.Pointer<sk_shaper_run_handler_buffer_t> buffer,
+    );
+typedef sk_shaper_run_handler_run_buffer_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_run_buffer_procFunction>
+    >;
+typedef sk_shaper_run_handler_commit_run_buffer_procFunction =
+    ffi.Void Function(ffi.Pointer<sk_shaper_run_handler_run_info_t> info);
+typedef Dartsk_shaper_run_handler_commit_run_buffer_procFunction =
+    void Function(ffi.Pointer<sk_shaper_run_handler_run_info_t> info);
+typedef sk_shaper_run_handler_commit_run_buffer_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_commit_run_buffer_procFunction>
+    >;
+typedef sk_shaper_run_handler_commit_line_procFunction = ffi.Void Function();
+typedef Dartsk_shaper_run_handler_commit_line_procFunction = void Function();
+typedef sk_shaper_run_handler_commit_line_proc =
+    ffi.Pointer<
+      ffi.NativeFunction<sk_shaper_run_handler_commit_line_procFunction>
+    >;
+
+final class sk_shaper_run_handler_procs_t extends ffi.Struct {
+  external sk_shaper_run_handler_begin_line_proc beginLine;
+
+  external sk_shaper_run_handler_run_info_proc runInfo;
+
+  external sk_shaper_run_handler_commit_run_info_proc commitRunInfo;
+
+  external sk_shaper_run_handler_run_buffer_proc runBuffer;
+
+  external sk_shaper_run_handler_commit_run_buffer_proc commitRunBuffer;
+
+  external sk_shaper_run_handler_commit_line_proc commitLine;
+}
