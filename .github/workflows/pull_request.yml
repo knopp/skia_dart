@@ -114,6 +114,11 @@ jobs:
         working-directory: out/${{ matrix.config }}
         run: ninja dawn_dart
 
+      - name: Copy icudtl.dat (Windows)
+        if: runner.os == 'windows'
+        run: |
+          cp out/${{ matrix.config }}/icudtl.dat packages/skia_dart/.dart_tool/lib
+
       - name: Run tests
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart test

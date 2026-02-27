@@ -24,8 +24,7 @@
 // Custom RunHandler implementation that delegates to C callbacks
 class CRunHandler : public SkShaper::RunHandler {
  public:
-  explicit CRunHandler(const sk_shaper_run_handler_procs_t* procs)
-      : fProcs(*procs) {
+  explicit CRunHandler(const sk_shaper_run_handler_procs_t* procs) : fProcs(*procs) {
   }
 
   void beginLine() override {
@@ -76,8 +75,9 @@ class CRunHandler : public SkShaper::RunHandler {
       buffer.clusters = cBuffer.clusters;
       buffer.point = *AsPoint(&cBuffer.point);
       return buffer;
+    } else {
+      return Buffer();
     }
-    return Buffer();
   }
 
   void commitRunBuffer(const RunInfo& info) override {
@@ -121,34 +121,25 @@ void sk_shaper_delete(sk_shaper_t* shaper) {
 
 // HarfBuzz shapers
 
-sk_shaper_t* sk_shaper_new_hb_shaper_driven_wrapper(
-    sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
+sk_shaper_t* sk_shaper_new_hb_shaper_driven_wrapper(sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
-  return ToShaper(SkShapers::HB::ShaperDrivenWrapper(
-                      sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback)))
-                      .release());
+  return ToShaper(SkShapers::HB::ShaperDrivenWrapper(sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback))).release());
 #else
   return nullptr;
 #endif
 }
 
-sk_shaper_t* sk_shaper_new_hb_shape_then_wrap(
-    sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
+sk_shaper_t* sk_shaper_new_hb_shape_then_wrap(sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
-  return ToShaper(SkShapers::HB::ShapeThenWrap(
-                      sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback)))
-                      .release());
+  return ToShaper(SkShapers::HB::ShapeThenWrap(sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback))).release());
 #else
   return nullptr;
 #endif
 }
 
-sk_shaper_t* sk_shaper_new_hb_shape_dont_wrap_or_reorder(
-    sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
+sk_shaper_t* sk_shaper_new_hb_shape_dont_wrap_or_reorder(sk_unicode_t* unicode, sk_fontmgr_t* fallback) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
-  return ToShaper(SkShapers::HB::ShapeDontWrapOrReorder(
-                      sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback)))
-                      .release());
+  return ToShaper(SkShapers::HB::ShapeDontWrapOrReorder(sk_ref_sp(AsUnicode(unicode)), sk_ref_sp(AsFontMgr(fallback))).release());
 #else
   return nullptr;
 #endif
@@ -186,26 +177,15 @@ bool sk_shaper_run_iterator_at_end(const sk_shaper_run_iterator_t* iterator) {
 
 // Font run iterator
 
-sk_shaper_font_run_iterator_t* sk_shaper_font_run_iterator_new(
-    const char* utf8, size_t utf8Bytes,
-    const sk_font_t* font, sk_fontmgr_t* fallback) {
-  return ToFontRunIterator(
-      SkShaper::MakeFontMgrRunIterator(utf8, utf8Bytes, AsFont(*font), sk_ref_sp(AsFontMgr(fallback))).release());
+sk_shaper_font_run_iterator_t* sk_shaper_font_run_iterator_new(const char* utf8, size_t utf8Bytes, const sk_font_t* font, sk_fontmgr_t* fallback) {
+  return ToFontRunIterator(SkShaper::MakeFontMgrRunIterator(utf8, utf8Bytes, AsFont(*font), sk_ref_sp(AsFontMgr(fallback))).release());
 }
 
-sk_shaper_font_run_iterator_t* sk_shaper_font_run_iterator_new_with_style(
-    const char* utf8, size_t utf8Bytes,
-    const sk_font_t* font, sk_fontmgr_t* fallback,
-    const char* requestName, sk_fontstyle_t* requestStyle,
-    const sk_shaper_language_run_iterator_t* languageIterator) {
-  return ToFontRunIterator(
-      SkShaper::MakeFontMgrRunIterator(utf8, utf8Bytes, AsFont(*font), sk_ref_sp(AsFontMgr(fallback)),
-                                       requestName, *AsFontStyle(requestStyle), AsLanguageRunIterator(languageIterator))
-          .release());
+sk_shaper_font_run_iterator_t* sk_shaper_font_run_iterator_new_with_style(const char* utf8, size_t utf8Bytes, const sk_font_t* font, sk_fontmgr_t* fallback, const char* requestName, sk_fontstyle_t* requestStyle, const sk_shaper_language_run_iterator_t* languageIterator) {
+  return ToFontRunIterator(SkShaper::MakeFontMgrRunIterator(utf8, utf8Bytes, AsFont(*font), sk_ref_sp(AsFontMgr(fallback)), requestName, *AsFontStyle(requestStyle), AsLanguageRunIterator(languageIterator)).release());
 }
 
-sk_shaper_font_run_iterator_t* sk_shaper_trivial_font_run_iterator_new(
-    const sk_font_t* font, size_t utf8Bytes) {
+sk_shaper_font_run_iterator_t* sk_shaper_trivial_font_run_iterator_new(const sk_font_t* font, size_t utf8Bytes) {
   return ToFontRunIterator(new SkShaper::TrivialFontRunIterator(AsFont(*font), utf8Bytes));
 }
 
@@ -219,17 +199,13 @@ const sk_font_t* sk_shaper_font_run_iterator_current_font(const sk_shaper_font_r
 
 // BiDi run iterator
 
-sk_shaper_bidi_run_iterator_t* sk_shaper_trivial_bidi_run_iterator_new(
-    uint8_t bidiLevel, size_t utf8Bytes) {
+sk_shaper_bidi_run_iterator_t* sk_shaper_trivial_bidi_run_iterator_new(uint8_t bidiLevel, size_t utf8Bytes) {
   return ToBiDiRunIterator(new SkShaper::TrivialBiDiRunIterator(bidiLevel, utf8Bytes));
 }
 
-sk_shaper_bidi_run_iterator_t* sk_shaper_unicode_bidi_run_iterator_new(
-    sk_unicode_t* unicode, const char* utf8, size_t utf8Bytes, uint8_t bidiLevel) {
+sk_shaper_bidi_run_iterator_t* sk_shaper_unicode_bidi_run_iterator_new(sk_unicode_t* unicode, const char* utf8, size_t utf8Bytes, uint8_t bidiLevel) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
-  return ToBiDiRunIterator(SkShapers::unicode::BidiRunIterator(
-                               sk_ref_sp(AsUnicode(unicode)), utf8, utf8Bytes, bidiLevel)
-                               .release());
+  return ToBiDiRunIterator(SkShapers::unicode::BidiRunIterator(sk_ref_sp(AsUnicode(unicode)), utf8, utf8Bytes, bidiLevel).release());
 #else
   return nullptr;
 #endif
@@ -245,13 +221,11 @@ uint8_t sk_shaper_bidi_run_iterator_current_level(const sk_shaper_bidi_run_itera
 
 // Script run iterator
 
-sk_shaper_script_run_iterator_t* sk_shaper_trivial_script_run_iterator_new(
-    uint32_t script, size_t utf8Bytes) {
+sk_shaper_script_run_iterator_t* sk_shaper_trivial_script_run_iterator_new(uint32_t script, size_t utf8Bytes) {
   return ToScriptRunIterator(new SkShaper::TrivialScriptRunIterator(script, utf8Bytes));
 }
 
-sk_shaper_script_run_iterator_t* sk_shaper_hb_script_run_iterator_new(
-    const char* utf8, size_t utf8Bytes) {
+sk_shaper_script_run_iterator_t* sk_shaper_hb_script_run_iterator_new(const char* utf8, size_t utf8Bytes) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
   return ToScriptRunIterator(SkShapers::HB::ScriptRunIterator(utf8, utf8Bytes).release());
 #else
@@ -259,8 +233,7 @@ sk_shaper_script_run_iterator_t* sk_shaper_hb_script_run_iterator_new(
 #endif
 }
 
-sk_shaper_script_run_iterator_t* sk_shaper_hb_script_run_iterator_new_with_script(
-    const char* utf8, size_t utf8Bytes, uint32_t script) {
+sk_shaper_script_run_iterator_t* sk_shaper_hb_script_run_iterator_new_with_script(const char* utf8, size_t utf8Bytes, uint32_t script) {
 #ifdef SK_SHAPER_HARFBUZZ_AVAILABLE
   return ToScriptRunIterator(SkShapers::HB::ScriptRunIterator(utf8, utf8Bytes, script).release());
 #else
@@ -278,13 +251,11 @@ uint32_t sk_shaper_script_run_iterator_current_script(const sk_shaper_script_run
 
 // Language run iterator
 
-sk_shaper_language_run_iterator_t* sk_shaper_std_language_run_iterator_new(
-    const char* utf8, size_t utf8Bytes) {
+sk_shaper_language_run_iterator_t* sk_shaper_std_language_run_iterator_new(const char* utf8, size_t utf8Bytes) {
   return ToLanguageRunIterator(SkShaper::MakeStdLanguageRunIterator(utf8, utf8Bytes).release());
 }
 
-sk_shaper_language_run_iterator_t* sk_shaper_trivial_language_run_iterator_new(
-    const char* language, size_t utf8Bytes) {
+sk_shaper_language_run_iterator_t* sk_shaper_trivial_language_run_iterator_new(const char* language, size_t utf8Bytes) {
   return ToLanguageRunIterator(new SkShaper::TrivialLanguageRunIterator(language, utf8Bytes));
 }
 
@@ -298,8 +269,7 @@ const char* sk_shaper_language_run_iterator_current_language(const sk_shaper_lan
 
 // Custom RunHandler
 
-sk_shaper_run_handler_t* sk_shaper_run_handler_new(
-    const sk_shaper_run_handler_procs_t* procs) {
+sk_shaper_run_handler_t* sk_shaper_run_handler_new(const sk_shaper_run_handler_procs_t* procs) {
   return ToRunHandler(new CRunHandler(procs));
 }
 
@@ -309,8 +279,7 @@ void sk_shaper_run_handler_delete(sk_shaper_run_handler_t* handler) {
 
 // TextBlobBuilderRunHandler
 
-sk_textblob_builder_run_handler_t* sk_textblob_builder_run_handler_new(
-    const char* utf8Text, sk_point_t offset) {
+sk_textblob_builder_run_handler_t* sk_textblob_builder_run_handler_new(const char* utf8Text, sk_point_t offset) {
   return ToTextBlobBuilderRunHandler(new SkTextBlobBuilderRunHandler(utf8Text, *AsPoint(&offset)));
 }
 
@@ -326,23 +295,6 @@ void sk_textblob_builder_run_handler_end_point(sk_textblob_builder_run_handler_t
   *endPoint = ToPoint(AsTextBlobBuilderRunHandler(handler)->endPoint());
 }
 
-// Shaping functions
-
-void sk_shaper_shape(
-    const sk_shaper_t* shaper,
-    const char* utf8, size_t utf8Bytes,
-    sk_shaper_font_run_iterator_t* fontIterator,
-    sk_shaper_bidi_run_iterator_t* bidiIterator,
-    sk_shaper_script_run_iterator_t* scriptIterator,
-    sk_shaper_language_run_iterator_t* languageIterator,
-    const sk_shaper_feature_t* features, size_t featuresCount,
-    float width,
-    sk_shaper_run_handler_t* handler) {
-  AsShaper(shaper)->shape(utf8, utf8Bytes,
-                          *AsFontRunIterator(fontIterator),
-                          *AsBiDiRunIterator(bidiIterator),
-                          *AsScriptRunIterator(scriptIterator),
-                          *AsLanguageRunIterator(languageIterator),
-                          AsShaperFeature(features), featuresCount,
-                          width, AsRunHandler(handler));
+void sk_shaper_shape(const sk_shaper_t* shaper, const char* utf8, size_t utf8Bytes, sk_shaper_font_run_iterator_t* fontIterator, sk_shaper_bidi_run_iterator_t* bidiIterator, sk_shaper_script_run_iterator_t* scriptIterator, sk_shaper_language_run_iterator_t* languageIterator, const sk_shaper_feature_t* features, size_t featuresCount, float width, sk_shaper_run_handler_t* handler) {
+  AsShaper(shaper)->shape(utf8, utf8Bytes, *AsFontRunIterator(fontIterator), *AsBiDiRunIterator(bidiIterator), *AsScriptRunIterator(scriptIterator), *AsLanguageRunIterator(languageIterator), AsShaperFeature(features), featuresCount, width, AsRunHandler(handler));
 }
