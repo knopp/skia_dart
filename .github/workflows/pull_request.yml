@@ -117,6 +117,7 @@ jobs:
       - name: Copy icudtl.dat (Windows)
         if: runner.os == 'windows'
         run: |
+          mkdir -p packages/skia_dart/.dart_tool/lib
           cp out/${{ matrix.config }}/icudtl.dat packages/skia_dart/.dart_tool/lib
 
       - name: Run tests
