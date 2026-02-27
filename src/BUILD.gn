@@ -6,6 +6,15 @@ config("skia_host_debug_config") {
   defines = [ "SKIA_IMPLEMENTATION" ]
 }
 
+config("android_page_size") {
+  if (is_android) {
+    ldflags = [
+      # 16KB page size alignment required for Play Store
+      "-Wl,-z,max-page-size=16384",
+    ]
+  }
+}
+
 source_set("skia_c_wrapper") {
   sources = [
     "wrapper/gr_context.cpp",
@@ -182,6 +191,7 @@ source_set("skia_c_wrapper") {
 shared_library("skia_dart") {
   include_dirs = [ "." ]
   deps = [ ":skia_c_wrapper" ]
+  configs += [ ":android_page_size" ]
   if (is_mac) {
     ldflags = [
       "-flto=thin",
@@ -203,6 +213,7 @@ shared_library("dawn_dart") {
     "SKIA_IMPLEMENTATION",
   ]
   deps = [ "//third_party/dawn" ]
+  configs += [ ":android_page_size" ]
   if (is_linux) {
     libs = [ "EGL" ]
   }
@@ -215,4 +226,5 @@ shared_library("dawn_dart_stub") {
   ]
   include_dirs = [ "." ]
   defines = [ "SKIA_IMPLEMENTATION" ]
+  configs += [ ":android_page_size" ]
 }
