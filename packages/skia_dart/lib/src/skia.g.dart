@@ -6442,7 +6442,7 @@ external bool sk_paint_equals(
   ffi.Pointer<sk_paint_t> b,
 );
 
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
 external int sk_paint_get_hash(
   ffi.Pointer<sk_paint_t> paint,
 );
@@ -8186,6 +8186,11 @@ external bool sk_strut_style_equals(
 );
 
 @ffi.Native<ffi.Size Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external int sk_strut_style_get_hash(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
 external int sk_strut_style_get_font_family_count(
   ffi.Pointer<sk_strut_style_t> style,
 );
@@ -8346,6 +8351,11 @@ external void sk_paragraph_style_delete(
 external bool sk_paragraph_style_equals(
   ffi.Pointer<sk_paragraph_style_t> style,
   ffi.Pointer<sk_paragraph_style_t> other,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external int sk_paragraph_style_get_hash(
+  ffi.Pointer<sk_paragraph_style_t> style,
 );
 
 @ffi.Native<
@@ -8664,6 +8674,11 @@ bool sk_text_style_match_attribute(
   style,
   attribute.value,
   other,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_hash(
+  ffi.Pointer<sk_text_style_t> style,
 );
 
 @ffi.Native<sk_color_t Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
@@ -9533,29 +9548,22 @@ external int sk_paragraph_unresolved_codepoints(
 );
 
 @ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_paragraph_t>,
-    sk_paragraph_visitor_proc,
-    ffi.Pointer<ffi.Void>,
-  )
+  ffi.Void Function(ffi.Pointer<sk_paragraph_t>, sk_paragraph_visitor_proc)
 >()
 external void sk_paragraph_visit(
   ffi.Pointer<sk_paragraph_t> paragraph,
   sk_paragraph_visitor_proc proc,
-  ffi.Pointer<ffi.Void> context,
 );
 
 @ffi.Native<
   ffi.Void Function(
     ffi.Pointer<sk_paragraph_t>,
     sk_paragraph_extended_visitor_proc,
-    ffi.Pointer<ffi.Void>,
   )
 >()
 external void sk_paragraph_extended_visit(
   ffi.Pointer<sk_paragraph_t> paragraph,
   sk_paragraph_extended_visitor_proc proc,
-  ffi.Pointer<ffi.Void> context,
 );
 
 @ffi.Native<

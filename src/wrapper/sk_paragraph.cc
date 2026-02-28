@@ -10,6 +10,7 @@
 #include "wrapper/include/sk_paragraph.h"
 
 #include <algorithm>
+#include <cstring>
 #include <iterator>
 #include <limits>
 #include <variant>
@@ -37,6 +38,128 @@ using skia::textlayout::StrutStyle;
 using skia::textlayout::TextShadow;
 
 namespace {
+
+void HashMix(uint64_t* hash, uint64_t value) {
+  *hash ^= value;
+  *hash *= 1099511628211ull;
+}
+
+void HashMixFloat(uint64_t* hash, float value) {
+  uint32_t bits = 0;
+  std::memcpy(&bits, &value, sizeof(bits));
+  HashMix(hash, bits);
+}
+
+void HashMixString(uint64_t* hash, const SkString& value) {
+  HashMix(hash, value.size());
+  for (size_t i = 0; i < value.size(); ++i) {
+    HashMix(hash, static_cast<uint8_t>(value[i]));
+  }
+}
+
+void HashMixUtf16String(uint64_t* hash, const std::u16string& value) {
+  HashMix(hash, value.size());
+  for (char16_t ch : value) {
+    HashMix(hash, static_cast<uint16_t>(ch));
+  }
+}
+
+size_t PaintHash(const SkPaint& paint) {
+  uint64_t hash = 1469598103934665603ull;
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getPathEffect()));
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getShader()));
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getMaskFilter()));
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getColorFilter()));
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getBlender()));
+  HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getImageFilter()));
+
+  const SkColor4f color = paint.getColor4f();
+  HashMixFloat(&hash, color.fR);
+  HashMixFloat(&hash, color.fG);
+  HashMixFloat(&hash, color.fB);
+  HashMixFloat(&hash, color.fA);
+  HashMixFloat(&hash, paint.getStrokeWidth());
+  HashMixFloat(&hash, paint.getStrokeMiter());
+
+  HashMix(&hash, static_cast<uint8_t>(paint.isAntiAlias()));
+  HashMix(&hash, static_cast<uint8_t>(paint.isDither()));
+  HashMix(&hash, static_cast<uint8_t>(paint.getStrokeCap()));
+  HashMix(&hash, static_cast<uint8_t>(paint.getStrokeJoin()));
+  HashMix(&hash, static_cast<uint8_t>(paint.getStyle()));
+
+  return static_cast<size_t>(hash);
+}
+
+void HashMixPaintOrID(uint64_t* hash, const skia::textlayout::ParagraphPainter::SkPaintOrID& value) {
+  if (const SkPaint* paint = std::get_if<SkPaint>(&value)) {
+    HashMix(hash, 1);
+    HashMix(hash, PaintHash(*paint));
+    return;
+  }
+  HashMix(hash, 2);
+  HashMix(hash, static_cast<uint32_t>(std::get<skia::textlayout::ParagraphPainter::PaintID>(value)));
+}
+
+size_t TextStyleHash(const skia::textlayout::TextStyle& value) {
+  uint64_t hash = 1469598103934665603ull;
+
+  HashMix(&hash, value.getColor());
+
+  const auto decoration = value.getDecoration();
+  HashMix(&hash, decoration.fType);
+  HashMix(&hash, decoration.fMode);
+  HashMix(&hash, decoration.fColor);
+  HashMix(&hash, decoration.fStyle);
+  HashMixFloat(&hash, decoration.fThicknessMultiplier);
+
+  const SkFontStyle font_style = value.getFontStyle();
+  HashMix(&hash, font_style.weight());
+  HashMix(&hash, font_style.width());
+  HashMix(&hash, font_style.slant());
+
+  const auto& font_families = value.getFontFamilies();
+  HashMix(&hash, font_families.size());
+  for (const SkString& family : font_families) {
+    HashMixString(&hash, family);
+  }
+
+  HashMixFloat(&hash, value.getLetterSpacing());
+  HashMixFloat(&hash, value.getWordSpacing());
+  HashMixFloat(&hash, value.getHeight());
+  HashMix(&hash, value.getHeightOverride());
+  HashMix(&hash, value.getHalfLeading());
+  HashMixFloat(&hash, value.getBaselineShift());
+  HashMixFloat(&hash, value.getFontSize());
+  HashMixString(&hash, value.getLocale());
+
+  HashMix(&hash, value.hasForeground());
+  if (value.hasForeground()) {
+    HashMixPaintOrID(&hash, value.getForegroundPaintOrID());
+  }
+
+  HashMix(&hash, value.hasBackground());
+  if (value.hasBackground()) {
+    HashMixPaintOrID(&hash, value.getBackgroundPaintOrID());
+  }
+
+  const auto shadows = value.getShadows();
+  HashMix(&hash, shadows.size());
+  for (const TextShadow& shadow : shadows) {
+    HashMix(&hash, shadow.fColor);
+    HashMixFloat(&hash, shadow.fOffset.x());
+    HashMixFloat(&hash, shadow.fOffset.y());
+    HashMixFloat(&hash, shadow.fBlurSigma);
+  }
+
+  const auto font_features = value.getFontFeatures();
+  HashMix(&hash, font_features.size());
+  for (const skia::textlayout::FontFeature& feature : font_features) {
+    HashMixString(&hash, feature.fName);
+    HashMix(&hash, feature.fValue);
+  }
+
+  return static_cast<size_t>(hash);
+}
 
 TextShadow AsTextShadowValue(const sk_text_shadow_t& shadow) {
   return TextShadow(shadow.color, AsPoint(shadow.offset), shadow.blur_sigma);
@@ -87,6 +210,32 @@ void sk_strut_style_delete(sk_strut_style_t* style) {
 
 bool sk_strut_style_equals(const sk_strut_style_t* style, const sk_strut_style_t* other) {
   return *AsStrutStyle(style) == *AsStrutStyle(other);
+}
+
+size_t sk_strut_style_get_hash(const sk_strut_style_t* style) {
+  const StrutStyle& value = *AsStrutStyle(style);
+  uint64_t hash = 1469598103934665603ull;
+
+  HashMix(&hash, value.getStrutEnabled());
+  HashMix(&hash, value.getHeightOverride());
+  HashMix(&hash, value.getForceStrutHeight());
+  HashMix(&hash, value.getHalfLeading());
+  HashMixFloat(&hash, value.getLeading());
+  HashMixFloat(&hash, value.getHeight());
+  HashMixFloat(&hash, value.getFontSize());
+
+  const SkFontStyle font_style = value.getFontStyle();
+  HashMix(&hash, font_style.weight());
+  HashMix(&hash, font_style.width());
+  HashMix(&hash, font_style.slant());
+
+  const auto& font_families = value.getFontFamilies();
+  HashMix(&hash, font_families.size());
+  for (const SkString& family : font_families) {
+    HashMixString(&hash, family);
+  }
+
+  return static_cast<size_t>(hash);
 }
 
 size_t sk_strut_style_get_font_family_count(const sk_strut_style_t* style) {
@@ -189,6 +338,22 @@ void sk_paragraph_style_delete(sk_paragraph_style_t* style) {
 
 bool sk_paragraph_style_equals(const sk_paragraph_style_t* style, const sk_paragraph_style_t* other) {
   return *AsParagraphStyle(style) == *AsParagraphStyle(other);
+}
+
+size_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style) {
+  const ParagraphStyle& value = *AsParagraphStyle(style);
+  uint64_t hash = 1469598103934665603ull;
+
+  HashMixFloat(&hash, value.getHeight());
+  HashMixString(&hash, value.getEllipsis());
+  HashMixUtf16String(&hash, value.getEllipsisUtf16());
+  HashMix(&hash, static_cast<uint32_t>(value.getTextDirection()));
+  HashMix(&hash, static_cast<uint32_t>(value.getTextAlign()));
+  HashMix(&hash, TextStyleHash(value.getTextStyle()));
+  HashMix(&hash, value.getReplaceTabCharacters());
+  HashMix(&hash, value.fakeMissingFontStyles());
+
+  return static_cast<size_t>(hash);
 }
 
 void sk_paragraph_style_get_strut_style(const sk_paragraph_style_t* style, sk_strut_style_t* strut_style) {
@@ -328,6 +493,10 @@ bool sk_text_style_equals_by_fonts(const sk_text_style_t* style, const sk_text_s
 
 bool sk_text_style_match_attribute(const sk_text_style_t* style, sk_text_style_attribute_t attribute, const sk_text_style_t* other) {
   return AsTextStyle(style)->matchOneAttribute(AsTextStyleAttribute(attribute), *AsTextStyle(other));
+}
+
+size_t sk_text_style_get_hash(const sk_text_style_t* style) {
+  return TextStyleHash(*AsTextStyle(style));
 }
 
 sk_color_t sk_text_style_get_color(const sk_text_style_t* style) {

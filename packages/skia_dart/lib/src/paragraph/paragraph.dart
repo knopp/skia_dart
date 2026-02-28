@@ -635,7 +635,7 @@ final class SkParagraph with _NativeMixin<sk_paragraph_t> {
           },
         );
     try {
-      sk_paragraph_visit(_ptr, callable.nativeFunction, nullptr);
+      sk_paragraph_visit(_ptr, callable.nativeFunction);
     } finally {
       callable.close();
     }
@@ -657,7 +657,7 @@ final class SkParagraph with _NativeMixin<sk_paragraph_t> {
           },
         );
     try {
-      sk_paragraph_extended_visit(_ptr, callable.nativeFunction, nullptr);
+      sk_paragraph_extended_visit(_ptr, callable.nativeFunction);
     } finally {
       callable.close();
     }
