@@ -1175,11 +1175,186 @@ typedef struct sk_shaper_language_run_iterator_t sk_shaper_language_run_iterator
 typedef struct sk_textblob_builder_run_handler_t sk_textblob_builder_run_handler_t;
 
 typedef struct {
-    uint32_t tag;
-    uint32_t value;
-    size_t start;
-    size_t end;
+  uint32_t tag;
+  uint32_t value;
+  size_t start;
+  size_t end;
 } sk_shaper_feature_t;
+
+/*
+ * SkParagraph types
+ */
+typedef struct sk_font_collection_t sk_font_collection_t;
+typedef struct sk_paragraph_t sk_paragraph_t;
+typedef struct sk_paragraph_builder_t sk_paragraph_builder_t;
+typedef struct sk_paragraph_painter_t sk_paragraph_painter_t;
+typedef struct sk_paragraph_style_t sk_paragraph_style_t;
+typedef struct sk_line_metrics_t sk_line_metrics_t;
+typedef struct sk_strut_style_t sk_strut_style_t;
+typedef struct sk_text_style_t sk_text_style_t;
+
+typedef enum {
+  UPSTREAM_SK_PARAGRAPH_AFFINITY,
+  DOWNSTREAM_SK_PARAGRAPH_AFFINITY,
+} sk_paragraph_affinity_t;
+
+typedef enum {
+  TIGHT_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+  MAX_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+  INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+  INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+  INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+} sk_paragraph_rect_height_style_t;
+
+typedef enum {
+  TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE,
+  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE,
+} sk_paragraph_rect_width_style_t;
+
+typedef enum {
+  LEFT_SK_PARAGRAPH_TEXT_ALIGN,
+  RIGHT_SK_PARAGRAPH_TEXT_ALIGN,
+  CENTER_SK_PARAGRAPH_TEXT_ALIGN,
+  JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN,
+  START_SK_PARAGRAPH_TEXT_ALIGN,
+  END_SK_PARAGRAPH_TEXT_ALIGN,
+} sk_paragraph_text_align_t;
+
+typedef enum {
+  RTL_SK_PARAGRAPH_TEXT_DIRECTION,
+  LTR_SK_PARAGRAPH_TEXT_DIRECTION,
+} sk_paragraph_text_direction_t;
+
+typedef enum {
+  ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE,
+  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE,
+} sk_paragraph_text_baseline_t;
+
+typedef enum {
+  ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR = 0x0,
+  DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR = 0x1,
+  DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR = 0x2,
+  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR = 0x3,
+} sk_paragraph_text_height_behavior_t;
+
+typedef enum {
+  TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE,
+  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE,
+} sk_paragraph_line_metric_style_t;
+
+typedef enum {
+  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG = 1 << 0,
+} sk_paragraph_visitor_flag_t;
+
+typedef struct {
+  size_t start;
+  size_t end;
+} sk_paragraph_text_range_t;
+
+typedef struct {
+  int32_t position;
+  sk_paragraph_affinity_t affinity;
+} sk_paragraph_position_with_affinity_t;
+
+typedef struct {
+  sk_rect_t rect;
+  sk_paragraph_text_direction_t direction;
+} sk_paragraph_text_box_t;
+
+typedef struct {
+  sk_rect_t bounds;
+  sk_paragraph_text_range_t cluster_text_range;
+  sk_paragraph_text_direction_t glyph_cluster_position;
+} sk_paragraph_glyph_cluster_info_t;
+
+typedef struct {
+  sk_rect_t grapheme_layout_bounds;
+  sk_paragraph_text_range_t grapheme_cluster_text_range;
+  sk_paragraph_text_direction_t direction;
+  bool is_ellipsis;
+} sk_paragraph_glyph_info_t;
+
+typedef struct {
+  const sk_font_t* font;
+  sk_point_t origin;
+  float advance_x;
+  int count;
+  const uint16_t* glyphs;
+  const sk_point_t* positions;
+  const uint32_t* utf8_starts;
+  unsigned flags;
+} sk_paragraph_visitor_info_t;
+
+typedef struct {
+  const sk_font_t* font;
+  sk_point_t origin;
+  sk_size_t advance;
+  int count;
+  const uint16_t* glyphs;
+  const sk_point_t* positions;
+  const sk_rect_t* bounds;
+  const uint32_t* utf8_starts;
+  unsigned flags;
+} sk_paragraph_extended_visitor_info_t;
+
+typedef void (*sk_paragraph_visitor_proc)(int line_number, const sk_paragraph_visitor_info_t* info);
+typedef void (*sk_paragraph_extended_visitor_proc)(int line_number, const sk_paragraph_extended_visitor_info_t* info);
+
+typedef enum {
+  NO_SK_TEXT_DECORATION = 0x0,
+  UNDERLINE_SK_TEXT_DECORATION = 0x1,
+  OVERLINE_SK_TEXT_DECORATION = 0x2,
+  LINE_THROUGH_SK_TEXT_DECORATION = 0x4,
+} sk_text_decoration_t;
+
+typedef enum {
+  SOLID_SK_TEXT_DECORATION_STYLE,
+  DOUBLE_SK_TEXT_DECORATION_STYLE,
+  DOTTED_SK_TEXT_DECORATION_STYLE,
+  DASHED_SK_TEXT_DECORATION_STYLE,
+  WAVY_SK_TEXT_DECORATION_STYLE,
+} sk_text_decoration_style_t;
+
+typedef enum {
+  GAPS_SK_TEXT_DECORATION_MODE,
+  THROUGH_SK_TEXT_DECORATION_MODE,
+} sk_text_decoration_mode_t;
+
+typedef enum {
+  NONE_SK_TEXT_STYLE_ATTRIBUTE,
+  ALL_ATTRIBUTES_SK_TEXT_STYLE_ATTRIBUTE,
+  FONT_SK_TEXT_STYLE_ATTRIBUTE,
+  FOREGROUND_SK_TEXT_STYLE_ATTRIBUTE,
+  BACKGROUND_SK_TEXT_STYLE_ATTRIBUTE,
+  SHADOW_SK_TEXT_STYLE_ATTRIBUTE,
+  DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE,
+  LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE,
+  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE,
+} sk_text_style_attribute_t;
+
+typedef enum {
+  BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+  ABOVE_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+  BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+  TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+  BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+} sk_paragraph_placeholder_alignment_t;
+
+typedef struct {
+  float width;
+  float height;
+  sk_paragraph_placeholder_alignment_t alignment;
+  sk_paragraph_text_baseline_t baseline;
+  float baseline_offset;
+} sk_paragraph_placeholder_style_t;
+
+typedef struct {
+  sk_color_t color;
+  sk_point_t offset;
+  double blur_sigma;
+} sk_text_shadow_t;
 
 SK_C_PLUS_PLUS_END_GUARD
 

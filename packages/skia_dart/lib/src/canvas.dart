@@ -715,7 +715,7 @@ class SkCanvas with _NativeMixin<sk_canvas_t> {
     if (!sk_canvas_get_local_clip_bounds(_ptr, rectPtr)) {
       return null;
     }
-    return _SkRect.fromNative(rectPtr);
+    return _SkRect.fromPtr(rectPtr);
   }
 
   /// Returns bounds of clip, unaffected by matrix.

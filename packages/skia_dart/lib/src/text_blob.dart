@@ -322,7 +322,7 @@ class SkTextBlob with _NativeMixin<sk_textblob_t> {
   SkRect get bounds {
     final rectPtr = _SkRect.pool[0];
     sk_textblob_get_bounds(_ptr, rectPtr);
-    return _SkRect.fromNative(rectPtr);
+    return _SkRect.fromPtr(rectPtr);
   }
 
   /// Returns the intervals where the text blob intersects two horizontal lines.

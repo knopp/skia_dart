@@ -10,6 +10,7 @@
 #ifndef sk_types_priv_DEFINED
 #define sk_types_priv_DEFINED
 
+#include "include/core/SkFont.h"
 #include "include/core/SkTypes.h"  // required to make sure SK_GANESH is defined
 #include "wrapper/include/sk_types.h"
 
@@ -118,8 +119,10 @@ DEF_CLASS_MAP(SkDynamicMemoryWStream, sk_wstream_dynamicmemorystream_t, DynamicM
 DEF_CLASS_MAP(SkFILEStream, sk_stream_filestream_t, FileStream)
 DEF_CLASS_MAP(SkFILEWStream, sk_wstream_filestream_t, FileWStream)
 DEF_CLASS_MAP(SkFlattenable, sk_flattenable_t, Flattenable)
+DEF_MAP(SkFont::Edging, sk_font_edging_t, FontEdging)
 DEF_CLASS_MAP(SkFont, sk_font_t, Font)
 DEF_CLASS_MAP(SkFontMgr, sk_fontmgr_t, FontMgr)
+DEF_MAP(SkFontHinting, sk_font_hinting_t, FontHinting)
 DEF_CLASS_MAP(SkFontStyle, sk_fontstyle_t, FontStyle)
 DEF_CLASS_MAP(SkFontStyleSet, sk_fontstyleset_t, FontStyleSet)
 DEF_CLASS_MAP(SkImage, sk_image_t, Image)
@@ -174,6 +177,35 @@ DEF_CLASS_MAP_WITH_NS(SkShaper, ScriptRunIterator, sk_shaper_script_run_iterator
 DEF_CLASS_MAP_WITH_NS(SkShaper, LanguageRunIterator, sk_shaper_language_run_iterator_t, LanguageRunIterator)
 DEF_MAP(SkShaper::Feature, sk_shaper_feature_t, ShaperFeature)
 
+#include "modules/skparagraph/include/FontCollection.h"
+#include "modules/skparagraph/include/Metrics.h"
+#include "modules/skparagraph/include/Paragraph.h"
+#include "modules/skparagraph/include/ParagraphBuilder.h"
+#include "modules/skparagraph/include/ParagraphPainter.h"
+#include "modules/skparagraph/include/ParagraphStyle.h"
+#include "modules/skparagraph/include/TextStyle.h"
+DEF_MAP_WITH_NS(skia::textlayout, Affinity, sk_paragraph_affinity_t, ParagraphAffinity)
+DEF_CLASS_MAP_WITH_NS(skia::textlayout, FontCollection, sk_font_collection_t, FontCollection)
+DEF_MAP_WITH_NS(skia::textlayout, LineMetrics, sk_line_metrics_t, LineMetrics)
+DEF_CLASS_MAP_WITH_NS(skia::textlayout, Paragraph, sk_paragraph_t, Paragraph)
+DEF_CLASS_MAP_WITH_NS(skia::textlayout, ParagraphBuilder, sk_paragraph_builder_t, ParagraphBuilder)
+DEF_CLASS_MAP_WITH_NS(skia::textlayout, ParagraphPainter, sk_paragraph_painter_t, ParagraphPainter)
+DEF_MAP_WITH_NS(skia::textlayout, PlaceholderAlignment, sk_paragraph_placeholder_alignment_t, ParagraphPlaceholderAlignment)
+DEF_MAP_WITH_NS(skia::textlayout::Paragraph, VisitorFlags, sk_paragraph_visitor_flag_t, ParagraphVisitorFlags)
+DEF_MAP_WITH_NS(skia::textlayout, ParagraphStyle, sk_paragraph_style_t, ParagraphStyle)
+DEF_MAP_WITH_NS(skia::textlayout, RectHeightStyle, sk_paragraph_rect_height_style_t, ParagraphRectHeightStyle)
+DEF_MAP_WITH_NS(skia::textlayout, RectWidthStyle, sk_paragraph_rect_width_style_t, ParagraphRectWidthStyle)
+DEF_MAP_WITH_NS(skia::textlayout, StrutStyle, sk_strut_style_t, StrutStyle)
+DEF_MAP_WITH_NS(skia::textlayout, StyleType, sk_text_style_attribute_t, TextStyleAttribute)
+DEF_MAP_WITH_NS(skia::textlayout, TextAlign, sk_paragraph_text_align_t, ParagraphTextAlign)
+DEF_MAP_WITH_NS(skia::textlayout, TextBaseline, sk_paragraph_text_baseline_t, ParagraphTextBaseline)
+DEF_MAP_WITH_NS(skia::textlayout, TextDecoration, sk_text_decoration_t, TextDecoration)
+DEF_MAP_WITH_NS(skia::textlayout, TextDecorationMode, sk_text_decoration_mode_t, TextDecorationMode)
+DEF_MAP_WITH_NS(skia::textlayout, TextDecorationStyle, sk_text_decoration_style_t, TextDecorationStyle)
+DEF_MAP_WITH_NS(skia::textlayout, TextDirection, sk_paragraph_text_direction_t, ParagraphTextDirection)
+DEF_MAP_WITH_NS(skia::textlayout, TextHeightBehavior, sk_paragraph_text_height_behavior_t, ParagraphTextHeightBehavior)
+DEF_MAP_WITH_NS(skia::textlayout, TextStyle, sk_text_style_t, TextStyle)
+
 DEF_CLASS_MAP(GrDirectContext, gr_direct_context_t, GrDirectContext)
 DEF_CLASS_MAP(GrRecordingContext, gr_recording_context_t, GrRecordingContext)
 DEF_CLASS_MAP(GrBackendTexture, gr_backendtexture_t, GrBackendTexture)
@@ -195,6 +227,62 @@ DEF_STRUCT_MAP(SkRSXform, sk_rsxform_t, RSXform)
 DEF_STRUCT_MAP(SkSize, sk_size_t, Size)
 DEF_STRUCT_MAP(SkCubicResampler, sk_cubic_resampler_t, CubicResampler)
 DEF_STRUCT_MAP(SkSamplingOptions, sk_sampling_options_t, SamplingOptions)
+
+static inline sk_paragraph_text_range_t ToParagraphTextRange(const skia::textlayout::TextRange& range) {
+  return {range.start, range.end};
+}
+
+static inline skia::textlayout::TextRange AsParagraphTextRange(const sk_paragraph_text_range_t& range) {
+  return skia::textlayout::TextRange(range.start, range.end);
+}
+
+static inline sk_paragraph_position_with_affinity_t ToParagraphPositionWithAffinity(const skia::textlayout::PositionWithAffinity& position) {
+  return {
+      position.position,
+      ToParagraphAffinity(position.affinity),
+  };
+}
+
+static inline skia::textlayout::PositionWithAffinity AsParagraphPositionWithAffinity(const sk_paragraph_position_with_affinity_t& position) {
+  return skia::textlayout::PositionWithAffinity(position.position, AsParagraphAffinity(position.affinity));
+}
+
+static inline sk_paragraph_text_box_t ToParagraphTextBox(const skia::textlayout::TextBox& box) {
+  return {
+      ToRect(box.rect),
+      ToParagraphTextDirection(box.direction),
+  };
+}
+
+static inline sk_paragraph_glyph_cluster_info_t ToParagraphGlyphClusterInfo(const skia::textlayout::Paragraph::GlyphClusterInfo& info) {
+  return {
+      ToRect(info.fBounds),
+      ToParagraphTextRange(info.fClusterTextRange),
+      ToParagraphTextDirection(info.fGlyphClusterPosition),
+  };
+}
+
+static inline sk_paragraph_glyph_info_t ToParagraphGlyphInfo(const skia::textlayout::Paragraph::GlyphInfo& info) {
+  return {
+      ToRect(info.fGraphemeLayoutBounds),
+      ToParagraphTextRange(info.fGraphemeClusterTextRange),
+      ToParagraphTextDirection(info.fDirection),
+      info.fIsEllipsis,
+  };
+}
+
+static inline skia::textlayout::PlaceholderStyle AsParagraphPlaceholderStyle(const sk_paragraph_placeholder_style_t& style) {
+  return skia::textlayout::PlaceholderStyle(style.width, style.height, AsParagraphPlaceholderAlignment(style.alignment), AsParagraphTextBaseline(style.baseline), style.baseline_offset);
+}
+
+static inline skia::textlayout::TextDecoration AsTextDecorationValue(uint32_t decoration) {
+  const auto c_decoration = static_cast<sk_text_decoration_t>(decoration);
+  return AsTextDecoration(c_decoration);
+}
+
+static inline uint32_t ToTextDecorationValue(skia::textlayout::TextDecoration decoration) {
+  return ToTextDecoration(decoration);
+}
 
 #include "include/core/SkTypeface.h"
 DEF_MAP(SkTypeface::LocalizedString, sk_localized_string_t, LocalizedString)
@@ -313,22 +401,24 @@ static inline sk_matrix_t ToMatrix(const SkMatrix& matrix) {
 
 static inline SkM44 AsM44(const sk_matrix44_t* matrix) {
   SkScalar values[16] = {
+      // clang-format off
       static_cast<SkScalar>(matrix->values[0]),
       static_cast<SkScalar>(matrix->values[1]),
       static_cast<SkScalar>(matrix->values[2]),
-      static_cast<SkScalar>(matrix->values[3]),  //
+      static_cast<SkScalar>(matrix->values[3]),
       static_cast<SkScalar>(matrix->values[4]),
       static_cast<SkScalar>(matrix->values[5]),
       static_cast<SkScalar>(matrix->values[6]),
-      static_cast<SkScalar>(matrix->values[7]),  //
+      static_cast<SkScalar>(matrix->values[7]),
       static_cast<SkScalar>(matrix->values[8]),
       static_cast<SkScalar>(matrix->values[9]),
       static_cast<SkScalar>(matrix->values[10]),
-      static_cast<SkScalar>(matrix->values[11]),  //
+      static_cast<SkScalar>(matrix->values[11]),
       static_cast<SkScalar>(matrix->values[12]),
       static_cast<SkScalar>(matrix->values[13]),
       static_cast<SkScalar>(matrix->values[14]),
       static_cast<SkScalar>(matrix->values[15]),
+      // clang-format on
   };
   return SkM44::ColMajor(values);
 }

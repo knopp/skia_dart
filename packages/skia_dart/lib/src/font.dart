@@ -495,7 +495,7 @@ class SkFont with _NativeMixin<sk_font_t> {
       );
       return (
         advance: advance,
-        bounds: includeBounds ? _SkRect.fromNative(boundsPtr) : null,
+        bounds: includeBounds ? _SkRect.fromPtr(boundsPtr) : null,
       );
     } finally {
       ffi.calloc.free(textPointer);
@@ -537,7 +537,7 @@ class SkFont with _NativeMixin<sk_font_t> {
       final bounds = includeBounds
           ? List<SkRect>.generate(
               count,
-              (index) => _SkRect.fromNative(boundsPtr + index),
+              (index) => _SkRect.fromPtr(boundsPtr + index),
             )
           : null;
       return (widths: widths, bounds: bounds);
@@ -606,7 +606,7 @@ class SkFont with _NativeMixin<sk_font_t> {
       sk_font_get_pos(_ptr, glyphsPtr, count, posPtr, originPtr);
       return List<SkPoint>.generate(
         count,
-        (index) => _SkPoint.fromNative(posPtr + index),
+        (index) => _SkPoint.fromPtr(posPtr + index),
       );
     } finally {
       ffi.calloc.free(glyphsPtr);

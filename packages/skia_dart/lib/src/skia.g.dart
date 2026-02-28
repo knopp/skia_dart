@@ -8159,6 +8159,1854 @@ external ffi.Pointer<ffi.Char> sk_string_get_c_str(
   ffi.Pointer<sk_string_t> arg0,
 );
 
+@ffi.Native<ffi.Pointer<sk_strut_style_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_strut_style_t> sk_strut_style_new();
+
+@ffi.Native<
+  ffi.Pointer<sk_strut_style_t> Function(ffi.Pointer<sk_strut_style_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_strut_style_t> sk_strut_style_clone(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external void sk_strut_style_delete(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_strut_style_t>,
+    ffi.Pointer<sk_strut_style_t>,
+  )
+>(isLeaf: true)
+external bool sk_strut_style_equals(
+  ffi.Pointer<sk_strut_style_t> style,
+  ffi.Pointer<sk_strut_style_t> other,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external int sk_strut_style_get_font_family_count(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_strut_style_t>,
+    ffi.Size,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external bool sk_strut_style_get_font_family(
+  ffi.Pointer<sk_strut_style_t> style,
+  int index,
+  ffi.Pointer<sk_string_t> family,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_strut_style_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external void sk_strut_style_set_font_families(
+  ffi.Pointer<sk_strut_style_t> style,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> families,
+  int count,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_fontstyle_t> Function(ffi.Pointer<sk_strut_style_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_fontstyle_t> sk_strut_style_get_font_style(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Pointer<sk_fontstyle_t>)
+>(isLeaf: true)
+external void sk_strut_style_set_font_style(
+  ffi.Pointer<sk_strut_style_t> style,
+  ffi.Pointer<sk_fontstyle_t> font_style,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external double sk_strut_style_get_font_size(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_font_size(
+  ffi.Pointer<sk_strut_style_t> style,
+  double size,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external double sk_strut_style_get_height(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_height(
+  ffi.Pointer<sk_strut_style_t> style,
+  double height,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external double sk_strut_style_get_leading(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_leading(
+  ffi.Pointer<sk_strut_style_t> style,
+  double leading,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external bool sk_strut_style_get_strut_enabled(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_strut_enabled(
+  ffi.Pointer<sk_strut_style_t> style,
+  bool enabled,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external bool sk_strut_style_get_force_strut_height(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_force_strut_height(
+  ffi.Pointer<sk_strut_style_t> style,
+  bool force_height,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external bool sk_strut_style_get_height_override(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_height_override(
+  ffi.Pointer<sk_strut_style_t> style,
+  bool height_override,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+external bool sk_strut_style_get_half_leading(
+  ffi.Pointer<sk_strut_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_strut_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_strut_style_set_half_leading(
+  ffi.Pointer<sk_strut_style_t> style,
+  bool half_leading,
+);
+
+@ffi.Native<ffi.Pointer<sk_paragraph_style_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_paragraph_style_t> sk_paragraph_style_new();
+
+@ffi.Native<
+  ffi.Pointer<sk_paragraph_style_t> Function(ffi.Pointer<sk_paragraph_style_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_paragraph_style_t> sk_paragraph_style_clone(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external void sk_paragraph_style_delete(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_paragraph_style_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_style_equals(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_paragraph_style_t> other,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_strut_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_style_get_strut_style(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_strut_style_t> strut_style,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_strut_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_style_set_strut_style(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_strut_style_t> strut_style,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_text_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_style_get_text_style(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_text_style_t> text_style,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_text_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_style_set_text_style(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_text_style_t> text_style,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paragraph_style_t>)>(
+  symbol: 'sk_paragraph_style_get_text_direction',
+  isLeaf: true,
+)
+external int _sk_paragraph_style_get_text_direction(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+sk_paragraph_text_direction_t sk_paragraph_style_get_text_direction(
+  ffi.Pointer<sk_paragraph_style_t> style,
+) => sk_paragraph_text_direction_t.fromValue(
+  _sk_paragraph_style_get_text_direction(
+    style,
+  ),
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.UnsignedInt)
+>(symbol: 'sk_paragraph_style_set_text_direction', isLeaf: true)
+external void _sk_paragraph_style_set_text_direction(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  int direction,
+);
+
+void sk_paragraph_style_set_text_direction(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  sk_paragraph_text_direction_t direction,
+) => _sk_paragraph_style_set_text_direction(
+  style,
+  direction.value,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paragraph_style_t>)>(
+  symbol: 'sk_paragraph_style_get_text_align',
+  isLeaf: true,
+)
+external int _sk_paragraph_style_get_text_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+sk_paragraph_text_align_t sk_paragraph_style_get_text_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+) => sk_paragraph_text_align_t.fromValue(
+  _sk_paragraph_style_get_text_align(
+    style,
+  ),
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.UnsignedInt)
+>(symbol: 'sk_paragraph_style_set_text_align', isLeaf: true)
+external void _sk_paragraph_style_set_text_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  int align,
+);
+
+void sk_paragraph_style_set_text_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  sk_paragraph_text_align_t align,
+) => _sk_paragraph_style_set_text_align(
+  style,
+  align.value,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external int sk_paragraph_style_get_max_lines(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external void sk_paragraph_style_set_max_lines(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  int max_lines,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Pointer<sk_string_t>)
+>(isLeaf: true)
+external void sk_paragraph_style_get_ellipsis(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_string_t> ellipsis,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Pointer<ffi.Char>)
+>(isLeaf: true)
+external void sk_paragraph_style_set_ellipsis(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<ffi.Char> ellipsis,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external double sk_paragraph_style_get_height(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_paragraph_style_set_height(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  double height,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paragraph_style_t>)>(
+  symbol: 'sk_paragraph_style_get_text_height_behavior',
+  isLeaf: true,
+)
+external int _sk_paragraph_style_get_text_height_behavior(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+sk_paragraph_text_height_behavior_t sk_paragraph_style_get_text_height_behavior(
+  ffi.Pointer<sk_paragraph_style_t> style,
+) => sk_paragraph_text_height_behavior_t.fromValue(
+  _sk_paragraph_style_get_text_height_behavior(
+    style,
+  ),
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.UnsignedInt)
+>(symbol: 'sk_paragraph_style_set_text_height_behavior', isLeaf: true)
+external void _sk_paragraph_style_set_text_height_behavior(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  int behavior,
+);
+
+void sk_paragraph_style_set_text_height_behavior(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  sk_paragraph_text_height_behavior_t behavior,
+) => _sk_paragraph_style_set_text_height_behavior(
+  style,
+  behavior.value,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_unlimited_lines(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_ellipsized(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paragraph_style_t>)>(
+  symbol: 'sk_paragraph_style_get_effective_align',
+  isLeaf: true,
+)
+external int _sk_paragraph_style_get_effective_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+sk_paragraph_text_align_t sk_paragraph_style_get_effective_align(
+  ffi.Pointer<sk_paragraph_style_t> style,
+) => sk_paragraph_text_align_t.fromValue(
+  _sk_paragraph_style_get_effective_align(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_is_hinting_on(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external void sk_paragraph_style_turn_hinting_off(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_get_fake_missing_font_styles(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_paragraph_style_set_fake_missing_font_styles(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  bool value,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_get_replace_tab_characters(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_paragraph_style_set_replace_tab_characters(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  bool value,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+external bool sk_paragraph_style_get_apply_rounding_hack(
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_paragraph_style_set_apply_rounding_hack(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  bool value,
+);
+
+@ffi.Native<ffi.Pointer<sk_text_style_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_text_style_t> sk_text_style_new();
+
+@ffi.Native<
+  ffi.Pointer<sk_text_style_t> Function(ffi.Pointer<sk_text_style_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_text_style_t> sk_text_style_clone(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_text_style_t> Function(ffi.Pointer<sk_text_style_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_text_style_t> sk_text_style_clone_for_placeholder(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_delete(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_text_style_t>)
+>(isLeaf: true)
+external bool sk_text_style_equals(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_text_style_t> other,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_text_style_t>)
+>(isLeaf: true)
+external bool sk_text_style_equals_by_fonts(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_text_style_t> other,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_text_style_t>,
+  )
+>(symbol: 'sk_text_style_match_attribute', isLeaf: true)
+external bool _sk_text_style_match_attribute(
+  ffi.Pointer<sk_text_style_t> style,
+  int attribute,
+  ffi.Pointer<sk_text_style_t> other,
+);
+
+bool sk_text_style_match_attribute(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_text_style_attribute_t attribute,
+  ffi.Pointer<sk_text_style_t> other,
+) => _sk_text_style_match_attribute(
+  style,
+  attribute.value,
+  other,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_color(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, sk_color_t)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_color(
+  ffi.Pointer<sk_text_style_t> style,
+  int color,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_has_foreground(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external bool sk_text_style_get_foreground_paint(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<ffi.Int>)
+>(isLeaf: true)
+external bool sk_text_style_get_foreground_paint_id(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<ffi.Int> paint_id,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external void sk_text_style_set_foreground_paint(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Int)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_foreground_paint_id(
+  ffi.Pointer<sk_text_style_t> style,
+  int paint_id,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_clear_foreground(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_has_background(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external bool sk_text_style_get_background_paint(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<ffi.Int>)
+>(isLeaf: true)
+external bool sk_text_style_get_background_paint_id(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<ffi.Int> paint_id,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external void sk_text_style_set_background_paint(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Int)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_background_paint_id(
+  ffi.Pointer<sk_text_style_t> style,
+  int paint_id,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_clear_background(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_decoration(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Uint32)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_decoration(
+  ffi.Pointer<sk_text_style_t> style,
+  int decoration,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_text_style_t>)>(
+  symbol: 'sk_text_style_get_decoration_mode',
+  isLeaf: true,
+)
+external int _sk_text_style_get_decoration_mode(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+sk_text_decoration_mode_t sk_text_style_get_decoration_mode(
+  ffi.Pointer<sk_text_style_t> style,
+) => sk_text_decoration_mode_t.fromValue(
+  _sk_text_style_get_decoration_mode(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_text_style_set_decoration_mode',
+  isLeaf: true,
+)
+external void _sk_text_style_set_decoration_mode(
+  ffi.Pointer<sk_text_style_t> style,
+  int mode,
+);
+
+void sk_text_style_set_decoration_mode(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_text_decoration_mode_t mode,
+) => _sk_text_style_set_decoration_mode(
+  style,
+  mode.value,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_decoration_color(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, sk_color_t)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_decoration_color(
+  ffi.Pointer<sk_text_style_t> style,
+  int color,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_text_style_t>)>(
+  symbol: 'sk_text_style_get_decoration_style',
+  isLeaf: true,
+)
+external int _sk_text_style_get_decoration_style(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+sk_text_decoration_style_t sk_text_style_get_decoration_style(
+  ffi.Pointer<sk_text_style_t> style,
+) => sk_text_decoration_style_t.fromValue(
+  _sk_text_style_get_decoration_style(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_text_style_set_decoration_style',
+  isLeaf: true,
+)
+external void _sk_text_style_set_decoration_style(
+  ffi.Pointer<sk_text_style_t> style,
+  int style_value,
+);
+
+void sk_text_style_set_decoration_style(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_text_decoration_style_t style_value,
+) => _sk_text_style_set_decoration_style(
+  style,
+  style_value.value,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_decoration_thickness_multiplier(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_decoration_thickness_multiplier(
+  ffi.Pointer<sk_text_style_t> style,
+  double multiplier,
+);
+
+@ffi.Native<ffi.Pointer<sk_fontstyle_t> Function(ffi.Pointer<sk_text_style_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_fontstyle_t> sk_text_style_get_font_style(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_fontstyle_t>)
+>(isLeaf: true)
+external void sk_text_style_set_font_style(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_fontstyle_t> font_style,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_shadow_count(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Size,
+    ffi.Pointer<sk_text_shadow_t>,
+  )
+>(isLeaf: true)
+external bool sk_text_style_get_shadow(
+  ffi.Pointer<sk_text_style_t> style,
+  int index,
+  ffi.Pointer<sk_text_shadow_t> shadow,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_text_shadow_t>)
+>(isLeaf: true)
+external void sk_text_style_add_shadow(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_text_shadow_t> shadow,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_reset_shadows(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_font_feature_count(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Size,
+    ffi.Pointer<sk_string_t>,
+    ffi.Pointer<ffi.Int>,
+  )
+>(isLeaf: true)
+external bool sk_text_style_get_font_feature(
+  ffi.Pointer<sk_text_style_t> style,
+  int index,
+  ffi.Pointer<sk_string_t> name,
+  ffi.Pointer<ffi.Int> value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external void sk_text_style_add_font_feature(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<ffi.Char> name,
+  int value,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_reset_font_features(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_font_size(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_font_size(
+  ffi.Pointer<sk_text_style_t> style,
+  double size,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external int sk_text_style_get_font_family_count(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Size,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external bool sk_text_style_get_font_family(
+  ffi.Pointer<sk_text_style_t> style,
+  int index,
+  ffi.Pointer<sk_string_t> family,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external void sk_text_style_set_font_families(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> families,
+  int count,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_baseline_shift(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_baseline_shift(
+  ffi.Pointer<sk_text_style_t> style,
+  double baseline_shift,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_height(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_height(
+  ffi.Pointer<sk_text_style_t> style,
+  double height,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_get_height_override(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_height_override(
+  ffi.Pointer<sk_text_style_t> style,
+  bool height_override,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_get_half_leading(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_half_leading(
+  ffi.Pointer<sk_text_style_t> style,
+  bool half_leading,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_letter_spacing(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_letter_spacing(
+  ffi.Pointer<sk_text_style_t> style,
+  double letter_spacing,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external double sk_text_style_get_word_spacing(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_word_spacing(
+  ffi.Pointer<sk_text_style_t> style,
+  double word_spacing,
+);
+
+@ffi.Native<ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_text_style_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_typeface_t> sk_text_style_get_typeface(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_typeface_t>)
+>(isLeaf: true)
+external void sk_text_style_set_typeface(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_string_t>)
+>(isLeaf: true)
+external void sk_text_style_get_locale(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_string_t> locale,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<ffi.Char>)
+>(isLeaf: true)
+external void sk_text_style_set_locale(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<ffi.Char> locale,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_text_style_t>)>(
+  symbol: 'sk_text_style_get_text_baseline',
+  isLeaf: true,
+)
+external int _sk_text_style_get_text_baseline(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+sk_paragraph_text_baseline_t sk_text_style_get_text_baseline(
+  ffi.Pointer<sk_text_style_t> style,
+) => sk_paragraph_text_baseline_t.fromValue(
+  _sk_text_style_get_text_baseline(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_text_style_set_text_baseline',
+  isLeaf: true,
+)
+external void _sk_text_style_set_text_baseline(
+  ffi.Pointer<sk_text_style_t> style,
+  int baseline,
+);
+
+void sk_text_style_set_text_baseline(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_paragraph_text_baseline_t baseline,
+) => _sk_text_style_set_text_baseline(
+  style,
+  baseline.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Pointer<sk_fontmetrics_t>)
+>(isLeaf: true)
+external void sk_text_style_get_font_metrics(
+  ffi.Pointer<sk_text_style_t> style,
+  ffi.Pointer<sk_fontmetrics_t> metrics,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_is_placeholder(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external void sk_text_style_set_placeholder(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_text_style_t>)>(
+  symbol: 'sk_text_style_get_font_edging',
+  isLeaf: true,
+)
+external int _sk_text_style_get_font_edging(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+sk_font_edging_t sk_text_style_get_font_edging(
+  ffi.Pointer<sk_text_style_t> style,
+) => sk_font_edging_t.fromValue(
+  _sk_text_style_get_font_edging(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_text_style_set_font_edging',
+  isLeaf: true,
+)
+external void _sk_text_style_set_font_edging(
+  ffi.Pointer<sk_text_style_t> style,
+  int edging,
+);
+
+void sk_text_style_set_font_edging(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_font_edging_t edging,
+) => _sk_text_style_set_font_edging(
+  style,
+  edging.value,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+external bool sk_text_style_get_subpixel(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external void sk_text_style_set_subpixel(
+  ffi.Pointer<sk_text_style_t> style,
+  bool subpixel,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_text_style_t>)>(
+  symbol: 'sk_text_style_get_font_hinting',
+  isLeaf: true,
+)
+external int _sk_text_style_get_font_hinting(
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+sk_font_hinting_t sk_text_style_get_font_hinting(
+  ffi.Pointer<sk_text_style_t> style,
+) => sk_font_hinting_t.fromValue(
+  _sk_text_style_get_font_hinting(
+    style,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_text_style_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_text_style_set_font_hinting',
+  isLeaf: true,
+)
+external void _sk_text_style_set_font_hinting(
+  ffi.Pointer<sk_text_style_t> style,
+  int hinting,
+);
+
+void sk_text_style_set_font_hinting(
+  ffi.Pointer<sk_text_style_t> style,
+  sk_font_hinting_t hinting,
+) => _sk_text_style_set_font_hinting(
+  style,
+  hinting.value,
+);
+
+@ffi.Native<ffi.Pointer<sk_line_metrics_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_line_metrics_t> sk_line_metrics_new();
+
+@ffi.Native<
+  ffi.Pointer<sk_line_metrics_t> Function(ffi.Pointer<sk_line_metrics_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_line_metrics_t> sk_line_metrics_clone(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external void sk_line_metrics_delete(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_start_index(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_end_index(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_end_excluding_whitespaces(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_end_including_newline(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external bool sk_line_metrics_is_hard_break(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_ascent(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_descent(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_unscaled_ascent(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_height(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_width(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_left(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Double Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external double sk_line_metrics_get_baseline(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_line_number(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_line_metrics_t>)>(isLeaf: true)
+external int sk_line_metrics_get_style_metrics_count(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_line_metrics_t>,
+    ffi.Size,
+    ffi.Pointer<ffi.Size>,
+    ffi.Pointer<sk_text_style_t>,
+    ffi.Pointer<sk_fontmetrics_t>,
+  )
+>(isLeaf: true)
+external bool sk_line_metrics_get_style_metrics(
+  ffi.Pointer<sk_line_metrics_t> metrics,
+  int index,
+  ffi.Pointer<ffi.Size> text_start,
+  ffi.Pointer<sk_text_style_t> text_style,
+  ffi.Pointer<sk_fontmetrics_t> font_metrics,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external void sk_paragraph_delete(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_max_width(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_height(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_min_intrinsic_width(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_max_intrinsic_width(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_alphabetic_baseline(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_ideographic_baseline(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external double sk_paragraph_get_longest_line(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external bool sk_paragraph_did_exceed_max_lines(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_paragraph_layout(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  double width,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Float,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external void sk_paragraph_paint(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<sk_canvas_t> canvas,
+  double x,
+  double y,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Pointer<sk_paragraph_painter_t>,
+    ffi.Float,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external void sk_paragraph_paint_with_painter(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<sk_paragraph_painter_t> painter,
+  double x,
+  double y,
+);
+
+@ffi.Native<
+  ffi.Size Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_paragraph_text_box_t>,
+  )
+>(symbol: 'sk_paragraph_get_rects_for_range', isLeaf: true)
+external int _sk_paragraph_get_rects_for_range(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int start,
+  int end,
+  int rect_height_style,
+  int rect_width_style,
+  ffi.Pointer<sk_paragraph_text_box_t> boxes,
+);
+
+int sk_paragraph_get_rects_for_range(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int start,
+  int end,
+  sk_paragraph_rect_height_style_t rect_height_style,
+  sk_paragraph_rect_width_style_t rect_width_style,
+  ffi.Pointer<sk_paragraph_text_box_t> boxes,
+) => _sk_paragraph_get_rects_for_range(
+  paragraph,
+  start,
+  end,
+  rect_height_style.value,
+  rect_width_style.value,
+  boxes,
+);
+
+@ffi.Native<
+  ffi.Size Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Pointer<sk_paragraph_text_box_t>,
+  )
+>(isLeaf: true)
+external int sk_paragraph_get_rects_for_placeholders(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<sk_paragraph_text_box_t> boxes,
+);
+
+@ffi.Native<
+  sk_paragraph_position_with_affinity_t Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Float,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external sk_paragraph_position_with_affinity_t
+sk_paragraph_get_glyph_position_at_coordinate(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<
+  sk_paragraph_text_range_t Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.UnsignedInt,
+  )
+>(isLeaf: true)
+external sk_paragraph_text_range_t sk_paragraph_get_word_boundary(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int offset,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external int sk_paragraph_get_line_metrics_count(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Size,
+    ffi.Pointer<sk_line_metrics_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_line_metrics_by_index(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int index,
+  ffi.Pointer<sk_line_metrics_t> line_metrics,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external int sk_paragraph_get_line_number(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external void sk_paragraph_mark_dirty(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<ffi.Int32 Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external int sk_paragraph_unresolved_glyphs(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<
+  ffi.Size Function(ffi.Pointer<sk_paragraph_t>, ffi.Pointer<ffi.Int32>)
+>(isLeaf: true)
+external int sk_paragraph_unresolved_codepoints(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<ffi.Int32> codepoints,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_t>,
+    sk_paragraph_visitor_proc,
+    ffi.Pointer<ffi.Void>,
+  )
+>()
+external void sk_paragraph_visit(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  sk_paragraph_visitor_proc proc,
+  ffi.Pointer<ffi.Void> context,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_t>,
+    sk_paragraph_extended_visitor_proc,
+    ffi.Pointer<ffi.Void>,
+  )
+>()
+external void sk_paragraph_extended_visit(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  sk_paragraph_extended_visitor_proc proc,
+  ffi.Pointer<ffi.Void> context,
+);
+
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<sk_paragraph_t>, ffi.Int, ffi.Pointer<sk_path_t>)
+>(isLeaf: true)
+external int sk_paragraph_get_path(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int line_number,
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_textblob_t>, ffi.Pointer<sk_path_t>)
+>(isLeaf: true)
+external void sk_paragraph_get_path_from_text_blob(
+  ffi.Pointer<sk_textblob_t> text_blob,
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_paragraph_t>, ffi.Pointer<sk_textblob_t>)
+>(isLeaf: true)
+external bool sk_paragraph_contains_emoji(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<sk_textblob_t> text_blob,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_paragraph_t>, ffi.Pointer<sk_textblob_t>)
+>(isLeaf: true)
+external bool sk_paragraph_contains_color_font_or_bitmap(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  ffi.Pointer<sk_textblob_t> text_blob,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_paragraph_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external int sk_paragraph_get_line_number_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_paragraph_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external int sk_paragraph_get_line_number_at_utf16_offset(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Int,
+    ffi.Pointer<sk_line_metrics_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_line_metrics_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int line_number,
+  ffi.Pointer<sk_line_metrics_t> line_metrics,
+);
+
+@ffi.Native<
+  sk_paragraph_text_range_t Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Int,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external sk_paragraph_text_range_t sk_paragraph_get_actual_text_range(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int line_number,
+  bool include_spaces,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Size,
+    ffi.Pointer<sk_paragraph_glyph_cluster_info_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_glyph_cluster_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+  ffi.Pointer<sk_paragraph_glyph_cluster_info_t> glyph_info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paragraph_glyph_cluster_info_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_closest_glyph_cluster_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  double dx,
+  double dy,
+  ffi.Pointer<sk_paragraph_glyph_cluster_info_t> glyph_info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Size,
+    ffi.Pointer<sk_paragraph_glyph_info_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_glyph_info_at_utf16_offset(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+  ffi.Pointer<sk_paragraph_glyph_info_t> glyph_info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paragraph_glyph_info_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_closest_utf16_glyph_info_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  double dx,
+  double dy,
+  ffi.Pointer<sk_paragraph_glyph_info_t> glyph_info,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_paragraph_t>, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_font_t> sk_paragraph_get_font_at(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_paragraph_t>, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_font_t> sk_paragraph_get_font_at_utf16_offset(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int code_unit_index,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_t>)>(isLeaf: true)
+external int sk_paragraph_get_fonts_count(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paragraph_t>,
+    ffi.Size,
+    ffi.Pointer<ffi.Pointer<sk_font_t>>,
+    ffi.Pointer<sk_paragraph_text_range_t>,
+  )
+>(isLeaf: true)
+external bool sk_paragraph_get_font_info(
+  ffi.Pointer<sk_paragraph_t> paragraph,
+  int index,
+  ffi.Pointer<ffi.Pointer<sk_font_t>> font,
+  ffi.Pointer<sk_paragraph_text_range_t> text_range,
+);
+
+@ffi.Native<ffi.Pointer<sk_font_collection_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_font_collection_t> sk_font_collection_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external void sk_font_collection_unref(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external int sk_font_collection_get_font_managers_count(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_asset_font_manager(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_dynamic_font_manager(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_test_font_manager(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_default_font_manager(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_default_font_manager_with_family(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+  ffi.Pointer<ffi.Char> default_family_name,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external void sk_font_collection_set_default_font_manager_with_family_names(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<sk_fontmgr_t> font_manager,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> default_family_names,
+  int count,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_fontmgr_t> Function(ffi.Pointer<sk_font_collection_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_fontmgr_t> sk_font_collection_get_fallback_manager(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<
+  ffi.Size Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Size,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<ffi.Pointer<sk_typeface_t>>,
+  )
+>(isLeaf: true)
+external int sk_font_collection_find_typefaces(
+  ffi.Pointer<sk_font_collection_t> collection,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> family_names,
+  int family_name_count,
+  ffi.Pointer<sk_fontstyle_t> font_style,
+  ffi.Pointer<ffi.Pointer<sk_typeface_t>> typefaces,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_font_collection_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_font_collection_default_fallback(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Int32,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Size,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<ffi.Char>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t>
+sk_font_collection_default_fallback_with_character(
+  ffi.Pointer<sk_font_collection_t> collection,
+  int unicode,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> families,
+  int family_count,
+  ffi.Pointer<sk_fontstyle_t> font_style,
+  ffi.Pointer<ffi.Char> locale,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Int32,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<ffi.Char>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_font_collection_default_emoji_fallback(
+  ffi.Pointer<sk_font_collection_t> collection,
+  int emoji_start,
+  ffi.Pointer<sk_fontstyle_t> font_style,
+  ffi.Pointer<ffi.Char> locale,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external void sk_font_collection_disable_font_fallback(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external void sk_font_collection_enable_font_fallback(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external bool sk_font_collection_font_fallback_enabled(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_font_collection_t>)>(isLeaf: true)
+external void sk_font_collection_clear_caches(
+  ffi.Pointer<sk_font_collection_t> collection,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_paragraph_builder_t> Function(
+    ffi.Pointer<sk_paragraph_style_t>,
+    ffi.Pointer<sk_font_collection_t>,
+    ffi.Pointer<sk_unicode_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_paragraph_builder_t> sk_paragraph_builder_make(
+  ffi.Pointer<sk_paragraph_style_t> style,
+  ffi.Pointer<sk_font_collection_t> font_collection,
+  ffi.Pointer<sk_unicode_t> unicode,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_builder_t>)>(
+  isLeaf: true,
+)
+external void sk_paragraph_builder_delete(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<sk_text_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_push_style(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_builder_t>)>(
+  isLeaf: true,
+)
+external void sk_paragraph_builder_pop(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<sk_text_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_peek_style(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<sk_text_style_t> style,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_add_text_len(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<ffi.Char> text,
+  int len,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<sk_paragraph_placeholder_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_add_placeholder(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<sk_paragraph_placeholder_style_t> placeholder_style,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_paragraph_t> Function(ffi.Pointer<sk_paragraph_builder_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_paragraph_t> sk_paragraph_builder_build(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Pointer<ffi.Size>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_get_text(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> text,
+  ffi.Pointer<ffi.Size> length,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paragraph_builder_t>,
+    ffi.Pointer<sk_paragraph_style_t>,
+  )
+>(isLeaf: true)
+external void sk_paragraph_builder_get_paragraph_style(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+  ffi.Pointer<sk_paragraph_style_t> style,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paragraph_builder_t>)>(
+  isLeaf: true,
+)
+external void sk_paragraph_builder_reset(
+  ffi.Pointer<sk_paragraph_builder_t> builder,
+);
+
 @ffi.Native<ffi.Pointer<sk_picture_recorder_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_picture_recorder_t> sk_picture_recorder_new();
 
@@ -14650,6 +16498,470 @@ final class sk_shaper_feature_t extends ffi.Struct {
 
   @ffi.Size()
   external int end;
+}
+
+final class sk_font_collection_t extends ffi.Opaque {}
+
+final class sk_paragraph_t extends ffi.Opaque {}
+
+final class sk_paragraph_builder_t extends ffi.Opaque {}
+
+final class sk_paragraph_painter_t extends ffi.Opaque {}
+
+final class sk_paragraph_style_t extends ffi.Opaque {}
+
+final class sk_line_metrics_t extends ffi.Opaque {}
+
+final class sk_strut_style_t extends ffi.Opaque {}
+
+final class sk_text_style_t extends ffi.Opaque {}
+
+enum sk_paragraph_affinity_t {
+  UPSTREAM_SK_PARAGRAPH_AFFINITY(0),
+  DOWNSTREAM_SK_PARAGRAPH_AFFINITY(1)
+  ;
+
+  final int value;
+  const sk_paragraph_affinity_t(this.value);
+
+  static sk_paragraph_affinity_t fromValue(int value) => switch (value) {
+    0 => UPSTREAM_SK_PARAGRAPH_AFFINITY,
+    1 => DOWNSTREAM_SK_PARAGRAPH_AFFINITY,
+    _ => throw ArgumentError(
+      'Unknown value for sk_paragraph_affinity_t: $value',
+    ),
+  };
+}
+
+enum sk_paragraph_rect_height_style_t {
+  TIGHT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(0),
+  MAX_SK_PARAGRAPH_RECT_HEIGHT_STYLE(1),
+  INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE(2),
+  INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE(3),
+  INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE(4),
+  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(5)
+  ;
+
+  final int value;
+  const sk_paragraph_rect_height_style_t(this.value);
+
+  static sk_paragraph_rect_height_style_t fromValue(int value) =>
+      switch (value) {
+        0 => TIGHT_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        1 => MAX_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        2 => INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        3 => INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        4 => INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        5 => STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE,
+        _ => throw ArgumentError(
+          'Unknown value for sk_paragraph_rect_height_style_t: $value',
+        ),
+      };
+}
+
+enum sk_paragraph_rect_width_style_t {
+  TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE(0),
+  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE(1)
+  ;
+
+  final int value;
+  const sk_paragraph_rect_width_style_t(this.value);
+
+  static sk_paragraph_rect_width_style_t fromValue(int value) =>
+      switch (value) {
+        0 => TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE,
+        1 => MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE,
+        _ => throw ArgumentError(
+          'Unknown value for sk_paragraph_rect_width_style_t: $value',
+        ),
+      };
+}
+
+enum sk_paragraph_text_align_t {
+  LEFT_SK_PARAGRAPH_TEXT_ALIGN(0),
+  RIGHT_SK_PARAGRAPH_TEXT_ALIGN(1),
+  CENTER_SK_PARAGRAPH_TEXT_ALIGN(2),
+  JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN(3),
+  START_SK_PARAGRAPH_TEXT_ALIGN(4),
+  END_SK_PARAGRAPH_TEXT_ALIGN(5)
+  ;
+
+  final int value;
+  const sk_paragraph_text_align_t(this.value);
+
+  static sk_paragraph_text_align_t fromValue(int value) => switch (value) {
+    0 => LEFT_SK_PARAGRAPH_TEXT_ALIGN,
+    1 => RIGHT_SK_PARAGRAPH_TEXT_ALIGN,
+    2 => CENTER_SK_PARAGRAPH_TEXT_ALIGN,
+    3 => JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN,
+    4 => START_SK_PARAGRAPH_TEXT_ALIGN,
+    5 => END_SK_PARAGRAPH_TEXT_ALIGN,
+    _ => throw ArgumentError(
+      'Unknown value for sk_paragraph_text_align_t: $value',
+    ),
+  };
+}
+
+enum sk_paragraph_text_direction_t {
+  RTL_SK_PARAGRAPH_TEXT_DIRECTION(0),
+  LTR_SK_PARAGRAPH_TEXT_DIRECTION(1)
+  ;
+
+  final int value;
+  const sk_paragraph_text_direction_t(this.value);
+
+  static sk_paragraph_text_direction_t fromValue(int value) => switch (value) {
+    0 => RTL_SK_PARAGRAPH_TEXT_DIRECTION,
+    1 => LTR_SK_PARAGRAPH_TEXT_DIRECTION,
+    _ => throw ArgumentError(
+      'Unknown value for sk_paragraph_text_direction_t: $value',
+    ),
+  };
+}
+
+enum sk_paragraph_text_baseline_t {
+  ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE(0),
+  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE(1)
+  ;
+
+  final int value;
+  const sk_paragraph_text_baseline_t(this.value);
+
+  static sk_paragraph_text_baseline_t fromValue(int value) => switch (value) {
+    0 => ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE,
+    1 => IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_paragraph_text_baseline_t: $value',
+    ),
+  };
+}
+
+enum sk_paragraph_text_height_behavior_t {
+  ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(0),
+  DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(1),
+  DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(2),
+  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(3)
+  ;
+
+  final int value;
+  const sk_paragraph_text_height_behavior_t(this.value);
+
+  static sk_paragraph_text_height_behavior_t fromValue(int value) =>
+      switch (value) {
+        0 => ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR,
+        1 => DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR,
+        2 => DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR,
+        3 => DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR,
+        _ => throw ArgumentError(
+          'Unknown value for sk_paragraph_text_height_behavior_t: $value',
+        ),
+      };
+}
+
+enum sk_paragraph_line_metric_style_t {
+  TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE(0),
+  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE(1)
+  ;
+
+  final int value;
+  const sk_paragraph_line_metric_style_t(this.value);
+
+  static sk_paragraph_line_metric_style_t fromValue(int value) =>
+      switch (value) {
+        0 => TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE,
+        1 => CSS_SK_PARAGRAPH_LINE_METRIC_STYLE,
+        _ => throw ArgumentError(
+          'Unknown value for sk_paragraph_line_metric_style_t: $value',
+        ),
+      };
+}
+
+enum sk_paragraph_visitor_flag_t {
+  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG(1)
+  ;
+
+  final int value;
+  const sk_paragraph_visitor_flag_t(this.value);
+
+  static sk_paragraph_visitor_flag_t fromValue(int value) => switch (value) {
+    1 => WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG,
+    _ => throw ArgumentError(
+      'Unknown value for sk_paragraph_visitor_flag_t: $value',
+    ),
+  };
+}
+
+final class sk_paragraph_text_range_t extends ffi.Struct {
+  @ffi.Size()
+  external int start;
+
+  @ffi.Size()
+  external int end;
+}
+
+final class sk_paragraph_position_with_affinity_t extends ffi.Struct {
+  @ffi.Int32()
+  external int position;
+
+  @ffi.UnsignedInt()
+  external int affinityAsInt;
+
+  sk_paragraph_affinity_t get affinity =>
+      sk_paragraph_affinity_t.fromValue(affinityAsInt);
+}
+
+final class sk_paragraph_text_box_t extends ffi.Struct {
+  external sk_rect_t rect;
+
+  @ffi.UnsignedInt()
+  external int directionAsInt;
+
+  sk_paragraph_text_direction_t get direction =>
+      sk_paragraph_text_direction_t.fromValue(directionAsInt);
+}
+
+final class sk_paragraph_glyph_cluster_info_t extends ffi.Struct {
+  external sk_rect_t bounds;
+
+  external sk_paragraph_text_range_t cluster_text_range;
+
+  @ffi.UnsignedInt()
+  external int glyph_cluster_positionAsInt;
+
+  sk_paragraph_text_direction_t get glyph_cluster_position =>
+      sk_paragraph_text_direction_t.fromValue(glyph_cluster_positionAsInt);
+}
+
+final class sk_paragraph_glyph_info_t extends ffi.Struct {
+  external sk_rect_t grapheme_layout_bounds;
+
+  external sk_paragraph_text_range_t grapheme_cluster_text_range;
+
+  @ffi.UnsignedInt()
+  external int directionAsInt;
+
+  sk_paragraph_text_direction_t get direction =>
+      sk_paragraph_text_direction_t.fromValue(directionAsInt);
+
+  @ffi.Bool()
+  external bool is_ellipsis;
+}
+
+final class sk_paragraph_visitor_info_t extends ffi.Struct {
+  external ffi.Pointer<sk_font_t> font;
+
+  external sk_point_t origin;
+
+  @ffi.Float()
+  external double advance_x;
+
+  @ffi.Int()
+  external int count;
+
+  external ffi.Pointer<ffi.Uint16> glyphs;
+
+  external ffi.Pointer<sk_point_t> positions;
+
+  external ffi.Pointer<ffi.Uint32> utf8_starts;
+
+  @ffi.UnsignedInt()
+  external int flags;
+}
+
+final class sk_paragraph_extended_visitor_info_t extends ffi.Struct {
+  external ffi.Pointer<sk_font_t> font;
+
+  external sk_point_t origin;
+
+  external sk_size_t advance;
+
+  @ffi.Int()
+  external int count;
+
+  external ffi.Pointer<ffi.Uint16> glyphs;
+
+  external ffi.Pointer<sk_point_t> positions;
+
+  external ffi.Pointer<sk_rect_t> bounds;
+
+  external ffi.Pointer<ffi.Uint32> utf8_starts;
+
+  @ffi.UnsignedInt()
+  external int flags;
+}
+
+typedef sk_paragraph_visitor_procFunction =
+    ffi.Void Function(
+      ffi.Int line_number,
+      ffi.Pointer<sk_paragraph_visitor_info_t> info,
+    );
+typedef Dartsk_paragraph_visitor_procFunction =
+    void Function(
+      int line_number,
+      ffi.Pointer<sk_paragraph_visitor_info_t> info,
+    );
+typedef sk_paragraph_visitor_proc =
+    ffi.Pointer<ffi.NativeFunction<sk_paragraph_visitor_procFunction>>;
+typedef sk_paragraph_extended_visitor_procFunction =
+    ffi.Void Function(
+      ffi.Int line_number,
+      ffi.Pointer<sk_paragraph_extended_visitor_info_t> info,
+    );
+typedef Dartsk_paragraph_extended_visitor_procFunction =
+    void Function(
+      int line_number,
+      ffi.Pointer<sk_paragraph_extended_visitor_info_t> info,
+    );
+typedef sk_paragraph_extended_visitor_proc =
+    ffi.Pointer<ffi.NativeFunction<sk_paragraph_extended_visitor_procFunction>>;
+
+enum sk_text_decoration_t {
+  NO_SK_TEXT_DECORATION(0),
+  UNDERLINE_SK_TEXT_DECORATION(1),
+  OVERLINE_SK_TEXT_DECORATION(2),
+  LINE_THROUGH_SK_TEXT_DECORATION(4)
+  ;
+
+  final int value;
+  const sk_text_decoration_t(this.value);
+
+  static sk_text_decoration_t fromValue(int value) => switch (value) {
+    0 => NO_SK_TEXT_DECORATION,
+    1 => UNDERLINE_SK_TEXT_DECORATION,
+    2 => OVERLINE_SK_TEXT_DECORATION,
+    4 => LINE_THROUGH_SK_TEXT_DECORATION,
+    _ => throw ArgumentError('Unknown value for sk_text_decoration_t: $value'),
+  };
+}
+
+enum sk_text_decoration_style_t {
+  SOLID_SK_TEXT_DECORATION_STYLE(0),
+  DOUBLE_SK_TEXT_DECORATION_STYLE(1),
+  DOTTED_SK_TEXT_DECORATION_STYLE(2),
+  DASHED_SK_TEXT_DECORATION_STYLE(3),
+  WAVY_SK_TEXT_DECORATION_STYLE(4)
+  ;
+
+  final int value;
+  const sk_text_decoration_style_t(this.value);
+
+  static sk_text_decoration_style_t fromValue(int value) => switch (value) {
+    0 => SOLID_SK_TEXT_DECORATION_STYLE,
+    1 => DOUBLE_SK_TEXT_DECORATION_STYLE,
+    2 => DOTTED_SK_TEXT_DECORATION_STYLE,
+    3 => DASHED_SK_TEXT_DECORATION_STYLE,
+    4 => WAVY_SK_TEXT_DECORATION_STYLE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_text_decoration_style_t: $value',
+    ),
+  };
+}
+
+enum sk_text_decoration_mode_t {
+  GAPS_SK_TEXT_DECORATION_MODE(0),
+  THROUGH_SK_TEXT_DECORATION_MODE(1)
+  ;
+
+  final int value;
+  const sk_text_decoration_mode_t(this.value);
+
+  static sk_text_decoration_mode_t fromValue(int value) => switch (value) {
+    0 => GAPS_SK_TEXT_DECORATION_MODE,
+    1 => THROUGH_SK_TEXT_DECORATION_MODE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_text_decoration_mode_t: $value',
+    ),
+  };
+}
+
+enum sk_text_style_attribute_t {
+  NONE_SK_TEXT_STYLE_ATTRIBUTE(0),
+  ALL_ATTRIBUTES_SK_TEXT_STYLE_ATTRIBUTE(1),
+  FONT_SK_TEXT_STYLE_ATTRIBUTE(2),
+  FOREGROUND_SK_TEXT_STYLE_ATTRIBUTE(3),
+  BACKGROUND_SK_TEXT_STYLE_ATTRIBUTE(4),
+  SHADOW_SK_TEXT_STYLE_ATTRIBUTE(5),
+  DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE(6),
+  LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE(7),
+  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE(8)
+  ;
+
+  final int value;
+  const sk_text_style_attribute_t(this.value);
+
+  static sk_text_style_attribute_t fromValue(int value) => switch (value) {
+    0 => NONE_SK_TEXT_STYLE_ATTRIBUTE,
+    1 => ALL_ATTRIBUTES_SK_TEXT_STYLE_ATTRIBUTE,
+    2 => FONT_SK_TEXT_STYLE_ATTRIBUTE,
+    3 => FOREGROUND_SK_TEXT_STYLE_ATTRIBUTE,
+    4 => BACKGROUND_SK_TEXT_STYLE_ATTRIBUTE,
+    5 => SHADOW_SK_TEXT_STYLE_ATTRIBUTE,
+    6 => DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE,
+    7 => LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE,
+    8 => WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE,
+    _ => throw ArgumentError(
+      'Unknown value for sk_text_style_attribute_t: $value',
+    ),
+  };
+}
+
+enum sk_paragraph_placeholder_alignment_t {
+  BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(0),
+  ABOVE_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(1),
+  BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(2),
+  TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(3),
+  BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(4),
+  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(5)
+  ;
+
+  final int value;
+  const sk_paragraph_placeholder_alignment_t(this.value);
+
+  static sk_paragraph_placeholder_alignment_t fromValue(int value) =>
+      switch (value) {
+        0 => BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        1 => ABOVE_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        2 => BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        3 => TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        4 => BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        5 => MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT,
+        _ => throw ArgumentError(
+          'Unknown value for sk_paragraph_placeholder_alignment_t: $value',
+        ),
+      };
+}
+
+final class sk_paragraph_placeholder_style_t extends ffi.Struct {
+  @ffi.Float()
+  external double width;
+
+  @ffi.Float()
+  external double height;
+
+  @ffi.UnsignedInt()
+  external int alignmentAsInt;
+
+  sk_paragraph_placeholder_alignment_t get alignment =>
+      sk_paragraph_placeholder_alignment_t.fromValue(alignmentAsInt);
+
+  @ffi.UnsignedInt()
+  external int baselineAsInt;
+
+  sk_paragraph_text_baseline_t get baseline =>
+      sk_paragraph_text_baseline_t.fromValue(baselineAsInt);
+
+  @ffi.Float()
+  external double baseline_offset;
+}
+
+final class sk_text_shadow_t extends ffi.Struct {
+  @sk_color_t()
+  external int color;
+
+  external sk_point_t offset;
+
+  @ffi.Double()
+  external double blur_sigma;
 }
 
 final class d3d_dxgi_adapter_t extends ffi.Opaque {}

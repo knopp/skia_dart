@@ -222,7 +222,7 @@ class SkPicture with _NativeMixin<sk_picture_t> {
   SkRect get cullRect {
     final rectPtr = _SkRect.pool[0];
     sk_picture_get_cull_rect(_ptr, rectPtr);
-    return _SkRect.fromNative(rectPtr);
+    return _SkRect.fromPtr(rectPtr);
   }
 
   /// Returns the approximate number of operations in this picture.

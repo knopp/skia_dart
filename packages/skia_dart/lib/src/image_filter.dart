@@ -1173,7 +1173,7 @@ class SkImageFilter with _NativeMixin<sk_imagefilter_t> {
       bounds.toNativePooled(1),
       result,
     );
-    return _SkRect.fromNative(result);
+    return _SkRect.fromPtr(result);
   }
 
   /// Returns whether this filter DAG can compute the resulting bounds.

@@ -471,7 +471,7 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
   SkPoint? getLastPoint() {
     final ptr = _SkPoint.pool[0];
     if (sk_path_builder_get_last_point(_ptr, ptr)) {
-      return _SkPoint.fromNative(ptr);
+      return _SkPoint.fromPtr(ptr);
     }
     return null;
   }
@@ -480,7 +480,7 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
   SkPoint? getPoint(int index) {
     final ptr = _SkPoint.pool[0];
     if (sk_path_builder_get_point(_ptr, index, ptr)) {
-      return _SkPoint.fromNative(ptr);
+      return _SkPoint.fromPtr(ptr);
     }
     return null;
   }
@@ -509,7 +509,7 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
   SkRect? computeFiniteBounds() {
     final ptr = _SkRect.pool[0];
     if (sk_path_builder_compute_finite_bounds(_ptr, ptr)) {
-      return _SkRect.fromNative(ptr);
+      return _SkRect.fromPtr(ptr);
     }
     return null;
   }
@@ -522,7 +522,7 @@ class SkPathBuilder with _NativeMixin<sk_path_builder_t> {
   SkRect? computeTightBounds() {
     final ptr = _SkRect.pool[0];
     if (sk_path_builder_compute_tight_bounds(_ptr, ptr)) {
-      return _SkRect.fromNative(ptr);
+      return _SkRect.fromPtr(ptr);
     }
     return null;
   }

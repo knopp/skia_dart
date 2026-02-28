@@ -63,7 +63,7 @@ class SkVertices with _NativeMixin<sk_vertices_t> {
   SkRect get bounds {
     final rect = _SkRect.pool[0];
     sk_vertices_get_bounds(_ptr, rect);
-    return _SkRect.fromNative(rect);
+    return _SkRect.fromPtr(rect);
   }
 
   /// Returns the approximate byte size of this vertices object.

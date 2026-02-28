@@ -584,7 +584,7 @@ class SkTextBlobBuilderRunHandler extends SkShaperBaseRunHandler
   SkPoint get endPoint {
     final pointPtr = _SkPoint.pool[0];
     sk_textblob_builder_run_handler_end_point(_ptr, pointPtr);
-    return _SkPoint.fromNative(pointPtr);
+    return _SkPoint.fromPtr(pointPtr);
   }
 
   @override
