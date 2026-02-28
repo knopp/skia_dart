@@ -33,6 +33,8 @@
 #include "include/encode/SkWebpEncoder.h"
 #include "include/pathops/SkPathOps.h"
 #include "include/utils/SkTextUtils.h"
+#include "modules/skparagraph/include/DartTypes.h"
+#include "modules/skparagraph/include/TextStyle.h"
 #include "modules/skresources/include/SkResources.h"
 #include "wrapper/sk_types_priv.h"
 
@@ -92,6 +94,87 @@ static_assert((int)SkTextEncoding::kUTF8 == (int)UTF8_SK_TEXT_ENCODING, ASSERT_M
 static_assert((int)SkTextEncoding::kUTF16 == (int)UTF16_SK_TEXT_ENCODING, ASSERT_MSG(SkTextEncoding, sk_text_encoding_t));
 static_assert((int)SkTextEncoding::kUTF32 == (int)UTF32_SK_TEXT_ENCODING, ASSERT_MSG(SkTextEncoding, sk_text_encoding_t));
 static_assert((int)SkTextEncoding::kGlyphID == (int)GLYPH_ID_SK_TEXT_ENCODING, ASSERT_MSG(SkTextEncoding, sk_text_encoding_t));
+
+// sk_paragraph_affinity_t
+static_assert((int)skia::textlayout::Affinity::kUpstream == (int)UPSTREAM_SK_PARAGRAPH_AFFINITY, ASSERT_MSG(skia::textlayout::Affinity, sk_paragraph_affinity_t));
+static_assert((int)skia::textlayout::Affinity::kDownstream == (int)DOWNSTREAM_SK_PARAGRAPH_AFFINITY, ASSERT_MSG(skia::textlayout::Affinity, sk_paragraph_affinity_t));
+
+// sk_paragraph_rect_height_style_t
+static_assert((int)skia::textlayout::RectHeightStyle::kTight == (int)TIGHT_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+static_assert((int)skia::textlayout::RectHeightStyle::kMax == (int)MAX_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+static_assert((int)skia::textlayout::RectHeightStyle::kIncludeLineSpacingMiddle == (int)INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+static_assert((int)skia::textlayout::RectHeightStyle::kIncludeLineSpacingTop == (int)INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+static_assert((int)skia::textlayout::RectHeightStyle::kIncludeLineSpacingBottom == (int)INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+static_assert((int)skia::textlayout::RectHeightStyle::kStrut == (int)STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE, ASSERT_MSG(skia::textlayout::RectHeightStyle, sk_paragraph_rect_height_style_t));
+
+// sk_paragraph_rect_width_style_t
+static_assert((int)skia::textlayout::RectWidthStyle::kTight == (int)TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE, ASSERT_MSG(skia::textlayout::RectWidthStyle, sk_paragraph_rect_width_style_t));
+static_assert((int)skia::textlayout::RectWidthStyle::kMax == (int)MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE, ASSERT_MSG(skia::textlayout::RectWidthStyle, sk_paragraph_rect_width_style_t));
+
+// sk_paragraph_text_align_t
+static_assert((int)skia::textlayout::TextAlign::kLeft == (int)LEFT_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+static_assert((int)skia::textlayout::TextAlign::kRight == (int)RIGHT_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+static_assert((int)skia::textlayout::TextAlign::kCenter == (int)CENTER_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+static_assert((int)skia::textlayout::TextAlign::kJustify == (int)JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+static_assert((int)skia::textlayout::TextAlign::kStart == (int)START_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+static_assert((int)skia::textlayout::TextAlign::kEnd == (int)END_SK_PARAGRAPH_TEXT_ALIGN, ASSERT_MSG(skia::textlayout::TextAlign, sk_paragraph_text_align_t));
+
+// sk_paragraph_text_direction_t
+static_assert((int)skia::textlayout::TextDirection::kRtl == (int)RTL_SK_PARAGRAPH_TEXT_DIRECTION, ASSERT_MSG(skia::textlayout::TextDirection, sk_paragraph_text_direction_t));
+static_assert((int)skia::textlayout::TextDirection::kLtr == (int)LTR_SK_PARAGRAPH_TEXT_DIRECTION, ASSERT_MSG(skia::textlayout::TextDirection, sk_paragraph_text_direction_t));
+
+// sk_paragraph_text_baseline_t
+static_assert((int)skia::textlayout::TextBaseline::kAlphabetic == (int)ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE, ASSERT_MSG(skia::textlayout::TextBaseline, sk_paragraph_text_baseline_t));
+static_assert((int)skia::textlayout::TextBaseline::kIdeographic == (int)IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE, ASSERT_MSG(skia::textlayout::TextBaseline, sk_paragraph_text_baseline_t));
+
+// sk_paragraph_text_height_behavior_t
+static_assert((int)skia::textlayout::TextHeightBehavior::kAll == (int)ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR, ASSERT_MSG(skia::textlayout::TextHeightBehavior, sk_paragraph_text_height_behavior_t));
+static_assert((int)skia::textlayout::TextHeightBehavior::kDisableFirstAscent == (int)DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR, ASSERT_MSG(skia::textlayout::TextHeightBehavior, sk_paragraph_text_height_behavior_t));
+static_assert((int)skia::textlayout::TextHeightBehavior::kDisableLastDescent == (int)DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR, ASSERT_MSG(skia::textlayout::TextHeightBehavior, sk_paragraph_text_height_behavior_t));
+static_assert((int)skia::textlayout::TextHeightBehavior::kDisableAll == (int)DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR, ASSERT_MSG(skia::textlayout::TextHeightBehavior, sk_paragraph_text_height_behavior_t));
+
+// sk_paragraph_line_metric_style_t
+static_assert((int)skia::textlayout::LineMetricStyle::Typographic == (int)TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE, ASSERT_MSG(skia::textlayout::LineMetricStyle, sk_paragraph_line_metric_style_t));
+static_assert((int)skia::textlayout::LineMetricStyle::CSS == (int)CSS_SK_PARAGRAPH_LINE_METRIC_STYLE, ASSERT_MSG(skia::textlayout::LineMetricStyle, sk_paragraph_line_metric_style_t));
+
+// sk_paragraph_visitor_flag_t
+static_assert((int)skia::textlayout::Paragraph::VisitorFlags::kWhiteSpace_VisitorFlag == (int)WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG, ASSERT_MSG(skia::textlayout::Paragraph::VisitorFlags, sk_paragraph_visitor_flag_t));
+
+// sk_text_decoration_t
+static_assert((int)skia::textlayout::TextDecoration::kNoDecoration == (int)NO_SK_TEXT_DECORATION, ASSERT_MSG(skia::textlayout::TextDecoration, sk_text_decoration_t));
+static_assert((int)skia::textlayout::TextDecoration::kUnderline == (int)UNDERLINE_SK_TEXT_DECORATION, ASSERT_MSG(skia::textlayout::TextDecoration, sk_text_decoration_t));
+static_assert((int)skia::textlayout::TextDecoration::kOverline == (int)OVERLINE_SK_TEXT_DECORATION, ASSERT_MSG(skia::textlayout::TextDecoration, sk_text_decoration_t));
+static_assert((int)skia::textlayout::TextDecoration::kLineThrough == (int)LINE_THROUGH_SK_TEXT_DECORATION, ASSERT_MSG(skia::textlayout::TextDecoration, sk_text_decoration_t));
+
+// sk_text_decoration_style_t
+static_assert((int)skia::textlayout::TextDecorationStyle::kSolid == (int)SOLID_SK_TEXT_DECORATION_STYLE, ASSERT_MSG(skia::textlayout::TextDecorationStyle, sk_text_decoration_style_t));
+static_assert((int)skia::textlayout::TextDecorationStyle::kDouble == (int)DOUBLE_SK_TEXT_DECORATION_STYLE, ASSERT_MSG(skia::textlayout::TextDecorationStyle, sk_text_decoration_style_t));
+static_assert((int)skia::textlayout::TextDecorationStyle::kDotted == (int)DOTTED_SK_TEXT_DECORATION_STYLE, ASSERT_MSG(skia::textlayout::TextDecorationStyle, sk_text_decoration_style_t));
+static_assert((int)skia::textlayout::TextDecorationStyle::kDashed == (int)DASHED_SK_TEXT_DECORATION_STYLE, ASSERT_MSG(skia::textlayout::TextDecorationStyle, sk_text_decoration_style_t));
+static_assert((int)skia::textlayout::TextDecorationStyle::kWavy == (int)WAVY_SK_TEXT_DECORATION_STYLE, ASSERT_MSG(skia::textlayout::TextDecorationStyle, sk_text_decoration_style_t));
+
+// sk_text_decoration_mode_t
+static_assert((int)skia::textlayout::TextDecorationMode::kGaps == (int)GAPS_SK_TEXT_DECORATION_MODE, ASSERT_MSG(skia::textlayout::TextDecorationMode, sk_text_decoration_mode_t));
+static_assert((int)skia::textlayout::TextDecorationMode::kThrough == (int)THROUGH_SK_TEXT_DECORATION_MODE, ASSERT_MSG(skia::textlayout::TextDecorationMode, sk_text_decoration_mode_t));
+
+// sk_text_style_attribute_t
+static_assert((int)skia::textlayout::StyleType::kNone == (int)NONE_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kAllAttributes == (int)ALL_ATTRIBUTES_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kFont == (int)FONT_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kForeground == (int)FOREGROUND_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kBackground == (int)BACKGROUND_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kShadow == (int)SHADOW_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kDecorations == (int)DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kLetterSpacing == (int)LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+static_assert((int)skia::textlayout::StyleType::kWordSpacing == (int)WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE, ASSERT_MSG(skia::textlayout::StyleType, sk_text_style_attribute_t));
+
+// sk_paragraph_placeholder_alignment_t
+static_assert((int)skia::textlayout::PlaceholderAlignment::kBaseline == (int)BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
+static_assert((int)skia::textlayout::PlaceholderAlignment::kAboveBaseline == (int)ABOVE_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
+static_assert((int)skia::textlayout::PlaceholderAlignment::kBelowBaseline == (int)BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
+static_assert((int)skia::textlayout::PlaceholderAlignment::kTop == (int)TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
+static_assert((int)skia::textlayout::PlaceholderAlignment::kBottom == (int)BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
+static_assert((int)skia::textlayout::PlaceholderAlignment::kMiddle == (int)MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT, ASSERT_MSG(skia::textlayout::PlaceholderAlignment, sk_paragraph_placeholder_alignment_t));
 
 // sk_filter_mode_t
 static_assert((int)SkFilterMode::kNearest == (int)NEAREST_SK_FILTER_MODE, ASSERT_MSG(SkFilterMode, sk_filter_mode_t));

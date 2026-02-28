@@ -1,4 +1,9 @@
+// ignore_for_file: unused_element
+
 part of '../skia_dart.dart';
+
+// TODO(knopp): Everything allocated here will leak on isolate shutdown.
+// Register all allocation with native and free them in native finalizer.
 
 extension _SkPoint on SkPoint {
   static final List<Pointer<sk_point_t>> pool = List.generate(
@@ -16,23 +21,56 @@ extension _SkPoint on SkPoint {
     return ptr;
   }
 
-  static SkPoint fromNative(Pointer<sk_point_t> ptr) {
+  static SkPoint fromPtr(Pointer<sk_point_t> ptr) {
     final ref = ptr.ref;
     return SkPoint(
       ref.x,
       ref.y,
     );
   }
+
+  static SkPoint fromNative(sk_point_t point) {
+    return SkPoint(
+      point.x,
+      point.y,
+    );
+  }
+}
+
+extension _SkSize on SkSize {
+  static SkSize fromPtr(Pointer<sk_size_t> ptr) {
+    final ref = ptr.ref;
+    return SkSize(
+      ref.w,
+      ref.h,
+    );
+  }
+
+  static SkSize fromNative(sk_size_t size) {
+    return SkSize(
+      size.w,
+      size.h,
+    );
+  }
 }
 
 extension _SkRect on SkRect {
-  static SkRect fromNative(Pointer<sk_rect_t> ptr) {
+  static SkRect fromPtr(Pointer<sk_rect_t> ptr) {
     final ref = ptr.ref;
     return SkRect.fromLTRB(
       ref.left,
       ref.top,
       ref.right,
       ref.bottom,
+    );
+  }
+
+  static SkRect fromNative(sk_rect_t rect) {
+    return SkRect.fromLTRB(
+      rect.left,
+      rect.top,
+      rect.right,
+      rect.bottom,
     );
   }
 
@@ -609,3 +647,8 @@ extension _GraphiteInsertRecordingInfo on GraphiteInsertRecordingInfo {
     return ptr;
   }
 }
+
+final _fontPtr = ffi.calloc<Pointer<sk_font_t>>();
+final _textRangePtr = ffi.calloc<sk_paragraph_text_range_t>();
+final _glyphInfoPtr = ffi.calloc<sk_paragraph_glyph_info_t>();
+final _glyphClusterInfoPtr = ffi.calloc<sk_paragraph_glyph_cluster_info_t>();

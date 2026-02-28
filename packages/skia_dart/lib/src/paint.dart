@@ -362,7 +362,7 @@ class SkPaint with _NativeMixin<sk_paint_t> {
   SkRect computeFastBounds(SkRect orig) {
     final result = _SkRect.pool[0];
     sk_paint_compute_fast_bounds(_ptr, orig.toNativePooled(1), result);
-    return _SkRect.fromNative(result);
+    return _SkRect.fromPtr(result);
   }
 
   /// Computes the fast bounds for stroking the given rectangle.
@@ -372,7 +372,7 @@ class SkPaint with _NativeMixin<sk_paint_t> {
   SkRect computeFastStrokeBounds(SkRect orig) {
     final result = _SkRect.pool[0];
     sk_paint_compute_fast_stroke_bounds(_ptr, orig.toNativePooled(1), result);
-    return _SkRect.fromNative(result);
+    return _SkRect.fromPtr(result);
   }
 
   @override

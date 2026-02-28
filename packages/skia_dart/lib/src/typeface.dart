@@ -425,7 +425,7 @@ class SkTypeface with _NativeMixin<sk_typeface_t> {
   SkRect get bounds {
     final ptr = _SkRect.pool[0];
     sk_typeface_get_bounds(_ptr, ptr);
-    return _SkRect.fromNative(ptr);
+    return _SkRect.fromPtr(ptr);
   }
 
   /// Returns all localized family names specified by the font.

@@ -28,7 +28,7 @@ class SkDrawable with _NativeMixin<sk_drawable_t> {
   SkRect get bounds {
     final rectPtr = _SkRect.pool[0];
     sk_drawable_get_bounds(_ptr, rectPtr);
-    return _SkRect.fromNative(rectPtr);
+    return _SkRect.fromPtr(rectPtr);
   }
 
   /// Draws into [canvas].

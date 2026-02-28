@@ -47,7 +47,7 @@ bool sk_paint_equals(const sk_paint_t* a, const sk_paint_t* b) {
   return *AsPaint(a) == *AsPaint(b);
 }
 
-uint32_t sk_paint_get_hash(const sk_paint_t* paint) {
+int64_t sk_paint_get_hash(const sk_paint_t* paint) {
   const SkPaint* p = AsPaint(paint);
   uint64_t h = 1469598103934665603ull;
   auto mix = [&h](uint64_t v) {
@@ -81,7 +81,7 @@ uint32_t sk_paint_get_hash(const sk_paint_t* paint) {
   mix(static_cast<uint8_t>(p->getStrokeJoin()));
   mix(static_cast<uint8_t>(p->getStyle()));
 
-  return static_cast<uint32_t>(h ^ (h >> 32));
+  return static_cast<int64_t>(h);
 }
 
 sk_color_t sk_paint_get_color(const sk_paint_t* cpaint) {

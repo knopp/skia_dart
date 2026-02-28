@@ -576,7 +576,7 @@ class SkPath with _NativeMixin<sk_path_t> {
       final pointCount = 1 + 2 * quadCount;
       final points = List<SkPoint>.generate(
         pointCount,
-        (i) => _SkPoint.fromNative(pts + i),
+        (i) => _SkPoint.fromPtr(pts + i),
         growable: false,
       );
       return (quadCount: quadCount, points: points);
@@ -601,7 +601,7 @@ class SkPath with _NativeMixin<sk_path_t> {
   SkRect get bounds {
     final ptr = _SkRect.pool[0];
     sk_path_get_bounds(_ptr, ptr);
-    return _SkRect.fromNative(ptr);
+    return _SkRect.fromPtr(ptr);
   }
 
   /// Computes and returns the tight bounds of the path.
@@ -611,7 +611,7 @@ class SkPath with _NativeMixin<sk_path_t> {
   SkRect computeTightBounds() {
     final ptr = _SkRect.pool[0];
     sk_path_compute_tight_bounds(_ptr, ptr);
-    return _SkRect.fromNative(ptr);
+    return _SkRect.fromPtr(ptr);
   }
 
   /// Returns true if the rectangle is contained by this path.
@@ -679,7 +679,7 @@ class SkPath with _NativeMixin<sk_path_t> {
     }
     return List<SkPoint>.generate(
       count,
-      (i) => _SkPoint.fromNative(pointsPtr + i),
+      (i) => _SkPoint.fromPtr(pointsPtr + i),
       growable: false,
     );
   }
@@ -717,14 +717,14 @@ class SkPath with _NativeMixin<sk_path_t> {
   SkPoint getPoint(int index) {
     final ptr = _SkPoint.pool[0];
     sk_path_get_point(_ptr, index, ptr);
-    return _SkPoint.fromNative(ptr);
+    return _SkPoint.fromPtr(ptr);
   }
 
   /// Returns the last point in the path, or null if empty.
   SkPoint? getLastPoint() {
     final ptr = _SkPoint.pool[0];
     if (sk_path_get_last_point(_ptr, ptr)) {
-      return _SkPoint.fromNative(ptr);
+      return _SkPoint.fromPtr(ptr);
     }
     return null;
   }
@@ -764,7 +764,7 @@ class SkPath with _NativeMixin<sk_path_t> {
   SkRect? isOval() {
     final ptr = _SkRect.pool[0];
     if (sk_path_is_oval(_ptr, ptr)) {
-      return _SkRect.fromNative(ptr);
+      return _SkRect.fromPtr(ptr);
     }
     return null;
   }
@@ -790,7 +790,7 @@ class SkPath with _NativeMixin<sk_path_t> {
     final ptr = ffi.calloc<sk_point_t>(2);
     try {
       if (sk_path_is_line(_ptr, ptr)) {
-        return (_SkPoint.fromNative(ptr), _SkPoint.fromNative(ptr + 1));
+        return (_SkPoint.fromPtr(ptr), _SkPoint.fromPtr(ptr + 1));
       }
       return null;
     } finally {
@@ -811,7 +811,7 @@ class SkPath with _NativeMixin<sk_path_t> {
     try {
       if (sk_path_is_rect(_ptr, rectPtr, isClosedPtr, dirPtr.cast())) {
         return SkPathIsRectResult(
-          rect: _SkRect.fromNative(rectPtr),
+          rect: _SkRect.fromPtr(rectPtr),
           isClosed: isClosedPtr.value,
           direction: SkPathDirection._fromNative(
             sk_path_direction_t.fromValue(dirPtr.value),
@@ -982,7 +982,7 @@ class SkPathIterator with _NativeMixin<sk_path_iterator_t> {
       final pointCount = pathVerb.pointCount;
       final points = <SkPoint>[];
       for (int i = 0; i < pointCount; i++) {
-        points.add(_SkPoint.fromNative(pts + i));
+        points.add(_SkPoint.fromPtr(pts + i));
       }
       return (pathVerb, points);
     } finally {
@@ -1070,7 +1070,7 @@ class SkPathRawIterator with _NativeMixin<sk_path_rawiterator_t> {
       final pointCount = pathVerb.pointCount;
       final points = <SkPoint>[];
       for (int i = 0; i < pointCount; i++) {
-        points.add(_SkPoint.fromNative(pts + i));
+        points.add(_SkPoint.fromPtr(pts + i));
       }
       return (pathVerb, points);
     } finally {
@@ -1218,8 +1218,8 @@ class SkPathMeasure with _NativeMixin<sk_pathmeasure_t> {
     final tanPtr = _SkPoint.pool[1];
     if (sk_pathmeasure_get_pos_tan(_ptr, distance, posPtr, tanPtr)) {
       return (
-        position: _SkPoint.fromNative(posPtr),
-        tangent: _SkPoint.fromNative(tanPtr),
+        position: _SkPoint.fromPtr(posPtr),
+        tangent: _SkPoint.fromPtr(tanPtr),
       );
     }
     return null;

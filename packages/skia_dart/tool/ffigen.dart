@@ -17,10 +17,12 @@ String findMacSdkPath() {
 void main() {
   const nonLeafFunctions = {
     'sk_font_get_paths',
-    'sk_shaper_shape',
     'skgpu_graphite_async_rescale_and_read_pixels_from_surface',
     'skgpu_graphite_async_rescale_and_read_pixels_from_image',
     'skgpu_graphite_context_submit',
+    'sk_shaper_shape',
+    'sk_paragraph_visit',
+    'sk_paragraph_extended_visit',
   };
   final packageRoot = Platform.script.resolve('../');
   final wrapperRoot = packageRoot.resolve('../../src/');

@@ -279,7 +279,7 @@ class SkRRect with _NativeMixin<sk_rrect_t> {
   SkRect get rect {
     final ptr = _SkRect.pool[0];
     sk_rrect_get_rect(_ptr, ptr);
-    return _SkRect.fromNative(ptr);
+    return _SkRect.fromPtr(ptr);
   }
 
   /// Returns the x-axis and y-axis radii for the specified [corner].
@@ -288,7 +288,7 @@ class SkRRect with _NativeMixin<sk_rrect_t> {
   SkVector getRadii(SkRRectCorner corner) {
     final ptr = _SkPoint.pool[0];
     sk_rrect_get_radii(_ptr, corner._value, ptr);
-    return _SkPoint.fromNative(ptr);
+    return _SkPoint.fromPtr(ptr);
   }
 
   /// Insets bounds by [dx] and [dy], and adjusts radii by [dx] and [dy].
