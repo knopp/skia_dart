@@ -1024,60 +1024,50 @@ void main() {
       });
     });
 
-    test(
-      'renders paragraph golden',
-      // TODO(knopp): Figure out why this fails on github actions linux runner.
-      skip: Platform.isLinux,
-      () {
-        final activeUnicode = unicode;
-        if (activeUnicode == null) return;
+    test('renders paragraph golden', () {
+      final activeUnicode = unicode;
+      if (activeUnicode == null) return;
 
-        SkAutoDisposeScope.run(() {
-          final surface = createSurface(width: 260, height: 120);
-          final canvas = surface.canvas;
-          canvas.clear(const SkColor(0xFFF7F1E8));
+      SkAutoDisposeScope.run(() {
+        final surface = createSurface(width: 260, height: 120);
+        final canvas = surface.canvas;
+        canvas.clear(const SkColor(0xFFF7F1E8));
 
-          final paragraph = createLaidOutParagraph(width: 220);
-          paragraph.paint(canvas, 12, 18);
+        final paragraph = createLaidOutParagraph(width: 220);
+        paragraph.paint(canvas, 12, 18);
 
-          final pixmap = SkPixmap();
-          expect(surface.peekPixels(pixmap), isTrue);
-          expect(Goldens.verify(pixmap, platformSpecific: true), isTrue);
-        });
-      },
-    );
+        final pixmap = SkPixmap();
+        expect(surface.peekPixels(pixmap), isTrue);
+        expect(Goldens.verify(pixmap, platformSpecific: true), isTrue);
+      });
+    });
 
-    test(
-      'renders paragraph with placeholder golden',
-      // TODO(knopp): Figure out why this fails on github actions linux runner.
-      skip: Platform.isLinux,
-      () {
-        final activeUnicode = unicode;
-        if (activeUnicode == null) return;
+    test('renders paragraph with placeholder golden', () {
+      final activeUnicode = unicode;
+      if (activeUnicode == null) return;
 
-        SkAutoDisposeScope.run(() {
-          final surface = createSurface(width: 280, height: 140);
-          final canvas = surface.canvas;
-          canvas.clear(const SkColor(0xFFFDFBF6));
+      SkAutoDisposeScope.run(() {
+        final surface = createSurface(width: 280, height: 140);
+        final canvas = surface.canvas;
+        canvas.clear(const SkColor(0xFFFDFBF6));
 
-          final paragraph = createLaidOutParagraph(
-            firstText: 'Inline ',
-            secondText: 'placeholder sample',
-            addPlaceholder: true,
-            width: 240,
-          );
-          paragraph.paint(canvas, 16, 22);
+        final paragraph = createLaidOutParagraph(
+          firstText: 'Inline ',
+          secondText: 'placeholder sample',
+          addPlaceholder: true,
+          width: 240,
+        );
+        paragraph.paint(canvas, 16, 22);
 
-          final placeholderPaint = SkPaint()..color = const SkColor(0xFF2F7D6B);
-          for (final box in paragraph.getRectsForPlaceholders()) {
-            canvas.drawRect(box.rect.makeOffset(16, 22), placeholderPaint);
-          }
+        final placeholderPaint = SkPaint()..color = const SkColor(0xFF2F7D6B);
+        for (final box in paragraph.getRectsForPlaceholders()) {
+          canvas.drawRect(box.rect.makeOffset(16, 22), placeholderPaint);
+        }
 
-          final pixmap = SkPixmap();
-          expect(surface.peekPixels(pixmap), isTrue);
-          expect(Goldens.verify(pixmap, platformSpecific: true), isTrue);
-        });
-      },
-    );
+        final pixmap = SkPixmap();
+        expect(surface.peekPixels(pixmap), isTrue);
+        expect(Goldens.verify(pixmap, platformSpecific: true), isTrue);
+      });
+    });
   });
 }

@@ -13,6 +13,9 @@ class Goldens {
         ? '${baseName}_${Platform.operatingSystem}.png'
         : '$baseName.png';
     final goldenFile = File('test/goldens/$goldenFileName');
+    final failedGoldenOutputDir = String.fromEnvironment(
+      'failed-golden-output-dir',
+    );
 
     final recreateGoldens = bool.fromEnvironment('recreate-goldens') == true;
     if (recreateGoldens) {
@@ -24,13 +27,18 @@ class Goldens {
     }
 
     if (!goldenFile.existsSync()) {
+      _storeFailedGolden(
+        pixmap,
+        goldenFileName: goldenFileName,
+        failedGoldenOutputDir: failedGoldenOutputDir,
+      );
       throw Exception(
         'Golden file does not exist: ${goldenFile.path}. '
         'Please recreate goldens using dart -Drecreate-goldens=true test',
       );
     }
 
-    return SkAutoDisposeScope.run(() {
+    final matchesGolden = SkAutoDisposeScope.run(() {
       final goldenStream = SkFileStream(goldenFile.path);
       final (:codec, :result) = SkCodec.fromStream(goldenStream);
       if (codec == null || result != SkCodecResult.success) {
@@ -50,6 +58,16 @@ class Goldens {
         5, // tolerance
       );
     });
+
+    if (!matchesGolden) {
+      _storeFailedGolden(
+        pixmap,
+        goldenFileName: goldenFileName,
+        failedGoldenOutputDir: failedGoldenOutputDir,
+      );
+    }
+
+    return matchesGolden;
   }
 
   static bool _comparePixmapsFuzzy(SkPixmap a, SkPixmap b, int tolerance) {
@@ -77,5 +95,20 @@ class Goldens {
     }
 
     return true;
+  }
+
+  static void _storeFailedGolden(
+    SkPixmap pixmap, {
+    required String goldenFileName,
+    required String failedGoldenOutputDir,
+  }) {
+    if (failedGoldenOutputDir.isEmpty) {
+      return;
+    }
+    final failedGoldenFile = File('$failedGoldenOutputDir/$goldenFileName');
+    failedGoldenFile.parent.createSync(recursive: true);
+    final wstream = SkFileWStream(failedGoldenFile.path);
+    SkPngEncoder.encode(wstream, pixmap);
+    print('Stored failed golden file: ${failedGoldenFile.path}');
   }
 }
