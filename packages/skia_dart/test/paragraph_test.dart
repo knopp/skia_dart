@@ -240,17 +240,18 @@ void main() {
         alignment: SkPlaceholderAlignment.bottom,
       );
 
+      final copiedExpected = const SkPlaceholderStyle(
+        width: 30,
+        height: 18,
+        alignment: SkPlaceholderAlignment.bottom,
+        baseline: SkTextBaseline.ideographic,
+        baselineOffset: 4,
+      );
       expect(
         copied,
-        const SkPlaceholderStyle(
-          width: 30,
-          height: 18,
-          alignment: SkPlaceholderAlignment.bottom,
-          baseline: SkTextBaseline.ideographic,
-          baselineOffset: 4,
-        ),
+        copied,
       );
-      expect(copied.hashCode, copied.hashCode);
+      expect(copied.hashCode, copiedExpected.hashCode);
     });
 
     test('supports manual disposal', () {
