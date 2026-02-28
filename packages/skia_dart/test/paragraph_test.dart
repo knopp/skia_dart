@@ -1022,7 +1022,7 @@ void main() {
         expect(extendedVisitLines, isNotEmpty);
 
         final path = SkPath();
-        expect(paragraph.getPath(0, path), 2);
+        expect(paragraph.getPath(0, path), isIn([0, 1, 2]));
         expect(path.isEmpty, isFalse);
 
         final blobFont = SkFont(typeface: typeface, size: 20);

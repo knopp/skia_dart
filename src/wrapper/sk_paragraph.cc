@@ -225,7 +225,7 @@ void sk_paragraph_style_set_text_align(sk_paragraph_style_t* style, sk_paragraph
 
 size_t sk_paragraph_style_get_max_lines(const sk_paragraph_style_t* style) {
   const size_t max_lines = AsParagraphStyle(style)->getMaxLines();
-  const size_t max_signed_size = std::numeric_limits<ssize_t>::max();
+  const size_t max_signed_size = std::numeric_limits<ptrdiff_t>::max();
   return std::min(max_lines, max_signed_size);
 }
 
