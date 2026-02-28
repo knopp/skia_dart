@@ -300,7 +300,7 @@ final class SkTextStyle with _NativeMixin<sk_text_style_t> {
   }
 
   @override
-  int get hashCode => _skTextStyleGetHash(_ptr);
+  int get hashCode => sk_text_style_get_hash(_ptr);
 
   bool equalsByFonts(SkTextStyle other) {
     return sk_text_style_equals_by_fonts(_ptr, other._ptr);
@@ -701,12 +701,6 @@ final class SkTextStyle with _NativeMixin<sk_text_style_t> {
     return NativeFinalizer(ptr.cast());
   }
 }
-
-@Native<Size Function(Pointer<sk_text_style_t>)>(
-  symbol: 'sk_text_style_get_hash',
-  isLeaf: true,
-)
-external int _skTextStyleGetHash(Pointer<sk_text_style_t> style);
 
 extension _SkTextShadow on SkTextShadow {
   static SkTextShadow fromNative(Pointer<sk_text_shadow_t> ptr) {

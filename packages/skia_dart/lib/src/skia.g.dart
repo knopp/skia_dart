@@ -6442,7 +6442,7 @@ external bool sk_paint_equals(
   ffi.Pointer<sk_paint_t> b,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
 external int sk_paint_get_hash(
   ffi.Pointer<sk_paint_t> paint,
 );
@@ -8185,7 +8185,7 @@ external bool sk_strut_style_equals(
   ffi.Pointer<sk_strut_style_t> other,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
+@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_strut_style_t>)>(isLeaf: true)
 external int sk_strut_style_get_hash(
   ffi.Pointer<sk_strut_style_t> style,
 );
@@ -8353,7 +8353,7 @@ external bool sk_paragraph_style_equals(
   ffi.Pointer<sk_paragraph_style_t> other,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
+@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_paragraph_style_t>)>(isLeaf: true)
 external int sk_paragraph_style_get_hash(
   ffi.Pointer<sk_paragraph_style_t> style,
 );
@@ -8676,7 +8676,7 @@ bool sk_text_style_match_attribute(
   other,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
+@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_text_style_t>)>(isLeaf: true)
 external int sk_text_style_get_hash(
   ffi.Pointer<sk_text_style_t> style,
 );

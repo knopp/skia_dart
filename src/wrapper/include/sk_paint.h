@@ -21,7 +21,7 @@ SK_C_API void sk_paint_reset(sk_paint_t*);
 SK_C_API bool sk_paint_is_antialias(const sk_paint_t*);
 SK_C_API void sk_paint_set_antialias(sk_paint_t*, bool);
 SK_C_API bool sk_paint_equals(const sk_paint_t* a, const sk_paint_t* b);
-SK_C_API size_t sk_paint_get_hash(const sk_paint_t* paint);
+SK_C_API int64_t sk_paint_get_hash(const sk_paint_t* paint);
 SK_C_API sk_color_t sk_paint_get_color(const sk_paint_t*);
 SK_C_API void sk_paint_get_color4f(const sk_paint_t* paint, sk_color4f_t* color);
 SK_C_API void sk_paint_set_color(sk_paint_t*, sk_color_t);

@@ -121,7 +121,7 @@ final class SkStrutStyle with _NativeMixin<sk_strut_style_t> {
   }
 
   @override
-  int get hashCode => _skStrutStyleGetHash(_ptr);
+  int get hashCode => sk_strut_style_get_hash(_ptr);
 
   List<String> get fontFamilies {
     final count = sk_strut_style_get_font_family_count(_ptr);
@@ -207,12 +207,6 @@ final class SkStrutStyle with _NativeMixin<sk_strut_style_t> {
   }
 }
 
-@Native<Size Function(Pointer<sk_strut_style_t>)>(
-  symbol: 'sk_strut_style_get_hash',
-  isLeaf: true,
-)
-external int _skStrutStyleGetHash(Pointer<sk_strut_style_t> style);
-
 final class SkParagraphStyle with _NativeMixin<sk_paragraph_style_t> {
   static const Object _sentinel = Object();
 
@@ -288,7 +282,7 @@ final class SkParagraphStyle with _NativeMixin<sk_paragraph_style_t> {
   }
 
   @override
-  int get hashCode => _skParagraphStyleGetHash(_ptr);
+  int get hashCode => sk_paragraph_style_get_hash(_ptr);
 
   SkStrutStyle get strutStyle {
     final style = SkStrutStyle();
@@ -409,9 +403,3 @@ final class SkParagraphStyle with _NativeMixin<sk_paragraph_style_t> {
     return NativeFinalizer(ptr.cast());
   }
 }
-
-@Native<Size Function(Pointer<sk_paragraph_style_t>)>(
-  symbol: 'sk_paragraph_style_get_hash',
-  isLeaf: true,
-)
-external int _skParagraphStyleGetHash(Pointer<sk_paragraph_style_t> style);

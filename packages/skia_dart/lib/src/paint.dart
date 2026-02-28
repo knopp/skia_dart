@@ -124,7 +124,7 @@ class SkPaint with _NativeMixin<sk_paint_t> {
   }
 
   @override
-  int get hashCode => _skPaintGetHash(_ptr);
+  int get hashCode => sk_paint_get_hash(_ptr);
 
   /// Sets all paint contents to their initial values.
   ///
@@ -388,9 +388,3 @@ class SkPaint with _NativeMixin<sk_paint_t> {
     return NativeFinalizer(ptr.cast());
   }
 }
-
-@Native<Size Function(Pointer<sk_paint_t>)>(
-  symbol: 'sk_paint_get_hash',
-  isLeaf: true,
-)
-external int _skPaintGetHash(Pointer<sk_paint_t> paint);

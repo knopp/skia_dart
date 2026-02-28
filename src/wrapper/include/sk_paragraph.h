@@ -19,7 +19,7 @@ SK_C_API sk_strut_style_t* sk_strut_style_clone(const sk_strut_style_t* style);
 SK_C_API void sk_strut_style_delete(sk_strut_style_t* style);
 
 SK_C_API bool sk_strut_style_equals(const sk_strut_style_t* style, const sk_strut_style_t* other);
-SK_C_API size_t sk_strut_style_get_hash(const sk_strut_style_t* style);
+SK_C_API int64_t sk_strut_style_get_hash(const sk_strut_style_t* style);
 
 SK_C_API size_t sk_strut_style_get_font_family_count(const sk_strut_style_t* style);
 SK_C_API bool sk_strut_style_get_font_family(const sk_strut_style_t* style, size_t index, sk_string_t* family);
@@ -49,7 +49,7 @@ SK_C_API sk_paragraph_style_t* sk_paragraph_style_clone(const sk_paragraph_style
 SK_C_API void sk_paragraph_style_delete(sk_paragraph_style_t* style);
 
 SK_C_API bool sk_paragraph_style_equals(const sk_paragraph_style_t* style, const sk_paragraph_style_t* other);
-SK_C_API size_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style);
+SK_C_API int64_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style);
 
 SK_C_API void sk_paragraph_style_get_strut_style(const sk_paragraph_style_t* style, sk_strut_style_t* strut_style);
 SK_C_API void sk_paragraph_style_set_strut_style(sk_paragraph_style_t* style, const sk_strut_style_t* strut_style);
@@ -93,7 +93,7 @@ SK_C_API void sk_text_style_delete(sk_text_style_t* style);
 SK_C_API bool sk_text_style_equals(const sk_text_style_t* style, const sk_text_style_t* other);
 SK_C_API bool sk_text_style_equals_by_fonts(const sk_text_style_t* style, const sk_text_style_t* other);
 SK_C_API bool sk_text_style_match_attribute(const sk_text_style_t* style, sk_text_style_attribute_t attribute, const sk_text_style_t* other);
-SK_C_API size_t sk_text_style_get_hash(const sk_text_style_t* style);
+SK_C_API int64_t sk_text_style_get_hash(const sk_text_style_t* style);
 
 SK_C_API sk_color_t sk_text_style_get_color(const sk_text_style_t* style);
 SK_C_API void sk_text_style_set_color(sk_text_style_t* style, sk_color_t color);

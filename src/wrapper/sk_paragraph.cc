@@ -64,7 +64,7 @@ void HashMixUtf16String(uint64_t* hash, const std::u16string& value) {
   }
 }
 
-size_t PaintHash(const SkPaint& paint) {
+int64_t PaintHash(const SkPaint& paint) {
   uint64_t hash = 1469598103934665603ull;
   HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getPathEffect()));
   HashMix(&hash, reinterpret_cast<uintptr_t>(paint.getShader()));
@@ -87,7 +87,7 @@ size_t PaintHash(const SkPaint& paint) {
   HashMix(&hash, static_cast<uint8_t>(paint.getStrokeJoin()));
   HashMix(&hash, static_cast<uint8_t>(paint.getStyle()));
 
-  return static_cast<size_t>(hash);
+  return static_cast<int64_t>(hash);
 }
 
 void HashMixPaintOrID(uint64_t* hash, const skia::textlayout::ParagraphPainter::SkPaintOrID& value) {
@@ -100,7 +100,7 @@ void HashMixPaintOrID(uint64_t* hash, const skia::textlayout::ParagraphPainter::
   HashMix(hash, static_cast<uint32_t>(std::get<skia::textlayout::ParagraphPainter::PaintID>(value)));
 }
 
-size_t TextStyleHash(const skia::textlayout::TextStyle& value) {
+int64_t TextStyleHash(const skia::textlayout::TextStyle& value) {
   uint64_t hash = 1469598103934665603ull;
 
   HashMix(&hash, value.getColor());
@@ -158,7 +158,7 @@ size_t TextStyleHash(const skia::textlayout::TextStyle& value) {
     HashMix(&hash, feature.fValue);
   }
 
-  return static_cast<size_t>(hash);
+  return static_cast<int64_t>(hash);
 }
 
 TextShadow AsTextShadowValue(const sk_text_shadow_t& shadow) {
@@ -212,7 +212,7 @@ bool sk_strut_style_equals(const sk_strut_style_t* style, const sk_strut_style_t
   return *AsStrutStyle(style) == *AsStrutStyle(other);
 }
 
-size_t sk_strut_style_get_hash(const sk_strut_style_t* style) {
+int64_t sk_strut_style_get_hash(const sk_strut_style_t* style) {
   const StrutStyle& value = *AsStrutStyle(style);
   uint64_t hash = 1469598103934665603ull;
 
@@ -235,7 +235,7 @@ size_t sk_strut_style_get_hash(const sk_strut_style_t* style) {
     HashMixString(&hash, family);
   }
 
-  return static_cast<size_t>(hash);
+  return static_cast<int64_t>(hash);
 }
 
 size_t sk_strut_style_get_font_family_count(const sk_strut_style_t* style) {
@@ -340,7 +340,7 @@ bool sk_paragraph_style_equals(const sk_paragraph_style_t* style, const sk_parag
   return *AsParagraphStyle(style) == *AsParagraphStyle(other);
 }
 
-size_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style) {
+int64_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style) {
   const ParagraphStyle& value = *AsParagraphStyle(style);
   uint64_t hash = 1469598103934665603ull;
 
@@ -353,7 +353,7 @@ size_t sk_paragraph_style_get_hash(const sk_paragraph_style_t* style) {
   HashMix(&hash, value.getReplaceTabCharacters());
   HashMix(&hash, value.fakeMissingFontStyles());
 
-  return static_cast<size_t>(hash);
+  return static_cast<int64_t>(hash);
 }
 
 void sk_paragraph_style_get_strut_style(const sk_paragraph_style_t* style, sk_strut_style_t* strut_style) {
@@ -495,7 +495,7 @@ bool sk_text_style_match_attribute(const sk_text_style_t* style, sk_text_style_a
   return AsTextStyle(style)->matchOneAttribute(AsTextStyleAttribute(attribute), *AsTextStyle(other));
 }
 
-size_t sk_text_style_get_hash(const sk_text_style_t* style) {
+int64_t sk_text_style_get_hash(const sk_text_style_t* style) {
   return TextStyleHash(*AsTextStyle(style));
 }
 
