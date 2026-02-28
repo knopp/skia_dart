@@ -130,6 +130,7 @@ jobs:
         run: ../../flutter_zero/bin/dart -Dfailed-golden-output-dir=test/failed_goldens test
 
       - name: Upload failed golden artifacts
+        if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: failed-goldens-${{ matrix.config }}
