@@ -17,6 +17,7 @@ String findMacSdkPath() {
 void main() {
   const nonLeafFunctions = {
     'sk_font_get_paths',
+    'sk_shaper_shape',
     'skgpu_graphite_async_rescale_and_read_pixels_from_surface',
     'skgpu_graphite_async_rescale_and_read_pixels_from_image',
     'skgpu_graphite_context_submit',

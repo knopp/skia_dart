@@ -286,24 +286,6 @@ class SkPath with _NativeMixin<sk_path_t> {
     }
   }
 
-  // ignore: non_constant_identifier_names
-  /// Deprecated: Use [SkPath.raw] instead.
-  factory SkPath.Raw({
-    required List<SkPoint> points,
-    required List<SkPathVerb> verbs,
-    List<double> conics = const [],
-    SkPathFillType fillType = SkPathFillType.winding,
-    bool isVolatile = false,
-  }) {
-    return SkPath.raw(
-      points: points,
-      verbs: verbs,
-      conics: conics,
-      fillType: fillType,
-      isVolatile: isVolatile,
-    );
-  }
-
   /// Creates a path containing a rectangle.
   ///
   /// The rectangle begins at [startIndex] and winds in the specified
@@ -601,18 +583,6 @@ class SkPath with _NativeMixin<sk_path_t> {
     } finally {
       ffi.calloc.free(pts);
     }
-  }
-
-  // ignore: non_constant_identifier_names
-  /// Deprecated: Use [convertConicToQuads] instead.
-  static ({int quadCount, List<SkPoint> points}) ConvertConicToQuads(
-    SkPoint p0,
-    SkPoint p1,
-    SkPoint p2,
-    double w,
-    int pow2,
-  ) {
-    return convertConicToQuads(p0, p1, p2, w, pow2);
   }
 
   /// Returns the approximate byte size of the path in memory.

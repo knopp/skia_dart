@@ -7,7 +7,7 @@ part of '../skia_dart.dart';
 /// as a vector.
 final class SkPoint {
   /// Creates a point with the given [x] and [y] coordinates.
-  SkPoint(this.x, this.y);
+  const SkPoint(this.x, this.y);
 
   /// The x-axis value.
   final double x;

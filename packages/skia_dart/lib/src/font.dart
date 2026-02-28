@@ -342,6 +342,11 @@ class SkFont with _NativeMixin<sk_font_t> {
     return SkFont._(sk_font_make_with_size(_ptr, size));
   }
 
+  /// Creates a copy of this font with all the same attributes.
+  SkFont clone() {
+    return SkFont._(sk_font_clone(_ptr));
+  }
+
   /// Compares this font with [other] and returns true if they are equivalent.
   ///
   /// May return false if SkTypeface has identical contents but different

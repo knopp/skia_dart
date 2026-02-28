@@ -158,6 +158,22 @@ DEF_CLASS_MAP(SkTypeface, sk_typeface_t, Typeface)
 DEF_CLASS_MAP(SkVertices, sk_vertices_t, Vertices)
 DEF_CLASS_MAP(SkWStream, sk_wstream_t, WStream)
 
+#include "modules/skunicode/include/SkUnicode.h"
+DEF_CLASS_MAP(SkUnicode, sk_unicode_t, Unicode)
+
+#include "modules/skshaper/include/SkShaper.h"
+#include "modules/skshaper/include/SkShaper_factory.h"
+DEF_CLASS_MAP(SkShaper, sk_shaper_t, Shaper)
+DEF_CLASS_MAP(SkTextBlobBuilderRunHandler, sk_textblob_builder_run_handler_t, TextBlobBuilderRunHandler)
+DEF_CLASS_MAP_WITH_NS(SkShapers, Factory, sk_shaper_factory_t, ShaperFactory)
+DEF_CLASS_MAP_WITH_NS(SkShaper, RunIterator, sk_shaper_run_iterator_t, RunIterator)
+DEF_CLASS_MAP_WITH_NS(SkShaper, RunHandler, sk_shaper_run_handler_t, RunHandler)
+DEF_CLASS_MAP_WITH_NS(SkShaper, FontRunIterator, sk_shaper_font_run_iterator_t, FontRunIterator)
+DEF_CLASS_MAP_WITH_NS(SkShaper, BiDiRunIterator, sk_shaper_bidi_run_iterator_t, BiDiRunIterator)
+DEF_CLASS_MAP_WITH_NS(SkShaper, ScriptRunIterator, sk_shaper_script_run_iterator_t, ScriptRunIterator)
+DEF_CLASS_MAP_WITH_NS(SkShaper, LanguageRunIterator, sk_shaper_language_run_iterator_t, LanguageRunIterator)
+DEF_MAP(SkShaper::Feature, sk_shaper_feature_t, ShaperFeature)
+
 DEF_CLASS_MAP(GrDirectContext, gr_direct_context_t, GrDirectContext)
 DEF_CLASS_MAP(GrRecordingContext, gr_recording_context_t, GrRecordingContext)
 DEF_CLASS_MAP(GrBackendTexture, gr_backendtexture_t, GrBackendTexture)

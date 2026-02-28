@@ -18,6 +18,11 @@ formatter:
 
 # Uncomment the following section to specify additional rules.
 
+linter:
+  rules:
+    - curly_braces_in_flow_control_structures: true
+    - prefer_single_quotes: true
+
 # linter:
 #   rules:
 #     - camel_case_types

@@ -47,6 +47,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_region.h",
     "wrapper/include/sk_rrect.h",
     "wrapper/include/sk_shader.h",
+    "wrapper/include/sk_shaper.h",
     "wrapper/include/sk_stream.h",
     "wrapper/include/sk_string.h",
     "wrapper/include/sk_stroke_rec.h",
@@ -55,6 +56,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_textblob.h",
     "wrapper/include/sk_typeface.h",
     "wrapper/include/sk_types.h",
+    "wrapper/include/sk_unicode.h",
     "wrapper/include/sk_vertices.h",
 
     # "wrapper/include/skottie_animation.h",
@@ -91,6 +93,7 @@ source_set("skia_c_wrapper") {
     "wrapper/sk_runtimeeffect.cpp",
     "wrapper/sk_runtimeeffect.h",
     "wrapper/sk_shader.cpp",
+    "wrapper/sk_shaper.cpp",
     "wrapper/sk_stream.cpp",
     "wrapper/sk_string.cpp",
     "wrapper/sk_stroke_rec.cpp",
@@ -100,6 +103,7 @@ source_set("skia_c_wrapper") {
     "wrapper/sk_textblob.cpp",
     "wrapper/sk_typeface.cpp",
     "wrapper/sk_types_priv.h",
+    "wrapper/sk_unicode.cpp",
     "wrapper/sk_vertices.cpp",
 
     # "wrapper/skottie_animation.cpp",
@@ -137,6 +141,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_rrect.h",
     "wrapper/include/sk_runtimeeffect.h",
     "wrapper/include/sk_shader.h",
+    "wrapper/include/sk_shaper.h",
     "wrapper/include/sk_stream.h",
     "wrapper/include/sk_string.h",
     "wrapper/include/sk_stroke_rec.h",
@@ -145,6 +150,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_textblob.h",
     "wrapper/include/sk_typeface.h",
     "wrapper/include/sk_types.h",
+    "wrapper/include/sk_unicode.h",
     "wrapper/include/sk_vertices.h",
 
     # "wrapper/include/skottie_animation.h",
@@ -160,6 +166,8 @@ source_set("skia_c_wrapper") {
     "//:skia",
     "//modules/jsonreader",
     "//modules/skresources",
+    "//modules/skshaper",
+    "//modules/skunicode",
 
     # "//modules/skottie",
     "//modules/sksg",

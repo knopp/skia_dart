@@ -320,9 +320,9 @@ class SkTextBlob with _NativeMixin<sk_textblob_t> {
   /// unions all bounds. The returned bounds may be larger than the bounds of
   /// all glyphs in runs.
   SkRect get bounds {
-    final rect = SkRect.zero();
-    sk_textblob_get_bounds(_ptr, rect.toNativePooled(0));
-    return rect;
+    final rectPtr = _SkRect.pool[0];
+    sk_textblob_get_bounds(_ptr, rectPtr);
+    return _SkRect.fromNative(rectPtr);
   }
 
   /// Returns the intervals where the text blob intersects two horizontal lines.
@@ -443,7 +443,9 @@ class SkTextBlobIterator with _NativeMixin<sk_textblob_iter_t> {
       return null;
     }
     final run = _runPtr.ref;
-    final typeface = run.typeface == nullptr ? null : SkTypeface._(run.typeface);
+    final typeface = run.typeface == nullptr
+        ? null
+        : SkTypeface._(run.typeface);
     final glyphs = run.glyphCount <= 0 || run.glyphIndices == nullptr
         ? Uint16List(0)
         : Uint16List.fromList(
