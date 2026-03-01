@@ -1,0 +1,1 @@
+Minimal icudtl.dat (from icu/flutter) go get the tests passing.

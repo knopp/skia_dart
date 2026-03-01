@@ -6,6 +6,7 @@ import 'package:skia_dart/skia_dart.dart';
 import 'package:test/test.dart';
 
 import 'goldens.dart';
+import 'icu.dart';
 
 const _fontPath = 'test/NotoSans-ASCII.ttf';
 
@@ -88,6 +89,8 @@ void verifyGolden(SkSurface surface, {bool platformSpecific = false}) {
 void main() {
   late SkFontMgr fontMgr;
   late SkTypeface typeface;
+
+  loadIcuData();
 
   setUpAll(() {
     fontMgr = SkFontMgr.createPlatformDefault()!;

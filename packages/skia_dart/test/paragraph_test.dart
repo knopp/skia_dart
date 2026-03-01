@@ -1,9 +1,8 @@
-import 'dart:io';
-
 import 'package:skia_dart/skia_dart.dart';
 import 'package:test/test.dart';
 
 import 'goldens.dart';
+import 'icu.dart';
 
 const _fontPath = 'test/NotoSans-ASCII.ttf';
 
@@ -11,6 +10,8 @@ void main() {
   late SkFontMgr fontMgr;
   late SkTypeface typeface;
   late SkUnicode? unicode;
+
+  loadIcuData();
 
   setUpAll(() {
     fontMgr = SkFontMgr.createPlatformDefault()!;
