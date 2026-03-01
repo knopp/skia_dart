@@ -93,7 +93,7 @@ sk_surface_t* sk_surface_new_backend_texture(gr_recording_context_t* context, co
 }
 
 sk_surface_t* sk_surface_new_render_target(gr_recording_context_t* context, bool budgeted, const sk_imageinfo_t* cinfo, int sampleCount, gr_surfaceorigin_t origin, const sk_surfaceprops_t* props, bool shouldCreateWithMips) {
-  return SK_ONLY_GPU(ToSurface(SkSurfaces::RenderTarget(AsGrRecordingContext(context), (skgpu::Budgeted)budgeted, AsImageInfo(cinfo), sampleCount, (GrSurfaceOrigin)origin, AsSurfaceProps(props), shouldCreateWithMips).release()), nullptr);
+  return SK_ONLY_GPU(ToSurface(SkSurfaces::RenderTarget(AsGrRecordingContext(context), (skgpu::Budgeted)budgeted, *AsImageInfo(cinfo), sampleCount, (GrSurfaceOrigin)origin, AsSurfaceProps(props), shouldCreateWithMips).release()), nullptr);
 }
 
 void sk_surface_draw(sk_surface_t* surface, sk_canvas_t* canvas, float x, float y, const sk_sampling_options_t* sampling, const sk_paint_t* paint) {

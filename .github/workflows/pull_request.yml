@@ -97,7 +97,7 @@ jobs:
       - name: Generate GN files
         if: steps.check-release.outputs.release_exists == 'false'
         working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }}
+        run: ../../flutter_zero/bin/dart tool/build_tool.dart gen --build-config=${{ matrix.config }} --force-enable-ganesh
 
       - name: Print args.gn
         if: steps.check-release.outputs.release_exists == 'false'
