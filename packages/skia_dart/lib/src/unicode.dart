@@ -66,6 +66,8 @@ class ICU {
   /// The data must be in the format expected by the version of ICU that Skia was
   /// built with. Returns true if the data was successfully set, false otherwise.
   ///
+  /// The data must remain valid for the entire duration of the program.
+  ///
   /// This method can be called multiple times, but only the first invocation will
   /// have an effect. Subsequent calls will return the result of the first call.
   static bool setData(Pointer<Void> data) {
