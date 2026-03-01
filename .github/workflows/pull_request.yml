@@ -90,7 +90,8 @@ jobs:
           sudo update-alternatives --set c++ /usr/bin/clang++
 
       - name: Fetch Skia dependencies
-        if: steps.check-release.outputs.release_exists == 'false'
+        # Required on windows for icudtl.dat
+        if: steps.check-release.outputs.release_exists == 'false' || runner.os == 'windows'
         working-directory: skia
         run: python3 tools/git-sync-deps
 
@@ -118,8 +119,21 @@ jobs:
         if: runner.os == 'windows'
         run: |
           mkdir -p packages/skia_dart/.dart_tool/lib
-          cp out/${{ matrix.config }}/icudtl.dat packages/skia_dart/.dart_tool/lib
+          cp skia/third_party/externals/icu/common/icudtl.dat packages/skia_dart/.dart_tool/lib
+
+      - name: Clear failed golden outputs
+        working-directory: packages/skia_dart
+        shell: bash
+        run: rm -rf test/failed_goldens
 
       - name: Run tests
         working-directory: packages/skia_dart
-        run: ../../flutter_zero/bin/dart test
+        run: ../../flutter_zero/bin/dart -Dfailed-golden-output-dir=test/failed_goldens test
+
+      - name: Upload failed golden artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: failed-goldens-${{ matrix.config }}
+          path: packages/skia_dart/test/failed_goldens
+          if-no-files-found: ignore
