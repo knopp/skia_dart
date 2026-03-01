@@ -2,13 +2,10 @@
 
 part of '../skia_dart.dart';
 
-// TODO(knopp): Everything allocated here will leak on isolate shutdown.
-// Register all allocation with native and free them in native finalizer.
-
 extension _SkPoint on SkPoint {
   static final List<Pointer<sk_point_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_point_t>(),
+    (_) => _scratchAlloc<sk_point_t>(),
     growable: false,
   );
 
@@ -76,7 +73,7 @@ extension _SkRect on SkRect {
 
   static final List<Pointer<sk_rect_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_rect_t>(),
+    (_) => _scratchAlloc<sk_rect_t>(),
     growable: false,
   );
 
@@ -105,7 +102,7 @@ extension _SkIRect on SkIRect {
 
   static final List<Pointer<sk_irect_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_irect_t>(),
+    (_) => _scratchAlloc<sk_irect_t>(),
     growable: false,
   );
 
@@ -124,7 +121,7 @@ extension _SkIRect on SkIRect {
 extension _SkISize on SkISize {
   static final List<Pointer<sk_isize_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_isize_t>(),
+    (_) => _scratchAlloc<sk_isize_t>(),
     growable: false,
   );
 
@@ -147,7 +144,7 @@ extension _Matrix3 on Matrix3 {
 
   static final List<Pointer<sk_matrix_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_matrix_t>(),
+    (_) => _scratchAlloc<sk_matrix_t>(),
     growable: false,
   );
 
@@ -169,7 +166,7 @@ extension _Matrix4 on Matrix4 {
 
   static final List<Pointer<sk_matrix44_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_matrix44_t>(),
+    (_) => _scratchAlloc<sk_matrix44_t>(),
     growable: false,
   );
 
@@ -245,7 +242,7 @@ extension _SkColor4f on SkColor4f {
 
   static final List<Pointer<sk_color4f_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_color4f_t>(),
+    (_) => _scratchAlloc<sk_color4f_t>(),
     growable: false,
   );
 }
@@ -284,7 +281,7 @@ extension _SkColorspacePrimaries on SkColorspacePrimaries {
 
   static final List<Pointer<sk_colorspace_primaries_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_colorspace_primaries_t>(),
+    (_) => _scratchAlloc<sk_colorspace_primaries_t>(),
     growable: false,
   );
 }
@@ -321,7 +318,7 @@ extension _SkColorspaceTransferFn on SkColorspaceTransferFn {
 
   static final List<Pointer<sk_colorspace_transfer_fn_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_colorspace_transfer_fn_t>(),
+    (_) => _scratchAlloc<sk_colorspace_transfer_fn_t>(),
     growable: false,
   );
 }
@@ -360,7 +357,7 @@ extension _SkColorspaceXYZ on SkColorspaceXYZ {
 
   static final List<Pointer<sk_colorspace_xyz_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_colorspace_xyz_t>(),
+    (_) => _scratchAlloc<sk_colorspace_xyz_t>(),
     growable: false,
   );
 }
@@ -368,7 +365,7 @@ extension _SkColorspaceXYZ on SkColorspaceXYZ {
 extension _Size on Size {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Size>(),
+    (_) => _scratchAlloc<Size>(),
     growable: false,
   );
 }
@@ -376,7 +373,7 @@ extension _Size on Size {
 extension _Uint8 on Uint8 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Uint8>(),
+    (_) => _scratchAlloc<Uint8>(),
     growable: false,
   );
 }
@@ -384,7 +381,7 @@ extension _Uint8 on Uint8 {
 extension _Int8 on Int8 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Int8>(),
+    (_) => _scratchAlloc<Int8>(),
     growable: false,
   );
 }
@@ -392,7 +389,7 @@ extension _Int8 on Int8 {
 extension _Uint16 on Uint16 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Uint16>(),
+    (_) => _scratchAlloc<Uint16>(),
     growable: false,
   );
 }
@@ -400,7 +397,7 @@ extension _Uint16 on Uint16 {
 extension _Int16 on Int16 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Int16>(),
+    (_) => _scratchAlloc<Int16>(),
     growable: false,
   );
 }
@@ -408,7 +405,7 @@ extension _Int16 on Int16 {
 extension _Uint32 on Uint32 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Uint32>(),
+    (_) => _scratchAlloc<Uint32>(),
     growable: false,
   );
 }
@@ -416,7 +413,7 @@ extension _Uint32 on Uint32 {
 extension _Int32 on Int32 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Int32>(),
+    (_) => _scratchAlloc<Int32>(),
     growable: false,
   );
 }
@@ -424,7 +421,7 @@ extension _Int32 on Int32 {
 extension _Uint64 on Uint64 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Uint64>(),
+    (_) => _scratchAlloc<Uint64>(),
     growable: false,
   );
 }
@@ -432,7 +429,7 @@ extension _Uint64 on Uint64 {
 extension _Int64 on Int64 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Int64>(),
+    (_) => _scratchAlloc<Int64>(),
     growable: false,
   );
 }
@@ -440,7 +437,7 @@ extension _Int64 on Int64 {
 extension _Float on Float {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Float>(),
+    (_) => _scratchAlloc<Float>(),
     growable: false,
   );
 }
@@ -448,7 +445,7 @@ extension _Float on Float {
 extension _Bool on Bool {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Bool>(),
+    (_) => _scratchAlloc<Bool>(),
     growable: false,
   );
 }
@@ -456,7 +453,7 @@ extension _Bool on Bool {
 extension _Int on Int {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<Int>(),
+    (_) => _scratchAlloc<Int>(),
     growable: false,
   );
 }
@@ -464,7 +461,7 @@ extension _Int on Int {
 extension _UnsignedInt on UnsignedInt {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<UnsignedInt>(),
+    (_) => _scratchAlloc<UnsignedInt>(),
     growable: false,
   );
 }
@@ -472,7 +469,7 @@ extension _UnsignedInt on UnsignedInt {
 extension _SkPoint3 on SkPoint3 {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_point3_t>(),
+    (_) => _scratchAlloc<sk_point3_t>(),
     growable: false,
   );
 
@@ -499,7 +496,7 @@ extension _SkPoint3 on SkPoint3 {
 extension _SkIPoint on SkIPoint {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_ipoint_t>(),
+    (_) => _scratchAlloc<sk_ipoint_t>(),
     growable: false,
   );
 
@@ -537,7 +534,7 @@ String? _stringFromSkString(Pointer<sk_string_t> ptr) {
 extension _SkRSXFrom on SkRSXForm {
   static final List<Pointer<sk_rsxform_t>> pool = List.generate(
     10,
-    (_) => ffi.calloc<sk_rsxform_t>(),
+    (_) => _scratchAlloc<sk_rsxform_t>(),
     growable: false,
   );
 
@@ -599,7 +596,7 @@ extension _SkWebpEncoderOptions on SkWebpEncoderOptions {
 extension _GrSubmitInfo on GrSubmitInfo {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<gr_submit_info_t>(),
+    (_) => _scratchAlloc<gr_submit_info_t>(),
     growable: false,
   );
   Pointer<gr_submit_info_t> toNativePooled(int index) {
@@ -616,7 +613,7 @@ extension _GrSubmitInfo on GrSubmitInfo {
 extension _GraphiteSubmitInfo on GraphiteSubmitInfo {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<skgpu_graphite_submit_info_t>(),
+    (_) => _scratchAlloc<skgpu_graphite_submit_info_t>(),
     growable: false,
   );
 
@@ -634,7 +631,7 @@ extension _GraphiteSubmitInfo on GraphiteSubmitInfo {
 extension _GraphiteInsertRecordingInfo on GraphiteInsertRecordingInfo {
   static final pool = List.generate(
     10,
-    (_) => ffi.calloc<skgpu_graphite_insert_recording_info_t>(),
+    (_) => _scratchAlloc<skgpu_graphite_insert_recording_info_t>(),
     growable: false,
   );
 
@@ -648,7 +645,32 @@ extension _GraphiteInsertRecordingInfo on GraphiteInsertRecordingInfo {
   }
 }
 
-final _fontPtr = ffi.calloc<Pointer<sk_font_t>>();
-final _textRangePtr = ffi.calloc<sk_paragraph_text_range_t>();
-final _glyphInfoPtr = ffi.calloc<sk_paragraph_glyph_info_t>();
-final _glyphClusterInfoPtr = ffi.calloc<sk_paragraph_glyph_cluster_info_t>();
+final _fontPtr = _scratchAlloc<Pointer<sk_font_t>>();
+final _textRangePtr = _scratchAlloc<sk_paragraph_text_range_t>();
+final _glyphInfoPtr = _scratchAlloc<sk_paragraph_glyph_info_t>();
+final _glyphClusterInfoPtr = _scratchAlloc<sk_paragraph_glyph_cluster_info_t>();
+
+final _scratchAlloc = _ScratchAllocator();
+
+final class _ScratchAllocator implements Allocator, Finalizable {
+  static final NativeFinalizer _finalizer = NativeFinalizer(
+    ffi.malloc.nativeFree.cast(),
+  );
+
+  @override
+  Pointer<T> allocate<T extends NativeType>(int byteCount, {int? alignment}) {
+    final ptr = ffi.calloc.allocate<T>(byteCount, alignment: alignment);
+    _finalizer.attach(
+      this,
+      ptr.cast(),
+      detach: null,
+      externalSize: byteCount,
+    );
+    return ptr;
+  }
+
+  @override
+  void free(Pointer<NativeType> pointer) {
+    throw UnsupportedError('Scratch allocations cannot be freed manually.');
+  }
+}
