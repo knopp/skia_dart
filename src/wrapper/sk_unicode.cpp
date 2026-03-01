@@ -9,6 +9,8 @@
 
 #include "wrapper/include/sk_unicode.h"
 
+#include <mutex>
+
 #include "modules/skunicode/include/SkUnicode.h"
 #include "modules/skunicode/include/SkUnicode_icu.h"
 #include "modules/skunicode/include/SkUnicode_icu4x.h"
