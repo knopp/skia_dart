@@ -17,6 +17,7 @@
 
 #ifdef SK_UNICODE_ICU_IMPLEMENTATION
   #ifdef SK_BUILD_FOR_WIN
+    #include <windows.h>
   #else
     #include <fcntl.h>
     #include <sys/mman.h>
@@ -65,6 +66,31 @@ void sk_icu_load_data_once(const char* data_path) {
 #ifdef SK_UNICODE_ICU_IMPLEMENTATION
   #ifdef SK_BUILD_FOR_WIN
   load_data_result = false;
+  auto length = strlen(data_path);
+  int size = MultiByteToWideChar(CP_UTF8, 0, data_path, (int)length, nullptr, 0);
+
+  std::wstring utf16(size, 0);
+  MultiByteToWideChar(CP_UTF8, 0, data_path, (int)length, utf16.data(), size);
+  HANDLE hFile = CreateFileW(utf16.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+  if (hFile == INVALID_HANDLE_VALUE) return;
+
+  HANDLE hMap = CreateFileMappingA(hFile, NULL, PAGE_READONLY, 0,
+                                   0,  // map entire file
+                                   NULL);
+  if (!hMap) {
+    CloseHandle(hFile);
+    return;
+  };
+
+  void* data = MapViewOfFile(hMap, FILE_MAP_READ, 0, 0,
+                             0  // entire file
+  );
+  if (!data) {
+    CloseHandle(hMap);
+    CloseHandle(hFile);
+    return;
+  }
+  load_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
   #else
   load_data_result = false;
   int fd = open(data_path, O_RDONLY);
