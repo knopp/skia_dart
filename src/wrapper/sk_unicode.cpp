@@ -114,7 +114,7 @@ void sk_icu_load_data_once(const char* data_path) {
 #endif
 }
 
-void sk_icu_set_data_once(void* data) {
+void sk_icu_set_data_once(const void* data) {
 #ifdef SK_UNICODE_ICU_IMPLEMENTATION
   icu_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
 #else

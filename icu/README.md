@@ -1,1 +1,1 @@
-Minimal icudtl.dat (from icu/flutter) go get the tests passing.
+Minimal icudtl.dat (from icu/flutter) to get the tests passing.
