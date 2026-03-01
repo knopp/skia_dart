@@ -115,6 +115,7 @@ class WgpuDevice extends api.WgpuDevice with _NativeMixin<sk_wgpu_device_t> {
     return WgpuQueue._(ptr);
   }
 
+  @override
   Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
@@ -227,6 +228,7 @@ class WgpuQueue extends api.WgpuQueue with _NativeMixin<sk_wgpu_queue_t> {
     _dispose(sk_wgpu_queue_release, _finalizer);
   }
 
+  @override
   Pointer<Void> get handle => _ptr.cast();
 
   static final _finalizer = _createFinalizer();
