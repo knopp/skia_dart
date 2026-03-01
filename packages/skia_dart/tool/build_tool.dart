@@ -82,7 +82,9 @@ class BuildConfig {
     );
   }
 
-  Map<String, Object> optionsFull() {
+  Map<String, Object> optionsFull({
+    required bool forceEnableGanesh,
+  }) {
     final options = Map<String, Object>.from(this.options);
     final targetOs = options['target_os'] as String;
     if (options.containsKey('is_debug') != true) {
@@ -122,6 +124,10 @@ class BuildConfig {
       options['target_cc'] = 'clang';
       options['target_cxx'] = 'clang++';
       options['target_link'] = 'clang++';
+    }
+
+    if (forceEnableGanesh) {
+      options['skia_enable_ganesh'] = true;
     }
 
     return options;
@@ -235,6 +241,12 @@ class GenCommand extends Command<void> {
         debug: true,
       ).map((c) => c.name),
     );
+    argParser.addFlag(
+      'force-enable-ganesh',
+      defaultsTo: false,
+      help:
+          'Whether to enable the Ganesh GPU backend even if disabled in build configuration.',
+    );
   }
 
   @override
@@ -246,7 +258,10 @@ class GenCommand extends Command<void> {
     final outDir = p.join(workspaceRoot, 'out', config.name);
     final argsGn = p.join(outDir, 'args.gn');
     final argsContent = StringBuffer();
-    for (final entry in config.optionsFull().entries) {
+    final forceEnableGanesh = argResults!['force-enable-ganesh'] as bool;
+
+    for (final entry
+        in config.optionsFull(forceEnableGanesh: forceEnableGanesh).entries) {
       final value = entry.value;
       if (value is String) {
         argsContent.writeln('${entry.key} = "$value"');

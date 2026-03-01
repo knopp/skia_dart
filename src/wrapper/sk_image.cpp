@@ -162,7 +162,7 @@ sk_image_t* sk_image_make_subset_raster(const sk_image_t* cimage, const sk_irect
 
 sk_image_t* sk_image_make_subset(const sk_image_t* cimage, sk_recorder_t* recorder, const sk_irect_t* subset) {
   SkImage::RequiredProperties props;
-  return SK_ONLY_GPU(ToImage(AsImage(cimage)->makeSubset(AsSkRecorder(recorder), *AsIRect(subset), props).release()), nullptr);
+  return SK_ONLY_GPU(ToImage(AsImage(cimage)->makeSubset(AsRecorder(recorder), *AsIRect(subset), props).release()), nullptr);
 }
 
 sk_image_t* sk_image_make_texture_image(const sk_image_t* cimage, gr_direct_context_t* context, bool mipmapped, bool budgeted) {
