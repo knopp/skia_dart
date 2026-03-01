@@ -80,11 +80,9 @@ void sk_icu_load_data_once(const char* data_path) {
   if (!hMap) {
     CloseHandle(hFile);
     return;
-  };
+  }
 
-  void* data = MapViewOfFile(hMap, FILE_MAP_READ, 0, 0,
-                             0  // entire file
-  );
+  void* data = MapViewOfFile(hMap, FILE_MAP_READ, 0, 0, 0);
   if (data) {
     icu_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
   }
