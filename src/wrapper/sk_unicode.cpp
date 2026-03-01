@@ -60,12 +60,12 @@ sk_unicode_t* sk_unicode_make_libgrapheme(void) {
 }
 
 namespace {
-bool load_data_result;
+bool icu_data_result;
 
 void sk_icu_load_data_once(const char* data_path) {
 #ifdef SK_UNICODE_ICU_IMPLEMENTATION
   #ifdef SK_BUILD_FOR_WIN
-  load_data_result = false;
+  icu_data_result = false;
   auto length = strlen(data_path);
   int size = MultiByteToWideChar(CP_UTF8, 0, data_path, (int)length, nullptr, 0);
 
@@ -90,9 +90,10 @@ void sk_icu_load_data_once(const char* data_path) {
     CloseHandle(hFile);
     return;
   }
-  load_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
+  icu_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
+  CloseHandle(hFile);
   #else
-  load_data_result = false;
+  icu_data_result = false;
   int fd = open(data_path, O_RDONLY);
   if (fd < 0) return;
   struct stat st;
@@ -105,32 +106,31 @@ void sk_icu_load_data_once(const char* data_path) {
     close(fd);
     return;
   }
-  load_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
+  icu_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
+  close(fd);
   #endif
 #else
-  load_data_result = false;
+  icu_data_result = false;
 #endif
 }
-
-bool set_data_result;
 
 void sk_icu_set_data_once(void* data) {
 #ifdef SK_UNICODE_ICU_IMPLEMENTATION
-  set_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
+  icu_data_result = SkUnicodes::ICU::SkICUSetCommonData(data);
 #else
-  set_data_result = false;
+  icu_data_result = false;
 #endif
 }
+
+static std::once_flag icu_once_flag;
 }  // namespace
 
 bool sk_icu_load_data(const char* data_path) {
-  static std::once_flag onceFlag;
-  std::call_once(onceFlag, sk_icu_load_data_once, data_path);
-  return load_data_result;
+  std::call_once(icu_once_flag, sk_icu_load_data_once, data_path);
+  return icu_data_result;
 }
 
 bool sk_icu_set_data(void* data) {
-  static std::once_flag onceFlag;
-  std::call_once(onceFlag, sk_icu_set_data_once, data);
-  return set_data_result;
+  std::call_once(icu_once_flag, sk_icu_set_data_once, data);
+  return icu_data_result;
 }
