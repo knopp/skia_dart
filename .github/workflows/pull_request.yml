@@ -90,8 +90,7 @@ jobs:
           sudo update-alternatives --set c++ /usr/bin/clang++
 
       - name: Fetch Skia dependencies
-        # Required on windows for icudtl.dat
-        if: steps.check-release.outputs.release_exists == 'false' || runner.os == 'windows'
+        if: steps.check-release.outputs.release_exists == 'false'
         working-directory: skia
         run: python3 tools/git-sync-deps
 
@@ -114,12 +113,6 @@ jobs:
         if: steps.check-release.outputs.release_exists == 'false'
         working-directory: out/${{ matrix.config }}
         run: ninja dawn_dart
-
-      - name: Copy icudtl.dat (Windows)
-        if: runner.os == 'windows'
-        run: |
-          mkdir -p packages/skia_dart/.dart_tool/lib
-          cp skia/third_party/externals/icu/common/icudtl.dat packages/skia_dart/.dart_tool/lib
 
       - name: Clear failed golden outputs
         working-directory: packages/skia_dart

@@ -3076,6 +3076,16 @@ external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu4x();
 @ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
 external ffi.Pointer<sk_unicode_t> sk_unicode_make_libgrapheme();
 
+@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Char>)>(isLeaf: true)
+external bool sk_icu_load_data(
+  ffi.Pointer<ffi.Char> data_path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external bool sk_icu_set_data(
+  ffi.Pointer<ffi.Void> data,
+);
+
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_imagefilter_t>)>(isLeaf: true)
 external void sk_imagefilter_ref(
   ffi.Pointer<sk_imagefilter_t> cfilter,
