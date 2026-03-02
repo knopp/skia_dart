@@ -1018,15 +1018,11 @@ int32_t sk_paragraph_unresolved_glyphs(sk_paragraph_t* paragraph) {
 }
 
 size_t sk_paragraph_unresolved_codepoints(sk_paragraph_t* paragraph, int32_t codepoints[]) {
-  std::vector<int32_t> values;
-  for (SkUnichar codepoint : AsParagraph(paragraph)->unresolvedCodepoints()) {
-    values.push_back(codepoint);
-  }
-  std::sort(values.begin(), values.end());
+  auto unresolved_codepoints = AsParagraph(paragraph)->unresolvedCodepoints();
   if (codepoints != nullptr) {
-    std::copy(values.begin(), values.end(), codepoints);
+    std::copy(unresolved_codepoints.begin(), unresolved_codepoints.end(), codepoints);
   }
-  return values.size();
+  return unresolved_codepoints.size();
 }
 
 void sk_paragraph_visit(sk_paragraph_t* paragraph, sk_paragraph_visitor_proc proc) {
