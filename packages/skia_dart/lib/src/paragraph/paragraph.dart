@@ -614,14 +614,14 @@ final class SkParagraph with _NativeMixin<sk_paragraph_t> {
     sk_paragraph_mark_dirty(_ptr);
   }
 
-  List<int> get unresolvedCodepoints {
+  Set<int> get unresolvedCodepoints {
     final count = sk_paragraph_unresolved_codepoints(_ptr, nullptr);
     if (count == 0) {
-      return const [];
+      return const {};
     }
     final codepoints = Int32List(count);
     sk_paragraph_unresolved_codepoints(_ptr, codepoints.address);
-    return codepoints;
+    return codepoints.toSet();
   }
 
   void visit(SkParagraphVisitor visitor) {

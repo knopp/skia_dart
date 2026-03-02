@@ -1009,6 +1009,40 @@ void main() {
       });
     });
 
+    test('reports unresolved codepoints when font fallback is unavailable', () {
+      final activeUnicode = unicode;
+      if (activeUnicode == null) return;
+
+      SkAutoDisposeScope.run(() {
+        final emptyMgr = SkFontMgr.empty();
+        final collection = SkFontCollection();
+        collection.assetFontManager = emptyMgr;
+        collection.dynamicFontManager = emptyMgr;
+        collection.testFontManager = emptyMgr;
+        collection.defaultFontManager = emptyMgr;
+        collection.disableFontFallback();
+
+        final style = createParagraphStyle();
+        style.textStyle = createParagraphTextStyle().copyWith(
+          fontFamilies: [typeface.familyName],
+          typeface: typeface,
+        );
+
+        final builder = SkParagraphBuilder(
+          style: style,
+          fontCollection: collection,
+          unicode: activeUnicode,
+        );
+        builder.addText('ABCD');
+
+        final paragraph = builder.build();
+        paragraph.layout(220);
+
+        final unresolved = paragraph.unresolvedCodepoints;
+        expect(unresolved, equals({65, 66, 67, 68})); // 'A', 'B', 'C', 'D'
+      });
+    });
+
     test('can be marked dirty and laid out again', () {
       final activeUnicode = unicode;
       if (activeUnicode == null) return;
