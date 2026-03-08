@@ -48,12 +48,27 @@ class WgpuInstance extends api.WgpuInstance
     sk_wgpu_instance_process_events(_ptr);
   }
 
-  WgpuAdapter? requestAdapter(WgpuBackendType backendType) {
-    final ptr = sk_wgpu_instance_request_adapter(_ptr, backendType._value);
-    if (ptr == nullptr) {
-      return null;
+  WgpuAdapter? requestAdapter(
+    WgpuBackendType backendType, {
+    Pointer<Void>? eglDisplay,
+  }) {
+    final request = ffi.calloc<sk_wgpu_adapter_request_t>();
+    if (eglDisplay != null) {
+      request.ref.egl_display = eglDisplay;
     }
-    return WgpuAdapter._(ptr, this);
+    try {
+      final ptr = sk_wgpu_instance_request_adapter(
+        _ptr,
+        backendType._value,
+        request,
+      );
+      if (ptr == nullptr) {
+        return null;
+      }
+      return WgpuAdapter._(ptr, this);
+    } finally {
+      ffi.calloc.free(request);
+    }
   }
 
   @override
@@ -216,6 +231,36 @@ extension Win32 on WgpuDevice {
     }
 
     return WgpuSharedTextureMemory._(ptr);
+  }
+}
+
+extension Egl on WgpuDevice {
+  WgpuTexture? textureFromEglImage(
+    Pointer<Void> eglImage, {
+    required int width,
+    required int height,
+    String? label,
+  }) {
+    final labelPtr = label != null
+        ? label.toNativeUtf8().cast<Int8>()
+        : nullptr;
+    try {
+      final ptr = sk_wgpu_texture_from_egl_image(
+        _ptr,
+        eglImage,
+        width,
+        height,
+        labelPtr.cast(),
+      );
+      if (ptr == nullptr) {
+        return null;
+      }
+      return WgpuTexture._(ptr);
+    } finally {
+      if (labelPtr != nullptr) {
+        ffi.calloc.free(labelPtr);
+      }
+    }
   }
 }
 

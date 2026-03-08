@@ -182,7 +182,8 @@ sk_surface_t* skgpu_graphite_surface_make_render_target(skgpu_graphite_recorder_
 }
 
 sk_surface_t* skgpu_graphite_surface_wrap_backend_texture(skgpu_graphite_recorder_t* recorder, const skgpu_graphite_backend_texture_t* backendTexture, sk_colortype_t color_type, sk_colorspace_t* color_space, const sk_surfaceprops_t* props, const char* label) {
-  return SK_ONLY_GRAPHITE(ToSurface(SkSurfaces::WrapBackendTexture(AsGraphiteRecorder(recorder), *AsGraphiteBackendTexture(backendTexture), (SkColorType)color_type, sk_ref_sp(AsColorSpace(color_space)), AsSurfaceProps(props), nullptr, nullptr, label).release()), nullptr);
+  std::string_view label_view(label ? label : "");
+  return SK_ONLY_GRAPHITE(ToSurface(SkSurfaces::WrapBackendTexture(AsGraphiteRecorder(recorder), *AsGraphiteBackendTexture(backendTexture), (SkColorType)color_type, sk_ref_sp(AsColorSpace(color_space)), AsSurfaceProps(props), nullptr, nullptr, label_view).release()), nullptr);
 }
 
 #ifdef SK_GRAPHITE

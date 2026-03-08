@@ -8,6 +8,347 @@ library;
 
 import 'dart:ffi' as ffi;
 
+@ffi.Native<ffi.Pointer<sk_rrect_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_rrect_t> sk_rrect_new();
+
+@ffi.Native<ffi.Pointer<sk_rrect_t> Function(ffi.Pointer<sk_rrect_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_rrect_t> sk_rrect_new_copy(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
+external void sk_rrect_delete(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_rrect_t>)>(
+  symbol: 'sk_rrect_get_type',
+  isLeaf: true,
+)
+external int _sk_rrect_get_type(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+sk_rrect_type_t sk_rrect_get_type(
+  ffi.Pointer<sk_rrect_t> rrect,
+) => sk_rrect_type_t.fromValue(
+  _sk_rrect_get_type(
+    rrect,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external void sk_rrect_get_rect(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_vector_t>,
+  )
+>(symbol: 'sk_rrect_get_radii', isLeaf: true)
+external void _sk_rrect_get_radii(
+  ffi.Pointer<sk_rrect_t> rrect,
+  int corner,
+  ffi.Pointer<sk_vector_t> radii,
+);
+
+void sk_rrect_get_radii(
+  ffi.Pointer<sk_rrect_t> rrect,
+  sk_rrect_corner_t corner,
+  ffi.Pointer<sk_vector_t> radii,
+) => _sk_rrect_get_radii(
+  rrect,
+  corner.value,
+  radii,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
+external double sk_rrect_get_width(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
+external double sk_rrect_get_height(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
+external void sk_rrect_set_empty(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external void sk_rrect_set_rect(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external void sk_rrect_set_oval(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Float,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external void sk_rrect_set_rect_xy(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+  double xRad,
+  double yRad,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external void sk_rrect_set_nine_patch(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+  double leftRad,
+  double topRad,
+  double rightRad,
+  double bottomRad,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_vector_t>,
+  )
+>(isLeaf: true)
+external void sk_rrect_set_rect_radii(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+  ffi.Pointer<sk_vector_t> radii,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_rrect_inset(
+  ffi.Pointer<sk_rrect_t> rrect,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_rrect_outset(
+  ffi.Pointer<sk_rrect_t> rrect,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_rrect_offset(
+  ffi.Pointer<sk_rrect_t> rrect,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external bool sk_rrect_contains(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_rect_t> rect,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
+external bool sk_rrect_is_valid(
+  ffi.Pointer<sk_rrect_t> rrect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_rrect_t>,
+  )
+>(isLeaf: true)
+external bool sk_rrect_transform(
+  ffi.Pointer<sk_rrect_t> rrect,
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_rrect_t> dest,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
+external void sk_path_effect_ref(
+  ffi.Pointer<sk_path_effect_t> t,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
+external void sk_path_effect_unref(
+  ffi.Pointer<sk_path_effect_t> t,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(
+    ffi.Pointer<sk_path_effect_t>,
+    ffi.Pointer<sk_path_effect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_compose(
+  ffi.Pointer<sk_path_effect_t> outer,
+  ffi.Pointer<sk_path_effect_t> inner,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(
+    ffi.Pointer<sk_path_effect_t>,
+    ffi.Pointer<sk_path_effect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_sum(
+  ffi.Pointer<sk_path_effect_t> first,
+  ffi.Pointer<sk_path_effect_t> second,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Float, ffi.Uint32)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_discrete(
+  double segLength,
+  double deviation,
+  int seedAssist,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_effect_t> Function(ffi.Float)>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_corner(
+  double radius,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_effect_create_1d_path', isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> _sk_path_effect_create_1d_path(
+  ffi.Pointer<sk_path_t> path,
+  double advance,
+  double phase,
+  int style,
+);
+
+ffi.Pointer<sk_path_effect_t> sk_path_effect_create_1d_path(
+  ffi.Pointer<sk_path_t> path,
+  double advance,
+  double phase,
+  sk_path_effect_1d_style_t style,
+) => _sk_path_effect_create_1d_path(
+  path,
+  advance,
+  phase,
+  style.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Pointer<sk_matrix_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_2d_line(
+  double width,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_path_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_2d_path(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(
+    ffi.Pointer<ffi.Float>,
+    ffi.Int,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_dash(
+  ffi.Pointer<ffi.Float> intervals,
+  int count,
+  double phase,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Float, ffi.UnsignedInt)
+>(symbol: 'sk_path_effect_create_trim', isLeaf: true)
+external ffi.Pointer<sk_path_effect_t> _sk_path_effect_create_trim(
+  double start,
+  double stop,
+  int mode,
+);
+
+ffi.Pointer<sk_path_effect_t> sk_path_effect_create_trim(
+  double start,
+  double stop,
+  sk_path_effect_trim_mode_t mode,
+) => _sk_path_effect_create_trim(
+  start,
+  stop,
+  mode.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_path_effect_t>,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external bool sk_path_effect_filter_path(
+  ffi.Pointer<sk_path_effect_t> effect,
+  ffi.Pointer<sk_path_builder_t> dst,
+  ffi.Pointer<sk_path_t> src,
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_rect_t> cullRect,
+  ffi.Pointer<sk_matrix_t> ctm,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
+external bool sk_path_effect_needs_ctm(
+  ffi.Pointer<sk_path_effect_t> effect,
+);
+
 /// /////////////////////////////////////////////////////////////////////////////
 @ffi.Native<
   ffi.Pointer<sk_stream_filestream_t> Function(ffi.Pointer<ffi.Char>)
@@ -520,2570 +861,52 @@ external int sk_wstream_get_size_of_packed_uint(
   int value,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
-external void sk_textblob_ref(
-  ffi.Pointer<sk_textblob_t> blob,
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
+external void sk_drawable_unref(
+  ffi.Pointer<sk_drawable_t> arg0,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
-external void sk_textblob_unref(
-  ffi.Pointer<sk_textblob_t> blob,
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
+external int sk_drawable_get_generation_id(
+  ffi.Pointer<sk_drawable_t> arg0,
 );
 
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
-external int sk_textblob_get_unique_id(
-  ffi.Pointer<sk_textblob_t> blob,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_textblob_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external void sk_textblob_get_bounds(
-  ffi.Pointer<sk_textblob_t> blob,
-  ffi.Pointer<sk_rect_t> bounds,
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_textblob_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<ffi.Float>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external int sk_textblob_get_intercepts(
-  ffi.Pointer<sk_textblob_t> blob,
-  double lower,
-  double upper,
-  ffi.Pointer<ffi.Float> intervals,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_textblob_make_from_text', isLeaf: true)
-external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_text(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_font_t> font,
-  int encoding,
-);
-
-ffi.Pointer<sk_textblob_t> sk_textblob_make_from_text(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_font_t> font,
-  sk_text_encoding_t encoding,
-) => _sk_textblob_make_from_text(
-  text,
-  byteLength,
-  font,
-  encoding.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Pointer<sk_font_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_textblob_make_from_string', isLeaf: true)
-external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_string(
-  ffi.Pointer<ffi.Char> string,
-  ffi.Pointer<sk_font_t> font,
-  int encoding,
-);
-
-ffi.Pointer<sk_textblob_t> sk_textblob_make_from_string(
-  ffi.Pointer<ffi.Char> string,
-  ffi.Pointer<sk_font_t> font,
-  sk_text_encoding_t encoding,
-) => _sk_textblob_make_from_string(
-  string,
-  font,
-  encoding.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<ffi.Float>,
-    ffi.Size,
-    ffi.Float,
-    ffi.Pointer<sk_font_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_textblob_make_from_pos_text_h', isLeaf: true)
-external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_pos_text_h(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<ffi.Float> xpos,
-  int xposCount,
-  double constY,
-  ffi.Pointer<sk_font_t> font,
-  int encoding,
-);
-
-ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_text_h(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<ffi.Float> xpos,
-  int xposCount,
-  double constY,
-  ffi.Pointer<sk_font_t> font,
-  sk_text_encoding_t encoding,
-) => _sk_textblob_make_from_pos_text_h(
-  text,
-  byteLength,
-  xpos,
-  xposCount,
-  constY,
-  font,
-  encoding.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_point_t>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_textblob_make_from_pos_text', isLeaf: true)
-external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_pos_text(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_point_t> pos,
-  int posCount,
-  ffi.Pointer<sk_font_t> font,
-  int encoding,
-);
-
-ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_text(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_point_t> pos,
-  int posCount,
-  ffi.Pointer<sk_font_t> font,
-  sk_text_encoding_t encoding,
-) => _sk_textblob_make_from_pos_text(
-  text,
-  byteLength,
-  pos,
-  posCount,
-  font,
-  encoding.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_rsxform_t>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_textblob_make_from_rsxform', isLeaf: true)
-external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_rsxform(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_rsxform_t> xform,
-  int xformCount,
-  ffi.Pointer<sk_font_t> font,
-  int encoding,
-);
-
-ffi.Pointer<sk_textblob_t> sk_textblob_make_from_rsxform(
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  ffi.Pointer<sk_rsxform_t> xform,
-  int xformCount,
-  ffi.Pointer<sk_font_t> font,
-  sk_text_encoding_t encoding,
-) => _sk_textblob_make_from_rsxform(
-  text,
-  byteLength,
-  xform,
-  xformCount,
-  font,
-  encoding.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Uint16>,
-    ffi.Size,
-    ffi.Pointer<ffi.Float>,
-    ffi.Size,
-    ffi.Float,
-    ffi.Pointer<sk_font_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_h_glyphs(
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int glyphCount,
-  ffi.Pointer<ffi.Float> xpos,
-  int xposCount,
-  double constY,
-  ffi.Pointer<sk_font_t> font,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Uint16>,
-    ffi.Size,
-    ffi.Pointer<sk_point_t>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_glyphs(
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int glyphCount,
-  ffi.Pointer<sk_point_t> pos,
-  int posCount,
-  ffi.Pointer<sk_font_t> font,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<ffi.Uint16>,
-    ffi.Size,
-    ffi.Pointer<sk_rsxform_t>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_rsxform_glyphs(
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int glyphCount,
-  ffi.Pointer<sk_rsxform_t> xform,
-  int xformCount,
-  ffi.Pointer<sk_font_t> font,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_iter_t> Function(ffi.Pointer<sk_textblob_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_iter_t> sk_textblob_iter_new(
-  ffi.Pointer<sk_textblob_t> blob,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_iter_t>)>(isLeaf: true)
-external void sk_textblob_iter_delete(
-  ffi.Pointer<sk_textblob_iter_t> iter,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_textblob_iter_t>,
-    ffi.Pointer<sk_textblob_iter_run_t>,
-  )
->(isLeaf: true)
-external bool sk_textblob_iter_next(
-  ffi.Pointer<sk_textblob_iter_t> iter,
-  ffi.Pointer<sk_textblob_iter_run_t> run,
-);
-
-@ffi.Native<ffi.Pointer<sk_textblob_builder_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_textblob_builder_t> sk_textblob_builder_new();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_builder_t>)>(isLeaf: true)
-external void sk_textblob_builder_delete(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(ffi.Pointer<sk_textblob_builder_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_t> sk_textblob_builder_make(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  double x,
-  double y,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Float,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_pos_h(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  double y,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_pos(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_rsxform(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Float,
-    ffi.Float,
-    ffi.Int,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_text(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  double x,
-  double y,
-  int textByteCount,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Float,
-    ffi.Int,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_text_pos_h(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  double y,
-  int textByteCount,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_text_pos(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  int textByteCount,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_t>,
-    ffi.Pointer<sk_font_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_alloc_run_text_rsxform(
-  ffi.Pointer<sk_textblob_builder_t> builder,
-  ffi.Pointer<sk_font_t> font,
-  int count,
-  int textByteCount,
-  ffi.Pointer<sk_rect_t> bounds,
-  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
->(isLeaf: true)
-external bool sk_matrix_try_invert(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_matrix_t> result,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external void sk_matrix_concat(
-  ffi.Pointer<sk_matrix_t> result,
-  ffi.Pointer<sk_matrix_t> first,
-  ffi.Pointer<sk_matrix_t> second,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
->(isLeaf: true)
-external void sk_matrix_pre_concat(
-  ffi.Pointer<sk_matrix_t> result,
-  ffi.Pointer<sk_matrix_t> matrix,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
->(isLeaf: true)
-external void sk_matrix_post_concat(
-  ffi.Pointer<sk_matrix_t> result,
-  ffi.Pointer<sk_matrix_t> matrix,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external void sk_matrix_map_rect(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_rect_t> dest,
-  ffi.Pointer<sk_rect_t> source,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external void sk_matrix_map_points(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_point_t> dst,
-  ffi.Pointer<sk_point_t> src,
-  int count,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_vector_t>,
-    ffi.Pointer<sk_vector_t>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external void sk_matrix_map_vectors(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_vector_t> dst,
-  ffi.Pointer<sk_vector_t> src,
-  int count,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-  )
->(isLeaf: true)
-external void sk_matrix_map_point(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_point_t> src,
-  ffi.Pointer<sk_point_t> dst,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_vector_t>,
-    ffi.Pointer<sk_vector_t>,
-  )
->(isLeaf: true)
-external void sk_matrix_map_vector(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_vector_t> src,
-  ffi.Pointer<sk_vector_t> dst,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_matrix_t>, ffi.Float)>(
-  isLeaf: true,
-)
-external double sk_matrix_map_radius(
-  ffi.Pointer<sk_matrix_t> matrix,
-  double radius,
-);
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_codec_min_buffered_bytes_needed();
-
-@ffi.Native<
-  ffi.Pointer<sk_codec_t> Function(
-    ffi.Pointer<sk_stream_t>,
-    ffi.Pointer<ffi.UnsignedInt>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_codec_t> sk_codec_new_from_stream(
-  ffi.Pointer<sk_stream_t> stream,
-  ffi.Pointer<ffi.UnsignedInt> result,
-);
-
-@ffi.Native<ffi.Pointer<sk_codec_t> Function(ffi.Pointer<sk_data_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_codec_t> sk_codec_new_from_data(
-  ffi.Pointer<sk_data_t> data,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
-external void sk_codec_destroy(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_codec_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imageinfo_t> sk_codec_get_info(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
-  symbol: 'sk_codec_get_origin',
-  isLeaf: true,
-)
-external int _sk_codec_get_origin(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-sk_encodedorigin_t sk_codec_get_origin(
-  ffi.Pointer<sk_codec_t> codec,
-) => sk_encodedorigin_t.fromValue(
-  _sk_codec_get_origin(
-    codec,
-  ),
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_codec_t>, ffi.Float, ffi.Pointer<sk_isize_t>)
->(isLeaf: true)
-external void sk_codec_get_scaled_dimensions(
-  ffi.Pointer<sk_codec_t> codec,
-  double desiredScale,
-  ffi.Pointer<sk_isize_t> dimensions,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_codec_get_valid_subset(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_irect_t> desiredSubset,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
-  symbol: 'sk_codec_get_encoded_format',
-  isLeaf: true,
-)
-external int _sk_codec_get_encoded_format(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-sk_encoded_image_format_t sk_codec_get_encoded_format(
-  ffi.Pointer<sk_codec_t> codec,
-) => sk_encoded_image_format_t.fromValue(
-  _sk_codec_get_encoded_format(
-    codec,
-  ),
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_codec_options_t>,
-  )
->(symbol: 'sk_codec_get_pixels', isLeaf: true)
-external int _sk_codec_get_pixels(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  ffi.Pointer<sk_codec_options_t> options,
-);
-
-sk_codec_result_t sk_codec_get_pixels(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  ffi.Pointer<sk_codec_options_t> options,
-) => sk_codec_result_t.fromValue(
-  _sk_codec_get_pixels(
-    codec,
-    info,
-    pixels,
-    rowBytes,
-    options,
-  ),
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_codec_options_t>,
-  )
->(symbol: 'sk_codec_start_incremental_decode', isLeaf: true)
-external int _sk_codec_start_incremental_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  ffi.Pointer<sk_codec_options_t> options,
-);
-
-sk_codec_result_t sk_codec_start_incremental_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  ffi.Pointer<sk_codec_options_t> options,
-) => sk_codec_result_t.fromValue(
-  _sk_codec_start_incremental_decode(
-    codec,
-    info,
-    pixels,
-    rowBytes,
-    options,
-  ),
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<ffi.Int>)
->(symbol: 'sk_codec_incremental_decode', isLeaf: true)
-external int _sk_codec_incremental_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<ffi.Int> rowsDecoded,
-);
-
-sk_codec_result_t sk_codec_incremental_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<ffi.Int> rowsDecoded,
-) => sk_codec_result_t.fromValue(
-  _sk_codec_incremental_decode(
-    codec,
-    rowsDecoded,
-  ),
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<sk_codec_options_t>,
-  )
->(symbol: 'sk_codec_start_scanline_decode', isLeaf: true)
-external int _sk_codec_start_scanline_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<sk_codec_options_t> options,
-);
-
-sk_codec_result_t sk_codec_start_scanline_decode(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<sk_codec_options_t> options,
-) => sk_codec_result_t.fromValue(
-  _sk_codec_start_scanline_decode(
-    codec,
-    info,
-    options,
-  ),
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Int,
-    ffi.Size,
-  )
->(isLeaf: true)
-external int sk_codec_get_scanlines(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<ffi.Void> dst,
-  int countLines,
-  int rowBytes,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_codec_t>, ffi.Int)>(isLeaf: true)
-external bool sk_codec_skip_scanlines(
-  ffi.Pointer<sk_codec_t> codec,
-  int countLines,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
-  symbol: 'sk_codec_get_scanline_order',
-  isLeaf: true,
-)
-external int _sk_codec_get_scanline_order(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-sk_codec_scanline_order_t sk_codec_get_scanline_order(
-  ffi.Pointer<sk_codec_t> codec,
-) => sk_codec_scanline_order_t.fromValue(
-  _sk_codec_get_scanline_order(
-    codec,
-  ),
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
-external int sk_codec_next_scanline(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>, ffi.Int)>(isLeaf: true)
-external int sk_codec_output_scanline(
-  ffi.Pointer<sk_codec_t> codec,
-  int inputScanline,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
-external int sk_codec_get_frame_count(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<sk_codec_frameinfo_t>)
->(isLeaf: true)
-external void sk_codec_get_frame_info(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<sk_codec_frameinfo_t> frameInfo,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Int,
-    ffi.Pointer<sk_codec_frameinfo_t>,
-  )
->(isLeaf: true)
-external bool sk_codec_get_frame_info_for_index(
-  ffi.Pointer<sk_codec_t> codec,
-  int index,
-  ffi.Pointer<sk_codec_frameinfo_t> frameInfo,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
-external int sk_codec_get_repetition_count(
-  ffi.Pointer<sk_codec_t> codec,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_codec_t>,
-    ffi.Pointer<ffi.UnsignedInt>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_codecs_deferred_image(
-  ffi.Pointer<sk_codec_t> codec,
-  ffi.Pointer<ffi.UnsignedInt> alphaType,
-);
-
-@ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_graphics_init();
-
-@ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_graphics_purge_font_cache();
-
-@ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_graphics_purge_resource_cache();
-
-@ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_graphics_purge_all_caches();
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_graphics_get_font_cache_used();
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_graphics_get_font_cache_limit();
-
-@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
-external int sk_graphics_set_font_cache_limit(
-  int bytes,
-);
-
-@ffi.Native<ffi.Int Function()>(isLeaf: true)
-external int sk_graphics_get_font_cache_count_used();
-
-@ffi.Native<ffi.Int Function()>(isLeaf: true)
-external int sk_graphics_get_font_cache_count_limit();
-
-@ffi.Native<ffi.Int Function(ffi.Int)>(isLeaf: true)
-external int sk_graphics_set_font_cache_count_limit(
-  int count,
-);
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_graphics_get_resource_cache_total_bytes_used();
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_graphics_get_resource_cache_total_byte_limit();
-
-@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
-external int sk_graphics_set_resource_cache_total_byte_limit(
-  int newLimit,
-);
-
-@ffi.Native<ffi.Size Function()>(isLeaf: true)
-external int sk_graphics_get_resource_cache_single_allocation_byte_limit();
-
-@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
-external int sk_graphics_set_resource_cache_single_allocation_byte_limit(
-  int newLimit,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_tracememorydump_t>)>(isLeaf: true)
-external void sk_graphics_dump_memory_statistics(
-  ffi.Pointer<sk_tracememorydump_t> dump,
-);
-
-@ffi.Native<ffi.Pointer<sk_localized_string_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_localized_string_t> sk_localized_string_new();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_localized_string_t>)>(isLeaf: true)
-external void sk_localized_string_delete(
-  ffi.Pointer<sk_localized_string_t> str,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_localized_string_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<ffi.Char> sk_localized_string_get_language(
-  ffi.Pointer<sk_localized_string_t> str,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_localized_string_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<ffi.Char> sk_localized_string_get_string(
-  ffi.Pointer<sk_localized_string_t> str,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_localized_strings_t>)>(
-  isLeaf: true,
-)
-external void sk_localized_strings_unref(
-  ffi.Pointer<sk_localized_strings_t> strs,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_localized_strings_t>,
-    ffi.Pointer<sk_localized_string_t>,
-  )
->(isLeaf: true)
-external bool sk_localized_strings_next(
-  ffi.Pointer<sk_localized_strings_t> strs,
-  ffi.Pointer<sk_localized_string_t> str,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external void sk_typeface_unref(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Pointer<sk_fontstyle_t> Function(ffi.Pointer<sk_typeface_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_fontstyle_t> sk_typeface_get_fontstyle(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_get_font_weight(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_get_font_width(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_typeface_t>)>(
-  symbol: 'sk_typeface_get_font_slant',
-  isLeaf: true,
-)
-external int _sk_typeface_get_font_slant(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-sk_font_style_slant_t sk_typeface_get_font_slant(
-  ffi.Pointer<sk_typeface_t> typeface,
-) => sk_font_style_slant_t.fromValue(
-  _sk_typeface_get_font_slant(
-    typeface,
-  ),
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external bool sk_typeface_is_fixed_pitch(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external bool sk_typeface_is_bold(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external bool sk_typeface_is_italic(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external bool sk_typeface_is_synthetic_bold(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external bool sk_typeface_is_synthetic_oblique(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_get_unique_id(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_typeface_t>)
->(isLeaf: true)
-external bool sk_typeface_equal(
-  ffi.Pointer<sk_typeface_t> facea,
-  ffi.Pointer<sk_typeface_t> faceb,
-);
-
-@ffi.Native<ffi.Pointer<sk_typeface_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_typeface_create_empty();
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<ffi.Int32>,
-    ffi.Int,
-    ffi.Pointer<ffi.Uint16>,
-  )
->(isLeaf: true)
-external void sk_typeface_unichars_to_glyphs(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Int32> unichars,
-  int count,
-  ffi.Pointer<ffi.Uint16> glyphs,
-);
-
-@ffi.Native<ffi.Uint16 Function(ffi.Pointer<sk_typeface_t>, ffi.Int32)>(
-  isLeaf: true,
-)
-external int sk_typeface_unichar_to_glyph(
-  ffi.Pointer<sk_typeface_t> typeface,
-  int unichar,
-);
-
-@ffi.Native<
-  ffi.Size Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.UnsignedInt,
-    ffi.Pointer<ffi.Uint16>,
-    ffi.Int,
-  )
->(symbol: 'sk_typeface_text_to_glyphs', isLeaf: true)
-external int _sk_typeface_text_to_glyphs(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  int encoding,
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int maxGlyphCount,
-);
-
-int sk_typeface_text_to_glyphs(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Void> text,
-  int byteLength,
-  sk_text_encoding_t encoding,
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int maxGlyphCount,
-) => _sk_typeface_text_to_glyphs(
-  typeface,
-  text,
-  byteLength,
-  encoding.value,
-  glyphs,
-  maxGlyphCount,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_count_glyphs(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_count_tables(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<sk_font_table_tag_t>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external int sk_typeface_read_table_tags(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<sk_font_table_tag_t> tags,
-  int count,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_typeface_t>, sk_font_table_tag_t)>(
-  isLeaf: true,
-)
-external int sk_typeface_get_table_size(
-  ffi.Pointer<sk_typeface_t> typeface,
-  int tag,
-);
-
-@ffi.Native<
-  ffi.Size Function(
-    ffi.Pointer<sk_typeface_t>,
-    sk_font_table_tag_t,
-    ffi.Size,
-    ffi.Size,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external int sk_typeface_get_table_data(
-  ffi.Pointer<sk_typeface_t> typeface,
-  int tag,
-  int offset,
-  int length,
-  ffi.Pointer<ffi.Void> data,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(
-    ffi.Pointer<sk_typeface_t>,
-    sk_font_table_tag_t,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_typeface_copy_table_data(
-  ffi.Pointer<sk_typeface_t> typeface,
-  int tag,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
-external int sk_typeface_get_units_per_em(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<ffi.Uint16>,
-    ffi.Int,
-    ffi.Pointer<ffi.Int32>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external bool sk_typeface_get_kerning_pair_adjustments(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Uint16> glyphs,
-  int glyphCount,
-  ffi.Pointer<ffi.Int32> adjustments,
-  int adjustmentsCount,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_localized_strings_t> Function(ffi.Pointer<sk_typeface_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_localized_strings_t>
-sk_typeface_create_family_name_iterator(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<sk_typeface_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_string_t> sk_typeface_get_family_name(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<sk_typeface_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_string_t> sk_typeface_get_post_script_name(
-  ffi.Pointer<sk_typeface_t> typeface,
-);
-
-@ffi.Native<
-  ffi.Int Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_string_t>)
->(isLeaf: true)
-external int sk_typeface_get_resource_name(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<sk_string_t> resourceName,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_stream_asset_t> Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<ffi.Int>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_stream(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Int> ttcIndex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_stream_asset_t> Function(
-    ffi.Pointer<sk_typeface_t>,
-    ffi.Pointer<ffi.Int>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_existing_stream(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<ffi.Int> ttcIndex,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external void sk_typeface_get_bounds(
-  ffi.Pointer<sk_typeface_t> typeface,
-  ffi.Pointer<sk_rect_t> bounds,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_typeface_t>, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_typeface_serialize_to_data(
-  ffi.Pointer<sk_typeface_t> typeface,
-  int serializeBehavior,
-);
-
-@ffi.Native<ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_data_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_typeface_t> sk_typeface_deserialize_from_data(
-  ffi.Pointer<sk_data_t> data,
-);
-
-@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_empty();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontmgr_t>)>(isLeaf: true)
-external void sk_fontmgr_unref(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontmgr_t>)>(isLeaf: true)
-external int sk_fontmgr_count_families(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Int,
-    ffi.Pointer<sk_string_t>,
-  )
->(isLeaf: true)
-external void sk_fontmgr_get_family_name(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  int index,
-  ffi.Pointer<sk_string_t> familyName,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_fontstyleset_t> Function(ffi.Pointer<sk_fontmgr_t>, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<sk_fontstyleset_t> sk_fontmgr_create_styleset(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  int index,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_fontstyleset_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<ffi.Char>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_fontstyleset_t> sk_fontmgr_match_family(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<ffi.Char> familyName,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Pointer<sk_fontstyle_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontmgr_match_family_style(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<ffi.Char> familyName,
-  ffi.Pointer<sk_fontstyle_t> style,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Pointer<sk_fontstyle_t>,
-    ffi.Pointer<ffi.Pointer<ffi.Char>>,
-    ffi.Int,
-    ffi.Int32,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontmgr_match_family_style_character(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<ffi.Char> familyName,
-  ffi.Pointer<sk_fontstyle_t> style,
-  ffi.Pointer<ffi.Pointer<ffi.Char>> bcp47,
-  int bcp47Count,
-  int character,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<sk_data_t>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_data(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<sk_data_t> data,
-  int index,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<sk_stream_asset_t>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_stream(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<sk_stream_asset_t> stream,
-  int index,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_file(
-  ffi.Pointer<sk_fontmgr_t> arg0,
-  ffi.Pointer<ffi.Char> path,
-  int index,
-);
-
-@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function(ffi.Pointer<ffi.Void>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_core_text(
-  ffi.Pointer<ffi.Void> ct_font_collection,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_fontmgr_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_directwrite(
-  ffi.Pointer<ffi.Void> factory,
-  ffi.Pointer<ffi.Void> collection,
-);
-
-@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function(ffi.Pointer<ffi.Void>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_fontconfig(
-  ffi.Pointer<ffi.Void> config,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_fontstyle_t> Function(ffi.Int, ffi.Int, ffi.UnsignedInt)
->(symbol: 'sk_fontstyle_new', isLeaf: true)
-external ffi.Pointer<sk_fontstyle_t> _sk_fontstyle_new(
-  int weight,
-  int width,
-  int slant,
-);
-
-ffi.Pointer<sk_fontstyle_t> sk_fontstyle_new(
-  int weight,
-  int width,
-  sk_font_style_slant_t slant,
-) => _sk_fontstyle_new(
-  weight,
-  width,
-  slant.value,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
-external void sk_fontstyle_delete(
-  ffi.Pointer<sk_fontstyle_t> fs,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
-external int sk_fontstyle_get_weight(
-  ffi.Pointer<sk_fontstyle_t> fs,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
-external int sk_fontstyle_get_width(
-  ffi.Pointer<sk_fontstyle_t> fs,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_fontstyle_t>)>(
-  symbol: 'sk_fontstyle_get_slant',
-  isLeaf: true,
-)
-external int _sk_fontstyle_get_slant(
-  ffi.Pointer<sk_fontstyle_t> fs,
-);
-
-sk_font_style_slant_t sk_fontstyle_get_slant(
-  ffi.Pointer<sk_fontstyle_t> fs,
-) => sk_font_style_slant_t.fromValue(
-  _sk_fontstyle_get_slant(
-    fs,
-  ),
-);
-
-@ffi.Native<ffi.Pointer<sk_fontstyleset_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_fontstyleset_t> sk_fontstyleset_create_empty();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontstyleset_t>)>(isLeaf: true)
-external void sk_fontstyleset_unref(
-  ffi.Pointer<sk_fontstyleset_t> fss,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyleset_t>)>(isLeaf: true)
-external int sk_fontstyleset_get_count(
-  ffi.Pointer<sk_fontstyleset_t> fss,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_fontstyleset_t>,
-    ffi.Int,
-    ffi.Pointer<sk_fontstyle_t>,
-    ffi.Pointer<sk_string_t>,
-  )
->(isLeaf: true)
-external void sk_fontstyleset_get_style(
-  ffi.Pointer<sk_fontstyleset_t> fss,
-  int index,
-  ffi.Pointer<sk_fontstyle_t> fs,
-  ffi.Pointer<sk_string_t> style,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_fontstyleset_t>, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontstyleset_create_typeface(
-  ffi.Pointer<sk_fontstyleset_t> fss,
-  int index,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_typeface_t> Function(
-    ffi.Pointer<sk_fontstyleset_t>,
-    ffi.Pointer<sk_fontstyle_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_typeface_t> sk_fontstyleset_match_style(
-  ffi.Pointer<sk_fontstyleset_t> fss,
-  ffi.Pointer<sk_fontstyle_t> style,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_new();
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.UnsignedInt)>(
-  symbol: 'sk_path_new_with_filltype',
-  isLeaf: true,
-)
-external ffi.Pointer<sk_path_t> _sk_path_new_with_filltype(
-  int fillType,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_with_filltype(
-  sk_path_filltype_t fillType,
-) => _sk_path_new_with_filltype(
-  fillType.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Int,
-    ffi.Pointer<ffi.Uint8>,
-    ffi.Int,
-    ffi.Pointer<ffi.Float>,
-    ffi.Int,
-    ffi.UnsignedInt,
-    ffi.Bool,
-  )
->(symbol: 'sk_path_new_raw', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_raw(
-  ffi.Pointer<sk_point_t> points,
-  int pointCount,
-  ffi.Pointer<ffi.Uint8> verbs,
-  int verbCount,
-  ffi.Pointer<ffi.Float> conics,
-  int conicCount,
-  int fillType,
-  bool isVolatile,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_raw(
-  ffi.Pointer<sk_point_t> points,
-  int pointCount,
-  ffi.Pointer<ffi.Uint8> verbs,
-  int verbCount,
-  ffi.Pointer<ffi.Float> conics,
-  int conicCount,
-  sk_path_filltype_t fillType,
-  bool isVolatile,
-) => _sk_path_new_raw(
-  points,
-  pointCount,
-  verbs,
-  verbCount,
-  conics,
-  conicCount,
-  fillType.value,
-  isVolatile,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_rect', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_rect(
-  ffi.Pointer<sk_rect_t> rect,
-  int fillType,
-  int direction,
-  int startIndex,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_rect(
-  ffi.Pointer<sk_rect_t> rect,
-  sk_path_filltype_t fillType,
-  sk_path_direction_t direction,
-  int startIndex,
-) => _sk_path_new_rect(
-  rect,
-  fillType.value,
-  direction.value,
-  startIndex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_rect_simple', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_rect_simple(
-  ffi.Pointer<sk_rect_t> rect,
-  int direction,
-  int startIndex,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_rect_simple(
-  ffi.Pointer<sk_rect_t> rect,
-  sk_path_direction_t direction,
-  int startIndex,
-) => _sk_path_new_rect_simple(
-  rect,
-  direction.value,
-  startIndex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_rect_t>, ffi.UnsignedInt)
->(symbol: 'sk_path_new_oval', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_oval(
-  ffi.Pointer<sk_rect_t> rect,
-  int direction,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_oval(
-  ffi.Pointer<sk_rect_t> rect,
-  sk_path_direction_t direction,
-) => _sk_path_new_oval(
-  rect,
-  direction.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_oval_start', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_oval_start(
-  ffi.Pointer<sk_rect_t> rect,
-  int direction,
-  int startIndex,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_oval_start(
-  ffi.Pointer<sk_rect_t> rect,
-  sk_path_direction_t direction,
-  int startIndex,
-) => _sk_path_new_oval_start(
-  rect,
-  direction.value,
-  startIndex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_circle', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_circle(
-  double centerX,
-  double centerY,
-  double radius,
-  int direction,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_circle(
-  double centerX,
-  double centerY,
-  double radius,
-  sk_path_direction_t direction,
-) => _sk_path_new_circle(
-  centerX,
-  centerY,
-  radius,
-  direction.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_rrect_t>, ffi.UnsignedInt)
->(symbol: 'sk_path_new_rrect', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_rrect(
-  ffi.Pointer<sk_rrect_t> rrect,
-  int direction,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_rrect(
-  ffi.Pointer<sk_rrect_t> rrect,
-  sk_path_direction_t direction,
-) => _sk_path_new_rrect(
-  rrect,
-  direction.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_rrect_start', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_rrect_start(
-  ffi.Pointer<sk_rrect_t> rrect,
-  int direction,
-  int startIndex,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_rrect_start(
-  ffi.Pointer<sk_rrect_t> rrect,
-  sk_path_direction_t direction,
-  int startIndex,
-) => _sk_path_new_rrect_start(
-  rrect,
-  direction.value,
-  startIndex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_rect_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_new_round_rect', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_round_rect(
-  ffi.Pointer<sk_rect_t> rect,
-  double rx,
-  double ry,
-  int direction,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_round_rect(
-  ffi.Pointer<sk_rect_t> rect,
-  double rx,
-  double ry,
-  sk_path_direction_t direction,
-) => _sk_path_new_round_rect(
-  rect,
-  rx,
-  ry,
-  direction.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Int,
-    ffi.Bool,
-    ffi.UnsignedInt,
-    ffi.Bool,
-  )
->(symbol: 'sk_path_new_polygon', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_new_polygon(
-  ffi.Pointer<sk_point_t> points,
-  int count,
-  bool isClosed,
-  int fillType,
-  bool isVolatile,
-);
-
-ffi.Pointer<sk_path_t> sk_path_new_polygon(
-  ffi.Pointer<sk_point_t> points,
-  int count,
-  bool isClosed,
-  sk_path_filltype_t fillType,
-  bool isVolatile,
-) => _sk_path_new_polygon(
-  points,
-  count,
-  isClosed,
-  fillType.value,
-  isVolatile,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_new_line(
-  ffi.Pointer<sk_point_t> pointA,
-  ffi.Pointer<sk_point_t> pointB,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_path_t> sk_path_new_from_path(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external void sk_path_delete(
-  ffi.Pointer<sk_path_t> arg0,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_is_interpolatable(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_path_t> compare,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Float,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_make_interpolate(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_path_t> ending,
-  double weight,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_path_t>)>(
-  symbol: 'sk_path_get_filltype',
-  isLeaf: true,
-)
-external int _sk_path_get_filltype(
-  ffi.Pointer<sk_path_t> arg0,
-);
-
-sk_path_filltype_t sk_path_get_filltype(
-  ffi.Pointer<sk_path_t> arg0,
-) => sk_path_filltype_t.fromValue(
-  _sk_path_get_filltype(
-    arg0,
-  ),
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_path_set_filltype',
-  isLeaf: true,
-)
-external void _sk_path_set_filltype(
-  ffi.Pointer<sk_path_t> arg0,
-  int arg1,
-);
-
-void sk_path_set_filltype(
-  ffi.Pointer<sk_path_t> arg0,
-  sk_path_filltype_t arg1,
-) => _sk_path_set_filltype(
-  arg0,
-  arg1.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.UnsignedInt)
->(symbol: 'sk_path_make_filltype', isLeaf: true)
-external ffi.Pointer<sk_path_t> _sk_path_make_filltype(
-  ffi.Pointer<sk_path_t> path,
-  int fillType,
-);
-
-ffi.Pointer<sk_path_t> sk_path_make_filltype(
-  ffi.Pointer<sk_path_t> path,
-  sk_path_filltype_t fillType,
-) => _sk_path_make_filltype(
-  path,
-  fillType.value,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_inverse_filltype(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_path_t> sk_path_make_toggle_inverse_filltype(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external void sk_path_toggle_inverse_filltype(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_empty(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_last_contour_closed(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_finite(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_volatile(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Bool)>(isLeaf: true)
-external void sk_path_set_is_volatile(
-  ffi.Pointer<sk_path_t> path,
-  bool isVolatile,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Bool)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_path_t> sk_path_make_is_volatile(
-  ffi.Pointer<sk_path_t> path,
-  bool isVolatile,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_point_t>, ffi.Pointer<sk_point_t>, ffi.Bool)
->(isLeaf: true)
-external bool sk_path_is_line_degenerate(
-  ffi.Pointer<sk_point_t> p1,
-  ffi.Pointer<sk_point_t> p2,
-  bool exact,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external bool sk_path_is_quad_degenerate(
-  ffi.Pointer<sk_point_t> p1,
-  ffi.Pointer<sk_point_t> p2,
-  ffi.Pointer<sk_point_t> p3,
-  bool exact,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external bool sk_path_is_cubic_degenerate(
-  ffi.Pointer<sk_point_t> p1,
-  ffi.Pointer<sk_point_t> p2,
-  ffi.Pointer<sk_point_t> p3,
-  ffi.Pointer<sk_point_t> p4,
-  bool exact,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_point_t> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
->(isLeaf: true)
-external ffi.Pointer<sk_point_t> sk_path_get_points(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<ffi.Int> count,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint8> sk_path_get_verbs(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<ffi.Int> count,
-);
-
 @ffi.Native<
-  ffi.Pointer<ffi.Float> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
+  ffi.Void Function(ffi.Pointer<sk_drawable_t>, ffi.Pointer<sk_rect_t>)
 >(isLeaf: true)
-external ffi.Pointer<ffi.Float> sk_path_get_conic_weights(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<ffi.Int> count,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external int sk_path_approximate_bytes_used(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external void sk_path_update_bounds_cache(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external void sk_path_get_bounds(
-  ffi.Pointer<sk_path_t> arg0,
+external void sk_drawable_get_bounds(
+  ffi.Pointer<sk_drawable_t> arg0,
   ffi.Pointer<sk_rect_t> arg1,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external void sk_path_compute_tight_bounds(
-  ffi.Pointer<sk_path_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_conservatively_contains_rect(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_rect_t> rect,
-);
-
 @ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_path_t>,
+  ffi.Void Function(
+    ffi.Pointer<sk_drawable_t>,
+    ffi.Pointer<sk_canvas_t>,
     ffi.Pointer<sk_matrix_t>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_try_make_transform(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_matrix_t> matrix,
+external void sk_drawable_draw(
+  ffi.Pointer<sk_drawable_t> arg0,
+  ffi.Pointer<sk_canvas_t> arg1,
+  ffi.Pointer<sk_matrix_t> arg2,
 );
 
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_try_make_offset(
-  ffi.Pointer<sk_path_t> path,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_try_make_scale(
-  ffi.Pointer<sk_path_t> path,
-  double sx,
-  double sy,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_make_transform(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_matrix_t> matrix,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_make_offset(
-  ffi.Pointer<sk_path_t> path,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_make_scale(
-  ffi.Pointer<sk_path_t> path,
-  double sx,
-  double sy,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
+@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_drawable_t>)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_path_t> sk_path_clone(
-  ffi.Pointer<sk_path_t> cpath,
+external ffi.Pointer<sk_picture_t> sk_drawable_make_picture_snapshot(
+  ffi.Pointer<sk_drawable_t> arg0,
 );
 
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external int sk_path_count_points(
-  ffi.Pointer<sk_path_t> cpath,
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
+external void sk_drawable_notify_drawing_changed(
+  ffi.Pointer<sk_drawable_t> arg0,
 );
 
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external int sk_path_count_verbs(
-  ffi.Pointer<sk_path_t> cpath,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Int, ffi.Pointer<sk_point_t>)
->(isLeaf: true)
-external void sk_path_get_point(
-  ffi.Pointer<sk_path_t> cpath,
-  int index,
-  ffi.Pointer<sk_point_t> point,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external bool sk_path_contains(
-  ffi.Pointer<sk_path_t> cpath,
-  double x,
-  double y,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Char>)>(
-  isLeaf: true,
-)
-external bool sk_path_parse_svg_string(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<ffi.Char> str,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_string_t>)
->(isLeaf: true)
-external void sk_path_to_svg_string(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_string_t> str,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_point_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_get_last_point(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_point_t> point,
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Float,
-    ffi.Pointer<sk_point_t>,
-    ffi.Int,
-  )
->(isLeaf: true)
-external int sk_path_convert_conic_to_quads(
-  ffi.Pointer<sk_point_t> p0,
-  ffi.Pointer<sk_point_t> p1,
-  ffi.Pointer<sk_point_t> p2,
-  double w,
-  ffi.Pointer<sk_point_t> pts,
-  int pow2,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external int sk_path_get_segment_masks(
-  ffi.Pointer<sk_path_t> cpath,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_is_oval(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_rect_t> bounds,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rrect_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_is_rrect(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_rrect_t> bounds,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_point_t>)>(
-  isLeaf: true,
-)
-external bool sk_path_is_line(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_point_t> line,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<ffi.Bool>,
-    ffi.Pointer<ffi.UnsignedInt>,
-  )
->(isLeaf: true)
-external bool sk_path_is_rect(
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_rect_t> rect,
-  ffi.Pointer<ffi.Bool> isClosed,
-  ffi.Pointer<ffi.UnsignedInt> direction,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_convex(
-  ffi.Pointer<sk_path_t> cpath,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external bool sk_path_is_valid(
-  ffi.Pointer<sk_path_t> cpath,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Size>,
-  )
->(isLeaf: true)
-external bool sk_path_write_to_memory(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<ffi.Void> buffer,
-  ffi.Pointer<ffi.Size> size,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_data_t> sk_path_serialize(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<ffi.Size>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_t> sk_path_read_from_memory(
-  ffi.Pointer<ffi.Void> buffer,
-  int length,
-  ffi.Pointer<ffi.Size> bytesRead,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external int sk_path_get_generation_id(
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_wstream_t>, ffi.Bool)
->(isLeaf: true)
-external void sk_path_dump(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_wstream_t> stream,
-  bool dumpAsHex,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_iterator_t> Function(ffi.Pointer<sk_path_t>, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<sk_path_iterator_t> sk_path_create_iter(
-  ffi.Pointer<sk_path_t> cpath,
-  int forceClose,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_path_iterator_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external void sk_path_iter_set_path(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-  ffi.Pointer<sk_path_t> path,
-  bool forceClose,
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(
-    ffi.Pointer<sk_path_iterator_t>,
-    ffi.Pointer<sk_point_t>,
-  )
->(symbol: 'sk_path_iter_next', isLeaf: true)
-external int _sk_path_iter_next(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-  ffi.Pointer<sk_point_t> points,
-);
-
-sk_path_verb_t sk_path_iter_next(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-  ffi.Pointer<sk_point_t> points,
-) => sk_path_verb_t.fromValue(
-  _sk_path_iter_next(
-    iterator,
-    points,
-  ),
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
-external double sk_path_iter_conic_weight(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
-external int sk_path_iter_is_close_line(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
-external int sk_path_iter_is_closed_contour(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
-external void sk_path_iter_destroy(
-  ffi.Pointer<sk_path_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_rawiterator_t> Function(ffi.Pointer<sk_path_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_path_rawiterator_t> sk_path_create_rawiter(
-  ffi.Pointer<sk_path_t> cpath,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_path_rawiterator_t>, ffi.Pointer<sk_path_t>)
->(isLeaf: true)
-external void sk_path_rawiter_set_path(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_path_rawiterator_t>)>(
-  symbol: 'sk_path_rawiter_peek',
-  isLeaf: true,
-)
-external int _sk_path_rawiter_peek(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-);
-
-sk_path_verb_t sk_path_rawiter_peek(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-) => sk_path_verb_t.fromValue(
-  _sk_path_rawiter_peek(
-    iterator,
-  ),
-);
-
-@ffi.Native<
-  ffi.UnsignedInt Function(
-    ffi.Pointer<sk_path_rawiterator_t>,
-    ffi.Pointer<sk_point_t>,
-  )
->(symbol: 'sk_path_rawiter_next', isLeaf: true)
-external int _sk_path_rawiter_next(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-  ffi.Pointer<sk_point_t> points,
-);
-
-sk_path_verb_t sk_path_rawiter_next(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-  ffi.Pointer<sk_point_t> points,
-) => sk_path_verb_t.fromValue(
-  _sk_path_rawiter_next(
-    iterator,
-    points,
-  ),
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_path_rawiterator_t>)>(
-  isLeaf: true,
-)
-external double sk_path_rawiter_conic_weight(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_rawiterator_t>)>(isLeaf: true)
-external void sk_path_rawiter_destroy(
-  ffi.Pointer<sk_path_rawiterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_path_t>,
-  )
->(symbol: 'sk_pathop_op', isLeaf: true)
-external bool _sk_pathop_op(
-  ffi.Pointer<sk_path_t> one,
-  ffi.Pointer<sk_path_t> two,
-  int op,
-  ffi.Pointer<sk_path_t> result,
-);
-
-bool sk_pathop_op(
-  ffi.Pointer<sk_path_t> one,
-  ffi.Pointer<sk_path_t> two,
-  sk_pathop_t op,
-  ffi.Pointer<sk_path_t> result,
-) => _sk_pathop_op(
-  one,
-  two,
-  op.value,
-  result,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external bool sk_pathop_simplify(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_path_t> result,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
-  isLeaf: true,
-)
-external bool sk_pathop_as_winding(
-  ffi.Pointer<sk_path_t> path,
-  ffi.Pointer<sk_path_t> result,
-);
-
-@ffi.Native<ffi.Pointer<sk_opbuilder_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_opbuilder_t> sk_opbuilder_new();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_opbuilder_t>)>(isLeaf: true)
-external void sk_opbuilder_destroy(
-  ffi.Pointer<sk_opbuilder_t> builder,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_opbuilder_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_opbuilder_add', isLeaf: true)
-external void _sk_opbuilder_add(
-  ffi.Pointer<sk_opbuilder_t> builder,
-  ffi.Pointer<sk_path_t> path,
-  int op,
-);
-
-void sk_opbuilder_add(
-  ffi.Pointer<sk_opbuilder_t> builder,
-  ffi.Pointer<sk_path_t> path,
-  sk_pathop_t op,
-) => _sk_opbuilder_add(
-  builder,
-  path,
-  op.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_opbuilder_t>, ffi.Pointer<sk_path_t>)
->(isLeaf: true)
-external bool sk_opbuilder_resolve(
-  ffi.Pointer<sk_opbuilder_t> builder,
-  ffi.Pointer<sk_path_t> result,
-);
-
-@ffi.Native<ffi.Pointer<sk_pathmeasure_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_pathmeasure_t> sk_pathmeasure_new();
-
-@ffi.Native<
-  ffi.Pointer<sk_pathmeasure_t> Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Bool,
-    ffi.Float,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_pathmeasure_t> sk_pathmeasure_new_with_path(
-  ffi.Pointer<sk_path_t> path,
-  bool forceClosed,
-  double resScale,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
-external void sk_pathmeasure_destroy(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_pathmeasure_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external void sk_pathmeasure_set_path(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-  ffi.Pointer<sk_path_t> path,
-  bool forceClosed,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
-external double sk_pathmeasure_get_length(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pathmeasure_t>,
-    ffi.Float,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_vector_t>,
-  )
->(isLeaf: true)
-external bool sk_pathmeasure_get_pos_tan(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-  double distance,
-  ffi.Pointer<sk_point_t> position,
-  ffi.Pointer<sk_vector_t> tangent,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pathmeasure_t>,
-    ffi.Float,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_pathmeasure_get_matrix', isLeaf: true)
-external bool _sk_pathmeasure_get_matrix(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-  double distance,
-  ffi.Pointer<sk_matrix_t> matrix,
-  int flags,
-);
-
-bool sk_pathmeasure_get_matrix(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-  double distance,
-  ffi.Pointer<sk_matrix_t> matrix,
-  sk_pathmeasure_matrixflags_t flags,
-) => _sk_pathmeasure_get_matrix(
-  pathMeasure,
-  distance,
-  matrix,
-  flags.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pathmeasure_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_path_builder_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external bool sk_pathmeasure_get_segment(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-  double start,
-  double stop,
-  ffi.Pointer<sk_path_builder_t> dst,
-  bool startWithMoveTo,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
-external bool sk_pathmeasure_is_closed(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
-external bool sk_pathmeasure_next_contour(
-  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
-external void sk_unicode_ref(
-  ffi.Pointer<sk_unicode_t> unicode,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
-external void sk_unicode_unref(
-  ffi.Pointer<sk_unicode_t> unicode,
-);
-
-@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu();
-
-@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu4x();
-
-@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_unicode_t> sk_unicode_make_libgrapheme();
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Char>)>(isLeaf: true)
-external bool sk_icu_load_data(
-  ffi.Pointer<ffi.Char> data_path,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
-external bool sk_icu_set_data(
-  ffi.Pointer<ffi.Void> data,
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
+external int sk_drawable_approximate_bytes_used(
+  ffi.Pointer<sk_drawable_t> arg0,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_imagefilter_t>)>(isLeaf: true)
@@ -3752,3334 +1575,103 @@ external ffi.Pointer<sk_imagefilter_t> sk_imagefilter_new_spot_lit_specular(
   ffi.Pointer<sk_rect_t> cropRect,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
-external void sk_colorspace_unref(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_srgb();
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_srgb_linear();
-
-@ffi.Native<
-  ffi.Pointer<sk_colorspace_t> Function(
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_rgb(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorspace_t> Function(
-    ffi.Pointer<sk_colorspace_icc_profile_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_icc(
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_icc_profile_t>,
-  )
->(isLeaf: true)
-external void sk_colorspace_to_profile(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
-external bool sk_colorspace_gamma_close_to_srgb(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
-external bool sk_colorspace_gamma_is_linear(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_is_numerical_transfer_fn(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-  )
->(isLeaf: true)
-external void sk_colorspace_transfer_fn(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-  )
->(isLeaf: true)
-external void sk_colorspace_inv_transfer_fn(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_to_xyzd50(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external void sk_colorspace_gamut_transform_to(
-  ffi.Pointer<sk_colorspace_t> src,
-  ffi.Pointer<sk_colorspace_t> dst,
-  ffi.Pointer<sk_colorspace_xyz_t> src_to_dst,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorspace_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_make_linear_gamma(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorspace_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_colorspace_t> sk_colorspace_make_srgb_gamma(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
-external bool sk_colorspace_is_srgb(
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_colorspace_t>, ffi.Pointer<sk_colorspace_t>)
->(isLeaf: true)
-external bool sk_colorspace_equals(
-  ffi.Pointer<sk_colorspace_t> src,
-  ffi.Pointer<sk_colorspace_t> dst,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_srgb(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_2dot2(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_linear(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_rec2020(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_pq(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_transfer_fn_named_hlg(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-);
-
-@ffi.Native<
-  ffi.Float Function(ffi.Pointer<sk_colorspace_transfer_fn_t>, ffi.Float)
->(isLeaf: true)
-external double sk_colorspace_transfer_fn_eval(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
-  double x,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-    ffi.Pointer<sk_colorspace_transfer_fn_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_transfer_fn_invert(
-  ffi.Pointer<sk_colorspace_transfer_fn_t> src,
-  ffi.Pointer<sk_colorspace_transfer_fn_t> dst,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_primaries_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_primaries_to_xyzd50(
-  ffi.Pointer<sk_colorspace_primaries_t> primaries,
-  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
-external void sk_colorspace_xyz_named_srgb(
-  ffi.Pointer<sk_colorspace_xyz_t> xyz,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
-external void sk_colorspace_xyz_named_adobe_rgb(
-  ffi.Pointer<sk_colorspace_xyz_t> xyz,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
-external void sk_colorspace_xyz_named_display_p3(
-  ffi.Pointer<sk_colorspace_xyz_t> xyz,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
-external void sk_colorspace_xyz_named_rec2020(
-  ffi.Pointer<sk_colorspace_xyz_t> xyz,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
-external void sk_colorspace_xyz_named_xyz(
-  ffi.Pointer<sk_colorspace_xyz_t> xyz,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_xyz_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_xyz_invert(
-  ffi.Pointer<sk_colorspace_xyz_t> src,
-  ffi.Pointer<sk_colorspace_xyz_t> dst,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_colorspace_xyz_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external void sk_colorspace_xyz_concat(
-  ffi.Pointer<sk_colorspace_xyz_t> a,
-  ffi.Pointer<sk_colorspace_xyz_t> b,
-  ffi.Pointer<sk_colorspace_xyz_t> result,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_icc_profile_t>)>(
-  isLeaf: true,
-)
-external void sk_colorspace_icc_profile_delete(
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_icc_profile_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorspace_icc_profile_t>
-sk_colorspace_icc_profile_new();
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_colorspace_icc_profile_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_icc_profile_parse(
-  ffi.Pointer<ffi.Void> buffer,
-  int length,
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint8> Function(
-    ffi.Pointer<sk_colorspace_icc_profile_t>,
-    ffi.Pointer<ffi.Uint32>,
-  )
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint8> sk_colorspace_icc_profile_get_buffer(
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-  ffi.Pointer<ffi.Uint32> size,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorspace_icc_profile_t>,
-    ffi.Pointer<sk_colorspace_xyz_t>,
-  )
->(isLeaf: true)
-external bool sk_colorspace_icc_profile_get_to_xyzd50(
-  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
-  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
-);
-
-@ffi.Native<sk_color_t Function(ffi.Pointer<sk_color4f_t>)>(isLeaf: true)
-external int sk_color4f_to_color(
-  ffi.Pointer<sk_color4f_t> color4f,
-);
-
-@ffi.Native<ffi.Void Function(sk_color_t, ffi.Pointer<sk_color4f_t>)>(
-  isLeaf: true,
-)
-external void sk_color4f_from_color(
-  int color,
-  ffi.Pointer<sk_color4f_t> color4f,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_maskfilter_t>)>(isLeaf: true)
-external void sk_maskfilter_ref(
-  ffi.Pointer<sk_maskfilter_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_maskfilter_t>)>(isLeaf: true)
-external void sk_maskfilter_unref(
-  ffi.Pointer<sk_maskfilter_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_maskfilter_t> Function(ffi.UnsignedInt, ffi.Float, ffi.Bool)
->(symbol: 'sk_maskfilter_new_blur', isLeaf: true)
-external ffi.Pointer<sk_maskfilter_t> _sk_maskfilter_new_blur(
-  int arg0,
-  double sigma,
-  bool respectCTM,
-);
-
-ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_blur(
-  sk_blurstyle_t arg0,
-  double sigma,
-  bool respectCTM,
-) => _sk_maskfilter_new_blur(
-  arg0.value,
-  sigma,
-  respectCTM,
-);
-
-@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<ffi.Uint8>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_table(
-  ffi.Pointer<ffi.Uint8> table,
-);
-
-@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Float)>(isLeaf: true)
-external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_gamma(
-  double gamma,
-);
-
-@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Uint8, ffi.Uint8)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_clip(
-  int min,
-  int max,
-);
-
-@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<sk_shader_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_shader(
-  ffi.Pointer<sk_shader_t> cshader,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
-external void skgpu_set_dawn_proc_table(
-  ffi.Pointer<ffi.Void> procs,
-);
-
-@ffi.Native<ffi.Bool Function()>(isLeaf: true)
-external bool skgpu_graphite_is_supported();
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_context_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_context_t>
-skgpu_graphite_context_make_metal(
-  ffi.Pointer<ffi.Void> device,
-  ffi.Pointer<ffi.Void> queue,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_context_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_context_t> skgpu_graphite_context_make_dawn(
-  ffi.Pointer<ffi.Void> instance,
-  ffi.Pointer<ffi.Void> device,
-  ffi.Pointer<ffi.Void> queue,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_context_delete(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external bool skgpu_graphite_context_is_device_lost(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_context_max_texture_size(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external bool skgpu_graphite_context_supports_protected_content(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_context_current_budgeted_bytes(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_context_max_budgeted_bytes(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>, ffi.Size)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_context_set_max_budgeted_bytes(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  int bytes,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_context_free_gpu_resources(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>, ffi.LongLong)
->(isLeaf: true)
-external void skgpu_graphite_context_perform_deferred_cleanup(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  int ms,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<skgpu_graphite_context_t>,
-    ffi.Pointer<skgpu_graphite_insert_recording_info_t>,
-  )
->(isLeaf: true)
-external bool skgpu_graphite_context_insert_recording(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<skgpu_graphite_insert_recording_info_t> info,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<skgpu_graphite_context_t>,
-    ffi.Pointer<skgpu_graphite_submit_info_t>,
-  )
->()
-external bool skgpu_graphite_context_submit(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<skgpu_graphite_submit_info_t> info,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external bool skgpu_graphite_context_has_unfinished_gpu_work(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_context_check_async_work_completion(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_recorder_t> Function(
-    ffi.Pointer<skgpu_graphite_context_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_recorder_t>
-skgpu_graphite_context_make_recorder(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_recorder_delete(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_recording_t> Function(
-    ffi.Pointer<skgpu_graphite_recorder_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_recording_t> skgpu_graphite_recorder_snap(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_recorder_max_texture_size(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_recorder_free_gpu_resources(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_recorder_current_budgeted_bytes(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
-  isLeaf: true,
-)
-external int skgpu_graphite_recorder_max_budgeted_bytes(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recording_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_recording_delete(
-  ffi.Pointer<skgpu_graphite_recording_t> recording,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_backend_texture_t> Function(
-    ffi.Pointer<sk_isize_t>,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_backend_texture_t>
-skgpu_graphite_backend_texture_create_metal(
-  ffi.Pointer<sk_isize_t> size,
-  ffi.Pointer<ffi.Void> texture,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_backend_texture_t> Function(ffi.Pointer<ffi.Void>)
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_backend_texture_t>
-skgpu_graphite_backend_texture_create_dawn(
-  ffi.Pointer<ffi.Void> texture,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_backend_texture_t>)>(
-  isLeaf: true,
-)
-external void skgpu_graphite_backend_texture_delete(
-  ffi.Pointer<skgpu_graphite_backend_texture_t> backend_texture,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_surface_t> Function(
-    ffi.Pointer<skgpu_graphite_recorder_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Bool,
-    ffi.Pointer<sk_surfaceprops_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-  ffi.Pointer<sk_imageinfo_t> imageInfo,
-  bool mipmapped,
-  ffi.Pointer<sk_surfaceprops_t> props,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_surface_t> Function(
-    ffi.Pointer<skgpu_graphite_recorder_t>,
-    ffi.Pointer<skgpu_graphite_backend_texture_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_surfaceprops_t>,
-    ffi.Pointer<ffi.Char>,
-  )
->(symbol: 'skgpu_graphite_surface_wrap_backend_texture', isLeaf: true)
-external ffi.Pointer<sk_surface_t> _skgpu_graphite_surface_wrap_backend_texture(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-  ffi.Pointer<skgpu_graphite_backend_texture_t> backendTexture,
-  int color_type,
-  ffi.Pointer<sk_colorspace_t> color_space,
-  ffi.Pointer<sk_surfaceprops_t> props,
-  ffi.Pointer<ffi.Char> label,
-);
-
-ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
-  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
-  ffi.Pointer<skgpu_graphite_backend_texture_t> backendTexture,
-  sk_colortype_t color_type,
-  ffi.Pointer<sk_colorspace_t> color_space,
-  ffi.Pointer<sk_surfaceprops_t> props,
-  ffi.Pointer<ffi.Char> label,
-) => _skgpu_graphite_surface_wrap_backend_texture(
-  recorder,
-  backendTexture,
-  color_type.value,
-  color_space,
-  props,
-  label,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<skgpu_graphite_context_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_surface_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    skgpu_graphite_async_rescale_and_read_pixels_callback,
-    ffi.Pointer<ffi.Void>,
-  )
->(symbol: 'skgpu_graphite_async_rescale_and_read_pixels_from_surface')
-external void _skgpu_graphite_async_rescale_and_read_pixels_from_surface(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<sk_irect_t> src_rect,
-  ffi.Pointer<sk_surface_t> surface,
-  ffi.Pointer<sk_imageinfo_t> dst_info,
-  int rescale_gamme,
-  int rescale_mode,
-  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
-  ffi.Pointer<ffi.Void> callback_context,
-);
-
-void skgpu_graphite_async_rescale_and_read_pixels_from_surface(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<sk_irect_t> src_rect,
-  ffi.Pointer<sk_surface_t> surface,
-  ffi.Pointer<sk_imageinfo_t> dst_info,
-  sk_image_rescale_gamma_t rescale_gamme,
-  sk_image_rescale_mode_t rescale_mode,
-  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
-  ffi.Pointer<ffi.Void> callback_context,
-) => _skgpu_graphite_async_rescale_and_read_pixels_from_surface(
-  context,
-  src_rect,
-  surface,
-  dst_info,
-  rescale_gamme.value,
-  rescale_mode.value,
-  arg6,
-  callback_context,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<skgpu_graphite_context_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    skgpu_graphite_async_rescale_and_read_pixels_callback,
-    ffi.Pointer<ffi.Void>,
-  )
->(symbol: 'skgpu_graphite_async_rescale_and_read_pixels_from_image')
-external void _skgpu_graphite_async_rescale_and_read_pixels_from_image(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<sk_irect_t> src_rect,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_imageinfo_t> dst_info,
-  int rescale_gamme,
-  int rescale_mode,
-  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
-  ffi.Pointer<ffi.Void> callback_context,
-);
-
-void skgpu_graphite_async_rescale_and_read_pixels_from_image(
-  ffi.Pointer<skgpu_graphite_context_t> context,
-  ffi.Pointer<sk_irect_t> src_rect,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_imageinfo_t> dst_info,
-  sk_image_rescale_gamma_t rescale_gamme,
-  sk_image_rescale_mode_t rescale_mode,
-  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
-  ffi.Pointer<ffi.Void> callback_context,
-) => _skgpu_graphite_async_rescale_and_read_pixels_from_image(
-  context,
-  src_rect,
-  image,
-  dst_info,
-  rescale_gamme.value,
-  rescale_mode.value,
-  arg6,
-  callback_context,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> skgpu_graphite_surface_as_image(
-  ffi.Pointer<sk_surface_t> surface,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_surface_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> skgpu_graphite_surface_as_image_copy(
-  ffi.Pointer<sk_surface_t> surface,
-  ffi.Pointer<sk_irect_t> subset,
-  bool mipmapped,
-);
-
-@ffi.Native<
-  ffi.Pointer<skgpu_graphite_recorder_t> Function(ffi.Pointer<sk_surface_t>)
->(isLeaf: true)
-external ffi.Pointer<skgpu_graphite_recorder_t>
-skgpu_graphite_surface_get_recorder(
-  ffi.Pointer<sk_surface_t> surface,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
-external void sk_shader_ref(
-  ffi.Pointer<sk_shader_t> shader,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
-external void sk_shader_unref(
-  ffi.Pointer<sk_shader_t> shader,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
-external bool sk_shader_is_opaque(
-  ffi.Pointer<sk_shader_t> shader,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<ffi.UnsignedInt>,
-    ffi.Pointer<ffi.UnsignedInt>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_shader_is_a_image(
-  ffi.Pointer<sk_shader_t> shader,
-  ffi.Pointer<sk_matrix_t> localMatrix,
-  ffi.Pointer<ffi.UnsignedInt> tileModeX,
-  ffi.Pointer<ffi.UnsignedInt> tileModeY,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_with_local_matrix(
-  ffi.Pointer<sk_shader_t> shader,
-  ffi.Pointer<sk_matrix_t> localMatrix,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_colorfilter_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_with_color_filter(
-  ffi.Pointer<sk_shader_t> shader,
-  ffi.Pointer<sk_colorfilter_t> filter,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_make_with_working_colorspace(
-  ffi.Pointer<sk_shader_t> shader,
-  ffi.Pointer<sk_colorspace_t> inputCS,
-  ffi.Pointer<sk_colorspace_t> outputCS,
-);
-
-@ffi.Native<ffi.Pointer<sk_shader_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_empty();
-
-@ffi.Native<ffi.Pointer<sk_shader_t> Function(sk_color_t)>(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_color(
-  int color,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_color4f_t>,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_color4f(
-  ffi.Pointer<sk_color4f_t> color,
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_shader_t>,
-  )
->(symbol: 'sk_shader_new_blend', isLeaf: true)
-external ffi.Pointer<sk_shader_t> _sk_shader_new_blend(
-  int mode,
-  ffi.Pointer<sk_shader_t> dst,
-  ffi.Pointer<sk_shader_t> src,
-);
-
-ffi.Pointer<sk_shader_t> sk_shader_new_blend(
-  sk_blendmode_t mode,
-  ffi.Pointer<sk_shader_t> dst,
-  ffi.Pointer<sk_shader_t> src,
-) => _sk_shader_new_blend(
-  mode.value,
-  dst,
-  src,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_blender_t>,
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_shader_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_blender(
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_blender_t>)>(isLeaf: true)
+external void sk_blender_ref(
   ffi.Pointer<sk_blender_t> blender,
-  ffi.Pointer<sk_shader_t> dst,
-  ffi.Pointer<sk_shader_t> src,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_blender_t>)>(isLeaf: true)
+external void sk_blender_unref(
+  ffi.Pointer<sk_blender_t> blender,
+);
+
+@ffi.Native<ffi.Pointer<sk_blender_t> Function(ffi.UnsignedInt)>(
+  symbol: 'sk_blender_new_mode',
+  isLeaf: true,
+)
+external ffi.Pointer<sk_blender_t> _sk_blender_new_mode(
+  int mode,
+);
+
+ffi.Pointer<sk_blender_t> sk_blender_new_mode(
+  sk_blendmode_t mode,
+) => _sk_blender_new_mode(
+  mode.value,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_shader_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_coord_clamp(
-  ffi.Pointer<sk_shader_t> shader,
-  ffi.Pointer<sk_rect_t> subset,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
+  ffi.Pointer<sk_blender_t> Function(
     ffi.Float,
     ffi.Float,
-    ffi.Int,
-    ffi.Float,
-    ffi.Pointer<sk_isize_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_perlin_noise_fractal_noise(
-  double baseFrequencyX,
-  double baseFrequencyY,
-  int numOctaves,
-  double seed,
-  ffi.Pointer<sk_isize_t> tileSize,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
     ffi.Float,
     ffi.Float,
-    ffi.Int,
-    ffi.Float,
-    ffi.Pointer<sk_isize_t>,
+    ffi.Bool,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_shader_new_perlin_noise_turbulence(
-  double baseFrequencyX,
-  double baseFrequencyY,
-  int numOctaves,
-  double seed,
-  ffi.Pointer<sk_isize_t> tileSize,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Void> Function()>(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_metal_create_system_default_device();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
-external void sk_metal_release_device(
-  ffi.Pointer<ffi.Void> device,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_metal_create_command_queue(
-  ffi.Pointer<ffi.Void> device,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
-external void sk_metal_release_command_queue(
-  ffi.Pointer<ffi.Void> commandQueue,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
-external void sk_vertices_unref(
-  ffi.Pointer<sk_vertices_t> cvertices,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
-external void sk_vertices_ref(
-  ffi.Pointer<sk_vertices_t> cvertices,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
-external int sk_vertices_get_unique_id(
-  ffi.Pointer<sk_vertices_t> cvertices,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_vertices_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external void sk_vertices_get_bounds(
-  ffi.Pointer<sk_vertices_t> cvertices,
-  ffi.Pointer<sk_rect_t> bounds,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
-external int sk_vertices_get_approximate_size(
-  ffi.Pointer<sk_vertices_t> cvertices,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_vertices_t> Function(
-    ffi.UnsignedInt,
-    ffi.Int,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_color_t>,
-    ffi.Int,
-    ffi.Pointer<ffi.Uint16>,
-  )
->(symbol: 'sk_vertices_make_copy', isLeaf: true)
-external ffi.Pointer<sk_vertices_t> _sk_vertices_make_copy(
-  int vmode,
-  int vertexCount,
-  ffi.Pointer<sk_point_t> positions,
-  ffi.Pointer<sk_point_t> texs,
-  ffi.Pointer<sk_color_t> colors,
-  int indexCount,
-  ffi.Pointer<ffi.Uint16> indices,
-);
-
-ffi.Pointer<sk_vertices_t> sk_vertices_make_copy(
-  sk_vertices_vertex_mode_t vmode,
-  int vertexCount,
-  ffi.Pointer<sk_point_t> positions,
-  ffi.Pointer<sk_point_t> texs,
-  ffi.Pointer<sk_color_t> colors,
-  int indexCount,
-  ffi.Pointer<ffi.Uint16> indices,
-) => _sk_vertices_make_copy(
-  vmode.value,
-  vertexCount,
-  positions,
-  texs,
-  colors,
-  indexCount,
-  indices,
-);
-
-@ffi.Native<ffi.Int Function(ffi.UnsignedInt)>(
-  symbol: 'sk_colotype_bytes_per_pixel',
-  isLeaf: true,
-)
-external int _sk_colotype_bytes_per_pixel(
-  int ct,
-);
-
-int sk_colotype_bytes_per_pixel(
-  sk_colortype_t ct,
-) => _sk_colotype_bytes_per_pixel(
-  ct.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorinfo_t> Function(
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(symbol: 'sk_colorinfo_new', isLeaf: true)
-external ffi.Pointer<sk_colorinfo_t> _sk_colorinfo_new(
-  int ct,
-  int at,
-  ffi.Pointer<sk_colorspace_t> cs,
-);
-
-ffi.Pointer<sk_colorinfo_t> sk_colorinfo_new(
-  sk_colortype_t ct,
-  sk_alphatype_t at,
-  ffi.Pointer<sk_colorspace_t> cs,
-) => _sk_colorinfo_new(
-  ct.value,
-  at.value,
-  cs,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
-external void sk_colorinfo_delete(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
-  symbol: 'sk_colorinfo_get_colortype',
-  isLeaf: true,
-)
-external int _sk_colorinfo_get_colortype(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-sk_colortype_t sk_colorinfo_get_colortype(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-) => sk_colortype_t.fromValue(
-  _sk_colorinfo_get_colortype(
-    cinfo,
-  ),
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
-  symbol: 'sk_colorinfo_get_alphatype',
-  isLeaf: true,
-)
-external int _sk_colorinfo_get_alphatype(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-sk_alphatype_t sk_colorinfo_get_alphatype(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-) => sk_alphatype_t.fromValue(
-  _sk_colorinfo_get_alphatype(
-    cinfo,
-  ),
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorinfo_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorspace_t> sk_colorinfo_ref_colorspace(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
-external bool sk_colorinfo_is_opaque(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
-external bool sk_colorinfo_gamma_close_to_srgb(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>, ffi.Pointer<sk_colorinfo_t>)
->(isLeaf: true)
-external bool sk_colorinfo_equals(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-  ffi.Pointer<sk_colorinfo_t> other,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
-external int sk_colorinfo_bytes_per_pixel(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
-external int sk_colorinfo_shift_per_pixel(
-  ffi.Pointer<sk_colorinfo_t> cinfo,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_imageinfo_t> Function(
-    ffi.Int,
-    ffi.Int,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(symbol: 'sk_imageinfo_new', isLeaf: true)
-external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new(
-  int width,
-  int height,
-  int ct,
-  int at,
-  ffi.Pointer<sk_colorspace_t> cs,
-);
-
-ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new(
-  int width,
-  int height,
-  sk_colortype_t ct,
-  sk_alphatype_t at,
-  ffi.Pointer<sk_colorspace_t> cs,
-) => _sk_imageinfo_new(
-  width,
-  height,
-  ct.value,
-  at.value,
-  cs,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_imageinfo_t> Function(
-    ffi.Int,
-    ffi.Int,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(symbol: 'sk_imageinfo_new_n32', isLeaf: true)
-external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new_n32(
-  int width,
-  int height,
-  int at,
-  ffi.Pointer<sk_colorspace_t> cs,
-);
-
-ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32(
-  int width,
-  int height,
-  sk_alphatype_t at,
-  ffi.Pointer<sk_colorspace_t> cs,
-) => _sk_imageinfo_new_n32(
-  width,
-  height,
-  at.value,
-  cs,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_imageinfo_t> Function(
-    ffi.Int,
-    ffi.Int,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32_premul(
-  int width,
-  int height,
-  ffi.Pointer<sk_colorspace_t> cs,
-);
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_a8(
-  int width,
-  int height,
-);
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_unknown(
-  int width,
-  int height,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_imageinfo_t> Function(
-    ffi.Int,
-    ffi.Int,
-    ffi.Pointer<sk_colorinfo_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_color_info(
-  int width,
-  int height,
-  ffi.Pointer<sk_colorinfo_t> color_info,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external void sk_imageinfo_delete(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_get_width(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_get_height(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
-  symbol: 'sk_imageinfo_get_colortype',
-  isLeaf: true,
-)
-external int _sk_imageinfo_get_colortype(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-sk_colortype_t sk_imageinfo_get_colortype(
-  ffi.Pointer<sk_imageinfo_t> info,
-) => sk_colortype_t.fromValue(
-  _sk_imageinfo_get_colortype(
-    info,
-  ),
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
-  symbol: 'sk_imageinfo_get_alphatype',
-  isLeaf: true,
-)
-external int _sk_imageinfo_get_alphatype(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-sk_alphatype_t sk_imageinfo_get_alphatype(
-  ffi.Pointer<sk_imageinfo_t> info,
-) => sk_alphatype_t.fromValue(
-  _sk_imageinfo_get_alphatype(
-    info,
-  ),
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_imageinfo_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorspace_t> sk_imageinfo_ref_colorspace(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external bool sk_imageinfo_is_empty(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external bool sk_imageinfo_is_opaque(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external bool sk_imageinfo_gamma_close_to_srgb(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Pointer<sk_imageinfo_t>)
->(isLeaf: true)
-external bool sk_imageinfo_equals(
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<sk_imageinfo_t> other,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_bytes_per_pixel(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_shift_per_pixel(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_min_row_bytes(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Uint64 Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
-external int sk_imageinfo_compute_min_byte_size(
-  ffi.Pointer<sk_imageinfo_t> info,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Size)>(
-  isLeaf: true,
-)
-external bool sk_imageinfo_valid_row_bytes(
-  ffi.Pointer<sk_imageinfo_t> info,
-  int rowBytes,
-);
-
-@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_shaper_t> sk_shaper_new_primitive();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_t>)>(isLeaf: true)
-external void sk_shaper_delete(
-  ffi.Pointer<sk_shaper_t> shaper,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_t> Function(
-    ffi.Pointer<sk_unicode_t>,
-    ffi.Pointer<sk_fontmgr_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shaper_driven_wrapper(
-  ffi.Pointer<sk_unicode_t> unicode,
-  ffi.Pointer<sk_fontmgr_t> fallback,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_t> Function(
-    ffi.Pointer<sk_unicode_t>,
-    ffi.Pointer<sk_fontmgr_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_then_wrap(
-  ffi.Pointer<sk_unicode_t> unicode,
-  ffi.Pointer<sk_fontmgr_t> fallback,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_t> Function(
-    ffi.Pointer<sk_unicode_t>,
-    ffi.Pointer<sk_fontmgr_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_dont_wrap_or_reorder(
-  ffi.Pointer<sk_unicode_t> unicode,
-  ffi.Pointer<sk_fontmgr_t> fallback,
+external ffi.Pointer<sk_blender_t> sk_blender_new_arithmetic(
+  double k1,
+  double k2,
+  double k3,
+  double k4,
+  bool enforcePremul,
 );
 
 @ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_shaper_hb_purge_caches();
+external void sk_graphics_init();
 
-@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_shaper_t> sk_shaper_new_coretext();
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_graphics_purge_font_cache();
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_run_iterator_consume(
-  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
-  isLeaf: true,
-)
-external int sk_shaper_run_iterator_end_of_current_run(
-  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
-  isLeaf: true,
-)
-external bool sk_shaper_run_iterator_at_end(
-  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-    ffi.Pointer<sk_fontmgr_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_font_run_iterator_t>
-sk_shaper_font_run_iterator_new(
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-  ffi.Pointer<sk_font_t> font,
-  ffi.Pointer<sk_fontmgr_t> fallback,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<sk_font_t>,
-    ffi.Pointer<sk_fontmgr_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Pointer<sk_fontstyle_t>,
-    ffi.Pointer<sk_shaper_language_run_iterator_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_font_run_iterator_t>
-sk_shaper_font_run_iterator_new_with_style(
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-  ffi.Pointer<sk_font_t> font,
-  ffi.Pointer<sk_fontmgr_t> fallback,
-  ffi.Pointer<ffi.Char> requestName,
-  ffi.Pointer<sk_fontstyle_t> requestStyle,
-  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
-    ffi.Pointer<sk_font_t>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_font_run_iterator_t>
-sk_shaper_trivial_font_run_iterator_new(
-  ffi.Pointer<sk_font_t> font,
-  int utf8Bytes,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_font_run_iterator_delete(
-  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_font_t> sk_shaper_font_run_iterator_current_font(
-  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(ffi.Uint8, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
-sk_shaper_trivial_bidi_run_iterator_new(
-  int bidiLevel,
-  int utf8Bytes,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(
-    ffi.Pointer<sk_unicode_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Uint8,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
-sk_shaper_unicode_bidi_run_iterator_new(
-  ffi.Pointer<sk_unicode_t> unicode,
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-  int bidiLevel,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_bidi_run_iterator_delete(
-  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Uint8 Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
-  isLeaf: true,
-)
-external int sk_shaper_bidi_run_iterator_current_level(
-  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(ffi.Uint32, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_script_run_iterator_t>
-sk_shaper_trivial_script_run_iterator_new(
-  int script,
-  int utf8Bytes,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_script_run_iterator_t>
-sk_shaper_hb_script_run_iterator_new(
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Uint32,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_script_run_iterator_t>
-sk_shaper_hb_script_run_iterator_new_with_script(
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-  int script,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_script_run_iterator_delete(
-  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
-  isLeaf: true,
-)
-external int sk_shaper_script_run_iterator_current_script(
-  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_language_run_iterator_t>
-sk_shaper_std_language_run_iterator_new(
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_language_run_iterator_t>
-sk_shaper_trivial_language_run_iterator_new(
-  ffi.Pointer<ffi.Char> language,
-  int utf8Bytes,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_language_run_iterator_delete(
-  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)
->(isLeaf: true)
-external ffi.Pointer<ffi.Char> sk_shaper_language_run_iterator_current_language(
-  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shaper_run_handler_t> Function(
-    ffi.Pointer<sk_shaper_run_handler_procs_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_shaper_run_handler_t> sk_shaper_run_handler_new(
-  ffi.Pointer<sk_shaper_run_handler_procs_t> procs,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_handler_t>)>(
-  isLeaf: true,
-)
-external void sk_shaper_run_handler_delete(
-  ffi.Pointer<sk_shaper_run_handler_t> handler,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_builder_run_handler_t> Function(
-    ffi.Pointer<ffi.Char>,
-    sk_point_t,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_builder_run_handler_t>
-sk_textblob_builder_run_handler_new(
-  ffi.Pointer<ffi.Char> utf8Text,
-  sk_point_t offset,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_builder_run_handler_t>)>(
-  isLeaf: true,
-)
-external void sk_textblob_builder_run_handler_delete(
-  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_textblob_t> Function(
-    ffi.Pointer<sk_textblob_builder_run_handler_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_textblob_t> sk_textblob_builder_run_handler_make_blob(
-  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_textblob_builder_run_handler_t>,
-    ffi.Pointer<sk_point_t>,
-  )
->(isLeaf: true)
-external void sk_textblob_builder_run_handler_end_point(
-  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
-  ffi.Pointer<sk_point_t> endPoint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_shaper_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<sk_shaper_font_run_iterator_t>,
-    ffi.Pointer<sk_shaper_bidi_run_iterator_t>,
-    ffi.Pointer<sk_shaper_script_run_iterator_t>,
-    ffi.Pointer<sk_shaper_language_run_iterator_t>,
-    ffi.Pointer<sk_shaper_feature_t>,
-    ffi.Size,
-    ffi.Float,
-    ffi.Pointer<sk_shaper_run_handler_t>,
-  )
->()
-external void sk_shaper_shape(
-  ffi.Pointer<sk_shaper_t> shaper,
-  ffi.Pointer<ffi.Char> utf8,
-  int utf8Bytes,
-  ffi.Pointer<sk_shaper_font_run_iterator_t> fontIterator,
-  ffi.Pointer<sk_shaper_bidi_run_iterator_t> bidiIterator,
-  ffi.Pointer<sk_shaper_script_run_iterator_t> scriptIterator,
-  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
-  ffi.Pointer<sk_shaper_feature_t> features,
-  int featuresCount,
-  double width,
-  ffi.Pointer<sk_shaper_run_handler_t> handler,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_empty();
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<ffi.Void>, ffi.Size)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_data_t> sk_data_new_with_copy(
-  ffi.Pointer<ffi.Void> src,
-  int length,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_share_subset(
-  ffi.Pointer<sk_data_t> src,
-  int offset,
-  int length,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_copy_subset(
-  ffi.Pointer<sk_data_t> src,
-  int offset,
-  int length,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
-external void sk_data_ref(
-  ffi.Pointer<sk_data_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
-external void sk_data_unref(
-  ffi.Pointer<sk_data_t> arg0,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
-external int sk_data_get_size(
-  ffi.Pointer<sk_data_t> arg0,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<ffi.Char>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_data_t> sk_data_new_from_file(
-  ffi.Pointer<ffi.Char> path,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_stream_t>, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_from_stream(
-  ffi.Pointer<sk_stream_t> stream,
-  int length,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_data_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<ffi.Uint8> sk_data_get_bytes(
-  ffi.Pointer<sk_data_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Size Function(
-    ffi.Pointer<sk_data_t>,
-    ffi.Size,
-    ffi.Size,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external int sk_data_copy_range(
-  ffi.Pointer<sk_data_t> src,
-  int offset,
-  int length,
-  ffi.Pointer<ffi.Void> buffer,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_data_t> Function(
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    sk_data_release_proc,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_with_proc(
-  ffi.Pointer<ffi.Void> ptr,
-  int length,
-  sk_data_release_proc proc,
-  ffi.Pointer<ffi.Void> ctx,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Size)>(isLeaf: true)
-external ffi.Pointer<sk_data_t> sk_data_new_uninitialized(
-  int size,
-);
-
-@ffi.Native<ffi.Pointer<sk_rrect_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_rrect_t> sk_rrect_new();
-
-@ffi.Native<ffi.Pointer<sk_rrect_t> Function(ffi.Pointer<sk_rrect_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_rrect_t> sk_rrect_new_copy(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
-external void sk_rrect_delete(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_rrect_t>)>(
-  symbol: 'sk_rrect_get_type',
-  isLeaf: true,
-)
-external int _sk_rrect_get_type(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-sk_rrect_type_t sk_rrect_get_type(
-  ffi.Pointer<sk_rrect_t> rrect,
-) => sk_rrect_type_t.fromValue(
-  _sk_rrect_get_type(
-    rrect,
-  ),
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external void sk_rrect_get_rect(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_vector_t>,
-  )
->(symbol: 'sk_rrect_get_radii', isLeaf: true)
-external void _sk_rrect_get_radii(
-  ffi.Pointer<sk_rrect_t> rrect,
-  int corner,
-  ffi.Pointer<sk_vector_t> radii,
-);
-
-void sk_rrect_get_radii(
-  ffi.Pointer<sk_rrect_t> rrect,
-  sk_rrect_corner_t corner,
-  ffi.Pointer<sk_vector_t> radii,
-) => _sk_rrect_get_radii(
-  rrect,
-  corner.value,
-  radii,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
-external double sk_rrect_get_width(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
-external double sk_rrect_get_height(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
-external void sk_rrect_set_empty(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external void sk_rrect_set_rect(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external void sk_rrect_set_oval(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Float,
-    ffi.Float,
-  )
->(isLeaf: true)
-external void sk_rrect_set_rect_xy(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-  double xRad,
-  double yRad,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-  )
->(isLeaf: true)
-external void sk_rrect_set_nine_patch(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-  double leftRad,
-  double topRad,
-  double rightRad,
-  double bottomRad,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_vector_t>,
-  )
->(isLeaf: true)
-external void sk_rrect_set_rect_radii(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-  ffi.Pointer<sk_vector_t> radii,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_rrect_inset(
-  ffi.Pointer<sk_rrect_t> rrect,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_rrect_outset(
-  ffi.Pointer<sk_rrect_t> rrect,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rrect_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_rrect_offset(
-  ffi.Pointer<sk_rrect_t> rrect,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_rrect_t>, ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external bool sk_rrect_contains(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_rect_t> rect,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_rrect_t>)>(isLeaf: true)
-external bool sk_rrect_is_valid(
-  ffi.Pointer<sk_rrect_t> rrect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_rrect_t>,
-  )
->(isLeaf: true)
-external bool sk_rrect_transform(
-  ffi.Pointer<sk_rrect_t> rrect,
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_rrect_t> dest,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external void sk_image_ref(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external void sk_image_unref(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imageinfo_t> sk_image_get_info(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_new_raster_copy(
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_pixmap_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_new_raster_copy_with_pixmap(
-  ffi.Pointer<sk_pixmap_t> pixmap,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<sk_data_t>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_new_raster_data(
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<sk_data_t> pixels,
-  int rowBytes,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_data_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_image_new_raster_from_compressed_texture_data', isLeaf: true)
-external ffi.Pointer<sk_image_t>
-_sk_image_new_raster_from_compressed_texture_data(
-  ffi.Pointer<sk_data_t> cdata,
-  int width,
-  int height,
-  int type,
-);
-
-ffi.Pointer<sk_image_t> sk_image_new_raster_from_compressed_texture_data(
-  ffi.Pointer<sk_data_t> cdata,
-  int width,
-  int height,
-  sk_texture_compression_type_t type,
-) => _sk_image_new_raster_from_compressed_texture_data(
-  cdata,
-  width,
-  height,
-  type.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_pixmap_t>,
-    sk_image_raster_release_proc,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_new_raster(
-  ffi.Pointer<sk_pixmap_t> pixmap,
-  sk_image_raster_release_proc releaseProc,
-  ffi.Pointer<ffi.Void> context,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_bitmap_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_new_from_bitmap(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_data_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_new_from_encoded(
-  ffi.Pointer<sk_data_t> cdata,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<gr_recording_context_t>,
-    ffi.Pointer<gr_backendtexture_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-    sk_image_texture_release_proc,
-    ffi.Pointer<ffi.Void>,
-  )
->(symbol: 'sk_image_new_from_texture', isLeaf: true)
-external ffi.Pointer<sk_image_t> _sk_image_new_from_texture(
-  ffi.Pointer<gr_recording_context_t> context,
-  ffi.Pointer<gr_backendtexture_t> texture,
-  int origin,
-  int colorType,
-  int alpha,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  sk_image_texture_release_proc releaseProc,
-  ffi.Pointer<ffi.Void> releaseContext,
-);
-
-ffi.Pointer<sk_image_t> sk_image_new_from_texture(
-  ffi.Pointer<gr_recording_context_t> context,
-  ffi.Pointer<gr_backendtexture_t> texture,
-  gr_surfaceorigin_t origin,
-  sk_colortype_t colorType,
-  sk_alphatype_t alpha,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  sk_image_texture_release_proc releaseProc,
-  ffi.Pointer<ffi.Void> releaseContext,
-) => _sk_image_new_from_texture(
-  context,
-  texture,
-  origin.value,
-  colorType.value,
-  alpha.value,
-  colorSpace,
-  releaseProc,
-  releaseContext,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<gr_recording_context_t>,
-    ffi.Pointer<gr_backendtexture_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(symbol: 'sk_image_new_from_adopted_texture', isLeaf: true)
-external ffi.Pointer<sk_image_t> _sk_image_new_from_adopted_texture(
-  ffi.Pointer<gr_recording_context_t> context,
-  ffi.Pointer<gr_backendtexture_t> texture,
-  int origin,
-  int colorType,
-  int alpha,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-);
-
-ffi.Pointer<sk_image_t> sk_image_new_from_adopted_texture(
-  ffi.Pointer<gr_recording_context_t> context,
-  ffi.Pointer<gr_backendtexture_t> texture,
-  gr_surfaceorigin_t origin,
-  sk_colortype_t colorType,
-  sk_alphatype_t alpha,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-) => _sk_image_new_from_adopted_texture(
-  context,
-  texture,
-  origin.value,
-  colorType.value,
-  alpha.value,
-  colorSpace,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_picture_t>,
-    ffi.Pointer<sk_isize_t>,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_paint_t>,
-    ffi.Bool,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_surfaceprops_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_new_from_picture(
-  ffi.Pointer<sk_picture_t> picture,
-  ffi.Pointer<sk_isize_t> dimensions,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-  ffi.Pointer<sk_paint_t> paint,
-  bool useFloatingPointBitDepth,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  ffi.Pointer<sk_surfaceprops_t> props,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external int sk_image_get_width(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external int sk_image_get_height(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external int sk_image_get_unique_id(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_image_t>)>(
-  symbol: 'sk_image_get_alpha_type',
-  isLeaf: true,
-)
-external int _sk_image_get_alpha_type(
-  ffi.Pointer<sk_image_t> image,
-);
-
-sk_alphatype_t sk_image_get_alpha_type(
-  ffi.Pointer<sk_image_t> image,
-) => sk_alphatype_t.fromValue(
-  _sk_image_get_alpha_type(
-    image,
-  ),
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_image_t>)>(
-  symbol: 'sk_image_get_color_type',
-  isLeaf: true,
-)
-external int _sk_image_get_color_type(
-  ffi.Pointer<sk_image_t> image,
-);
-
-sk_colortype_t sk_image_get_color_type(
-  ffi.Pointer<sk_image_t> image,
-) => sk_colortype_t.fromValue(
-  _sk_image_get_color_type(
-    image,
-  ),
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorspace_t> sk_image_get_colorspace(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_is_alpha_only(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_is_opaque(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(symbol: 'sk_image_make_shader', isLeaf: true)
-external ffi.Pointer<sk_shader_t> _sk_image_make_shader(
-  ffi.Pointer<sk_image_t> image,
-  int tileX,
-  int tileY,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-);
-
-ffi.Pointer<sk_shader_t> sk_image_make_shader(
-  ffi.Pointer<sk_image_t> image,
-  sk_shader_tilemode_t tileX,
-  sk_shader_tilemode_t tileY,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-) => _sk_image_make_shader(
-  image,
-  tileX.value,
-  tileY.value,
-  sampling,
-  cmatrix,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(symbol: 'sk_image_make_raw_shader', isLeaf: true)
-external ffi.Pointer<sk_shader_t> _sk_image_make_raw_shader(
-  ffi.Pointer<sk_image_t> image,
-  int tileX,
-  int tileY,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-);
-
-ffi.Pointer<sk_shader_t> sk_image_make_raw_shader(
-  ffi.Pointer<sk_image_t> image,
-  sk_shader_tilemode_t tileX,
-  sk_shader_tilemode_t tileY,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-) => _sk_image_make_raw_shader(
-  image,
-  tileX.value,
-  tileY.value,
-  sampling,
-  cmatrix,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_pixmap_t>)
->(isLeaf: true)
-external bool sk_image_peek_pixels(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_pixmap_t> pixmap,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_is_texture_backed(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external int sk_image_texture_size(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_is_lazy_generated(
-  ffi.Pointer<sk_image_t> image,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_recorder_t>)
->(isLeaf: true)
-external bool sk_image_is_valid(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_recorder_t> recorder,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Int,
-    ffi.Int,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_image_read_pixels', isLeaf: true)
-external bool _sk_image_read_pixels(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_imageinfo_t> dstInfo,
-  ffi.Pointer<ffi.Void> dstPixels,
-  int dstRowBytes,
-  int srcX,
-  int srcY,
-  int cachingHint,
-);
-
-bool sk_image_read_pixels(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_imageinfo_t> dstInfo,
-  ffi.Pointer<ffi.Void> dstPixels,
-  int dstRowBytes,
-  int srcX,
-  int srcY,
-  sk_image_caching_hint_t cachingHint,
-) => _sk_image_read_pixels(
-  image,
-  dstInfo,
-  dstPixels,
-  dstRowBytes,
-  srcX,
-  srcY,
-  cachingHint.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_image_read_pixels_into_pixmap', isLeaf: true)
-external bool _sk_image_read_pixels_into_pixmap(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_pixmap_t> dst,
-  int srcX,
-  int srcY,
-  int cachingHint,
-);
-
-bool sk_image_read_pixels_into_pixmap(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_pixmap_t> dst,
-  int srcX,
-  int srcY,
-  sk_image_caching_hint_t cachingHint,
-) => _sk_image_read_pixels_into_pixmap(
-  image,
-  dst,
-  srcX,
-  srcY,
-  cachingHint.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_image_scale_pixels', isLeaf: true)
-external bool _sk_image_scale_pixels(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_pixmap_t> dst,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  int cachingHint,
-);
-
-bool sk_image_scale_pixels(
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_pixmap_t> dst,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  sk_image_caching_hint_t cachingHint,
-) => _sk_image_scale_pixels(
-  image,
-  dst,
-  sampling,
-  cachingHint.value,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_data_t> sk_image_ref_encoded(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_subset_raster(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_irect_t> subset,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_recorder_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_subset(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_recorder_t> recorder,
-  ffi.Pointer<sk_irect_t> subset,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<gr_direct_context_t>,
-    ffi.Bool,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_texture_image(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<gr_direct_context_t> context,
-  bool mipmapped,
-  bool budgeted,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_make_non_texture_image(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_make_raster_image(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_has_mipmaps(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
-external bool sk_image_is_protected(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_image_t> sk_image_with_default_mipmaps(
-  ffi.Pointer<sk_image_t> cimage,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_reinterpret_color_space(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_recorder_t>,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_color_space(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_recorder_t> recorder,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  bool mipmapped,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_recorder_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Bool,
-  )
->(symbol: 'sk_image_make_color_type_and_color_space', isLeaf: true)
-external ffi.Pointer<sk_image_t> _sk_image_make_color_type_and_color_space(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_recorder_t> recorder,
-  int colorType,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  bool mipmapped,
-);
-
-ffi.Pointer<sk_image_t> sk_image_make_color_type_and_color_space(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_recorder_t> recorder,
-  sk_colortype_t colorType,
-  ffi.Pointer<sk_colorspace_t> colorSpace,
-  bool mipmapped,
-) => _sk_image_make_color_type_and_color_space(
-  cimage,
-  recorder,
-  colorType.value,
-  colorSpace,
-  mipmapped,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_recorder_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_surfaceprops_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_scaled(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_recorder_t> recorder,
-  ffi.Pointer<sk_imageinfo_t> info,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_surfaceprops_t> props,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_imagefilter_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_ipoint_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_with_filter_raster(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_imagefilter_t> filter,
-  ffi.Pointer<sk_irect_t> subset,
-  ffi.Pointer<sk_irect_t> clipBounds,
-  ffi.Pointer<sk_irect_t> outSubset,
-  ffi.Pointer<sk_ipoint_t> outOffset,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<gr_recording_context_t>,
-    ffi.Pointer<sk_imagefilter_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_ipoint_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_image_t> sk_image_make_with_filter(
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<gr_recording_context_t> context,
-  ffi.Pointer<sk_imagefilter_t> filter,
-  ffi.Pointer<sk_irect_t> subset,
-  ffi.Pointer<sk_irect_t> clipBounds,
-  ffi.Pointer<sk_irect_t> outSubset,
-  ffi.Pointer<sk_ipoint_t> outOffset,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
-external void sk_document_unref(
-  ffi.Pointer<sk_document_t> document,
-);
-
-@ffi.Native<ffi.Pointer<sk_document_t> Function(ffi.Pointer<sk_wstream_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_document_t> sk_document_create_pdf_from_stream(
-  ffi.Pointer<sk_wstream_t> stream,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_document_t> Function(
-    ffi.Pointer<sk_wstream_t>,
-    ffi.Pointer<sk_document_pdf_metadata_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_document_t>
-sk_document_create_pdf_from_stream_with_metadata(
-  ffi.Pointer<sk_wstream_t> stream,
-  ffi.Pointer<sk_document_pdf_metadata_t> metadata,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_canvas_t> Function(
-    ffi.Pointer<sk_document_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_canvas_t> sk_document_begin_page(
-  ffi.Pointer<sk_document_t> document,
-  double width,
-  double height,
-  ffi.Pointer<sk_rect_t> content,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
-external void sk_document_end_page(
-  ffi.Pointer<sk_document_t> document,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
-external void sk_document_close(
-  ffi.Pointer<sk_document_t> document,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
-external void sk_document_abort(
-  ffi.Pointer<sk_document_t> document,
-);
-
-@ffi.Native<ffi.Pointer<sk_paint_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_paint_t> sk_paint_new();
-
-@ffi.Native<ffi.Pointer<sk_paint_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_paint_t> sk_paint_clone(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external void sk_paint_delete(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external void sk_paint_reset(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external bool sk_paint_is_antialias(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
-external void sk_paint_set_antialias(
-  ffi.Pointer<sk_paint_t> arg0,
-  bool arg1,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_paint_t>)
->(isLeaf: true)
-external bool sk_paint_equals(
-  ffi.Pointer<sk_paint_t> a,
-  ffi.Pointer<sk_paint_t> b,
-);
-
-@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external int sk_paint_get_hash(
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-@ffi.Native<sk_color_t Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external int sk_paint_get_color(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_color4f_t>)
->(isLeaf: true)
-external void sk_paint_get_color4f(
-  ffi.Pointer<sk_paint_t> paint,
-  ffi.Pointer<sk_color4f_t> color,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, sk_color_t)>(
-  isLeaf: true,
-)
-external void sk_paint_set_color(
-  ffi.Pointer<sk_paint_t> arg0,
-  int arg1,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_paint_t>,
-    ffi.Pointer<sk_color4f_t>,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external void sk_paint_set_color4f(
-  ffi.Pointer<sk_paint_t> paint,
-  ffi.Pointer<sk_color4f_t> color,
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<ffi.Uint8 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external int sk_paint_get_alpha(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external double sk_paint_get_alpha_f(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Uint8)>(isLeaf: true)
-external void sk_paint_set_alpha(
-  ffi.Pointer<sk_paint_t> arg0,
-  int a,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
-external void sk_paint_set_alpha_f(
-  ffi.Pointer<sk_paint_t> arg0,
-  double a,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
-  symbol: 'sk_paint_get_style',
-  isLeaf: true,
-)
-external int _sk_paint_get_style(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-sk_paint_style_t sk_paint_get_style(
-  ffi.Pointer<sk_paint_t> arg0,
-) => sk_paint_style_t.fromValue(
-  _sk_paint_get_style(
-    arg0,
-  ),
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_paint_set_style',
-  isLeaf: true,
-)
-external void _sk_paint_set_style(
-  ffi.Pointer<sk_paint_t> arg0,
-  int arg1,
-);
-
-void sk_paint_set_style(
-  ffi.Pointer<sk_paint_t> arg0,
-  sk_paint_style_t arg1,
-) => _sk_paint_set_style(
-  arg0,
-  arg1.value,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
-external void sk_paint_set_stroke(
-  ffi.Pointer<sk_paint_t> arg0,
-  bool isStroke,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external double sk_paint_get_stroke_width(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
-external void sk_paint_set_stroke_width(
-  ffi.Pointer<sk_paint_t> arg0,
-  double width,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external double sk_paint_get_stroke_miter(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
-external void sk_paint_set_stroke_miter(
-  ffi.Pointer<sk_paint_t> arg0,
-  double miter,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
-  symbol: 'sk_paint_get_stroke_cap',
-  isLeaf: true,
-)
-external int _sk_paint_get_stroke_cap(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-sk_stroke_cap_t sk_paint_get_stroke_cap(
-  ffi.Pointer<sk_paint_t> arg0,
-) => sk_stroke_cap_t.fromValue(
-  _sk_paint_get_stroke_cap(
-    arg0,
-  ),
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_paint_set_stroke_cap',
-  isLeaf: true,
-)
-external void _sk_paint_set_stroke_cap(
-  ffi.Pointer<sk_paint_t> arg0,
-  int arg1,
-);
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_graphics_purge_resource_cache();
 
-void sk_paint_set_stroke_cap(
-  ffi.Pointer<sk_paint_t> arg0,
-  sk_stroke_cap_t arg1,
-) => _sk_paint_set_stroke_cap(
-  arg0,
-  arg1.value,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
-  symbol: 'sk_paint_get_stroke_join',
-  isLeaf: true,
-)
-external int _sk_paint_get_stroke_join(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-sk_stroke_join_t sk_paint_get_stroke_join(
-  ffi.Pointer<sk_paint_t> arg0,
-) => sk_stroke_join_t.fromValue(
-  _sk_paint_get_stroke_join(
-    arg0,
-  ),
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_paint_set_stroke_join',
-  isLeaf: true,
-)
-external void _sk_paint_set_stroke_join(
-  ffi.Pointer<sk_paint_t> arg0,
-  int arg1,
-);
-
-void sk_paint_set_stroke_join(
-  ffi.Pointer<sk_paint_t> arg0,
-  sk_stroke_join_t arg1,
-) => _sk_paint_set_stroke_join(
-  arg0,
-  arg1.value,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_shader_t>)
->(isLeaf: true)
-external void sk_paint_set_shader(
-  ffi.Pointer<sk_paint_t> arg0,
-  ffi.Pointer<sk_shader_t> arg1,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_maskfilter_t>)
->(isLeaf: true)
-external void sk_paint_set_maskfilter(
-  ffi.Pointer<sk_paint_t> arg0,
-  ffi.Pointer<sk_maskfilter_t> arg1,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_paint_set_blendmode',
-  isLeaf: true,
-)
-external void _sk_paint_set_blendmode(
-  ffi.Pointer<sk_paint_t> arg0,
-  int arg1,
-);
-
-void sk_paint_set_blendmode(
-  ffi.Pointer<sk_paint_t> arg0,
-  sk_blendmode_t arg1,
-) => _sk_paint_set_blendmode(
-  arg0,
-  arg1.value,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_blender_t>)
->(isLeaf: true)
-external void sk_paint_set_blender(
-  ffi.Pointer<sk_paint_t> paint,
-  ffi.Pointer<sk_blender_t> blender,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external bool sk_paint_is_dither(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
-external void sk_paint_set_dither(
-  ffi.Pointer<sk_paint_t> arg0,
-  bool arg1,
-);
-
-@ffi.Native<ffi.Pointer<sk_shader_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_shader_t> sk_paint_get_shader(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_maskfilter_t> sk_paint_get_maskfilter(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_colorfilter_t>)
->(isLeaf: true)
-external void sk_paint_set_colorfilter(
-  ffi.Pointer<sk_paint_t> arg0,
-  ffi.Pointer<sk_colorfilter_t> arg1,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorfilter_t> sk_paint_get_colorfilter(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_imagefilter_t>)
->(isLeaf: true)
-external void sk_paint_set_imagefilter(
-  ffi.Pointer<sk_paint_t> arg0,
-  ffi.Pointer<sk_imagefilter_t> arg1,
-);
-
-@ffi.Native<ffi.Pointer<sk_imagefilter_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imagefilter_t> sk_paint_get_imagefilter(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
-  symbol: 'sk_paint_get_blendmode',
-  isLeaf: true,
-)
-external int _sk_paint_get_blendmode(
-  ffi.Pointer<sk_paint_t> arg0,
-);
-
-sk_blendmode_t sk_paint_get_blendmode(
-  ffi.Pointer<sk_paint_t> arg0,
-) => sk_blendmode_t.fromValue(
-  _sk_paint_get_blendmode(
-    arg0,
-  ),
-);
-
-@ffi.Native<ffi.Pointer<sk_blender_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_blender_t> sk_paint_get_blender(
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_effect_t> Function(ffi.Pointer<sk_paint_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_path_effect_t> sk_paint_get_path_effect(
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_path_effect_t>)
->(isLeaf: true)
-external void sk_paint_set_path_effect(
-  ffi.Pointer<sk_paint_t> cpaint,
-  ffi.Pointer<sk_path_effect_t> effect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_paint_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_path_builder_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external bool sk_paint_get_fill_path(
-  ffi.Pointer<sk_paint_t> cpaint,
-  ffi.Pointer<sk_path_t> src,
-  ffi.Pointer<sk_path_builder_t> dst,
-  ffi.Pointer<sk_rect_t> cullRect,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external bool sk_paint_nothing_to_draw(
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
-external bool sk_paint_can_compute_fast_bounds(
-  ffi.Pointer<sk_paint_t> cpaint,
-);
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_graphics_purge_all_caches();
 
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_paint_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external void sk_paint_compute_fast_bounds(
-  ffi.Pointer<sk_paint_t> cpaint,
-  ffi.Pointer<sk_rect_t> orig,
-  ffi.Pointer<sk_rect_t> result,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_paint_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external void sk_paint_compute_fast_stroke_bounds(
-  ffi.Pointer<sk_paint_t> cpaint,
-  ffi.Pointer<sk_rect_t> orig,
-  ffi.Pointer<sk_rect_t> result,
-);
-
-@ffi.Native<ffi.Pointer<sk_stroke_rec_t> Function(ffi.UnsignedInt)>(
-  symbol: 'sk_stroke_rec_new_init_style',
-  isLeaf: true,
-)
-external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_init_style(
-  int style,
-);
-
-ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_init_style(
-  sk_stroke_rec_init_style_t style,
-) => _sk_stroke_rec_new_init_style(
-  style.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_stroke_rec_t> Function(
-    ffi.Pointer<sk_paint_t>,
-    ffi.UnsignedInt,
-    ffi.Float,
-  )
->(symbol: 'sk_stroke_rec_new_paint_style', isLeaf: true)
-external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_paint_style(
-  ffi.Pointer<sk_paint_t> paint,
-  int style,
-  double resScale,
-);
-
-ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint_style(
-  ffi.Pointer<sk_paint_t> paint,
-  sk_paint_style_t style,
-  double resScale,
-) => _sk_stroke_rec_new_paint_style(
-  paint,
-  style.value,
-  resScale,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_stroke_rec_t> Function(ffi.Pointer<sk_paint_t>, ffi.Float)
->(isLeaf: true)
-external ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint(
-  ffi.Pointer<sk_paint_t> paint,
-  double resScale,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external void sk_stroke_rec_delete(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
-  symbol: 'sk_stroke_rec_get_style',
-  isLeaf: true,
-)
-external int _sk_stroke_rec_get_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-sk_stroke_rec_style_t sk_stroke_rec_get_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-) => sk_stroke_rec_style_t.fromValue(
-  _sk_stroke_rec_get_style(
-    strokeRec,
-  ),
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external double sk_stroke_rec_get_width(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external double sk_stroke_rec_get_miter(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
-  symbol: 'sk_stroke_rec_get_cap',
-  isLeaf: true,
-)
-external int _sk_stroke_rec_get_cap(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_graphics_get_font_cache_used();
 
-sk_stroke_cap_t sk_stroke_rec_get_cap(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-) => sk_stroke_cap_t.fromValue(
-  _sk_stroke_rec_get_cap(
-    strokeRec,
-  ),
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
-  symbol: 'sk_stroke_rec_get_join',
-  isLeaf: true,
-)
-external int _sk_stroke_rec_get_join(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-sk_stroke_join_t sk_stroke_rec_get_join(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-) => sk_stroke_join_t.fromValue(
-  _sk_stroke_rec_get_join(
-    strokeRec,
-  ),
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external bool sk_stroke_rec_is_hairline_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external bool sk_stroke_rec_is_fill_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external void sk_stroke_rec_set_fill_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external void sk_stroke_rec_set_hairline_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_graphics_get_font_cache_limit();
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float, ffi.Bool)
->(isLeaf: true)
-external void sk_stroke_rec_set_stroke_style(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  double width,
-  bool strokeAndFill,
+@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
+external int sk_graphics_set_font_cache_limit(
+  int bytes,
 );
 
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_stroke_rec_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Float,
-  )
->(symbol: 'sk_stroke_rec_set_stroke_params', isLeaf: true)
-external void _sk_stroke_rec_set_stroke_params(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  int cap,
-  int join,
-  double miterLimit,
-);
-
-void sk_stroke_rec_set_stroke_params(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  sk_stroke_cap_t cap,
-  sk_stroke_join_t join,
-  double miterLimit,
-) => _sk_stroke_rec_set_stroke_params(
-  strokeRec,
-  cap.value,
-  join.value,
-  miterLimit,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external double sk_stroke_rec_get_res_scale(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_stroke_rec_set_res_scale(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  double rs,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external bool sk_stroke_rec_need_to_apply(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
+@ffi.Native<ffi.Int Function()>(isLeaf: true)
+external int sk_graphics_get_font_cache_count_used();
 
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_stroke_rec_t>,
-    ffi.Pointer<sk_path_builder_t>,
-    ffi.Pointer<sk_path_t>,
-  )
->(isLeaf: true)
-external bool sk_stroke_rec_apply_to_path(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  ffi.Pointer<sk_path_builder_t> dst,
-  ffi.Pointer<sk_path_t> src,
-);
+@ffi.Native<ffi.Int Function()>(isLeaf: true)
+external int sk_graphics_get_font_cache_count_limit();
 
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_paint_t>)
->(isLeaf: true)
-external void sk_stroke_rec_apply_to_paint(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  ffi.Pointer<sk_paint_t> paint,
+@ffi.Native<ffi.Int Function(ffi.Int)>(isLeaf: true)
+external int sk_graphics_set_font_cache_count_limit(
+  int count,
 );
 
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
-external double sk_stroke_rec_get_inflation_radius(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-);
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_graphics_get_resource_cache_total_bytes_used();
 
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
-  symbol: 'sk_stroke_rec_get_inflation_radius_for_paint_style',
-  isLeaf: true,
-)
-external double _sk_stroke_rec_get_inflation_radius_for_paint_style(
-  ffi.Pointer<sk_paint_t> paint,
-  int style,
-);
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_graphics_get_resource_cache_total_byte_limit();
 
-double sk_stroke_rec_get_inflation_radius_for_paint_style(
-  ffi.Pointer<sk_paint_t> paint,
-  sk_paint_style_t style,
-) => _sk_stroke_rec_get_inflation_radius_for_paint_style(
-  paint,
-  style.value,
+@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
+external int sk_graphics_set_resource_cache_total_byte_limit(
+  int newLimit,
 );
 
-@ffi.Native<
-  ffi.Float Function(ffi.UnsignedInt, ffi.Float, ffi.UnsignedInt, ffi.Float)
->(symbol: 'sk_stroke_rec_get_inflation_radius_for_params', isLeaf: true)
-external double _sk_stroke_rec_get_inflation_radius_for_params(
-  int join,
-  double miterLimit,
-  int cap,
-  double strokeWidth,
-);
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_graphics_get_resource_cache_single_allocation_byte_limit();
 
-double sk_stroke_rec_get_inflation_radius_for_params(
-  sk_stroke_join_t join,
-  double miterLimit,
-  sk_stroke_cap_t cap,
-  double strokeWidth,
-) => _sk_stroke_rec_get_inflation_radius_for_params(
-  join.value,
-  miterLimit,
-  cap.value,
-  strokeWidth,
+@ffi.Native<ffi.Size Function(ffi.Size)>(isLeaf: true)
+external int sk_graphics_set_resource_cache_single_allocation_byte_limit(
+  int newLimit,
 );
 
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_stroke_rec_t>)
->(isLeaf: true)
-external bool sk_stroke_rec_has_equal_effect(
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  ffi.Pointer<sk_stroke_rec_t> other,
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_tracememorydump_t>)>(isLeaf: true)
+external void sk_graphics_dump_memory_statistics(
+  ffi.Pointer<sk_tracememorydump_t> dump,
 );
 
 @ffi.Native<ffi.Pointer<sk_path_builder_t> Function()>(isLeaf: true)
@@ -7801,6 +2393,2831 @@ external bool sk_path_builder_contains(
   ffi.Pointer<sk_point_t> point,
 );
 
+@ffi.Native<
+  ffi.Pointer<sk_runtimeeffect_t> Function(
+    ffi.Pointer<sk_string_t>,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_color_filter(
+  ffi.Pointer<sk_string_t> sksl,
+  ffi.Pointer<sk_string_t> error,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_runtimeeffect_t> Function(
+    ffi.Pointer<sk_string_t>,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_shader(
+  ffi.Pointer<sk_string_t> sksl,
+  ffi.Pointer<sk_string_t> error,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_runtimeeffect_t> Function(
+    ffi.Pointer<sk_string_t>,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_blender(
+  ffi.Pointer<sk_string_t> sksl,
+  ffi.Pointer<sk_string_t> error,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
+external void sk_runtimeeffect_unref(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<sk_data_t>,
+    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+    ffi.Size,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_runtimeeffect_make_shader(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  ffi.Pointer<sk_data_t> uniforms,
+  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
+  int childCount,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<sk_data_t>,
+    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_runtimeeffect_make_color_filter(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  ffi.Pointer<sk_data_t> uniforms,
+  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
+  int childCount,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_blender_t> Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<sk_data_t>,
+    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_blender_t> sk_runtimeeffect_make_blender(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  ffi.Pointer<sk_data_t> uniforms,
+  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
+  int childCount,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
+external int sk_runtimeeffect_get_uniform_byte_size(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
+external int sk_runtimeeffect_get_uniforms_size(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Int,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_uniform_name(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  int index,
+  ffi.Pointer<sk_string_t> name,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Int,
+    ffi.Pointer<sk_runtimeeffect_uniform_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_uniform_from_index(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  int index,
+  ffi.Pointer<sk_runtimeeffect_uniform_t> cuniform,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_runtimeeffect_uniform_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_uniform_from_name(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  ffi.Pointer<ffi.Char> name,
+  int len,
+  ffi.Pointer<sk_runtimeeffect_uniform_t> cuniform,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
+external int sk_runtimeeffect_get_children_size(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Int,
+    ffi.Pointer<sk_string_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_child_name(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  int index,
+  ffi.Pointer<sk_string_t> name,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Int,
+    ffi.Pointer<sk_runtimeeffect_child_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_child_from_index(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  int index,
+  ffi.Pointer<sk_runtimeeffect_child_t> cchild,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_runtimeeffect_child_t>,
+  )
+>(isLeaf: true)
+external void sk_runtimeeffect_get_child_from_name(
+  ffi.Pointer<sk_runtimeeffect_t> effect,
+  ffi.Pointer<ffi.Char> name,
+  int len,
+  ffi.Pointer<sk_runtimeeffect_child_t> cchild,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external void sk_vertices_unref(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external void sk_vertices_ref(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external int sk_vertices_get_unique_id(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_vertices_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_vertices_get_bounds(
+  ffi.Pointer<sk_vertices_t> cvertices,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_vertices_t>)>(isLeaf: true)
+external int sk_vertices_get_approximate_size(
+  ffi.Pointer<sk_vertices_t> cvertices,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_vertices_t> Function(
+    ffi.UnsignedInt,
+    ffi.Int,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_color_t>,
+    ffi.Int,
+    ffi.Pointer<ffi.Uint16>,
+  )
+>(symbol: 'sk_vertices_make_copy', isLeaf: true)
+external ffi.Pointer<sk_vertices_t> _sk_vertices_make_copy(
+  int vmode,
+  int vertexCount,
+  ffi.Pointer<sk_point_t> positions,
+  ffi.Pointer<sk_point_t> texs,
+  ffi.Pointer<sk_color_t> colors,
+  int indexCount,
+  ffi.Pointer<ffi.Uint16> indices,
+);
+
+ffi.Pointer<sk_vertices_t> sk_vertices_make_copy(
+  sk_vertices_vertex_mode_t vmode,
+  int vertexCount,
+  ffi.Pointer<sk_point_t> positions,
+  ffi.Pointer<sk_point_t> texs,
+  ffi.Pointer<sk_color_t> colors,
+  int indexCount,
+  ffi.Pointer<ffi.Uint16> indices,
+) => _sk_vertices_make_copy(
+  vmode.value,
+  vertexCount,
+  positions,
+  texs,
+  colors,
+  indexCount,
+  indices,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external void sk_image_ref(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external void sk_image_unref(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_image_get_info(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_new_raster_copy(
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_pixmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_new_raster_copy_with_pixmap(
+  ffi.Pointer<sk_pixmap_t> pixmap,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<sk_data_t>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_new_raster_data(
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<sk_data_t> pixels,
+  int rowBytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_data_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_image_new_raster_from_compressed_texture_data', isLeaf: true)
+external ffi.Pointer<sk_image_t>
+_sk_image_new_raster_from_compressed_texture_data(
+  ffi.Pointer<sk_data_t> cdata,
+  int width,
+  int height,
+  int type,
+);
+
+ffi.Pointer<sk_image_t> sk_image_new_raster_from_compressed_texture_data(
+  ffi.Pointer<sk_data_t> cdata,
+  int width,
+  int height,
+  sk_texture_compression_type_t type,
+) => _sk_image_new_raster_from_compressed_texture_data(
+  cdata,
+  width,
+  height,
+  type.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_pixmap_t>,
+    sk_image_raster_release_proc,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_new_raster(
+  ffi.Pointer<sk_pixmap_t> pixmap,
+  sk_image_raster_release_proc releaseProc,
+  ffi.Pointer<ffi.Void> context,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_bitmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_new_from_bitmap(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_data_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_new_from_encoded(
+  ffi.Pointer<sk_data_t> cdata,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<gr_recording_context_t>,
+    ffi.Pointer<gr_backendtexture_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+    sk_image_texture_release_proc,
+    ffi.Pointer<ffi.Void>,
+  )
+>(symbol: 'sk_image_new_from_texture', isLeaf: true)
+external ffi.Pointer<sk_image_t> _sk_image_new_from_texture(
+  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<gr_backendtexture_t> texture,
+  int origin,
+  int colorType,
+  int alpha,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  sk_image_texture_release_proc releaseProc,
+  ffi.Pointer<ffi.Void> releaseContext,
+);
+
+ffi.Pointer<sk_image_t> sk_image_new_from_texture(
+  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<gr_backendtexture_t> texture,
+  gr_surfaceorigin_t origin,
+  sk_colortype_t colorType,
+  sk_alphatype_t alpha,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  sk_image_texture_release_proc releaseProc,
+  ffi.Pointer<ffi.Void> releaseContext,
+) => _sk_image_new_from_texture(
+  context,
+  texture,
+  origin.value,
+  colorType.value,
+  alpha.value,
+  colorSpace,
+  releaseProc,
+  releaseContext,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<gr_recording_context_t>,
+    ffi.Pointer<gr_backendtexture_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_image_new_from_adopted_texture', isLeaf: true)
+external ffi.Pointer<sk_image_t> _sk_image_new_from_adopted_texture(
+  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<gr_backendtexture_t> texture,
+  int origin,
+  int colorType,
+  int alpha,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+);
+
+ffi.Pointer<sk_image_t> sk_image_new_from_adopted_texture(
+  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<gr_backendtexture_t> texture,
+  gr_surfaceorigin_t origin,
+  sk_colortype_t colorType,
+  sk_alphatype_t alpha,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+) => _sk_image_new_from_adopted_texture(
+  context,
+  texture,
+  origin.value,
+  colorType.value,
+  alpha.value,
+  colorSpace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_picture_t>,
+    ffi.Pointer<sk_isize_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_paint_t>,
+    ffi.Bool,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_surfaceprops_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_new_from_picture(
+  ffi.Pointer<sk_picture_t> picture,
+  ffi.Pointer<sk_isize_t> dimensions,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+  ffi.Pointer<sk_paint_t> paint,
+  bool useFloatingPointBitDepth,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  ffi.Pointer<sk_surfaceprops_t> props,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external int sk_image_get_width(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external int sk_image_get_height(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external int sk_image_get_unique_id(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_image_t>)>(
+  symbol: 'sk_image_get_alpha_type',
+  isLeaf: true,
+)
+external int _sk_image_get_alpha_type(
+  ffi.Pointer<sk_image_t> image,
+);
+
+sk_alphatype_t sk_image_get_alpha_type(
+  ffi.Pointer<sk_image_t> image,
+) => sk_alphatype_t.fromValue(
+  _sk_image_get_alpha_type(
+    image,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_image_t>)>(
+  symbol: 'sk_image_get_color_type',
+  isLeaf: true,
+)
+external int _sk_image_get_color_type(
+  ffi.Pointer<sk_image_t> image,
+);
+
+sk_colortype_t sk_image_get_color_type(
+  ffi.Pointer<sk_image_t> image,
+) => sk_colortype_t.fromValue(
+  _sk_image_get_color_type(
+    image,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_image_get_colorspace(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_alpha_only(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_opaque(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(symbol: 'sk_image_make_shader', isLeaf: true)
+external ffi.Pointer<sk_shader_t> _sk_image_make_shader(
+  ffi.Pointer<sk_image_t> image,
+  int tileX,
+  int tileY,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+ffi.Pointer<sk_shader_t> sk_image_make_shader(
+  ffi.Pointer<sk_image_t> image,
+  sk_shader_tilemode_t tileX,
+  sk_shader_tilemode_t tileY,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+) => _sk_image_make_shader(
+  image,
+  tileX.value,
+  tileY.value,
+  sampling,
+  cmatrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(symbol: 'sk_image_make_raw_shader', isLeaf: true)
+external ffi.Pointer<sk_shader_t> _sk_image_make_raw_shader(
+  ffi.Pointer<sk_image_t> image,
+  int tileX,
+  int tileY,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+ffi.Pointer<sk_shader_t> sk_image_make_raw_shader(
+  ffi.Pointer<sk_image_t> image,
+  sk_shader_tilemode_t tileX,
+  sk_shader_tilemode_t tileY,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+) => _sk_image_make_raw_shader(
+  image,
+  tileX.value,
+  tileY.value,
+  sampling,
+  cmatrix,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_pixmap_t>)
+>(isLeaf: true)
+external bool sk_image_peek_pixels(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_pixmap_t> pixmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_texture_backed(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external int sk_image_texture_size(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_lazy_generated(
+  ffi.Pointer<sk_image_t> image,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_image_t>, ffi.Pointer<sk_recorder_t>)
+>(isLeaf: true)
+external bool sk_image_is_valid(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_recorder_t> recorder,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_image_read_pixels', isLeaf: true)
+external bool _sk_image_read_pixels(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_imageinfo_t> dstInfo,
+  ffi.Pointer<ffi.Void> dstPixels,
+  int dstRowBytes,
+  int srcX,
+  int srcY,
+  int cachingHint,
+);
+
+bool sk_image_read_pixels(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_imageinfo_t> dstInfo,
+  ffi.Pointer<ffi.Void> dstPixels,
+  int dstRowBytes,
+  int srcX,
+  int srcY,
+  sk_image_caching_hint_t cachingHint,
+) => _sk_image_read_pixels(
+  image,
+  dstInfo,
+  dstPixels,
+  dstRowBytes,
+  srcX,
+  srcY,
+  cachingHint.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_image_read_pixels_into_pixmap', isLeaf: true)
+external bool _sk_image_read_pixels_into_pixmap(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_pixmap_t> dst,
+  int srcX,
+  int srcY,
+  int cachingHint,
+);
+
+bool sk_image_read_pixels_into_pixmap(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_pixmap_t> dst,
+  int srcX,
+  int srcY,
+  sk_image_caching_hint_t cachingHint,
+) => _sk_image_read_pixels_into_pixmap(
+  image,
+  dst,
+  srcX,
+  srcY,
+  cachingHint.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_image_scale_pixels', isLeaf: true)
+external bool _sk_image_scale_pixels(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_pixmap_t> dst,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  int cachingHint,
+);
+
+bool sk_image_scale_pixels(
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_pixmap_t> dst,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  sk_image_caching_hint_t cachingHint,
+) => _sk_image_scale_pixels(
+  image,
+  dst,
+  sampling,
+  cachingHint.value,
+);
+
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_data_t> sk_image_ref_encoded(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_subset_raster(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_subset(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<gr_direct_context_t>,
+    ffi.Bool,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_texture_image(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<gr_direct_context_t> context,
+  bool mipmapped,
+  bool budgeted,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_make_non_texture_image(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_make_raster_image(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_has_mipmaps(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_image_t>)>(isLeaf: true)
+external bool sk_image_is_protected(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_image_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> sk_image_with_default_mipmaps(
+  ffi.Pointer<sk_image_t> cimage,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_reinterpret_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Bool,
+  )
+>(symbol: 'sk_image_make_color_type_and_color_space', isLeaf: true)
+external ffi.Pointer<sk_image_t> _sk_image_make_color_type_and_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  int colorType,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+);
+
+ffi.Pointer<sk_image_t> sk_image_make_color_type_and_color_space(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  sk_colortype_t colorType,
+  ffi.Pointer<sk_colorspace_t> colorSpace,
+  bool mipmapped,
+) => _sk_image_make_color_type_and_color_space(
+  cimage,
+  recorder,
+  colorType.value,
+  colorSpace,
+  mipmapped,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_recorder_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_surfaceprops_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_scaled(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_recorder_t> recorder,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_surfaceprops_t> props,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_imagefilter_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_ipoint_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_with_filter_raster(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_irect_t> subset,
+  ffi.Pointer<sk_irect_t> clipBounds,
+  ffi.Pointer<sk_irect_t> outSubset,
+  ffi.Pointer<sk_ipoint_t> outOffset,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<gr_recording_context_t>,
+    ffi.Pointer<sk_imagefilter_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_ipoint_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_image_make_with_filter(
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<gr_recording_context_t> context,
+  ffi.Pointer<sk_imagefilter_t> filter,
+  ffi.Pointer<sk_irect_t> subset,
+  ffi.Pointer<sk_irect_t> clipBounds,
+  ffi.Pointer<sk_irect_t> outSubset,
+  ffi.Pointer<sk_ipoint_t> outOffset,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external void sk_bitmap_delete(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Pointer<sk_bitmap_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_bitmap_t> sk_bitmap_new();
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_bitmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_bitmap_get_info(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Void> Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<ffi.Size>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_bitmap_get_pixels(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<ffi.Size> length,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external int sk_bitmap_get_row_bytes(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external int sk_bitmap_compute_byte_size(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external int sk_bitmap_get_generation_id(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external void sk_bitmap_reset(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_is_null(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_empty(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_is_immutable(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external void sk_bitmap_set_immutable(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>, sk_color_t)>(
+  isLeaf: true,
+)
+external void sk_bitmap_erase(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int color,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_bitmap_t>,
+    sk_color_t,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external void sk_bitmap_erase_rect(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int color,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_bitmap_get_addr_8(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_bitmap_get_addr_16(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint32> sk_bitmap_get_addr_32(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_bitmap_get_addr(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external int sk_bitmap_get_pixel_color(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_ready_to_draw(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_color_t>)
+>(isLeaf: true)
+external void sk_bitmap_get_pixel_colors(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_color_t> colors,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    sk_bitmap_release_proc,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external bool sk_bitmap_install_pixels(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  sk_bitmap_release_proc releaseProc,
+  ffi.Pointer<ffi.Void> context,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_pixmap_t>)
+>(isLeaf: true)
+external bool sk_bitmap_install_pixels_with_pixmap(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external bool sk_bitmap_try_alloc_pixels(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_imageinfo_t> requestedInfo,
+  int rowBytes,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Uint32,
+  )
+>(isLeaf: true)
+external bool sk_bitmap_try_alloc_pixels_with_flags(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_imageinfo_t> requestedInfo,
+  int flags,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<ffi.Void>)>(
+  isLeaf: true,
+)
+external void sk_bitmap_set_pixels(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<ffi.Void> pixels,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_pixmap_t>)
+>(isLeaf: true)
+external bool sk_bitmap_peek_pixels(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external bool sk_bitmap_extract_subset(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_bitmap_t> dst,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_ipoint_t>,
+  )
+>(isLeaf: true)
+external bool sk_bitmap_extract_alpha(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_bitmap_t> dst,
+  ffi.Pointer<sk_paint_t> paint,
+  ffi.Pointer<sk_ipoint_t> offset,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external void sk_bitmap_notify_pixels_changed(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_bitmap_t>)
+>(isLeaf: true)
+external void sk_bitmap_swap(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  ffi.Pointer<sk_bitmap_t> cother,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
+external bool sk_bitmap_compute_is_opaque(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_bitmap_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(symbol: 'sk_bitmap_make_shader', isLeaf: true)
+external ffi.Pointer<sk_shader_t> _sk_bitmap_make_shader(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  int tmx,
+  int tmy,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+ffi.Pointer<sk_shader_t> sk_bitmap_make_shader(
+  ffi.Pointer<sk_bitmap_t> cbitmap,
+  sk_shader_tilemode_t tmx,
+  sk_shader_tilemode_t tmy,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+) => _sk_bitmap_make_shader(
+  cbitmap,
+  tmx.value,
+  tmy.value,
+  sampling,
+  cmatrix,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Void> Function()>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_metal_create_system_default_device();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external void sk_metal_release_device(
+  ffi.Pointer<ffi.Void> device,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Void> Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_metal_create_command_queue(
+  ffi.Pointer<ffi.Void> device,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external void sk_metal_release_command_queue(
+  ffi.Pointer<ffi.Void> commandQueue,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
+external void sk_shader_ref(
+  ffi.Pointer<sk_shader_t> shader,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
+external void sk_shader_unref(
+  ffi.Pointer<sk_shader_t> shader,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shader_t>)>(isLeaf: true)
+external bool sk_shader_is_opaque(
+  ffi.Pointer<sk_shader_t> shader,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> sk_shader_is_a_image(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+  ffi.Pointer<ffi.UnsignedInt> tileModeX,
+  ffi.Pointer<ffi.UnsignedInt> tileModeY,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_with_local_matrix(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_colorfilter_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_with_color_filter(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_colorfilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_make_with_working_colorspace(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_colorspace_t> inputCS,
+  ffi.Pointer<sk_colorspace_t> outputCS,
+);
+
+@ffi.Native<ffi.Pointer<sk_shader_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_empty();
+
+@ffi.Native<ffi.Pointer<sk_shader_t> Function(sk_color_t)>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_color(
+  int color,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_color4f(
+  ffi.Pointer<sk_color4f_t> color,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_shader_t>,
+  )
+>(symbol: 'sk_shader_new_blend', isLeaf: true)
+external ffi.Pointer<sk_shader_t> _sk_shader_new_blend(
+  int mode,
+  ffi.Pointer<sk_shader_t> dst,
+  ffi.Pointer<sk_shader_t> src,
+);
+
+ffi.Pointer<sk_shader_t> sk_shader_new_blend(
+  sk_blendmode_t mode,
+  ffi.Pointer<sk_shader_t> dst,
+  ffi.Pointer<sk_shader_t> src,
+) => _sk_shader_new_blend(
+  mode.value,
+  dst,
+  src,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_blender_t>,
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_shader_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_blender(
+  ffi.Pointer<sk_blender_t> blender,
+  ffi.Pointer<sk_shader_t> dst,
+  ffi.Pointer<sk_shader_t> src,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_shader_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_coord_clamp(
+  ffi.Pointer<sk_shader_t> shader,
+  ffi.Pointer<sk_rect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Float,
+    ffi.Float,
+    ffi.Int,
+    ffi.Float,
+    ffi.Pointer<sk_isize_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_perlin_noise_fractal_noise(
+  double baseFrequencyX,
+  double baseFrequencyY,
+  int numOctaves,
+  double seed,
+  ffi.Pointer<sk_isize_t> tileSize,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Float,
+    ffi.Float,
+    ffi.Int,
+    ffi.Float,
+    ffi.Pointer<sk_isize_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shader_t> sk_shader_new_perlin_noise_turbulence(
+  double baseFrequencyX,
+  double baseFrequencyY,
+  int numOctaves,
+  double seed,
+  ffi.Pointer<sk_isize_t> tileSize,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external void sk_canvas_destroy(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color_t)>(
+  isLeaf: true,
+)
+external void sk_canvas_clear(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  int color,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color4f_t)>(
+  isLeaf: true,
+)
+external void sk_canvas_clear_color4f(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  sk_color4f_t color,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external void sk_canvas_discard(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external int sk_canvas_get_save_count(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Int)>(isLeaf: true)
+external void sk_canvas_restore_to_count(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  int saveCount,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color_t, ffi.UnsignedInt)
+>(symbol: 'sk_canvas_draw_color', isLeaf: true)
+external void _sk_canvas_draw_color(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  int color,
+  int cmode,
+);
+
+void sk_canvas_draw_color(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  Dartsk_color_t color,
+  sk_blendmode_t cmode,
+) => _sk_canvas_draw_color(
+  ccanvas,
+  color,
+  cmode.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color4f_t, ffi.UnsignedInt)
+>(symbol: 'sk_canvas_draw_color4f', isLeaf: true)
+external void _sk_canvas_draw_color4f(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  sk_color4f_t color,
+  int cmode,
+);
+
+void sk_canvas_draw_color4f(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  sk_color4f_t color,
+  sk_blendmode_t cmode,
+) => _sk_canvas_draw_color4f(
+  ccanvas,
+  color,
+  cmode.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_point_t>,
+    ffi.Size,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_points', isLeaf: true)
+external void _sk_canvas_draw_points(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  int pointMode,
+  ffi.Pointer<sk_point_t> points,
+  int count,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+void sk_canvas_draw_points(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  sk_point_mode_t pointMode,
+  ffi.Pointer<sk_point_t> points,
+  int count,
+  ffi.Pointer<sk_paint_t> cpaint,
+) => _sk_canvas_draw_points(
+  ccanvas,
+  pointMode.value,
+  points,
+  count,
+  cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_point(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double x,
+  double y,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_line(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double x0,
+  double y0,
+  double x1,
+  double y1,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.UnsignedInt,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_simple_text', isLeaf: true)
+external void _sk_canvas_draw_simple_text(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<ffi.Void> text,
+  int byte_length,
+  int encoding,
+  double x,
+  double y,
+  ffi.Pointer<sk_font_t> cfont,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+void sk_canvas_draw_simple_text(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<ffi.Void> text,
+  int byte_length,
+  sk_text_encoding_t encoding,
+  double x,
+  double y,
+  ffi.Pointer<sk_font_t> cfont,
+  ffi.Pointer<sk_paint_t> cpaint,
+) => _sk_canvas_draw_simple_text(
+  ccanvas,
+  text,
+  byte_length,
+  encoding.value,
+  x,
+  y,
+  cfont,
+  cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_textblob_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_text_blob(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_textblob_t> text,
+  double x,
+  double y,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external void sk_canvas_reset_matrix(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
+>(isLeaf: true)
+external void sk_canvas_set_matrix(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_matrix44_t> cmatrix,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
+>(isLeaf: true)
+external void sk_canvas_get_matrix(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_matrix44_t> cmatrix,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_round_rect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  double rx,
+  double ry,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.Bool,
+  )
+>(symbol: 'sk_canvas_clip_rect_with_operation', isLeaf: true)
+external void _sk_canvas_clip_rect_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  int op,
+  bool doAA,
+);
+
+void sk_canvas_clip_rect_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  sk_clipop_t op,
+  bool doAA,
+) => _sk_canvas_clip_rect_with_operation(
+  ccanvas,
+  crect,
+  op.value,
+  doAA,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.UnsignedInt,
+    ffi.Bool,
+  )
+>(symbol: 'sk_canvas_clip_path_with_operation', isLeaf: true)
+external void _sk_canvas_clip_path_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_path_t> cpath,
+  int op,
+  bool doAA,
+);
+
+void sk_canvas_clip_path_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_path_t> cpath,
+  sk_clipop_t op,
+  bool doAA,
+) => _sk_canvas_clip_path_with_operation(
+  ccanvas,
+  cpath,
+  op.value,
+  doAA,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rrect_t>,
+    ffi.UnsignedInt,
+    ffi.Bool,
+  )
+>(symbol: 'sk_canvas_clip_rrect_with_operation', isLeaf: true)
+external void _sk_canvas_clip_rrect_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rrect_t> crect,
+  int op,
+  bool doAA,
+);
+
+void sk_canvas_clip_rrect_with_operation(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rrect_t> crect,
+  sk_clipop_t op,
+  bool doAA,
+) => _sk_canvas_clip_rrect_with_operation(
+  ccanvas,
+  crect,
+  op.value,
+  doAA,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external bool sk_canvas_get_local_clip_bounds(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> cbounds,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external bool sk_canvas_get_device_clip_bounds(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_irect_t> cbounds,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external int sk_canvas_save(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<
+  ffi.Int Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external int sk_canvas_save_layer(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Int Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_canvas_savelayerrec_t>,
+  )
+>(isLeaf: true)
+external int sk_canvas_save_layer_rec(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_canvas_savelayerrec_t> crec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external void sk_canvas_restore(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_canvas_translate(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_canvas_scale(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double sx,
+  double sy,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_canvas_rotate_degrees(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double degrees,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_canvas_rotate_radians(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double radians,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_canvas_skew(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double sx,
+  double sy,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
+>(isLeaf: true)
+external void sk_canvas_concat(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_matrix44_t> cmatrix,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external bool sk_canvas_quick_reject(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_region_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_canvas_clip_region', isLeaf: true)
+external void _sk_canvas_clip_region(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_region_t> region,
+  int op,
+);
+
+void sk_canvas_clip_region(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_region_t> region,
+  sk_clipop_t op,
+) => _sk_canvas_clip_region(
+  ccanvas,
+  region,
+  op.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external void sk_canvas_draw_paint(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_region_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_region(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_region_t> cregion,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_rect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_rrect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rrect_t> crect,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_circle(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  double cx,
+  double cy,
+  double rad,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_oval(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> crect,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_path(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_image(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> cimage,
+  double x,
+  double y,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_image_rect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> cimage,
+  ffi.Pointer<sk_rect_t> csrcR,
+  ffi.Pointer<sk_rect_t> cdstR,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_picture_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_picture(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_picture_t> cpicture,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_drawable_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_drawable(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_drawable_t> cdrawable,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+@ffi.Native<ffi.Pointer<sk_canvas_t> Function(ffi.Pointer<sk_bitmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_canvas_t> sk_canvas_new_from_bitmap(
+  ffi.Pointer<sk_bitmap_t> bitmap,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_canvas_t> Function(
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_surfaceprops_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_canvas_t> sk_canvas_new_from_raster(
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  ffi.Pointer<sk_surfaceprops_t> props,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_data_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_annotation(
+  ffi.Pointer<sk_canvas_t> t,
+  ffi.Pointer<sk_rect_t> rect,
+  ffi.Pointer<ffi.Char> key,
+  ffi.Pointer<sk_data_t> value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_data_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_url_annotation(
+  ffi.Pointer<sk_canvas_t> t,
+  ffi.Pointer<sk_rect_t> rect,
+  ffi.Pointer<sk_data_t> value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_data_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_named_destination_annotation(
+  ffi.Pointer<sk_canvas_t> t,
+  ffi.Pointer<sk_point_t> point,
+  ffi.Pointer<sk_data_t> value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_data_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_link_destination_annotation(
+  ffi.Pointer<sk_canvas_t> t,
+  ffi.Pointer<sk_rect_t> rect,
+  ffi.Pointer<sk_data_t> value,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_lattice_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_image_lattice', isLeaf: true)
+external void _sk_canvas_draw_image_lattice(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_lattice_t> lattice,
+  ffi.Pointer<sk_rect_t> dst,
+  int mode,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+void sk_canvas_draw_image_lattice(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_lattice_t> lattice,
+  ffi.Pointer<sk_rect_t> dst,
+  sk_filter_mode_t mode,
+  ffi.Pointer<sk_paint_t> paint,
+) => _sk_canvas_draw_image_lattice(
+  ccanvas,
+  image,
+  lattice,
+  dst,
+  mode.value,
+  paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_image_nine', isLeaf: true)
+external void _sk_canvas_draw_image_nine(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_irect_t> center,
+  ffi.Pointer<sk_rect_t> dst,
+  int mode,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+void sk_canvas_draw_image_nine(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_irect_t> center,
+  ffi.Pointer<sk_rect_t> dst,
+  sk_filter_mode_t mode,
+  ffi.Pointer<sk_paint_t> paint,
+) => _sk_canvas_draw_image_nine(
+  ccanvas,
+  image,
+  center,
+  dst,
+  mode.value,
+  paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_vertices_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_vertices', isLeaf: true)
+external void _sk_canvas_draw_vertices(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_vertices_t> vertices,
+  int mode,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+void sk_canvas_draw_vertices(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_vertices_t> vertices,
+  sk_blendmode_t mode,
+  ffi.Pointer<sk_paint_t> paint,
+) => _sk_canvas_draw_vertices(
+  ccanvas,
+  vertices,
+  mode.value,
+  paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Bool,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_arc(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rect_t> oval,
+  double startAngle,
+  double sweepAngle,
+  bool useCenter,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_rrect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external void sk_canvas_draw_drrect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_rrect_t> outer,
+  ffi.Pointer<sk_rrect_t> inner,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_rsxform_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_color_t>,
+    ffi.Size,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_sampling_options_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_atlas', isLeaf: true)
+external void _sk_canvas_draw_atlas(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> atlas,
+  ffi.Pointer<sk_rsxform_t> xform,
+  ffi.Pointer<sk_rect_t> tex,
+  ffi.Pointer<sk_color_t> colors,
+  int count,
+  int mode,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_rect_t> cullRect,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+void sk_canvas_draw_atlas(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_image_t> atlas,
+  ffi.Pointer<sk_rsxform_t> xform,
+  ffi.Pointer<sk_rect_t> tex,
+  ffi.Pointer<sk_color_t> colors,
+  int count,
+  sk_blendmode_t mode,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+  ffi.Pointer<sk_rect_t> cullRect,
+  ffi.Pointer<sk_paint_t> paint,
+) => _sk_canvas_draw_atlas(
+  ccanvas,
+  atlas,
+  xform,
+  tex,
+  colors,
+  count,
+  mode.value,
+  sampling,
+  cullRect,
+  paint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_canvas_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_color_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(symbol: 'sk_canvas_draw_patch', isLeaf: true)
+external void _sk_canvas_draw_patch(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_point_t> cubics,
+  ffi.Pointer<sk_color_t> colors,
+  ffi.Pointer<sk_point_t> texCoords,
+  int mode,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+void sk_canvas_draw_patch(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+  ffi.Pointer<sk_point_t> cubics,
+  ffi.Pointer<sk_color_t> colors,
+  ffi.Pointer<sk_point_t> texCoords,
+  sk_blendmode_t mode,
+  ffi.Pointer<sk_paint_t> paint,
+) => _sk_canvas_draw_patch(
+  ccanvas,
+  cubics,
+  colors,
+  texCoords,
+  mode.value,
+  paint,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external bool sk_canvas_is_clip_empty(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
+external bool sk_canvas_is_clip_rect(
+  ffi.Pointer<sk_canvas_t> ccanvas,
+);
+
+@ffi.Native<ffi.Pointer<sk_nodraw_canvas_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_nodraw_canvas_t> sk_nodraw_canvas_new(
+  int width,
+  int height,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nodraw_canvas_t>)>(isLeaf: true)
+external void sk_nodraw_canvas_destroy(
+  ffi.Pointer<sk_nodraw_canvas_t> t,
+);
+
+@ffi.Native<ffi.Pointer<sk_nway_canvas_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_nway_canvas_t> sk_nway_canvas_new(
+  int width,
+  int height,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>)>(isLeaf: true)
+external void sk_nway_canvas_destroy(
+  ffi.Pointer<sk_nway_canvas_t> t,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>, ffi.Pointer<sk_canvas_t>)
+>(isLeaf: true)
+external void sk_nway_canvas_add_canvas(
+  ffi.Pointer<sk_nway_canvas_t> t,
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>, ffi.Pointer<sk_canvas_t>)
+>(isLeaf: true)
+external void sk_nway_canvas_remove_canvas(
+  ffi.Pointer<sk_nway_canvas_t> t,
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>)>(isLeaf: true)
+external void sk_nway_canvas_remove_all(
+  ffi.Pointer<sk_nway_canvas_t> t,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_overdraw_canvas_t> Function(ffi.Pointer<sk_canvas_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_overdraw_canvas_t> sk_overdraw_canvas_new(
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_overdraw_canvas_t>)>(isLeaf: true)
+external void sk_overdraw_canvas_destroy(
+  ffi.Pointer<sk_overdraw_canvas_t> canvas,
+);
+
+@ffi.Native<
+  ffi.Pointer<gr_recording_context_t> Function(ffi.Pointer<sk_canvas_t>)
+>(isLeaf: true)
+external ffi.Pointer<gr_recording_context_t> sk_canvas_get_recording_context(
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<ffi.Pointer<sk_surface_t> Function(ffi.Pointer<sk_canvas_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_surface_t> sk_canvas_get_surface(
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<ffi.Pointer<sk_string_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_string_t> sk_string_new_empty();
+
+@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<ffi.Char>, ffi.Size)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_string_t> sk_string_new_with_copy(
+  ffi.Pointer<ffi.Char> src,
+  int length,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_string_t>)>(isLeaf: true)
+external void sk_string_destructor(
+  ffi.Pointer<sk_string_t> arg0,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_string_t>)>(isLeaf: true)
+external int sk_string_get_size(
+  ffi.Pointer<sk_string_t> arg0,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_string_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<ffi.Char> sk_string_get_c_str(
+  ffi.Pointer<sk_string_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external void skgpu_set_dawn_proc_table(
+  ffi.Pointer<ffi.Void> procs,
+);
+
+@ffi.Native<ffi.Bool Function()>(isLeaf: true)
+external bool skgpu_graphite_is_supported();
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_context_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_context_t>
+skgpu_graphite_context_make_metal(
+  ffi.Pointer<ffi.Void> device,
+  ffi.Pointer<ffi.Void> queue,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_context_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_context_t> skgpu_graphite_context_make_dawn(
+  ffi.Pointer<ffi.Void> instance,
+  ffi.Pointer<ffi.Void> device,
+  ffi.Pointer<ffi.Void> queue,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_context_delete(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external bool skgpu_graphite_context_is_device_lost(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_context_max_texture_size(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external bool skgpu_graphite_context_supports_protected_content(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_context_current_budgeted_bytes(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_context_max_budgeted_bytes(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_context_set_max_budgeted_bytes(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  int bytes,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_context_free_gpu_resources(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>, ffi.LongLong)
+>(isLeaf: true)
+external void skgpu_graphite_context_perform_deferred_cleanup(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  int ms,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<skgpu_graphite_context_t>,
+    ffi.Pointer<skgpu_graphite_insert_recording_info_t>,
+  )
+>(isLeaf: true)
+external bool skgpu_graphite_context_insert_recording(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<skgpu_graphite_insert_recording_info_t> info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<skgpu_graphite_context_t>,
+    ffi.Pointer<skgpu_graphite_submit_info_t>,
+  )
+>()
+external bool skgpu_graphite_context_submit(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<skgpu_graphite_submit_info_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external bool skgpu_graphite_context_has_unfinished_gpu_work(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_context_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_context_check_async_work_completion(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_recorder_t> Function(
+    ffi.Pointer<skgpu_graphite_context_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_recorder_t>
+skgpu_graphite_context_make_recorder(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_recorder_delete(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_recording_t> Function(
+    ffi.Pointer<skgpu_graphite_recorder_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_recording_t> skgpu_graphite_recorder_snap(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_recorder_max_texture_size(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_recorder_free_gpu_resources(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_recorder_current_budgeted_bytes(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
+  isLeaf: true,
+)
+external int skgpu_graphite_recorder_max_budgeted_bytes(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recording_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_recording_delete(
+  ffi.Pointer<skgpu_graphite_recording_t> recording,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_backend_texture_t> Function(
+    ffi.Pointer<sk_isize_t>,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_backend_texture_t>
+skgpu_graphite_backend_texture_create_metal(
+  ffi.Pointer<sk_isize_t> size,
+  ffi.Pointer<ffi.Void> texture,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_backend_texture_t> Function(ffi.Pointer<ffi.Void>)
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_backend_texture_t>
+skgpu_graphite_backend_texture_create_dawn(
+  ffi.Pointer<ffi.Void> texture,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_backend_texture_t>)>(
+  isLeaf: true,
+)
+external void skgpu_graphite_backend_texture_delete(
+  ffi.Pointer<skgpu_graphite_backend_texture_t> backend_texture,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_surface_t> Function(
+    ffi.Pointer<skgpu_graphite_recorder_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Bool,
+    ffi.Pointer<sk_surfaceprops_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+  ffi.Pointer<sk_imageinfo_t> imageInfo,
+  bool mipmapped,
+  ffi.Pointer<sk_surfaceprops_t> props,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_surface_t> Function(
+    ffi.Pointer<skgpu_graphite_recorder_t>,
+    ffi.Pointer<skgpu_graphite_backend_texture_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_surfaceprops_t>,
+    ffi.Pointer<ffi.Char>,
+  )
+>(symbol: 'skgpu_graphite_surface_wrap_backend_texture', isLeaf: true)
+external ffi.Pointer<sk_surface_t> _skgpu_graphite_surface_wrap_backend_texture(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+  ffi.Pointer<skgpu_graphite_backend_texture_t> backendTexture,
+  int color_type,
+  ffi.Pointer<sk_colorspace_t> color_space,
+  ffi.Pointer<sk_surfaceprops_t> props,
+  ffi.Pointer<ffi.Char> label,
+);
+
+ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
+  ffi.Pointer<skgpu_graphite_recorder_t> recorder,
+  ffi.Pointer<skgpu_graphite_backend_texture_t> backendTexture,
+  sk_colortype_t color_type,
+  ffi.Pointer<sk_colorspace_t> color_space,
+  ffi.Pointer<sk_surfaceprops_t> props,
+  ffi.Pointer<ffi.Char> label,
+) => _skgpu_graphite_surface_wrap_backend_texture(
+  recorder,
+  backendTexture,
+  color_type.value,
+  color_space,
+  props,
+  label,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<skgpu_graphite_context_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_surface_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    skgpu_graphite_async_rescale_and_read_pixels_callback,
+    ffi.Pointer<ffi.Void>,
+  )
+>(symbol: 'skgpu_graphite_async_rescale_and_read_pixels_from_surface')
+external void _skgpu_graphite_async_rescale_and_read_pixels_from_surface(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<sk_irect_t> src_rect,
+  ffi.Pointer<sk_surface_t> surface,
+  ffi.Pointer<sk_imageinfo_t> dst_info,
+  int rescale_gamme,
+  int rescale_mode,
+  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
+  ffi.Pointer<ffi.Void> callback_context,
+);
+
+void skgpu_graphite_async_rescale_and_read_pixels_from_surface(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<sk_irect_t> src_rect,
+  ffi.Pointer<sk_surface_t> surface,
+  ffi.Pointer<sk_imageinfo_t> dst_info,
+  sk_image_rescale_gamma_t rescale_gamme,
+  sk_image_rescale_mode_t rescale_mode,
+  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
+  ffi.Pointer<ffi.Void> callback_context,
+) => _skgpu_graphite_async_rescale_and_read_pixels_from_surface(
+  context,
+  src_rect,
+  surface,
+  dst_info,
+  rescale_gamme.value,
+  rescale_mode.value,
+  arg6,
+  callback_context,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<skgpu_graphite_context_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Pointer<sk_image_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    skgpu_graphite_async_rescale_and_read_pixels_callback,
+    ffi.Pointer<ffi.Void>,
+  )
+>(symbol: 'skgpu_graphite_async_rescale_and_read_pixels_from_image')
+external void _skgpu_graphite_async_rescale_and_read_pixels_from_image(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<sk_irect_t> src_rect,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_imageinfo_t> dst_info,
+  int rescale_gamme,
+  int rescale_mode,
+  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
+  ffi.Pointer<ffi.Void> callback_context,
+);
+
+void skgpu_graphite_async_rescale_and_read_pixels_from_image(
+  ffi.Pointer<skgpu_graphite_context_t> context,
+  ffi.Pointer<sk_irect_t> src_rect,
+  ffi.Pointer<sk_image_t> image,
+  ffi.Pointer<sk_imageinfo_t> dst_info,
+  sk_image_rescale_gamma_t rescale_gamme,
+  sk_image_rescale_mode_t rescale_mode,
+  skgpu_graphite_async_rescale_and_read_pixels_callback arg6,
+  ffi.Pointer<ffi.Void> callback_context,
+) => _skgpu_graphite_async_rescale_and_read_pixels_from_image(
+  context,
+  src_rect,
+  image,
+  dst_info,
+  rescale_gamme.value,
+  rescale_mode.value,
+  arg6,
+  callback_context,
+);
+
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_image_t> skgpu_graphite_surface_as_image(
+  ffi.Pointer<sk_surface_t> surface,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_surface_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_image_t> skgpu_graphite_surface_as_image_copy(
+  ffi.Pointer<sk_surface_t> surface,
+  ffi.Pointer<sk_irect_t> subset,
+  bool mipmapped,
+);
+
+@ffi.Native<
+  ffi.Pointer<skgpu_graphite_recorder_t> Function(ffi.Pointer<sk_surface_t>)
+>(isLeaf: true)
+external ffi.Pointer<skgpu_graphite_recorder_t>
+skgpu_graphite_surface_get_recorder(
+  ffi.Pointer<sk_surface_t> surface,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_maskfilter_t>)>(isLeaf: true)
+external void sk_maskfilter_ref(
+  ffi.Pointer<sk_maskfilter_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_maskfilter_t>)>(isLeaf: true)
+external void sk_maskfilter_unref(
+  ffi.Pointer<sk_maskfilter_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_maskfilter_t> Function(ffi.UnsignedInt, ffi.Float, ffi.Bool)
+>(symbol: 'sk_maskfilter_new_blur', isLeaf: true)
+external ffi.Pointer<sk_maskfilter_t> _sk_maskfilter_new_blur(
+  int arg0,
+  double sigma,
+  bool respectCTM,
+);
+
+ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_blur(
+  sk_blurstyle_t arg0,
+  double sigma,
+  bool respectCTM,
+) => _sk_maskfilter_new_blur(
+  arg0.value,
+  sigma,
+  respectCTM,
+);
+
+@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<ffi.Uint8>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_table(
+  ffi.Pointer<ffi.Uint8> table,
+);
+
+@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Float)>(isLeaf: true)
+external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_gamma(
+  double gamma,
+);
+
+@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Uint8, ffi.Uint8)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_clip(
+  int min,
+  int max,
+);
+
+@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<sk_shader_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_maskfilter_t> sk_maskfilter_new_shader(
+  ffi.Pointer<sk_shader_t> cshader,
+);
+
 @ffi.Native<ffi.Pointer<sk_surface_t> Function(ffi.Int, ffi.Int)>(isLeaf: true)
 external ffi.Pointer<sk_surface_t> sk_surface_new_null(
   int width,
@@ -8141,32 +5558,213 @@ sk_pixelgeometry_t sk_surfaceprops_get_pixel_geometry(
   ),
 );
 
-@ffi.Native<ffi.Pointer<sk_string_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_string_t> sk_string_new_empty();
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
+external void sk_colorfilter_ref(
+  ffi.Pointer<sk_colorfilter_t> filter,
+);
 
-@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<ffi.Char>, ffi.Size)>(
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
+external void sk_colorfilter_unref(
+  ffi.Pointer<sk_colorfilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(sk_color_t, ffi.UnsignedInt)
+>(symbol: 'sk_colorfilter_new_blend', isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend(
+  int c,
+  int mode,
+);
+
+ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend(
+  Dartsk_color_t c,
+  sk_blendmode_t mode,
+) => _sk_colorfilter_new_blend(
+  c,
+  mode.value,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(sk_color_t, sk_color_t)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_string_t> sk_string_new_with_copy(
-  ffi.Pointer<ffi.Char> src,
-  int length,
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_lighting(
+  int mul,
+  int add,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_string_t>)>(isLeaf: true)
-external void sk_string_destructor(
-  ffi.Pointer<sk_string_t> arg0,
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorfilter_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_compose(
+  ffi.Pointer<sk_colorfilter_t> outer,
+  ffi.Pointer<sk_colorfilter_t> inner,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_string_t>)>(isLeaf: true)
-external int sk_string_get_size(
-  ffi.Pointer<sk_string_t> arg0,
-);
-
-@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_string_t>)>(
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>)>(
   isLeaf: true,
 )
-external ffi.Pointer<ffi.Char> sk_string_get_c_str(
-  ffi.Pointer<sk_string_t> arg0,
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_color_matrix(
+  ffi.Pointer<ffi.Float> array,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_hsla_matrix(
+  ffi.Pointer<ffi.Float> array,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t>
+sk_colorfilter_new_linear_to_srgb_gamma();
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t>
+sk_colorfilter_new_srgb_to_linear_gamma();
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Float,
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorfilter_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_lerp(
+  double weight,
+  ffi.Pointer<sk_colorfilter_t> filter0,
+  ffi.Pointer<sk_colorfilter_t> filter1,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_luma_color();
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_highcontrastconfig_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_high_contrast(
+  ffi.Pointer<sk_highcontrastconfig_t> config,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Uint8>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table(
+  ffi.Pointer<ffi.Uint8> table,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<ffi.Uint8>,
+    ffi.Pointer<ffi.Uint8>,
+    ffi.Pointer<ffi.Uint8>,
+    ffi.Pointer<ffi.Uint8>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table_argb(
+  ffi.Pointer<ffi.Uint8> tableA,
+  ffi.Pointer<ffi.Uint8> tableR,
+  ffi.Pointer<ffi.Uint8> tableG,
+  ffi.Pointer<ffi.Uint8> tableB,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_color_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external bool sk_colorfilter_as_a_color_mode(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_color_t> color,
+  ffi.Pointer<ffi.UnsignedInt> mode,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>, ffi.Pointer<ffi.Float>)
+>(isLeaf: true)
+external bool sk_colorfilter_as_a_color_matrix(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<ffi.Float> matrix,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
+external bool sk_colorfilter_is_alpha_unchanged(
+  ffi.Pointer<sk_colorfilter_t> filter,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_color4f_t>,
+  )
+>(isLeaf: true)
+external void sk_colorfilter_filter_color4f(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_color4f_t> src,
+  ffi.Pointer<sk_colorspace_t> srcCS,
+  ffi.Pointer<sk_colorspace_t> dstCS,
+  ffi.Pointer<sk_color4f_t> result,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorfilter_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_make_composed(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_colorfilter_t> inner,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_colorfilter_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t>
+sk_colorfilter_make_with_working_colorspace(
+  ffi.Pointer<sk_colorfilter_t> filter,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_colorfilter_new_blend4f', isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend4f(
+  ffi.Pointer<sk_color4f_t> c,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  int mode,
+);
+
+ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend4f(
+  ffi.Pointer<sk_color4f_t> c,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  sk_blendmode_t mode,
+) => _sk_colorfilter_new_blend4f(
+  c,
+  colorspace,
+  mode.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>, ffi.Bool)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_color_matrix_clamped(
+  ffi.Pointer<ffi.Float> array,
+  bool clamp,
 );
 
 @ffi.Native<ffi.Pointer<sk_strut_style_t> Function()>(isLeaf: true)
@@ -10025,2023 +7623,6 @@ external void sk_paragraph_builder_reset(
   ffi.Pointer<sk_paragraph_builder_t> builder,
 );
 
-@ffi.Native<ffi.Pointer<sk_picture_recorder_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_picture_recorder_t> sk_picture_recorder_new();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_recorder_t>)>(isLeaf: true)
-external void sk_picture_recorder_delete(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_canvas_t> Function(
-    ffi.Pointer<sk_picture_recorder_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_canvas_t> sk_picture_recorder_begin_recording(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_canvas_t> Function(
-    ffi.Pointer<sk_picture_recorder_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_bbh_factory_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_canvas_t>
-sk_picture_recorder_begin_recording_with_bbh_factory(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-  ffi.Pointer<sk_bbh_factory_t> arg2,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_picture_recorder_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_picture_t> sk_picture_recorder_end_recording(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_picture_t> Function(
-    ffi.Pointer<sk_picture_recorder_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_picture_t> sk_picture_recorder_end_recording_with_cull(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_drawable_t> Function(ffi.Pointer<sk_picture_recorder_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_drawable_t>
-sk_picture_recorder_end_recording_as_drawable(
-  ffi.Pointer<sk_picture_recorder_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_canvas_t> Function(ffi.Pointer<sk_picture_recorder_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_canvas_t> sk_picture_get_recording_canvas(
-  ffi.Pointer<sk_picture_recorder_t> crec,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
-external void sk_picture_ref(
-  ffi.Pointer<sk_picture_t> arg0,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
-external void sk_picture_unref(
-  ffi.Pointer<sk_picture_t> arg0,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
-external int sk_picture_get_unique_id(
-  ffi.Pointer<sk_picture_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external void sk_picture_get_cull_rect(
-  ffi.Pointer<sk_picture_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_picture_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_rect_t>,
-  )
->(symbol: 'sk_picture_make_shader', isLeaf: true)
-external ffi.Pointer<sk_shader_t> _sk_picture_make_shader(
-  ffi.Pointer<sk_picture_t> src,
-  int tmx,
-  int tmy,
-  int mode,
-  ffi.Pointer<sk_matrix_t> localMatrix,
-  ffi.Pointer<sk_rect_t> tile,
-);
-
-ffi.Pointer<sk_shader_t> sk_picture_make_shader(
-  ffi.Pointer<sk_picture_t> src,
-  sk_shader_tilemode_t tmx,
-  sk_shader_tilemode_t tmy,
-  sk_filter_mode_t mode,
-  ffi.Pointer<sk_matrix_t> localMatrix,
-  ffi.Pointer<sk_rect_t> tile,
-) => _sk_picture_make_shader(
-  src,
-  tmx.value,
-  tmy.value,
-  mode.value,
-  localMatrix,
-  tile,
-);
-
-@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_picture_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_data_t> sk_picture_serialize_to_data(
-  ffi.Pointer<sk_picture_t> picture,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_wstream_t>)
->(isLeaf: true)
-external void sk_picture_serialize_to_stream(
-  ffi.Pointer<sk_picture_t> picture,
-  ffi.Pointer<sk_wstream_t> stream,
-);
-
-@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_stream_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_stream(
-  ffi.Pointer<sk_stream_t> stream,
-);
-
-@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_data_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_data(
-  ffi.Pointer<sk_data_t> data,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_picture_t> Function(ffi.Pointer<ffi.Void>, ffi.Size)
->(isLeaf: true)
-external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_memory(
-  ffi.Pointer<ffi.Void> buffer,
-  int length,
-);
-
-@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_rect_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_picture_t> sk_picture_make_placeholder(
-  ffi.Pointer<sk_rect_t> cull,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_canvas_t>)
->(isLeaf: true)
-external void sk_picture_playback(
-  ffi.Pointer<sk_picture_t> picture,
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_picture_t>, ffi.Bool)>(isLeaf: true)
-external int sk_picture_approximate_op_count(
-  ffi.Pointer<sk_picture_t> picture,
-  bool nested,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
-external int sk_picture_approximate_bytes_used(
-  ffi.Pointer<sk_picture_t> picture,
-);
-
-@ffi.Native<ffi.Pointer<sk_rtree_factory_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_rtree_factory_t> sk_rtree_factory_new();
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rtree_factory_t>)>(isLeaf: true)
-external void sk_rtree_factory_delete(
-  ffi.Pointer<sk_rtree_factory_t> arg0,
-);
-
-@ffi.Native<ffi.Pointer<sk_region_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_region_t> sk_region_new();
-
-@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_region_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_region_t> sk_region_new_from_region(
-  ffi.Pointer<sk_region_t> region,
-);
-
-@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_irect_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_region_t> sk_region_new_from_rect(
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external void sk_region_delete(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external bool sk_region_is_empty(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external bool sk_region_is_rect(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external bool sk_region_is_complex(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external void sk_region_get_bounds(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_path_t>)
->(isLeaf: true)
-external void sk_region_get_boundary_path(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_path_builder_t>)
->(isLeaf: true)
-external bool sk_region_add_boundary_path(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_path_builder_t> pathBuilder,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external int sk_region_compute_region_complexity(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
-external bool sk_region_set_empty(
-  ffi.Pointer<sk_region_t> r,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_region_set_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>, ffi.Int)
->(isLeaf: true)
-external bool sk_region_set_rects(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rects,
-  int count,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
->(isLeaf: true)
-external bool sk_region_set_region(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> region,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_region_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_region_t>,
-  )
->(isLeaf: true)
-external bool sk_region_set_path(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_path_t> t,
-  ffi.Pointer<sk_region_t> clip,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_region_intersects_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
->(isLeaf: true)
-external bool sk_region_intersects(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> src,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external bool sk_region_contains_point(
-  ffi.Pointer<sk_region_t> r,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_region_contains_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
->(isLeaf: true)
-external bool sk_region_contains(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> region,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_region_quick_contains(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_region_quick_reject_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
->(isLeaf: true)
-external bool sk_region_quick_reject(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> region,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external void sk_region_translate(
-  ffi.Pointer<sk_region_t> r,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_region_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_region_op_rect', isLeaf: true)
-external bool _sk_region_op_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-  int op,
-);
-
-bool sk_region_op_rect(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_irect_t> rect,
-  sk_region_op_t op,
-) => _sk_region_op_rect(
-  r,
-  rect,
-  op.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_region_t>,
-    ffi.Pointer<sk_region_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_region_op', isLeaf: true)
-external bool _sk_region_op(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> region,
-  int op,
-);
-
-bool sk_region_op(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<sk_region_t> region,
-  sk_region_op_t op,
-) => _sk_region_op(
-  r,
-  region,
-  op.value,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>)>(
-  isLeaf: true,
-)
-external int sk_region_write_to_memory(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<ffi.Void> buffer,
-);
-
-@ffi.Native<
-  ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>, ffi.Size)
->(isLeaf: true)
-external int sk_region_read_from_memory(
-  ffi.Pointer<sk_region_t> r,
-  ffi.Pointer<ffi.Void> buffer,
-  int length,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_region_iterator_t> Function(ffi.Pointer<sk_region_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_region_iterator_t> sk_region_iterator_new(
-  ffi.Pointer<sk_region_t> region,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
-external void sk_region_iterator_delete(
-  ffi.Pointer<sk_region_iterator_t> iter,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
-external bool sk_region_iterator_rewind(
-  ffi.Pointer<sk_region_iterator_t> iter,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
-external bool sk_region_iterator_done(
-  ffi.Pointer<sk_region_iterator_t> iter,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
-external void sk_region_iterator_next(
-  ffi.Pointer<sk_region_iterator_t> iter,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_region_iterator_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external void sk_region_iterator_rect(
-  ffi.Pointer<sk_region_iterator_t> iter,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_region_cliperator_t> Function(
-    ffi.Pointer<sk_region_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_region_cliperator_t> sk_region_cliperator_new(
-  ffi.Pointer<sk_region_t> region,
-  ffi.Pointer<sk_irect_t> clip,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_cliperator_t>)>(
-  isLeaf: true,
-)
-external void sk_region_cliperator_delete(
-  ffi.Pointer<sk_region_cliperator_t> iter,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_cliperator_t>)>(
-  isLeaf: true,
-)
-external bool sk_region_cliperator_done(
-  ffi.Pointer<sk_region_cliperator_t> iter,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_cliperator_t>)>(
-  isLeaf: true,
-)
-external void sk_region_cliperator_next(
-  ffi.Pointer<sk_region_cliperator_t> iter,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_region_cliperator_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external void sk_region_cliperator_rect(
-  ffi.Pointer<sk_region_cliperator_t> iter,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_region_spanerator_t> Function(
-    ffi.Pointer<sk_region_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.Int,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_region_spanerator_t> sk_region_spanerator_new(
-  ffi.Pointer<sk_region_t> region,
-  int y,
-  int left,
-  int right,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_spanerator_t>)>(
-  isLeaf: true,
-)
-external void sk_region_spanerator_delete(
-  ffi.Pointer<sk_region_spanerator_t> iter,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_region_spanerator_t>,
-    ffi.Pointer<ffi.Int>,
-    ffi.Pointer<ffi.Int>,
-  )
->(isLeaf: true)
-external bool sk_region_spanerator_next(
-  ffi.Pointer<sk_region_spanerator_t> iter,
-  ffi.Pointer<ffi.Int> left,
-  ffi.Pointer<ffi.Int> right,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external void sk_bitmap_delete(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Pointer<sk_bitmap_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_bitmap_t> sk_bitmap_new();
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_bitmap_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_imageinfo_t> sk_bitmap_get_info(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Void> Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<ffi.Size>,
-  )
->(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_bitmap_get_pixels(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<ffi.Size> length,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external int sk_bitmap_get_row_bytes(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external int sk_bitmap_compute_byte_size(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external int sk_bitmap_get_generation_id(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external void sk_bitmap_reset(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external bool sk_bitmap_is_null(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external bool sk_bitmap_empty(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external bool sk_bitmap_is_immutable(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external void sk_bitmap_set_immutable(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>, sk_color_t)>(
-  isLeaf: true,
-)
-external void sk_bitmap_erase(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int color,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_bitmap_t>,
-    sk_color_t,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external void sk_bitmap_erase_rect(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int color,
-  ffi.Pointer<sk_irect_t> rect,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint8> sk_bitmap_get_addr_8(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint16> sk_bitmap_get_addr_16(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint32> sk_bitmap_get_addr_32(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_bitmap_get_addr(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<sk_color_t Function(ffi.Pointer<sk_bitmap_t>, ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external int sk_bitmap_get_pixel_color(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external bool sk_bitmap_ready_to_draw(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_color_t>)
->(isLeaf: true)
-external void sk_bitmap_get_pixel_colors(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_color_t> colors,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    sk_bitmap_release_proc,
-    ffi.Pointer<ffi.Void>,
-  )
->(isLeaf: true)
-external bool sk_bitmap_install_pixels(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  sk_bitmap_release_proc releaseProc,
-  ffi.Pointer<ffi.Void> context,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_pixmap_t>)
->(isLeaf: true)
-external bool sk_bitmap_install_pixels_with_pixmap(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external bool sk_bitmap_try_alloc_pixels(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_imageinfo_t> requestedInfo,
-  int rowBytes,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Uint32,
-  )
->(isLeaf: true)
-external bool sk_bitmap_try_alloc_pixels_with_flags(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_imageinfo_t> requestedInfo,
-  int flags,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<ffi.Void>)>(
-  isLeaf: true,
-)
-external void sk_bitmap_set_pixels(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<ffi.Void> pixels,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_pixmap_t>)
->(isLeaf: true)
-external bool sk_bitmap_peek_pixels(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external bool sk_bitmap_extract_subset(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_bitmap_t> dst,
-  ffi.Pointer<sk_irect_t> subset,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.Pointer<sk_paint_t>,
-    ffi.Pointer<sk_ipoint_t>,
-  )
->(isLeaf: true)
-external bool sk_bitmap_extract_alpha(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_bitmap_t> dst,
-  ffi.Pointer<sk_paint_t> paint,
-  ffi.Pointer<sk_ipoint_t> offset,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external void sk_bitmap_notify_pixels_changed(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_bitmap_t>, ffi.Pointer<sk_bitmap_t>)
->(isLeaf: true)
-external void sk_bitmap_swap(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  ffi.Pointer<sk_bitmap_t> cother,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_bitmap_t>)>(isLeaf: true)
-external bool sk_bitmap_compute_is_opaque(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_bitmap_t>,
-    ffi.UnsignedInt,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(symbol: 'sk_bitmap_make_shader', isLeaf: true)
-external ffi.Pointer<sk_shader_t> _sk_bitmap_make_shader(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  int tmx,
-  int tmy,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-);
-
-ffi.Pointer<sk_shader_t> sk_bitmap_make_shader(
-  ffi.Pointer<sk_bitmap_t> cbitmap,
-  sk_shader_tilemode_t tmx,
-  sk_shader_tilemode_t tmy,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-) => _sk_bitmap_make_shader(
-  cbitmap,
-  tmx.value,
-  tmy.value,
-  sampling,
-  cmatrix,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external void sk_canvas_destroy(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color_t)>(
-  isLeaf: true,
-)
-external void sk_canvas_clear(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  int color,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color4f_t)>(
-  isLeaf: true,
-)
-external void sk_canvas_clear_color4f(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  sk_color4f_t color,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external void sk_canvas_discard(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external int sk_canvas_get_save_count(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Int)>(isLeaf: true)
-external void sk_canvas_restore_to_count(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  int saveCount,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color_t, ffi.UnsignedInt)
->(symbol: 'sk_canvas_draw_color', isLeaf: true)
-external void _sk_canvas_draw_color(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  int color,
-  int cmode,
-);
-
-void sk_canvas_draw_color(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  Dartsk_color_t color,
-  sk_blendmode_t cmode,
-) => _sk_canvas_draw_color(
-  ccanvas,
-  color,
-  cmode.value,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, sk_color4f_t, ffi.UnsignedInt)
->(symbol: 'sk_canvas_draw_color4f', isLeaf: true)
-external void _sk_canvas_draw_color4f(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  sk_color4f_t color,
-  int cmode,
-);
-
-void sk_canvas_draw_color4f(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  sk_color4f_t color,
-  sk_blendmode_t cmode,
-) => _sk_canvas_draw_color4f(
-  ccanvas,
-  color,
-  cmode.value,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_point_t>,
-    ffi.Size,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_points', isLeaf: true)
-external void _sk_canvas_draw_points(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  int pointMode,
-  ffi.Pointer<sk_point_t> points,
-  int count,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-void sk_canvas_draw_points(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  sk_point_mode_t pointMode,
-  ffi.Pointer<sk_point_t> points,
-  int count,
-  ffi.Pointer<sk_paint_t> cpaint,
-) => _sk_canvas_draw_points(
-  ccanvas,
-  pointMode.value,
-  points,
-  count,
-  cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_point(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double x,
-  double y,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_line(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double x0,
-  double y0,
-  double x1,
-  double y1,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.UnsignedInt,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_font_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_simple_text', isLeaf: true)
-external void _sk_canvas_draw_simple_text(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<ffi.Void> text,
-  int byte_length,
-  int encoding,
-  double x,
-  double y,
-  ffi.Pointer<sk_font_t> cfont,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-void sk_canvas_draw_simple_text(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<ffi.Void> text,
-  int byte_length,
-  sk_text_encoding_t encoding,
-  double x,
-  double y,
-  ffi.Pointer<sk_font_t> cfont,
-  ffi.Pointer<sk_paint_t> cpaint,
-) => _sk_canvas_draw_simple_text(
-  ccanvas,
-  text,
-  byte_length,
-  encoding.value,
-  x,
-  y,
-  cfont,
-  cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_textblob_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_text_blob(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_textblob_t> text,
-  double x,
-  double y,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external void sk_canvas_reset_matrix(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
->(isLeaf: true)
-external void sk_canvas_set_matrix(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_matrix44_t> cmatrix,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
->(isLeaf: true)
-external void sk_canvas_get_matrix(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_matrix44_t> cmatrix,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_round_rect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  double rx,
-  double ry,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.Bool,
-  )
->(symbol: 'sk_canvas_clip_rect_with_operation', isLeaf: true)
-external void _sk_canvas_clip_rect_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  int op,
-  bool doAA,
-);
-
-void sk_canvas_clip_rect_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  sk_clipop_t op,
-  bool doAA,
-) => _sk_canvas_clip_rect_with_operation(
-  ccanvas,
-  crect,
-  op.value,
-  doAA,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.UnsignedInt,
-    ffi.Bool,
-  )
->(symbol: 'sk_canvas_clip_path_with_operation', isLeaf: true)
-external void _sk_canvas_clip_path_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_path_t> cpath,
-  int op,
-  bool doAA,
-);
-
-void sk_canvas_clip_path_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_path_t> cpath,
-  sk_clipop_t op,
-  bool doAA,
-) => _sk_canvas_clip_path_with_operation(
-  ccanvas,
-  cpath,
-  op.value,
-  doAA,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rrect_t>,
-    ffi.UnsignedInt,
-    ffi.Bool,
-  )
->(symbol: 'sk_canvas_clip_rrect_with_operation', isLeaf: true)
-external void _sk_canvas_clip_rrect_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rrect_t> crect,
-  int op,
-  bool doAA,
-);
-
-void sk_canvas_clip_rrect_with_operation(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rrect_t> crect,
-  sk_clipop_t op,
-  bool doAA,
-) => _sk_canvas_clip_rrect_with_operation(
-  ccanvas,
-  crect,
-  op.value,
-  doAA,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external bool sk_canvas_get_local_clip_bounds(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> cbounds,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external bool sk_canvas_get_device_clip_bounds(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_irect_t> cbounds,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external int sk_canvas_save(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external int sk_canvas_save_layer(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Int Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_canvas_savelayerrec_t>,
-  )
->(isLeaf: true)
-external int sk_canvas_save_layer_rec(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_canvas_savelayerrec_t> crec,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external void sk_canvas_restore(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_canvas_translate(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double dx,
-  double dy,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_canvas_scale(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double sx,
-  double sy,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_canvas_rotate_degrees(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double degrees,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_canvas_rotate_radians(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double radians,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Float, ffi.Float)>(
-  isLeaf: true,
-)
-external void sk_canvas_skew(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double sx,
-  double sy,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_matrix44_t>)
->(isLeaf: true)
-external void sk_canvas_concat(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_matrix44_t> cmatrix,
-);
-
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external bool sk_canvas_quick_reject(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_region_t>,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_canvas_clip_region', isLeaf: true)
-external void _sk_canvas_clip_region(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_region_t> region,
-  int op,
-);
-
-void sk_canvas_clip_region(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_region_t> region,
-  sk_clipop_t op,
-) => _sk_canvas_clip_region(
-  ccanvas,
-  region,
-  op.value,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_canvas_t>, ffi.Pointer<sk_paint_t>)
->(isLeaf: true)
-external void sk_canvas_draw_paint(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_region_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_region(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_region_t> cregion,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_rect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_rrect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rrect_t> crect,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_circle(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  double cx,
-  double cy,
-  double rad,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_oval(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> crect,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_path(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_path_t> cpath,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_image(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> cimage,
-  double x,
-  double y,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_image_rect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> cimage,
-  ffi.Pointer<sk_rect_t> csrcR,
-  ffi.Pointer<sk_rect_t> cdstR,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_picture_t>,
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_picture(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_picture_t> cpicture,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-  ffi.Pointer<sk_paint_t> cpaint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_drawable_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_drawable(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_drawable_t> cdrawable,
-  ffi.Pointer<sk_matrix_t> cmatrix,
-);
-
-@ffi.Native<ffi.Pointer<sk_canvas_t> Function(ffi.Pointer<sk_bitmap_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_canvas_t> sk_canvas_new_from_bitmap(
-  ffi.Pointer<sk_bitmap_t> bitmap,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_canvas_t> Function(
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-    ffi.Pointer<sk_surfaceprops_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_canvas_t> sk_canvas_new_from_raster(
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<ffi.Void> pixels,
-  int rowBytes,
-  ffi.Pointer<sk_surfaceprops_t> props,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Pointer<sk_data_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_annotation(
-  ffi.Pointer<sk_canvas_t> t,
-  ffi.Pointer<sk_rect_t> rect,
-  ffi.Pointer<ffi.Char> key,
-  ffi.Pointer<sk_data_t> value,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_data_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_url_annotation(
-  ffi.Pointer<sk_canvas_t> t,
-  ffi.Pointer<sk_rect_t> rect,
-  ffi.Pointer<sk_data_t> value,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_data_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_named_destination_annotation(
-  ffi.Pointer<sk_canvas_t> t,
-  ffi.Pointer<sk_point_t> point,
-  ffi.Pointer<sk_data_t> value,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_data_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_link_destination_annotation(
-  ffi.Pointer<sk_canvas_t> t,
-  ffi.Pointer<sk_rect_t> rect,
-  ffi.Pointer<sk_data_t> value,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_lattice_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_image_lattice', isLeaf: true)
-external void _sk_canvas_draw_image_lattice(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_lattice_t> lattice,
-  ffi.Pointer<sk_rect_t> dst,
-  int mode,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-void sk_canvas_draw_image_lattice(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_lattice_t> lattice,
-  ffi.Pointer<sk_rect_t> dst,
-  sk_filter_mode_t mode,
-  ffi.Pointer<sk_paint_t> paint,
-) => _sk_canvas_draw_image_lattice(
-  ccanvas,
-  image,
-  lattice,
-  dst,
-  mode.value,
-  paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_irect_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_image_nine', isLeaf: true)
-external void _sk_canvas_draw_image_nine(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_irect_t> center,
-  ffi.Pointer<sk_rect_t> dst,
-  int mode,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-void sk_canvas_draw_image_nine(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> image,
-  ffi.Pointer<sk_irect_t> center,
-  ffi.Pointer<sk_rect_t> dst,
-  sk_filter_mode_t mode,
-  ffi.Pointer<sk_paint_t> paint,
-) => _sk_canvas_draw_image_nine(
-  ccanvas,
-  image,
-  center,
-  dst,
-  mode.value,
-  paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_vertices_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_vertices', isLeaf: true)
-external void _sk_canvas_draw_vertices(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_vertices_t> vertices,
-  int mode,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-void sk_canvas_draw_vertices(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_vertices_t> vertices,
-  sk_blendmode_t mode,
-  ffi.Pointer<sk_paint_t> paint,
-) => _sk_canvas_draw_vertices(
-  ccanvas,
-  vertices,
-  mode.value,
-  paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.Bool,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_arc(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rect_t> oval,
-  double startAngle,
-  double sweepAngle,
-  bool useCenter,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_rrect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(isLeaf: true)
-external void sk_canvas_draw_drrect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_rrect_t> outer,
-  ffi.Pointer<sk_rrect_t> inner,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_image_t>,
-    ffi.Pointer<sk_rsxform_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_color_t>,
-    ffi.Size,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_sampling_options_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_atlas', isLeaf: true)
-external void _sk_canvas_draw_atlas(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> atlas,
-  ffi.Pointer<sk_rsxform_t> xform,
-  ffi.Pointer<sk_rect_t> tex,
-  ffi.Pointer<sk_color_t> colors,
-  int count,
-  int mode,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_rect_t> cullRect,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-void sk_canvas_draw_atlas(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_image_t> atlas,
-  ffi.Pointer<sk_rsxform_t> xform,
-  ffi.Pointer<sk_rect_t> tex,
-  ffi.Pointer<sk_color_t> colors,
-  int count,
-  sk_blendmode_t mode,
-  ffi.Pointer<sk_sampling_options_t> sampling,
-  ffi.Pointer<sk_rect_t> cullRect,
-  ffi.Pointer<sk_paint_t> paint,
-) => _sk_canvas_draw_atlas(
-  ccanvas,
-  atlas,
-  xform,
-  tex,
-  colors,
-  count,
-  mode.value,
-  sampling,
-  cullRect,
-  paint,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.Pointer<sk_color_t>,
-    ffi.Pointer<sk_point_t>,
-    ffi.UnsignedInt,
-    ffi.Pointer<sk_paint_t>,
-  )
->(symbol: 'sk_canvas_draw_patch', isLeaf: true)
-external void _sk_canvas_draw_patch(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_point_t> cubics,
-  ffi.Pointer<sk_color_t> colors,
-  ffi.Pointer<sk_point_t> texCoords,
-  int mode,
-  ffi.Pointer<sk_paint_t> paint,
-);
-
-void sk_canvas_draw_patch(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-  ffi.Pointer<sk_point_t> cubics,
-  ffi.Pointer<sk_color_t> colors,
-  ffi.Pointer<sk_point_t> texCoords,
-  sk_blendmode_t mode,
-  ffi.Pointer<sk_paint_t> paint,
-) => _sk_canvas_draw_patch(
-  ccanvas,
-  cubics,
-  colors,
-  texCoords,
-  mode.value,
-  paint,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external bool sk_canvas_is_clip_empty(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_canvas_t>)>(isLeaf: true)
-external bool sk_canvas_is_clip_rect(
-  ffi.Pointer<sk_canvas_t> ccanvas,
-);
-
-@ffi.Native<ffi.Pointer<sk_nodraw_canvas_t> Function(ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_nodraw_canvas_t> sk_nodraw_canvas_new(
-  int width,
-  int height,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nodraw_canvas_t>)>(isLeaf: true)
-external void sk_nodraw_canvas_destroy(
-  ffi.Pointer<sk_nodraw_canvas_t> t,
-);
-
-@ffi.Native<ffi.Pointer<sk_nway_canvas_t> Function(ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_nway_canvas_t> sk_nway_canvas_new(
-  int width,
-  int height,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>)>(isLeaf: true)
-external void sk_nway_canvas_destroy(
-  ffi.Pointer<sk_nway_canvas_t> t,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>, ffi.Pointer<sk_canvas_t>)
->(isLeaf: true)
-external void sk_nway_canvas_add_canvas(
-  ffi.Pointer<sk_nway_canvas_t> t,
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>, ffi.Pointer<sk_canvas_t>)
->(isLeaf: true)
-external void sk_nway_canvas_remove_canvas(
-  ffi.Pointer<sk_nway_canvas_t> t,
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_nway_canvas_t>)>(isLeaf: true)
-external void sk_nway_canvas_remove_all(
-  ffi.Pointer<sk_nway_canvas_t> t,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_overdraw_canvas_t> Function(ffi.Pointer<sk_canvas_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_overdraw_canvas_t> sk_overdraw_canvas_new(
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_overdraw_canvas_t>)>(isLeaf: true)
-external void sk_overdraw_canvas_destroy(
-  ffi.Pointer<sk_overdraw_canvas_t> canvas,
-);
-
-@ffi.Native<
-  ffi.Pointer<gr_recording_context_t> Function(ffi.Pointer<sk_canvas_t>)
->(isLeaf: true)
-external ffi.Pointer<gr_recording_context_t> sk_canvas_get_recording_context(
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<ffi.Pointer<sk_surface_t> Function(ffi.Pointer<sk_canvas_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_surface_t> sk_canvas_get_surface(
-  ffi.Pointer<sk_canvas_t> canvas,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_blender_t>)>(isLeaf: true)
-external void sk_blender_ref(
-  ffi.Pointer<sk_blender_t> blender,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_blender_t>)>(isLeaf: true)
-external void sk_blender_unref(
-  ffi.Pointer<sk_blender_t> blender,
-);
-
-@ffi.Native<ffi.Pointer<sk_blender_t> Function(ffi.UnsignedInt)>(
-  symbol: 'sk_blender_new_mode',
-  isLeaf: true,
-)
-external ffi.Pointer<sk_blender_t> _sk_blender_new_mode(
-  int mode,
-);
-
-ffi.Pointer<sk_blender_t> sk_blender_new_mode(
-  sk_blendmode_t mode,
-) => _sk_blender_new_mode(
-  mode.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_blender_t> Function(
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Float,
-    ffi.Bool,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_blender_t> sk_blender_new_arithmetic(
-  double k1,
-  double k2,
-  double k3,
-  double k4,
-  bool enforcePremul,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
-external void sk_path_effect_ref(
-  ffi.Pointer<sk_path_effect_t> t,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
-external void sk_path_effect_unref(
-  ffi.Pointer<sk_path_effect_t> t,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(
-    ffi.Pointer<sk_path_effect_t>,
-    ffi.Pointer<sk_path_effect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_compose(
-  ffi.Pointer<sk_path_effect_t> outer,
-  ffi.Pointer<sk_path_effect_t> inner,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(
-    ffi.Pointer<sk_path_effect_t>,
-    ffi.Pointer<sk_path_effect_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_sum(
-  ffi.Pointer<sk_path_effect_t> first,
-  ffi.Pointer<sk_path_effect_t> second,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Float, ffi.Uint32)
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_discrete(
-  double segLength,
-  double deviation,
-  int seedAssist,
-);
-
-@ffi.Native<ffi.Pointer<sk_path_effect_t> Function(ffi.Float)>(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_corner(
-  double radius,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(
-    ffi.Pointer<sk_path_t>,
-    ffi.Float,
-    ffi.Float,
-    ffi.UnsignedInt,
-  )
->(symbol: 'sk_path_effect_create_1d_path', isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> _sk_path_effect_create_1d_path(
-  ffi.Pointer<sk_path_t> path,
-  double advance,
-  double phase,
-  int style,
-);
-
-ffi.Pointer<sk_path_effect_t> sk_path_effect_create_1d_path(
-  ffi.Pointer<sk_path_t> path,
-  double advance,
-  double phase,
-  sk_path_effect_1d_style_t style,
-) => _sk_path_effect_create_1d_path(
-  path,
-  advance,
-  phase,
-  style.value,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Pointer<sk_matrix_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_2d_line(
-  double width,
-  ffi.Pointer<sk_matrix_t> matrix,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(
-    ffi.Pointer<sk_matrix_t>,
-    ffi.Pointer<sk_path_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_2d_path(
-  ffi.Pointer<sk_matrix_t> matrix,
-  ffi.Pointer<sk_path_t> path,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(
-    ffi.Pointer<ffi.Float>,
-    ffi.Int,
-    ffi.Float,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> sk_path_effect_create_dash(
-  ffi.Pointer<ffi.Float> intervals,
-  int count,
-  double phase,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_path_effect_t> Function(ffi.Float, ffi.Float, ffi.UnsignedInt)
->(symbol: 'sk_path_effect_create_trim', isLeaf: true)
-external ffi.Pointer<sk_path_effect_t> _sk_path_effect_create_trim(
-  double start,
-  double stop,
-  int mode,
-);
-
-ffi.Pointer<sk_path_effect_t> sk_path_effect_create_trim(
-  double start,
-  double stop,
-  sk_path_effect_trim_mode_t mode,
-) => _sk_path_effect_create_trim(
-  start,
-  stop,
-  mode.value,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_path_effect_t>,
-    ffi.Pointer<sk_path_builder_t>,
-    ffi.Pointer<sk_path_t>,
-    ffi.Pointer<sk_stroke_rec_t>,
-    ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external bool sk_path_effect_filter_path(
-  ffi.Pointer<sk_path_effect_t> effect,
-  ffi.Pointer<sk_path_builder_t> dst,
-  ffi.Pointer<sk_path_t> src,
-  ffi.Pointer<sk_stroke_rec_t> strokeRec,
-  ffi.Pointer<sk_rect_t> cullRect,
-  ffi.Pointer<sk_matrix_t> ctm,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_effect_t>)>(isLeaf: true)
-external bool sk_path_effect_needs_ctm(
-  ffi.Pointer<sk_path_effect_t> effect,
-);
-
 @ffi.Native<ffi.Void Function(ffi.Pointer<gr_recording_context_t>)>(
   isLeaf: true,
 )
@@ -12670,216 +8251,1607 @@ external bool gr_backendrendertarget_get_gl_framebufferinfo(
   ffi.Pointer<gr_gl_framebufferinfo_t> glInfo,
 );
 
-@ffi.Native<ffi.Void Function()>(isLeaf: true)
-external void sk_linker_keep_alive();
+@ffi.Native<ffi.Pointer<sk_data_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_data_new_empty();
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
-external void sk_colorfilter_ref(
-  ffi.Pointer<sk_colorfilter_t> filter,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
-external void sk_colorfilter_unref(
-  ffi.Pointer<sk_colorfilter_t> filter,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(sk_color_t, ffi.UnsignedInt)
->(symbol: 'sk_colorfilter_new_blend', isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend(
-  int c,
-  int mode,
-);
-
-ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend(
-  Dartsk_color_t c,
-  sk_blendmode_t mode,
-) => _sk_colorfilter_new_blend(
-  c,
-  mode.value,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(sk_color_t, sk_color_t)>(
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<ffi.Void>, ffi.Size)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_lighting(
-  int mul,
-  int add,
+external ffi.Pointer<sk_data_t> sk_data_new_with_copy(
+  ffi.Pointer<ffi.Void> src,
+  int length,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_colorfilter_t>,
-  )
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_compose(
-  ffi.Pointer<sk_colorfilter_t> outer,
-  ffi.Pointer<sk_colorfilter_t> inner,
+external ffi.Pointer<sk_data_t> sk_data_new_share_subset(
+  ffi.Pointer<sk_data_t> src,
+  int offset,
+  int length,
 );
 
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>)>(
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_data_t>, ffi.Size, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_data_new_copy_subset(
+  ffi.Pointer<sk_data_t> src,
+  int offset,
+  int length,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
+external void sk_data_ref(
+  ffi.Pointer<sk_data_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
+external void sk_data_unref(
+  ffi.Pointer<sk_data_t> arg0,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_data_t>)>(isLeaf: true)
+external int sk_data_get_size(
+  ffi.Pointer<sk_data_t> arg0,
+);
+
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<ffi.Char>)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_color_matrix(
-  ffi.Pointer<ffi.Float> array,
+external ffi.Pointer<sk_data_t> sk_data_new_from_file(
+  ffi.Pointer<ffi.Char> path,
 );
 
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>)>(
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_stream_t>, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_data_new_from_stream(
+  ffi.Pointer<sk_stream_t> stream,
+  int length,
+);
+
+@ffi.Native<ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_data_t>)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_hsla_matrix(
-  ffi.Pointer<ffi.Float> array,
+external ffi.Pointer<ffi.Uint8> sk_data_get_bytes(
+  ffi.Pointer<sk_data_t> arg0,
 );
 
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t>
-sk_colorfilter_new_linear_to_srgb_gamma();
-
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t>
-sk_colorfilter_new_srgb_to_linear_gamma();
-
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Float,
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_colorfilter_t>,
+  ffi.Size Function(
+    ffi.Pointer<sk_data_t>,
+    ffi.Size,
+    ffi.Size,
+    ffi.Pointer<ffi.Void>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_lerp(
-  double weight,
-  ffi.Pointer<sk_colorfilter_t> filter0,
-  ffi.Pointer<sk_colorfilter_t> filter1,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_luma_color();
-
-@ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_highcontrastconfig_t>)
->(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_high_contrast(
-  ffi.Pointer<sk_highcontrastconfig_t> config,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Uint8>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table(
-  ffi.Pointer<ffi.Uint8> table,
+external int sk_data_copy_range(
+  ffi.Pointer<sk_data_t> src,
+  int offset,
+  int length,
+  ffi.Pointer<ffi.Void> buffer,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Pointer<ffi.Uint8>,
-    ffi.Pointer<ffi.Uint8>,
-    ffi.Pointer<ffi.Uint8>,
-    ffi.Pointer<ffi.Uint8>,
+  ffi.Pointer<sk_data_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    sk_data_release_proc,
+    ffi.Pointer<ffi.Void>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_table_argb(
-  ffi.Pointer<ffi.Uint8> tableA,
-  ffi.Pointer<ffi.Uint8> tableR,
-  ffi.Pointer<ffi.Uint8> tableG,
-  ffi.Pointer<ffi.Uint8> tableB,
+external ffi.Pointer<sk_data_t> sk_data_new_with_proc(
+  ffi.Pointer<ffi.Void> ptr,
+  int length,
+  sk_data_release_proc proc,
+  ffi.Pointer<ffi.Void> ctx,
 );
 
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Size)>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_data_new_uninitialized(
+  int size,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external void sk_pixmap_destructor(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Pointer<sk_pixmap_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_pixmap_t> sk_pixmap_new();
+
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_color_t>,
-    ffi.Pointer<ffi.UnsignedInt>,
+  ffi.Pointer<sk_pixmap_t> Function(
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
   )
 >(isLeaf: true)
-external bool sk_colorfilter_as_a_color_mode(
-  ffi.Pointer<sk_colorfilter_t> filter,
-  ffi.Pointer<sk_color_t> color,
-  ffi.Pointer<ffi.UnsignedInt> mode,
+external ffi.Pointer<sk_pixmap_t> sk_pixmap_new_with_params(
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<ffi.Void> addr,
+  int rowBytes,
 );
 
-@ffi.Native<
-  ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>, ffi.Pointer<ffi.Float>)
->(isLeaf: true)
-external bool sk_colorfilter_as_a_color_matrix(
-  ffi.Pointer<sk_colorfilter_t> filter,
-  ffi.Pointer<ffi.Float> matrix,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorfilter_t>)>(isLeaf: true)
-external bool sk_colorfilter_is_alpha_unchanged(
-  ffi.Pointer<sk_colorfilter_t> filter,
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external void sk_pixmap_reset(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
 );
 
 @ffi.Native<
   ffi.Void Function(
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_color4f_t>,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_colorspace_t>,
-    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
   )
 >(isLeaf: true)
-external void sk_colorfilter_filter_color4f(
-  ffi.Pointer<sk_colorfilter_t> filter,
-  ffi.Pointer<sk_color4f_t> src,
-  ffi.Pointer<sk_colorspace_t> srcCS,
-  ffi.Pointer<sk_colorspace_t> dstCS,
-  ffi.Pointer<sk_color4f_t> result,
+external void sk_pixmap_reset_with_params(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_imageinfo_t> cinfo,
+  ffi.Pointer<ffi.Void> addr,
+  int rowBytes,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_colorfilter_t>,
-  )
+  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_colorspace_t>)
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_make_composed(
-  ffi.Pointer<sk_colorfilter_t> filter,
-  ffi.Pointer<sk_colorfilter_t> inner,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Pointer<sk_colorfilter_t>,
-    ffi.Pointer<sk_colorspace_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t>
-sk_colorfilter_make_with_working_colorspace(
-  ffi.Pointer<sk_colorfilter_t> filter,
+external void sk_pixmap_set_colorspace(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
   ffi.Pointer<sk_colorspace_t> colorspace,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_extract_subset(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_pixmap_t> result,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_pixmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_pixmap_get_info(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_row_bytes(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_width(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_height(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
+  symbol: 'sk_pixmap_get_color_type',
+  isLeaf: true,
+)
+external int _sk_pixmap_get_color_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+sk_colortype_t sk_pixmap_get_color_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+) => sk_colortype_t.fromValue(
+  _sk_pixmap_get_color_type(
+    cpixmap,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
+  symbol: 'sk_pixmap_get_alpha_type',
+  isLeaf: true,
+)
+external int _sk_pixmap_get_alpha_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+sk_alphatype_t sk_pixmap_get_alpha_type(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+) => sk_alphatype_t.fromValue(
+  _sk_pixmap_get_alpha_type(
+    cpixmap,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external bool sk_pixmap_is_opaque(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external void sk_pixmap_get_bounds(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_irect_t> bounds,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_row_bytes_as_pixels(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_get_shift_per_pixel(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external int sk_pixmap_compute_byte_size(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_pixmap_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_pixmap_get_colorspace(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
+external bool sk_pixmap_compute_is_opaque(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external int sk_pixmap_get_pixel_color(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Int,
+    ffi.Int,
     ffi.Pointer<sk_color4f_t>,
-    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external void sk_pixmap_get_pixel_color4f(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+  ffi.Pointer<sk_color4f_t> color,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external double sk_pixmap_get_pixel_alphaf(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_pixmap_get_addr(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_pixmap_get_addr8(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint32> sk_pixmap_get_addr32(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint64> sk_pixmap_get_addr64(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr_f16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Void> sk_pixmap_get_writeable_addr(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_pixmap_get_writeable_addr8(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint32> sk_pixmap_get_writeable_addr32(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint64> sk_pixmap_get_writeable_addr64(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr_f16(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Int,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_read_pixels(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_imageinfo_t> dstInfo,
+  ffi.Pointer<ffi.Void> dstPixels,
+  int dstRowBytes,
+  int srcX,
+  int srcY,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Int,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_read_pixels_to_pixmap(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_pixmap_t> dst,
+  int srcX,
+  int srcY,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_sampling_options_t>,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_scale_pixels(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_pixmap_t> dst,
+  ffi.Pointer<sk_sampling_options_t> sampling,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    sk_color_t,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_erase_color(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  int color,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external bool sk_pixmap_erase_color4f(
+  ffi.Pointer<sk_pixmap_t> cpixmap,
+  ffi.Pointer<sk_color4f_t> color,
+  ffi.Pointer<sk_irect_t> subset,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_wstream_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_webpencoder_options_t>,
+  )
+>(isLeaf: true)
+external bool sk_webpencoder_encode(
+  ffi.Pointer<sk_wstream_t> dst,
+  ffi.Pointer<sk_pixmap_t> src,
+  ffi.Pointer<sk_webpencoder_options_t> options,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_wstream_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_jpegencoder_options_t>,
+  )
+>(isLeaf: true)
+external bool sk_jpegencoder_encode(
+  ffi.Pointer<sk_wstream_t> dst,
+  ffi.Pointer<sk_pixmap_t> src,
+  ffi.Pointer<sk_jpegencoder_options_t> options,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_wstream_t>,
+    ffi.Pointer<sk_pixmap_t>,
+    ffi.Pointer<sk_pngencoder_options_t>,
+  )
+>(isLeaf: true)
+external bool sk_pngencoder_encode(
+  ffi.Pointer<sk_wstream_t> dst,
+  ffi.Pointer<sk_pixmap_t> src,
+  ffi.Pointer<sk_pngencoder_options_t> options,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Int)
+>(isLeaf: true)
+external void sk_swizzle_swap_rb(
+  ffi.Pointer<ffi.Uint32> dest,
+  ffi.Pointer<ffi.Uint32> src,
+  int count,
+);
+
+@ffi.Native<sk_color_t Function(sk_pmcolor_t)>(isLeaf: true)
+external int sk_color_unpremultiply(
+  int pmcolor,
+);
+
+@ffi.Native<sk_pmcolor_t Function(sk_color_t)>(isLeaf: true)
+external int sk_color_premultiply(
+  int color,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_pmcolor_t>, ffi.Int, ffi.Pointer<sk_color_t>)
+>(isLeaf: true)
+external void sk_color_unpremultiply_array(
+  ffi.Pointer<sk_pmcolor_t> pmcolors,
+  int size,
+  ffi.Pointer<sk_color_t> colors,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_color_t>, ffi.Int, ffi.Pointer<sk_pmcolor_t>)
+>(isLeaf: true)
+external void sk_color_premultiply_array(
+  ffi.Pointer<sk_color_t> colors,
+  int size,
+  ffi.Pointer<sk_pmcolor_t> pmcolors,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<ffi.Int>,
+    ffi.Pointer<ffi.Int>,
+    ffi.Pointer<ffi.Int>,
+    ffi.Pointer<ffi.Int>,
+  )
+>(isLeaf: true)
+external void sk_color_get_bit_shift(
+  ffi.Pointer<ffi.Int> a,
+  ffi.Pointer<ffi.Int> r,
+  ffi.Pointer<ffi.Int> g,
+  ffi.Pointer<ffi.Int> b,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
+external void sk_textblob_ref(
+  ffi.Pointer<sk_textblob_t> blob,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
+external void sk_textblob_unref(
+  ffi.Pointer<sk_textblob_t> blob,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_textblob_t>)>(isLeaf: true)
+external int sk_textblob_get_unique_id(
+  ffi.Pointer<sk_textblob_t> blob,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_textblob_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_textblob_get_bounds(
+  ffi.Pointer<sk_textblob_t> blob,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<
+  ffi.Int Function(
+    ffi.Pointer<sk_textblob_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<ffi.Float>,
+    ffi.Pointer<sk_paint_t>,
+  )
+>(isLeaf: true)
+external int sk_textblob_get_intercepts(
+  ffi.Pointer<sk_textblob_t> blob,
+  double lower,
+  double upper,
+  ffi.Pointer<ffi.Float> intervals,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
     ffi.UnsignedInt,
   )
->(symbol: 'sk_colorfilter_new_blend4f', isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> _sk_colorfilter_new_blend4f(
-  ffi.Pointer<sk_color4f_t> c,
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  int mode,
+>(symbol: 'sk_textblob_make_from_text', isLeaf: true)
+external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_text(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_font_t> font,
+  int encoding,
 );
 
-ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_blend4f(
-  ffi.Pointer<sk_color4f_t> c,
-  ffi.Pointer<sk_colorspace_t> colorspace,
-  sk_blendmode_t mode,
-) => _sk_colorfilter_new_blend4f(
-  c,
-  colorspace,
-  mode.value,
+ffi.Pointer<sk_textblob_t> sk_textblob_make_from_text(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_font_t> font,
+  sk_text_encoding_t encoding,
+) => _sk_textblob_make_from_text(
+  text,
+  byteLength,
+  font,
+  encoding.value,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<ffi.Float>, ffi.Bool)
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_font_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_textblob_make_from_string', isLeaf: true)
+external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_string(
+  ffi.Pointer<ffi.Char> string,
+  ffi.Pointer<sk_font_t> font,
+  int encoding,
+);
+
+ffi.Pointer<sk_textblob_t> sk_textblob_make_from_string(
+  ffi.Pointer<ffi.Char> string,
+  ffi.Pointer<sk_font_t> font,
+  sk_text_encoding_t encoding,
+) => _sk_textblob_make_from_string(
+  string,
+  font,
+  encoding.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<ffi.Float>,
+    ffi.Size,
+    ffi.Float,
+    ffi.Pointer<sk_font_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_textblob_make_from_pos_text_h', isLeaf: true)
+external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_pos_text_h(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<ffi.Float> xpos,
+  int xposCount,
+  double constY,
+  ffi.Pointer<sk_font_t> font,
+  int encoding,
+);
+
+ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_text_h(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<ffi.Float> xpos,
+  int xposCount,
+  double constY,
+  ffi.Pointer<sk_font_t> font,
+  sk_text_encoding_t encoding,
+) => _sk_textblob_make_from_pos_text_h(
+  text,
+  byteLength,
+  xpos,
+  xposCount,
+  constY,
+  font,
+  encoding.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_point_t>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_textblob_make_from_pos_text', isLeaf: true)
+external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_pos_text(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_point_t> pos,
+  int posCount,
+  ffi.Pointer<sk_font_t> font,
+  int encoding,
+);
+
+ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_text(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_point_t> pos,
+  int posCount,
+  ffi.Pointer<sk_font_t> font,
+  sk_text_encoding_t encoding,
+) => _sk_textblob_make_from_pos_text(
+  text,
+  byteLength,
+  pos,
+  posCount,
+  font,
+  encoding.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_rsxform_t>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_textblob_make_from_rsxform', isLeaf: true)
+external ffi.Pointer<sk_textblob_t> _sk_textblob_make_from_rsxform(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_rsxform_t> xform,
+  int xformCount,
+  ffi.Pointer<sk_font_t> font,
+  int encoding,
+);
+
+ffi.Pointer<sk_textblob_t> sk_textblob_make_from_rsxform(
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  ffi.Pointer<sk_rsxform_t> xform,
+  int xformCount,
+  ffi.Pointer<sk_font_t> font,
+  sk_text_encoding_t encoding,
+) => _sk_textblob_make_from_rsxform(
+  text,
+  byteLength,
+  xform,
+  xformCount,
+  font,
+  encoding.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Size,
+    ffi.Pointer<ffi.Float>,
+    ffi.Size,
+    ffi.Float,
+    ffi.Pointer<sk_font_t>,
+  )
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_colorfilter_new_color_matrix_clamped(
-  ffi.Pointer<ffi.Float> array,
-  bool clamp,
+external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_h_glyphs(
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int glyphCount,
+  ffi.Pointer<ffi.Float> xpos,
+  int xposCount,
+  double constY,
+  ffi.Pointer<sk_font_t> font,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Size,
+    ffi.Pointer<sk_point_t>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_pos_glyphs(
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int glyphCount,
+  ffi.Pointer<sk_point_t> pos,
+  int posCount,
+  ffi.Pointer<sk_font_t> font,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Size,
+    ffi.Pointer<sk_rsxform_t>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_t> sk_textblob_make_from_rsxform_glyphs(
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int glyphCount,
+  ffi.Pointer<sk_rsxform_t> xform,
+  int xformCount,
+  ffi.Pointer<sk_font_t> font,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_iter_t> Function(ffi.Pointer<sk_textblob_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_iter_t> sk_textblob_iter_new(
+  ffi.Pointer<sk_textblob_t> blob,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_iter_t>)>(isLeaf: true)
+external void sk_textblob_iter_delete(
+  ffi.Pointer<sk_textblob_iter_t> iter,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_textblob_iter_t>,
+    ffi.Pointer<sk_textblob_iter_run_t>,
+  )
+>(isLeaf: true)
+external bool sk_textblob_iter_next(
+  ffi.Pointer<sk_textblob_iter_t> iter,
+  ffi.Pointer<sk_textblob_iter_run_t> run,
+);
+
+@ffi.Native<ffi.Pointer<sk_textblob_builder_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_textblob_builder_t> sk_textblob_builder_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_builder_t>)>(isLeaf: true)
+external void sk_textblob_builder_delete(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(ffi.Pointer<sk_textblob_builder_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_t> sk_textblob_builder_make(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  double x,
+  double y,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Float,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_pos_h(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  double y,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_pos(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_rsxform(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Float,
+    ffi.Float,
+    ffi.Int,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_text(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  double x,
+  double y,
+  int textByteCount,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Float,
+    ffi.Int,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_text_pos_h(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  double y,
+  int textByteCount,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_text_pos(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  int textByteCount,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_t>,
+    ffi.Pointer<sk_font_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_textblob_builder_runbuffer_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_alloc_run_text_rsxform(
+  ffi.Pointer<sk_textblob_builder_t> builder,
+  ffi.Pointer<sk_font_t> font,
+  int count,
+  int textByteCount,
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_textblob_builder_runbuffer_t> runbuffer,
+);
+
+@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_primitive();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_t>)>(isLeaf: true)
+external void sk_shaper_delete(
+  ffi.Pointer<sk_shaper_t> shaper,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shaper_driven_wrapper(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_then_wrap(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_hb_shape_dont_wrap_or_reorder(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_shaper_hb_purge_caches();
+
+@ffi.Native<ffi.Pointer<sk_shaper_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_shaper_t> sk_shaper_new_coretext();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_run_iterator_consume(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_run_iterator_end_of_current_run(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_shaper_run_iterator_t>)>(
+  isLeaf: true,
+)
+external bool sk_shaper_run_iterator_at_end(
+  ffi.Pointer<sk_shaper_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_font_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_font_t>,
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<sk_shaper_language_run_iterator_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_font_run_iterator_new_with_style(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_font_t> font,
+  ffi.Pointer<sk_fontmgr_t> fallback,
+  ffi.Pointer<ffi.Char> requestName,
+  ffi.Pointer<sk_fontstyle_t> requestStyle,
+  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_font_run_iterator_t> Function(
+    ffi.Pointer<sk_font_t>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_font_run_iterator_t>
+sk_shaper_trivial_font_run_iterator_new(
+  ffi.Pointer<sk_font_t> font,
+  int utf8Bytes,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_font_run_iterator_delete(
+  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_font_t> Function(ffi.Pointer<sk_shaper_font_run_iterator_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_font_t> sk_shaper_font_run_iterator_current_font(
+  ffi.Pointer<sk_shaper_font_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(ffi.Uint8, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
+sk_shaper_trivial_bidi_run_iterator_new(
+  int bidiLevel,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> Function(
+    ffi.Pointer<sk_unicode_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Uint8,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_bidi_run_iterator_t>
+sk_shaper_unicode_bidi_run_iterator_new(
+  ffi.Pointer<sk_unicode_t> unicode,
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  int bidiLevel,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_bidi_run_iterator_delete(
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Uint8 Function(ffi.Pointer<sk_shaper_bidi_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_bidi_run_iterator_current_level(
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(ffi.Uint32, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_trivial_script_run_iterator_new(
+  int script,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_hb_script_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_script_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Uint32,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_script_run_iterator_t>
+sk_shaper_hb_script_run_iterator_new_with_script(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  int script,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_script_run_iterator_delete(
+  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_shaper_script_run_iterator_t>)>(
+  isLeaf: true,
+)
+external int sk_shaper_script_run_iterator_current_script(
+  ffi.Pointer<sk_shaper_script_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_language_run_iterator_t>
+sk_shaper_std_language_run_iterator_new(
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_language_run_iterator_t> Function(
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_language_run_iterator_t>
+sk_shaper_trivial_language_run_iterator_new(
+  ffi.Pointer<ffi.Char> language,
+  int utf8Bytes,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_language_run_iterator_delete(
+  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_shaper_language_run_iterator_t>)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Char> sk_shaper_language_run_iterator_current_language(
+  ffi.Pointer<sk_shaper_language_run_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shaper_run_handler_t> Function(
+    ffi.Pointer<sk_shaper_run_handler_procs_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_shaper_run_handler_t> sk_shaper_run_handler_new(
+  ffi.Pointer<sk_shaper_run_handler_procs_t> procs,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_shaper_run_handler_t>)>(
+  isLeaf: true,
+)
+external void sk_shaper_run_handler_delete(
+  ffi.Pointer<sk_shaper_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_builder_run_handler_t> Function(
+    ffi.Pointer<ffi.Char>,
+    sk_point_t,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_builder_run_handler_t>
+sk_textblob_builder_run_handler_new(
+  ffi.Pointer<ffi.Char> utf8Text,
+  sk_point_t offset,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_textblob_builder_run_handler_t>)>(
+  isLeaf: true,
+)
+external void sk_textblob_builder_run_handler_delete(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_textblob_t> Function(
+    ffi.Pointer<sk_textblob_builder_run_handler_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_textblob_t> sk_textblob_builder_run_handler_make_blob(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_textblob_builder_run_handler_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(isLeaf: true)
+external void sk_textblob_builder_run_handler_end_point(
+  ffi.Pointer<sk_textblob_builder_run_handler_t> handler,
+  ffi.Pointer<sk_point_t> endPoint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_shaper_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Size,
+    ffi.Pointer<sk_shaper_font_run_iterator_t>,
+    ffi.Pointer<sk_shaper_bidi_run_iterator_t>,
+    ffi.Pointer<sk_shaper_script_run_iterator_t>,
+    ffi.Pointer<sk_shaper_language_run_iterator_t>,
+    ffi.Pointer<sk_shaper_feature_t>,
+    ffi.Size,
+    ffi.Float,
+    ffi.Pointer<sk_shaper_run_handler_t>,
+  )
+>()
+external void sk_shaper_shape(
+  ffi.Pointer<sk_shaper_t> shaper,
+  ffi.Pointer<ffi.Char> utf8,
+  int utf8Bytes,
+  ffi.Pointer<sk_shaper_font_run_iterator_t> fontIterator,
+  ffi.Pointer<sk_shaper_bidi_run_iterator_t> bidiIterator,
+  ffi.Pointer<sk_shaper_script_run_iterator_t> scriptIterator,
+  ffi.Pointer<sk_shaper_language_run_iterator_t> languageIterator,
+  ffi.Pointer<sk_shaper_feature_t> features,
+  int featuresCount,
+  double width,
+  ffi.Pointer<sk_shaper_run_handler_t> handler,
+);
+
+@ffi.Native<ffi.Pointer<sk_stroke_rec_t> Function(ffi.UnsignedInt)>(
+  symbol: 'sk_stroke_rec_new_init_style',
+  isLeaf: true,
+)
+external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_init_style(
+  int style,
+);
+
+ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_init_style(
+  sk_stroke_rec_init_style_t style,
+) => _sk_stroke_rec_new_init_style(
+  style.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stroke_rec_t> Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.UnsignedInt,
+    ffi.Float,
+  )
+>(symbol: 'sk_stroke_rec_new_paint_style', isLeaf: true)
+external ffi.Pointer<sk_stroke_rec_t> _sk_stroke_rec_new_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  int style,
+  double resScale,
+);
+
+ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  sk_paint_style_t style,
+  double resScale,
+) => _sk_stroke_rec_new_paint_style(
+  paint,
+  style.value,
+  resScale,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stroke_rec_t> Function(ffi.Pointer<sk_paint_t>, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_stroke_rec_t> sk_stroke_rec_new_paint(
+  ffi.Pointer<sk_paint_t> paint,
+  double resScale,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_delete(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_style',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_rec_style_t sk_stroke_rec_get_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_rec_style_t.fromValue(
+  _sk_stroke_rec_get_style(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_width(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_miter(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_cap',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_cap(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_cap_t sk_stroke_rec_get_cap(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_cap_t.fromValue(
+  _sk_stroke_rec_get_cap(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_stroke_rec_t>)>(
+  symbol: 'sk_stroke_rec_get_join',
+  isLeaf: true,
+)
+external int _sk_stroke_rec_get_join(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+sk_stroke_join_t sk_stroke_rec_get_join(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+) => sk_stroke_join_t.fromValue(
+  _sk_stroke_rec_get_join(
+    strokeRec,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_is_hairline_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_is_fill_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_set_fill_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external void sk_stroke_rec_set_hairline_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float, ffi.Bool)
+>(isLeaf: true)
+external void sk_stroke_rec_set_stroke_style(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  double width,
+  bool strokeAndFill,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Float,
+  )
+>(symbol: 'sk_stroke_rec_set_stroke_params', isLeaf: true)
+external void _sk_stroke_rec_set_stroke_params(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  int cap,
+  int join,
+  double miterLimit,
+);
+
+void sk_stroke_rec_set_stroke_params(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  sk_stroke_cap_t cap,
+  sk_stroke_join_t join,
+  double miterLimit,
+) => _sk_stroke_rec_set_stroke_params(
+  strokeRec,
+  cap.value,
+  join.value,
+  miterLimit,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_res_scale(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external void sk_stroke_rec_set_res_scale(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  double rs,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external bool sk_stroke_rec_need_to_apply(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_stroke_rec_t>,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Pointer<sk_path_t>,
+  )
+>(isLeaf: true)
+external bool sk_stroke_rec_apply_to_path(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_path_builder_t> dst,
+  ffi.Pointer<sk_path_t> src,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external void sk_stroke_rec_apply_to_paint(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_stroke_rec_t>)>(isLeaf: true)
+external double sk_stroke_rec_get_inflation_radius(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_stroke_rec_get_inflation_radius_for_paint_style',
+  isLeaf: true,
+)
+external double _sk_stroke_rec_get_inflation_radius_for_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  int style,
+);
+
+double sk_stroke_rec_get_inflation_radius_for_paint_style(
+  ffi.Pointer<sk_paint_t> paint,
+  sk_paint_style_t style,
+) => _sk_stroke_rec_get_inflation_radius_for_paint_style(
+  paint,
+  style.value,
+);
+
+@ffi.Native<
+  ffi.Float Function(ffi.UnsignedInt, ffi.Float, ffi.UnsignedInt, ffi.Float)
+>(symbol: 'sk_stroke_rec_get_inflation_radius_for_params', isLeaf: true)
+external double _sk_stroke_rec_get_inflation_radius_for_params(
+  int join,
+  double miterLimit,
+  int cap,
+  double strokeWidth,
+);
+
+double sk_stroke_rec_get_inflation_radius_for_params(
+  sk_stroke_join_t join,
+  double miterLimit,
+  sk_stroke_cap_t cap,
+  double strokeWidth,
+) => _sk_stroke_rec_get_inflation_radius_for_params(
+  join.value,
+  miterLimit,
+  cap.value,
+  strokeWidth,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_stroke_rec_t>, ffi.Pointer<sk_stroke_rec_t>)
+>(isLeaf: true)
+external bool sk_stroke_rec_has_equal_effect(
+  ffi.Pointer<sk_stroke_rec_t> strokeRec,
+  ffi.Pointer<sk_stroke_rec_t> other,
 );
 
 @ffi.Native<ffi.Pointer<sk_font_t> Function()>(isLeaf: true)
@@ -13355,6 +10327,1516 @@ void sk_text_utils_get_path(
   path,
 );
 
+@ffi.Native<ffi.Pointer<sk_path_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_new();
+
+@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.UnsignedInt)>(
+  symbol: 'sk_path_new_with_filltype',
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_t> _sk_path_new_with_filltype(
+  int fillType,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_with_filltype(
+  sk_path_filltype_t fillType,
+) => _sk_path_new_with_filltype(
+  fillType.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Int,
+    ffi.Pointer<ffi.Uint8>,
+    ffi.Int,
+    ffi.Pointer<ffi.Float>,
+    ffi.Int,
+    ffi.UnsignedInt,
+    ffi.Bool,
+  )
+>(symbol: 'sk_path_new_raw', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_raw(
+  ffi.Pointer<sk_point_t> points,
+  int pointCount,
+  ffi.Pointer<ffi.Uint8> verbs,
+  int verbCount,
+  ffi.Pointer<ffi.Float> conics,
+  int conicCount,
+  int fillType,
+  bool isVolatile,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_raw(
+  ffi.Pointer<sk_point_t> points,
+  int pointCount,
+  ffi.Pointer<ffi.Uint8> verbs,
+  int verbCount,
+  ffi.Pointer<ffi.Float> conics,
+  int conicCount,
+  sk_path_filltype_t fillType,
+  bool isVolatile,
+) => _sk_path_new_raw(
+  points,
+  pointCount,
+  verbs,
+  verbCount,
+  conics,
+  conicCount,
+  fillType.value,
+  isVolatile,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_rect', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_rect(
+  ffi.Pointer<sk_rect_t> rect,
+  int fillType,
+  int direction,
+  int startIndex,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_rect(
+  ffi.Pointer<sk_rect_t> rect,
+  sk_path_filltype_t fillType,
+  sk_path_direction_t direction,
+  int startIndex,
+) => _sk_path_new_rect(
+  rect,
+  fillType.value,
+  direction.value,
+  startIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_rect_simple', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_rect_simple(
+  ffi.Pointer<sk_rect_t> rect,
+  int direction,
+  int startIndex,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_rect_simple(
+  ffi.Pointer<sk_rect_t> rect,
+  sk_path_direction_t direction,
+  int startIndex,
+) => _sk_path_new_rect_simple(
+  rect,
+  direction.value,
+  startIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_rect_t>, ffi.UnsignedInt)
+>(symbol: 'sk_path_new_oval', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_oval(
+  ffi.Pointer<sk_rect_t> rect,
+  int direction,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_oval(
+  ffi.Pointer<sk_rect_t> rect,
+  sk_path_direction_t direction,
+) => _sk_path_new_oval(
+  rect,
+  direction.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_rect_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_oval_start', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_oval_start(
+  ffi.Pointer<sk_rect_t> rect,
+  int direction,
+  int startIndex,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_oval_start(
+  ffi.Pointer<sk_rect_t> rect,
+  sk_path_direction_t direction,
+  int startIndex,
+) => _sk_path_new_oval_start(
+  rect,
+  direction.value,
+  startIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Float,
+    ffi.Float,
+    ffi.Float,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_circle', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_circle(
+  double centerX,
+  double centerY,
+  double radius,
+  int direction,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_circle(
+  double centerX,
+  double centerY,
+  double radius,
+  sk_path_direction_t direction,
+) => _sk_path_new_circle(
+  centerX,
+  centerY,
+  radius,
+  direction.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_rrect_t>, ffi.UnsignedInt)
+>(symbol: 'sk_path_new_rrect', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_rrect(
+  ffi.Pointer<sk_rrect_t> rrect,
+  int direction,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_rrect(
+  ffi.Pointer<sk_rrect_t> rrect,
+  sk_path_direction_t direction,
+) => _sk_path_new_rrect(
+  rrect,
+  direction.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_rrect_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_rrect_start', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_rrect_start(
+  ffi.Pointer<sk_rrect_t> rrect,
+  int direction,
+  int startIndex,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_rrect_start(
+  ffi.Pointer<sk_rrect_t> rrect,
+  sk_path_direction_t direction,
+  int startIndex,
+) => _sk_path_new_rrect_start(
+  rrect,
+  direction.value,
+  startIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_rect_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_path_new_round_rect', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_round_rect(
+  ffi.Pointer<sk_rect_t> rect,
+  double rx,
+  double ry,
+  int direction,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_round_rect(
+  ffi.Pointer<sk_rect_t> rect,
+  double rx,
+  double ry,
+  sk_path_direction_t direction,
+) => _sk_path_new_round_rect(
+  rect,
+  rx,
+  ry,
+  direction.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Int,
+    ffi.Bool,
+    ffi.UnsignedInt,
+    ffi.Bool,
+  )
+>(symbol: 'sk_path_new_polygon', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_new_polygon(
+  ffi.Pointer<sk_point_t> points,
+  int count,
+  bool isClosed,
+  int fillType,
+  bool isVolatile,
+);
+
+ffi.Pointer<sk_path_t> sk_path_new_polygon(
+  ffi.Pointer<sk_point_t> points,
+  int count,
+  bool isClosed,
+  sk_path_filltype_t fillType,
+  bool isVolatile,
+) => _sk_path_new_polygon(
+  points,
+  count,
+  isClosed,
+  fillType.value,
+  isVolatile,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_new_line(
+  ffi.Pointer<sk_point_t> pointA,
+  ffi.Pointer<sk_point_t> pointB,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_t> sk_path_new_from_path(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external void sk_path_delete(
+  ffi.Pointer<sk_path_t> arg0,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_is_interpolatable(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_path_t> compare,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_make_interpolate(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_path_t> ending,
+  double weight,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_path_t>)>(
+  symbol: 'sk_path_get_filltype',
+  isLeaf: true,
+)
+external int _sk_path_get_filltype(
+  ffi.Pointer<sk_path_t> arg0,
+);
+
+sk_path_filltype_t sk_path_get_filltype(
+  ffi.Pointer<sk_path_t> arg0,
+) => sk_path_filltype_t.fromValue(
+  _sk_path_get_filltype(
+    arg0,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_path_set_filltype',
+  isLeaf: true,
+)
+external void _sk_path_set_filltype(
+  ffi.Pointer<sk_path_t> arg0,
+  int arg1,
+);
+
+void sk_path_set_filltype(
+  ffi.Pointer<sk_path_t> arg0,
+  sk_path_filltype_t arg1,
+) => _sk_path_set_filltype(
+  arg0,
+  arg1.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.UnsignedInt)
+>(symbol: 'sk_path_make_filltype', isLeaf: true)
+external ffi.Pointer<sk_path_t> _sk_path_make_filltype(
+  ffi.Pointer<sk_path_t> path,
+  int fillType,
+);
+
+ffi.Pointer<sk_path_t> sk_path_make_filltype(
+  ffi.Pointer<sk_path_t> path,
+  sk_path_filltype_t fillType,
+) => _sk_path_make_filltype(
+  path,
+  fillType.value,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_inverse_filltype(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_t> sk_path_make_toggle_inverse_filltype(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external void sk_path_toggle_inverse_filltype(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_empty(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_last_contour_closed(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_finite(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_volatile(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Bool)>(isLeaf: true)
+external void sk_path_set_is_volatile(
+  ffi.Pointer<sk_path_t> path,
+  bool isVolatile,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Bool)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_t> sk_path_make_is_volatile(
+  ffi.Pointer<sk_path_t> path,
+  bool isVolatile,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_point_t>, ffi.Pointer<sk_point_t>, ffi.Bool)
+>(isLeaf: true)
+external bool sk_path_is_line_degenerate(
+  ffi.Pointer<sk_point_t> p1,
+  ffi.Pointer<sk_point_t> p2,
+  bool exact,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external bool sk_path_is_quad_degenerate(
+  ffi.Pointer<sk_point_t> p1,
+  ffi.Pointer<sk_point_t> p2,
+  ffi.Pointer<sk_point_t> p3,
+  bool exact,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external bool sk_path_is_cubic_degenerate(
+  ffi.Pointer<sk_point_t> p1,
+  ffi.Pointer<sk_point_t> p2,
+  ffi.Pointer<sk_point_t> p3,
+  ffi.Pointer<sk_point_t> p4,
+  bool exact,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_point_t> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
+>(isLeaf: true)
+external ffi.Pointer<sk_point_t> sk_path_get_points(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_path_get_verbs(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Float> Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Int>)
+>(isLeaf: true)
+external ffi.Pointer<ffi.Float> sk_path_get_conic_weights(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<ffi.Int> count,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external int sk_path_approximate_bytes_used(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external void sk_path_update_bounds_cache(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external void sk_path_get_bounds(
+  ffi.Pointer<sk_path_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external void sk_path_compute_tight_bounds(
+  ffi.Pointer<sk_path_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_conservatively_contains_rect(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_rect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_try_make_transform(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_try_make_offset(
+  ffi.Pointer<sk_path_t> path,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_try_make_scale(
+  ffi.Pointer<sk_path_t> path,
+  double sx,
+  double sy,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_make_transform(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_make_offset(
+  ffi.Pointer<sk_path_t> path,
+  double dx,
+  double dy,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_make_scale(
+  ffi.Pointer<sk_path_t> path,
+  double sx,
+  double sy,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_t> Function(ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_t> sk_path_clone(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external int sk_path_count_points(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external int sk_path_count_verbs(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Int, ffi.Pointer<sk_point_t>)
+>(isLeaf: true)
+external void sk_path_get_point(
+  ffi.Pointer<sk_path_t> cpath,
+  int index,
+  ffi.Pointer<sk_point_t> point,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Float, ffi.Float)>(
+  isLeaf: true,
+)
+external bool sk_path_contains(
+  ffi.Pointer<sk_path_t> cpath,
+  double x,
+  double y,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<ffi.Char>)>(
+  isLeaf: true,
+)
+external bool sk_path_parse_svg_string(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<ffi.Char> str,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_string_t>)
+>(isLeaf: true)
+external void sk_path_to_svg_string(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_string_t> str,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_point_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_get_last_point(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_point_t> point,
+);
+
+@ffi.Native<
+  ffi.Int Function(
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Float,
+    ffi.Pointer<sk_point_t>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external int sk_path_convert_conic_to_quads(
+  ffi.Pointer<sk_point_t> p0,
+  ffi.Pointer<sk_point_t> p1,
+  ffi.Pointer<sk_point_t> p2,
+  double w,
+  ffi.Pointer<sk_point_t> pts,
+  int pow2,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external int sk_path_get_segment_masks(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_is_oval(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rrect_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_is_rrect(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_rrect_t> bounds,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_point_t>)>(
+  isLeaf: true,
+)
+external bool sk_path_is_line(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_point_t> line,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<ffi.Bool>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external bool sk_path_is_rect(
+  ffi.Pointer<sk_path_t> cpath,
+  ffi.Pointer<sk_rect_t> rect,
+  ffi.Pointer<ffi.Bool> isClosed,
+  ffi.Pointer<ffi.UnsignedInt> direction,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_convex(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external bool sk_path_is_valid(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Size>,
+  )
+>(isLeaf: true)
+external bool sk_path_write_to_memory(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<ffi.Void> buffer,
+  ffi.Pointer<ffi.Size> size,
+);
+
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_data_t> sk_path_serialize(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<ffi.Size>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_path_t> sk_path_read_from_memory(
+  ffi.Pointer<ffi.Void> buffer,
+  int length,
+  ffi.Pointer<ffi.Size> bytesRead,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
+external int sk_path_get_generation_id(
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_wstream_t>, ffi.Bool)
+>(isLeaf: true)
+external void sk_path_dump(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_wstream_t> stream,
+  bool dumpAsHex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_iterator_t> Function(ffi.Pointer<sk_path_t>, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_iterator_t> sk_path_create_iter(
+  ffi.Pointer<sk_path_t> cpath,
+  int forceClose,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_path_iterator_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external void sk_path_iter_set_path(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+  ffi.Pointer<sk_path_t> path,
+  bool forceClose,
+);
+
+@ffi.Native<
+  ffi.UnsignedInt Function(
+    ffi.Pointer<sk_path_iterator_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(symbol: 'sk_path_iter_next', isLeaf: true)
+external int _sk_path_iter_next(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+  ffi.Pointer<sk_point_t> points,
+);
+
+sk_path_verb_t sk_path_iter_next(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+  ffi.Pointer<sk_point_t> points,
+) => sk_path_verb_t.fromValue(
+  _sk_path_iter_next(
+    iterator,
+    points,
+  ),
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
+external double sk_path_iter_conic_weight(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
+external int sk_path_iter_is_close_line(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
+external int sk_path_iter_is_closed_contour(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_iterator_t>)>(isLeaf: true)
+external void sk_path_iter_destroy(
+  ffi.Pointer<sk_path_iterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_path_rawiterator_t> Function(ffi.Pointer<sk_path_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_path_rawiterator_t> sk_path_create_rawiter(
+  ffi.Pointer<sk_path_t> cpath,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_path_rawiterator_t>, ffi.Pointer<sk_path_t>)
+>(isLeaf: true)
+external void sk_path_rawiter_set_path(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+  ffi.Pointer<sk_path_t> path,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_path_rawiterator_t>)>(
+  symbol: 'sk_path_rawiter_peek',
+  isLeaf: true,
+)
+external int _sk_path_rawiter_peek(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+);
+
+sk_path_verb_t sk_path_rawiter_peek(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+) => sk_path_verb_t.fromValue(
+  _sk_path_rawiter_peek(
+    iterator,
+  ),
+);
+
+@ffi.Native<
+  ffi.UnsignedInt Function(
+    ffi.Pointer<sk_path_rawiterator_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(symbol: 'sk_path_rawiter_next', isLeaf: true)
+external int _sk_path_rawiter_next(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+  ffi.Pointer<sk_point_t> points,
+);
+
+sk_path_verb_t sk_path_rawiter_next(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+  ffi.Pointer<sk_point_t> points,
+) => sk_path_verb_t.fromValue(
+  _sk_path_rawiter_next(
+    iterator,
+    points,
+  ),
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_path_rawiterator_t>)>(
+  isLeaf: true,
+)
+external double sk_path_rawiter_conic_weight(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_rawiterator_t>)>(isLeaf: true)
+external void sk_path_rawiter_destroy(
+  ffi.Pointer<sk_path_rawiterator_t> iterator,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_path_t>,
+  )
+>(symbol: 'sk_pathop_op', isLeaf: true)
+external bool _sk_pathop_op(
+  ffi.Pointer<sk_path_t> one,
+  ffi.Pointer<sk_path_t> two,
+  int op,
+  ffi.Pointer<sk_path_t> result,
+);
+
+bool sk_pathop_op(
+  ffi.Pointer<sk_path_t> one,
+  ffi.Pointer<sk_path_t> two,
+  sk_pathop_t op,
+  ffi.Pointer<sk_path_t> result,
+) => _sk_pathop_op(
+  one,
+  two,
+  op.value,
+  result,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external bool sk_pathop_simplify(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_path_t> result,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_path_t>)>(
+  isLeaf: true,
+)
+external bool sk_pathop_as_winding(
+  ffi.Pointer<sk_path_t> path,
+  ffi.Pointer<sk_path_t> result,
+);
+
+@ffi.Native<ffi.Pointer<sk_opbuilder_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_opbuilder_t> sk_opbuilder_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_opbuilder_t>)>(isLeaf: true)
+external void sk_opbuilder_destroy(
+  ffi.Pointer<sk_opbuilder_t> builder,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_opbuilder_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_opbuilder_add', isLeaf: true)
+external void _sk_opbuilder_add(
+  ffi.Pointer<sk_opbuilder_t> builder,
+  ffi.Pointer<sk_path_t> path,
+  int op,
+);
+
+void sk_opbuilder_add(
+  ffi.Pointer<sk_opbuilder_t> builder,
+  ffi.Pointer<sk_path_t> path,
+  sk_pathop_t op,
+) => _sk_opbuilder_add(
+  builder,
+  path,
+  op.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_opbuilder_t>, ffi.Pointer<sk_path_t>)
+>(isLeaf: true)
+external bool sk_opbuilder_resolve(
+  ffi.Pointer<sk_opbuilder_t> builder,
+  ffi.Pointer<sk_path_t> result,
+);
+
+@ffi.Native<ffi.Pointer<sk_pathmeasure_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_pathmeasure_t> sk_pathmeasure_new();
+
+@ffi.Native<
+  ffi.Pointer<sk_pathmeasure_t> Function(
+    ffi.Pointer<sk_path_t>,
+    ffi.Bool,
+    ffi.Float,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_pathmeasure_t> sk_pathmeasure_new_with_path(
+  ffi.Pointer<sk_path_t> path,
+  bool forceClosed,
+  double resScale,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
+external void sk_pathmeasure_destroy(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_pathmeasure_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external void sk_pathmeasure_set_path(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+  ffi.Pointer<sk_path_t> path,
+  bool forceClosed,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
+external double sk_pathmeasure_get_length(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pathmeasure_t>,
+    ffi.Float,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_vector_t>,
+  )
+>(isLeaf: true)
+external bool sk_pathmeasure_get_pos_tan(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+  double distance,
+  ffi.Pointer<sk_point_t> position,
+  ffi.Pointer<sk_vector_t> tangent,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pathmeasure_t>,
+    ffi.Float,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_pathmeasure_get_matrix', isLeaf: true)
+external bool _sk_pathmeasure_get_matrix(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+  double distance,
+  ffi.Pointer<sk_matrix_t> matrix,
+  int flags,
+);
+
+bool sk_pathmeasure_get_matrix(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+  double distance,
+  ffi.Pointer<sk_matrix_t> matrix,
+  sk_pathmeasure_matrixflags_t flags,
+) => _sk_pathmeasure_get_matrix(
+  pathMeasure,
+  distance,
+  matrix,
+  flags.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_pathmeasure_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Bool,
+  )
+>(isLeaf: true)
+external bool sk_pathmeasure_get_segment(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+  double start,
+  double stop,
+  ffi.Pointer<sk_path_builder_t> dst,
+  bool startWithMoveTo,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
+external bool sk_pathmeasure_is_closed(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pathmeasure_t>)>(isLeaf: true)
+external bool sk_pathmeasure_next_contour(
+  ffi.Pointer<sk_pathmeasure_t> pathMeasure,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
+external void sk_colorspace_unref(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_srgb();
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_srgb_linear();
+
+@ffi.Native<
+  ffi.Pointer<sk_colorspace_t> Function(
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_rgb(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorspace_t> Function(
+    ffi.Pointer<sk_colorspace_icc_profile_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_new_icc(
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_icc_profile_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_to_profile(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
+external bool sk_colorspace_gamma_close_to_srgb(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
+external bool sk_colorspace_gamma_is_linear(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_is_numerical_transfer_fn(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_transfer_fn(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_inv_transfer_fn(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_to_xyzd50(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_gamut_transform_to(
+  ffi.Pointer<sk_colorspace_t> src,
+  ffi.Pointer<sk_colorspace_t> dst,
+  ffi.Pointer<sk_colorspace_xyz_t> src_to_dst,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorspace_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_make_linear_gamma(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorspace_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_t> sk_colorspace_make_srgb_gamma(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorspace_t>)>(isLeaf: true)
+external bool sk_colorspace_is_srgb(
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_colorspace_t>, ffi.Pointer<sk_colorspace_t>)
+>(isLeaf: true)
+external bool sk_colorspace_equals(
+  ffi.Pointer<sk_colorspace_t> src,
+  ffi.Pointer<sk_colorspace_t> dst,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_srgb(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_2dot2(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_linear(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_rec2020(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_pq(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_transfer_fn_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_transfer_fn_named_hlg(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+);
+
+@ffi.Native<
+  ffi.Float Function(ffi.Pointer<sk_colorspace_transfer_fn_t>, ffi.Float)
+>(isLeaf: true)
+external double sk_colorspace_transfer_fn_eval(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> transferFn,
+  double x,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+    ffi.Pointer<sk_colorspace_transfer_fn_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_transfer_fn_invert(
+  ffi.Pointer<sk_colorspace_transfer_fn_t> src,
+  ffi.Pointer<sk_colorspace_transfer_fn_t> dst,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_primaries_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_primaries_to_xyzd50(
+  ffi.Pointer<sk_colorspace_primaries_t> primaries,
+  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
+external void sk_colorspace_xyz_named_srgb(
+  ffi.Pointer<sk_colorspace_xyz_t> xyz,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
+external void sk_colorspace_xyz_named_adobe_rgb(
+  ffi.Pointer<sk_colorspace_xyz_t> xyz,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
+external void sk_colorspace_xyz_named_display_p3(
+  ffi.Pointer<sk_colorspace_xyz_t> xyz,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
+external void sk_colorspace_xyz_named_rec2020(
+  ffi.Pointer<sk_colorspace_xyz_t> xyz,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_xyz_t>)>(isLeaf: true)
+external void sk_colorspace_xyz_named_xyz(
+  ffi.Pointer<sk_colorspace_xyz_t> xyz,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_xyz_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_xyz_invert(
+  ffi.Pointer<sk_colorspace_xyz_t> src,
+  ffi.Pointer<sk_colorspace_xyz_t> dst,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_colorspace_xyz_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external void sk_colorspace_xyz_concat(
+  ffi.Pointer<sk_colorspace_xyz_t> a,
+  ffi.Pointer<sk_colorspace_xyz_t> b,
+  ffi.Pointer<sk_colorspace_xyz_t> result,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorspace_icc_profile_t>)>(
+  isLeaf: true,
+)
+external void sk_colorspace_icc_profile_delete(
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_icc_profile_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_colorspace_icc_profile_t>
+sk_colorspace_icc_profile_new();
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_colorspace_icc_profile_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_icc_profile_parse(
+  ffi.Pointer<ffi.Void> buffer,
+  int length,
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+);
+
+@ffi.Native<
+  ffi.Pointer<ffi.Uint8> Function(
+    ffi.Pointer<sk_colorspace_icc_profile_t>,
+    ffi.Pointer<ffi.Uint32>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<ffi.Uint8> sk_colorspace_icc_profile_get_buffer(
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+  ffi.Pointer<ffi.Uint32> size,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_colorspace_icc_profile_t>,
+    ffi.Pointer<sk_colorspace_xyz_t>,
+  )
+>(isLeaf: true)
+external bool sk_colorspace_icc_profile_get_to_xyzd50(
+  ffi.Pointer<sk_colorspace_icc_profile_t> profile,
+  ffi.Pointer<sk_colorspace_xyz_t> toXYZD50,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_color4f_t>)>(isLeaf: true)
+external int sk_color4f_to_color(
+  ffi.Pointer<sk_color4f_t> color4f,
+);
+
+@ffi.Native<ffi.Void Function(sk_color_t, ffi.Pointer<sk_color4f_t>)>(
+  isLeaf: true,
+)
+external void sk_color4f_from_color(
+  int color,
+  ffi.Pointer<sk_color4f_t> color4f,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
+>(isLeaf: true)
+external bool sk_matrix_try_invert(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_matrix_t> result,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external void sk_matrix_concat(
+  ffi.Pointer<sk_matrix_t> result,
+  ffi.Pointer<sk_matrix_t> first,
+  ffi.Pointer<sk_matrix_t> second,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
+>(isLeaf: true)
+external void sk_matrix_pre_concat(
+  ffi.Pointer<sk_matrix_t> result,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_matrix_t>, ffi.Pointer<sk_matrix_t>)
+>(isLeaf: true)
+external void sk_matrix_post_concat(
+  ffi.Pointer<sk_matrix_t> result,
+  ffi.Pointer<sk_matrix_t> matrix,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_matrix_map_rect(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_rect_t> dest,
+  ffi.Pointer<sk_rect_t> source,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external void sk_matrix_map_points(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_point_t> dst,
+  ffi.Pointer<sk_point_t> src,
+  int count,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_vector_t>,
+    ffi.Pointer<sk_vector_t>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external void sk_matrix_map_vectors(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_vector_t> dst,
+  ffi.Pointer<sk_vector_t> src,
+  int count,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_point_t>,
+    ffi.Pointer<sk_point_t>,
+  )
+>(isLeaf: true)
+external void sk_matrix_map_point(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_point_t> src,
+  ffi.Pointer<sk_point_t> dst,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_vector_t>,
+    ffi.Pointer<sk_vector_t>,
+  )
+>(isLeaf: true)
+external void sk_matrix_map_vector(
+  ffi.Pointer<sk_matrix_t> matrix,
+  ffi.Pointer<sk_vector_t> src,
+  ffi.Pointer<sk_vector_t> dst,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_matrix_t>, ffi.Float)>(
+  isLeaf: true,
+)
+external double sk_matrix_map_radius(
+  ffi.Pointer<sk_matrix_t> matrix,
+  double radius,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_canvas_t> Function(
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_wstream_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_canvas_t> sk_svgcanvas_create_with_stream(
+  ffi.Pointer<sk_rect_t> bounds,
+  ffi.Pointer<sk_wstream_t> stream,
+);
+
 @ffi.Native<ffi.Bool Function(ffi.Pointer<sk_refcnt_t>)>(isLeaf: true)
 external bool sk_refcnt_unique(
   ffi.Pointer<sk_refcnt_t> refcnt,
@@ -13403,706 +11885,2224 @@ external int sk_version_get_increment();
 @ffi.Native<ffi.Pointer<ffi.Char> Function()>(isLeaf: true)
 external ffi.Pointer<ffi.Char> sk_version_get_string();
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
-external void sk_drawable_unref(
-  ffi.Pointer<sk_drawable_t> arg0,
+@ffi.Native<ffi.Pointer<sk_localized_string_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_localized_string_t> sk_localized_string_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_localized_string_t>)>(isLeaf: true)
+external void sk_localized_string_delete(
+  ffi.Pointer<sk_localized_string_t> str,
 );
 
-@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
-external int sk_drawable_get_generation_id(
-  ffi.Pointer<sk_drawable_t> arg0,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_drawable_t>, ffi.Pointer<sk_rect_t>)
->(isLeaf: true)
-external void sk_drawable_get_bounds(
-  ffi.Pointer<sk_drawable_t> arg0,
-  ffi.Pointer<sk_rect_t> arg1,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_drawable_t>,
-    ffi.Pointer<sk_canvas_t>,
-    ffi.Pointer<sk_matrix_t>,
-  )
->(isLeaf: true)
-external void sk_drawable_draw(
-  ffi.Pointer<sk_drawable_t> arg0,
-  ffi.Pointer<sk_canvas_t> arg1,
-  ffi.Pointer<sk_matrix_t> arg2,
-);
-
-@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_drawable_t>)>(
+@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_localized_string_t>)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_picture_t> sk_drawable_make_picture_snapshot(
-  ffi.Pointer<sk_drawable_t> arg0,
+external ffi.Pointer<ffi.Char> sk_localized_string_get_language(
+  ffi.Pointer<sk_localized_string_t> str,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
-external void sk_drawable_notify_drawing_changed(
-  ffi.Pointer<sk_drawable_t> arg0,
+@ffi.Native<ffi.Pointer<ffi.Char> Function(ffi.Pointer<sk_localized_string_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<ffi.Char> sk_localized_string_get_string(
+  ffi.Pointer<sk_localized_string_t> str,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_drawable_t>)>(isLeaf: true)
-external int sk_drawable_approximate_bytes_used(
-  ffi.Pointer<sk_drawable_t> arg0,
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_localized_strings_t>)>(
+  isLeaf: true,
+)
+external void sk_localized_strings_unref(
+  ffi.Pointer<sk_localized_strings_t> strs,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_runtimeeffect_t> Function(
-    ffi.Pointer<sk_string_t>,
-    ffi.Pointer<sk_string_t>,
+  ffi.Bool Function(
+    ffi.Pointer<sk_localized_strings_t>,
+    ffi.Pointer<sk_localized_string_t>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_color_filter(
-  ffi.Pointer<sk_string_t> sksl,
-  ffi.Pointer<sk_string_t> error,
+external bool sk_localized_strings_next(
+  ffi.Pointer<sk_localized_strings_t> strs,
+  ffi.Pointer<sk_localized_string_t> str,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external void sk_typeface_unref(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Pointer<sk_fontstyle_t> Function(ffi.Pointer<sk_typeface_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_fontstyle_t> sk_typeface_get_fontstyle(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_get_font_weight(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_get_font_width(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_typeface_t>)>(
+  symbol: 'sk_typeface_get_font_slant',
+  isLeaf: true,
+)
+external int _sk_typeface_get_font_slant(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+sk_font_style_slant_t sk_typeface_get_font_slant(
+  ffi.Pointer<sk_typeface_t> typeface,
+) => sk_font_style_slant_t.fromValue(
+  _sk_typeface_get_font_slant(
+    typeface,
+  ),
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_fixed_pitch(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_bold(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_italic(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_synthetic_bold(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external bool sk_typeface_is_synthetic_oblique(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_get_unique_id(
+  ffi.Pointer<sk_typeface_t> typeface,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_runtimeeffect_t> Function(
-    ffi.Pointer<sk_string_t>,
-    ffi.Pointer<sk_string_t>,
+  ffi.Bool Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_typeface_t>)
+>(isLeaf: true)
+external bool sk_typeface_equal(
+  ffi.Pointer<sk_typeface_t> facea,
+  ffi.Pointer<sk_typeface_t> faceb,
+);
+
+@ffi.Native<ffi.Pointer<sk_typeface_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_typeface_create_empty();
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Int,
+    ffi.Pointer<ffi.Uint16>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_shader(
-  ffi.Pointer<sk_string_t> sksl,
-  ffi.Pointer<sk_string_t> error,
+external void sk_typeface_unichars_to_glyphs(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Int32> unichars,
+  int count,
+  ffi.Pointer<ffi.Uint16> glyphs,
+);
+
+@ffi.Native<ffi.Uint16 Function(ffi.Pointer<sk_typeface_t>, ffi.Int32)>(
+  isLeaf: true,
+)
+external int sk_typeface_unichar_to_glyph(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int unichar,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_runtimeeffect_t> Function(
-    ffi.Pointer<sk_string_t>,
-    ffi.Pointer<sk_string_t>,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_runtimeeffect_t> sk_runtimeeffect_make_for_blender(
-  ffi.Pointer<sk_string_t> sksl,
-  ffi.Pointer<sk_string_t> error,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
-external void sk_runtimeeffect_unref(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-);
-
-@ffi.Native<
-  ffi.Pointer<sk_shader_t> Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
-    ffi.Pointer<sk_data_t>,
-    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+  ffi.Size Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Void>,
     ffi.Size,
-    ffi.Pointer<sk_matrix_t>,
+    ffi.UnsignedInt,
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Int,
   )
->(isLeaf: true)
-external ffi.Pointer<sk_shader_t> sk_runtimeeffect_make_shader(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  ffi.Pointer<sk_data_t> uniforms,
-  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
-  int childCount,
-  ffi.Pointer<sk_matrix_t> localMatrix,
+>(symbol: 'sk_typeface_text_to_glyphs', isLeaf: true)
+external int _sk_typeface_text_to_glyphs(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  int encoding,
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int maxGlyphCount,
+);
+
+int sk_typeface_text_to_glyphs(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Void> text,
+  int byteLength,
+  sk_text_encoding_t encoding,
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int maxGlyphCount,
+) => _sk_typeface_text_to_glyphs(
+  typeface,
+  text,
+  byteLength,
+  encoding.value,
+  glyphs,
+  maxGlyphCount,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_count_glyphs(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_count_tables(
+  ffi.Pointer<sk_typeface_t> typeface,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_colorfilter_t> Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
-    ffi.Pointer<sk_data_t>,
-    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+  ffi.Int Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<sk_font_table_tag_t>,
     ffi.Size,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_colorfilter_t> sk_runtimeeffect_make_color_filter(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  ffi.Pointer<sk_data_t> uniforms,
-  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
-  int childCount,
+external int sk_typeface_read_table_tags(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<sk_font_table_tag_t> tags,
+  int count,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_typeface_t>, sk_font_table_tag_t)>(
+  isLeaf: true,
+)
+external int sk_typeface_get_table_size(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int tag,
 );
 
 @ffi.Native<
-  ffi.Pointer<sk_blender_t> Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
-    ffi.Pointer<sk_data_t>,
-    ffi.Pointer<ffi.Pointer<sk_flattenable_t>>,
+  ffi.Size Function(
+    ffi.Pointer<sk_typeface_t>,
+    sk_font_table_tag_t,
     ffi.Size,
+    ffi.Size,
+    ffi.Pointer<ffi.Void>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_blender_t> sk_runtimeeffect_make_blender(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  ffi.Pointer<sk_data_t> uniforms,
-  ffi.Pointer<ffi.Pointer<sk_flattenable_t>> children,
-  int childCount,
+external int sk_typeface_get_table_data(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int tag,
+  int offset,
+  int length,
+  ffi.Pointer<ffi.Void> data,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
-external int sk_runtimeeffect_get_uniform_byte_size(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(
+    ffi.Pointer<sk_typeface_t>,
+    sk_font_table_tag_t,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_typeface_copy_table_data(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int tag,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
-external int sk_runtimeeffect_get_uniforms_size(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_typeface_t>)>(isLeaf: true)
+external int sk_typeface_get_units_per_em(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Uint16>,
+    ffi.Int,
+    ffi.Pointer<ffi.Int32>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external bool sk_typeface_get_kerning_pair_adjustments(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Uint16> glyphs,
+  int glyphCount,
+  ffi.Pointer<ffi.Int32> adjustments,
+  int adjustmentsCount,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_localized_strings_t> Function(ffi.Pointer<sk_typeface_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_localized_strings_t>
+sk_typeface_create_family_name_iterator(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<sk_typeface_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_string_t> sk_typeface_get_family_name(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<ffi.Pointer<sk_string_t> Function(ffi.Pointer<sk_typeface_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_string_t> sk_typeface_get_post_script_name(
+  ffi.Pointer<sk_typeface_t> typeface,
+);
+
+@ffi.Native<
+  ffi.Int Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_string_t>)
+>(isLeaf: true)
+external int sk_typeface_get_resource_name(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<sk_string_t> resourceName,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stream_asset_t> Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Int>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_stream(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Int> ttcIndex,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_stream_asset_t> Function(
+    ffi.Pointer<sk_typeface_t>,
+    ffi.Pointer<ffi.Int>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_stream_asset_t> sk_typeface_open_existing_stream(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<ffi.Int> ttcIndex,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_typeface_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_typeface_get_bounds(
+  ffi.Pointer<sk_typeface_t> typeface,
+  ffi.Pointer<sk_rect_t> bounds,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_typeface_t>, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<sk_data_t> sk_typeface_serialize_to_data(
+  ffi.Pointer<sk_typeface_t> typeface,
+  int serializeBehavior,
+);
+
+@ffi.Native<ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_data_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_typeface_t> sk_typeface_deserialize_from_data(
+  ffi.Pointer<sk_data_t> data,
+);
+
+@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_empty();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontmgr_t>)>(isLeaf: true)
+external void sk_fontmgr_unref(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontmgr_t>)>(isLeaf: true)
+external int sk_fontmgr_count_families(
+  ffi.Pointer<sk_fontmgr_t> arg0,
 );
 
 @ffi.Native<
   ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<sk_fontmgr_t>,
     ffi.Int,
     ffi.Pointer<sk_string_t>,
   )
 >(isLeaf: true)
-external void sk_runtimeeffect_get_uniform_name(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+external void sk_fontmgr_get_family_name(
+  ffi.Pointer<sk_fontmgr_t> arg0,
   int index,
-  ffi.Pointer<sk_string_t> name,
+  ffi.Pointer<sk_string_t> familyName,
 );
 
 @ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
-    ffi.Int,
-    ffi.Pointer<sk_runtimeeffect_uniform_t>,
-  )
+  ffi.Pointer<sk_fontstyleset_t> Function(ffi.Pointer<sk_fontmgr_t>, ffi.Int)
 >(isLeaf: true)
-external void sk_runtimeeffect_get_uniform_from_index(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+external ffi.Pointer<sk_fontstyleset_t> sk_fontmgr_create_styleset(
+  ffi.Pointer<sk_fontmgr_t> arg0,
   int index,
-  ffi.Pointer<sk_runtimeeffect_uniform_t> cuniform,
 );
 
 @ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
+  ffi.Pointer<sk_fontstyleset_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
     ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<sk_runtimeeffect_uniform_t>,
   )
 >(isLeaf: true)
-external void sk_runtimeeffect_get_uniform_from_name(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  ffi.Pointer<ffi.Char> name,
-  int len,
-  ffi.Pointer<sk_runtimeeffect_uniform_t> cuniform,
+external ffi.Pointer<sk_fontstyleset_t> sk_fontmgr_match_family(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<ffi.Char> familyName,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_runtimeeffect_t>)>(isLeaf: true)
-external int sk_runtimeeffect_get_children_size(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_fontstyle_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontmgr_match_family_style(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<ffi.Char> familyName,
+  ffi.Pointer<sk_fontstyle_t> style,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Pointer<sk_fontstyle_t>,
+    ffi.Pointer<ffi.Pointer<ffi.Char>>,
+    ffi.Int,
+    ffi.Int32,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontmgr_match_family_style_character(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<ffi.Char> familyName,
+  ffi.Pointer<sk_fontstyle_t> style,
+  ffi.Pointer<ffi.Pointer<ffi.Char>> bcp47,
+  int bcp47Count,
+  int character,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<sk_data_t>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_data(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<sk_data_t> data,
+  int index,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<sk_stream_asset_t>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_stream(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<sk_stream_asset_t> stream,
+  int index,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontmgr_t>,
+    ffi.Pointer<ffi.Char>,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontmgr_create_from_file(
+  ffi.Pointer<sk_fontmgr_t> arg0,
+  ffi.Pointer<ffi.Char> path,
+  int index,
+);
+
+@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function(ffi.Pointer<ffi.Void>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_core_text(
+  ffi.Pointer<ffi.Void> ct_font_collection,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_fontmgr_t> Function(
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Void>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_directwrite(
+  ffi.Pointer<ffi.Void> factory,
+  ffi.Pointer<ffi.Void> collection,
+);
+
+@ffi.Native<ffi.Pointer<sk_fontmgr_t> Function(ffi.Pointer<ffi.Void>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_fontmgr_t> sk_fontmgr_create_fontconfig(
+  ffi.Pointer<ffi.Void> config,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_fontstyle_t> Function(ffi.Int, ffi.Int, ffi.UnsignedInt)
+>(symbol: 'sk_fontstyle_new', isLeaf: true)
+external ffi.Pointer<sk_fontstyle_t> _sk_fontstyle_new(
+  int weight,
+  int width,
+  int slant,
+);
+
+ffi.Pointer<sk_fontstyle_t> sk_fontstyle_new(
+  int weight,
+  int width,
+  sk_font_style_slant_t slant,
+) => _sk_fontstyle_new(
+  weight,
+  width,
+  slant.value,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
+external void sk_fontstyle_delete(
+  ffi.Pointer<sk_fontstyle_t> fs,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
+external int sk_fontstyle_get_weight(
+  ffi.Pointer<sk_fontstyle_t> fs,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyle_t>)>(isLeaf: true)
+external int sk_fontstyle_get_width(
+  ffi.Pointer<sk_fontstyle_t> fs,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_fontstyle_t>)>(
+  symbol: 'sk_fontstyle_get_slant',
+  isLeaf: true,
+)
+external int _sk_fontstyle_get_slant(
+  ffi.Pointer<sk_fontstyle_t> fs,
+);
+
+sk_font_style_slant_t sk_fontstyle_get_slant(
+  ffi.Pointer<sk_fontstyle_t> fs,
+) => sk_font_style_slant_t.fromValue(
+  _sk_fontstyle_get_slant(
+    fs,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_fontstyleset_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_fontstyleset_t> sk_fontstyleset_create_empty();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_fontstyleset_t>)>(isLeaf: true)
+external void sk_fontstyleset_unref(
+  ffi.Pointer<sk_fontstyleset_t> fss,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_fontstyleset_t>)>(isLeaf: true)
+external int sk_fontstyleset_get_count(
+  ffi.Pointer<sk_fontstyleset_t> fss,
 );
 
 @ffi.Native<
   ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
+    ffi.Pointer<sk_fontstyleset_t>,
     ffi.Int,
+    ffi.Pointer<sk_fontstyle_t>,
     ffi.Pointer<sk_string_t>,
   )
 >(isLeaf: true)
-external void sk_runtimeeffect_get_child_name(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
+external void sk_fontstyleset_get_style(
+  ffi.Pointer<sk_fontstyleset_t> fss,
   int index,
-  ffi.Pointer<sk_string_t> name,
+  ffi.Pointer<sk_fontstyle_t> fs,
+  ffi.Pointer<sk_string_t> style,
 );
 
 @ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
+  ffi.Pointer<sk_typeface_t> Function(ffi.Pointer<sk_fontstyleset_t>, ffi.Int)
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontstyleset_create_typeface(
+  ffi.Pointer<sk_fontstyleset_t> fss,
+  int index,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_typeface_t> Function(
+    ffi.Pointer<sk_fontstyleset_t>,
+    ffi.Pointer<sk_fontstyle_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_typeface_t> sk_fontstyleset_match_style(
+  ffi.Pointer<sk_fontstyleset_t> fss,
+  ffi.Pointer<sk_fontstyle_t> style,
+);
+
+@ffi.Native<ffi.Int Function(ffi.UnsignedInt)>(
+  symbol: 'sk_colotype_bytes_per_pixel',
+  isLeaf: true,
+)
+external int _sk_colotype_bytes_per_pixel(
+  int ct,
+);
+
+int sk_colotype_bytes_per_pixel(
+  sk_colortype_t ct,
+) => _sk_colotype_bytes_per_pixel(
+  ct.value,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_colorinfo_t> Function(
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_colorinfo_new', isLeaf: true)
+external ffi.Pointer<sk_colorinfo_t> _sk_colorinfo_new(
+  int ct,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_colorinfo_t> sk_colorinfo_new(
+  sk_colortype_t ct,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_colorinfo_new(
+  ct.value,
+  at.value,
+  cs,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external void sk_colorinfo_delete(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
+  symbol: 'sk_colorinfo_get_colortype',
+  isLeaf: true,
+)
+external int _sk_colorinfo_get_colortype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+sk_colortype_t sk_colorinfo_get_colortype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+) => sk_colortype_t.fromValue(
+  _sk_colorinfo_get_colortype(
+    cinfo,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_colorinfo_t>)>(
+  symbol: 'sk_colorinfo_get_alphatype',
+  isLeaf: true,
+)
+external int _sk_colorinfo_get_alphatype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+sk_alphatype_t sk_colorinfo_get_alphatype(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+) => sk_alphatype_t.fromValue(
+  _sk_colorinfo_get_alphatype(
+    cinfo,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_colorinfo_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_colorinfo_ref_colorspace(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external bool sk_colorinfo_is_opaque(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external bool sk_colorinfo_gamma_close_to_srgb(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_colorinfo_t>, ffi.Pointer<sk_colorinfo_t>)
+>(isLeaf: true)
+external bool sk_colorinfo_equals(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+  ffi.Pointer<sk_colorinfo_t> other,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external int sk_colorinfo_bytes_per_pixel(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_colorinfo_t>)>(isLeaf: true)
+external int sk_colorinfo_shift_per_pixel(
+  ffi.Pointer<sk_colorinfo_t> cinfo,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
     ffi.Int,
-    ffi.Pointer<sk_runtimeeffect_child_t>,
+    ffi.Int,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
   )
->(isLeaf: true)
-external void sk_runtimeeffect_get_child_from_index(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  int index,
-  ffi.Pointer<sk_runtimeeffect_child_t> cchild,
+>(symbol: 'sk_imageinfo_new', isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new(
+  int width,
+  int height,
+  int ct,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new(
+  int width,
+  int height,
+  sk_colortype_t ct,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_imageinfo_new(
+  width,
+  height,
+  ct.value,
+  at.value,
+  cs,
 );
 
 @ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_runtimeeffect_t>,
-    ffi.Pointer<ffi.Char>,
-    ffi.Size,
-    ffi.Pointer<sk_runtimeeffect_child_t>,
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(symbol: 'sk_imageinfo_new_n32', isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> _sk_imageinfo_new_n32(
+  int width,
+  int height,
+  int at,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32(
+  int width,
+  int height,
+  sk_alphatype_t at,
+  ffi.Pointer<sk_colorspace_t> cs,
+) => _sk_imageinfo_new_n32(
+  width,
+  height,
+  at.value,
+  cs,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_colorspace_t>,
   )
 >(isLeaf: true)
-external void sk_runtimeeffect_get_child_from_name(
-  ffi.Pointer<sk_runtimeeffect_t> effect,
-  ffi.Pointer<ffi.Char> name,
-  int len,
-  ffi.Pointer<sk_runtimeeffect_child_t> cchild,
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_n32_premul(
+  int width,
+  int height,
+  ffi.Pointer<sk_colorspace_t> cs,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_a8(
+  int width,
+  int height,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_unknown(
+  int width,
+  int height,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_imageinfo_t> Function(
+    ffi.Int,
+    ffi.Int,
+    ffi.Pointer<sk_colorinfo_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_imageinfo_t> sk_imageinfo_new_color_info(
+  int width,
+  int height,
+  ffi.Pointer<sk_colorinfo_t> color_info,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external void sk_imageinfo_delete(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_get_width(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_get_height(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
+  symbol: 'sk_imageinfo_get_colortype',
+  isLeaf: true,
+)
+external int _sk_imageinfo_get_colortype(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+sk_colortype_t sk_imageinfo_get_colortype(
+  ffi.Pointer<sk_imageinfo_t> info,
+) => sk_colortype_t.fromValue(
+  _sk_imageinfo_get_colortype(
+    info,
+  ),
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_imageinfo_t>)>(
+  symbol: 'sk_imageinfo_get_alphatype',
+  isLeaf: true,
+)
+external int _sk_imageinfo_get_alphatype(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+sk_alphatype_t sk_imageinfo_get_alphatype(
+  ffi.Pointer<sk_imageinfo_t> info,
+) => sk_alphatype_t.fromValue(
+  _sk_imageinfo_get_alphatype(
+    info,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_imageinfo_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorspace_t> sk_imageinfo_ref_colorspace(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_is_empty(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_is_opaque(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external bool sk_imageinfo_gamma_close_to_srgb(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Pointer<sk_imageinfo_t>)
+>(isLeaf: true)
+external bool sk_imageinfo_equals(
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_imageinfo_t> other,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_bytes_per_pixel(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_shift_per_pixel(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_min_row_bytes(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Uint64 Function(ffi.Pointer<sk_imageinfo_t>)>(isLeaf: true)
+external int sk_imageinfo_compute_min_byte_size(
+  ffi.Pointer<sk_imageinfo_t> info,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_imageinfo_t>, ffi.Size)>(
+  isLeaf: true,
+)
+external bool sk_imageinfo_valid_row_bytes(
+  ffi.Pointer<sk_imageinfo_t> info,
+  int rowBytes,
+);
+
+@ffi.Native<ffi.Pointer<sk_picture_recorder_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_picture_recorder_t> sk_picture_recorder_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_recorder_t>)>(isLeaf: true)
+external void sk_picture_recorder_delete(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
 );
 
 @ffi.Native<
   ffi.Pointer<sk_canvas_t> Function(
+    ffi.Pointer<sk_picture_recorder_t>,
     ffi.Pointer<sk_rect_t>,
-    ffi.Pointer<sk_wstream_t>,
   )
 >(isLeaf: true)
-external ffi.Pointer<sk_canvas_t> sk_svgcanvas_create_with_stream(
-  ffi.Pointer<sk_rect_t> bounds,
+external ffi.Pointer<sk_canvas_t> sk_picture_recorder_begin_recording(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_canvas_t> Function(
+    ffi.Pointer<sk_picture_recorder_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_bbh_factory_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_canvas_t>
+sk_picture_recorder_begin_recording_with_bbh_factory(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+  ffi.Pointer<sk_bbh_factory_t> arg2,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_picture_recorder_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_picture_t> sk_picture_recorder_end_recording(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_picture_t> Function(
+    ffi.Pointer<sk_picture_recorder_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_picture_t> sk_picture_recorder_end_recording_with_cull(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_drawable_t> Function(ffi.Pointer<sk_picture_recorder_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_drawable_t>
+sk_picture_recorder_end_recording_as_drawable(
+  ffi.Pointer<sk_picture_recorder_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_canvas_t> Function(ffi.Pointer<sk_picture_recorder_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_canvas_t> sk_picture_get_recording_canvas(
+  ffi.Pointer<sk_picture_recorder_t> crec,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
+external void sk_picture_ref(
+  ffi.Pointer<sk_picture_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
+external void sk_picture_unref(
+  ffi.Pointer<sk_picture_t> arg0,
+);
+
+@ffi.Native<ffi.Uint32 Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
+external int sk_picture_get_unique_id(
+  ffi.Pointer<sk_picture_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_rect_t>)
+>(isLeaf: true)
+external void sk_picture_get_cull_rect(
+  ffi.Pointer<sk_picture_t> arg0,
+  ffi.Pointer<sk_rect_t> arg1,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_shader_t> Function(
+    ffi.Pointer<sk_picture_t>,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.UnsignedInt,
+    ffi.Pointer<sk_matrix_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(symbol: 'sk_picture_make_shader', isLeaf: true)
+external ffi.Pointer<sk_shader_t> _sk_picture_make_shader(
+  ffi.Pointer<sk_picture_t> src,
+  int tmx,
+  int tmy,
+  int mode,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+  ffi.Pointer<sk_rect_t> tile,
+);
+
+ffi.Pointer<sk_shader_t> sk_picture_make_shader(
+  ffi.Pointer<sk_picture_t> src,
+  sk_shader_tilemode_t tmx,
+  sk_shader_tilemode_t tmy,
+  sk_filter_mode_t mode,
+  ffi.Pointer<sk_matrix_t> localMatrix,
+  ffi.Pointer<sk_rect_t> tile,
+) => _sk_picture_make_shader(
+  src,
+  tmx.value,
+  tmy.value,
+  mode.value,
+  localMatrix,
+  tile,
+);
+
+@ffi.Native<ffi.Pointer<sk_data_t> Function(ffi.Pointer<sk_picture_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_data_t> sk_picture_serialize_to_data(
+  ffi.Pointer<sk_picture_t> picture,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_wstream_t>)
+>(isLeaf: true)
+external void sk_picture_serialize_to_stream(
+  ffi.Pointer<sk_picture_t> picture,
   ffi.Pointer<sk_wstream_t> stream,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external void sk_pixmap_destructor(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Pointer<sk_pixmap_t> Function()>(isLeaf: true)
-external ffi.Pointer<sk_pixmap_t> sk_pixmap_new();
-
-@ffi.Native<
-  ffi.Pointer<sk_pixmap_t> Function(
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external ffi.Pointer<sk_pixmap_t> sk_pixmap_new_with_params(
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<ffi.Void> addr,
-  int rowBytes,
-);
-
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external void sk_pixmap_reset(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_imageinfo_t>,
-    ffi.Pointer<ffi.Void>,
-    ffi.Size,
-  )
->(isLeaf: true)
-external void sk_pixmap_reset_with_params(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_imageinfo_t> cinfo,
-  ffi.Pointer<ffi.Void> addr,
-  int rowBytes,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_colorspace_t>)
->(isLeaf: true)
-external void sk_pixmap_set_colorspace(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_colorspace_t> colorspace,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
->(isLeaf: true)
-external bool sk_pixmap_extract_subset(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_pixmap_t> result,
-  ffi.Pointer<sk_irect_t> subset,
-);
-
-@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_pixmap_t>)>(
+@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_stream_t>)>(
   isLeaf: true,
 )
-external ffi.Pointer<sk_imageinfo_t> sk_pixmap_get_info(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
+external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_stream(
+  ffi.Pointer<sk_stream_t> stream,
 );
 
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_get_row_bytes(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_get_width(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_get_height(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
-  symbol: 'sk_pixmap_get_color_type',
+@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_data_t>)>(
   isLeaf: true,
 )
-external int _sk_pixmap_get_color_type(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
+external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_data(
+  ffi.Pointer<sk_data_t> data,
 );
 
-sk_colortype_t sk_pixmap_get_color_type(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-) => sk_colortype_t.fromValue(
-  _sk_pixmap_get_color_type(
-    cpixmap,
+@ffi.Native<
+  ffi.Pointer<sk_picture_t> Function(ffi.Pointer<ffi.Void>, ffi.Size)
+>(isLeaf: true)
+external ffi.Pointer<sk_picture_t> sk_picture_deserialize_from_memory(
+  ffi.Pointer<ffi.Void> buffer,
+  int length,
+);
+
+@ffi.Native<ffi.Pointer<sk_picture_t> Function(ffi.Pointer<sk_rect_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_picture_t> sk_picture_make_placeholder(
+  ffi.Pointer<sk_rect_t> cull,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_picture_t>, ffi.Pointer<sk_canvas_t>)
+>(isLeaf: true)
+external void sk_picture_playback(
+  ffi.Pointer<sk_picture_t> picture,
+  ffi.Pointer<sk_canvas_t> canvas,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_picture_t>, ffi.Bool)>(isLeaf: true)
+external int sk_picture_approximate_op_count(
+  ffi.Pointer<sk_picture_t> picture,
+  bool nested,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_picture_t>)>(isLeaf: true)
+external int sk_picture_approximate_bytes_used(
+  ffi.Pointer<sk_picture_t> picture,
+);
+
+@ffi.Native<ffi.Pointer<sk_rtree_factory_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_rtree_factory_t> sk_rtree_factory_new();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_rtree_factory_t>)>(isLeaf: true)
+external void sk_rtree_factory_delete(
+  ffi.Pointer<sk_rtree_factory_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
+external void sk_document_unref(
+  ffi.Pointer<sk_document_t> document,
+);
+
+@ffi.Native<ffi.Pointer<sk_document_t> Function(ffi.Pointer<sk_wstream_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_document_t> sk_document_create_pdf_from_stream(
+  ffi.Pointer<sk_wstream_t> stream,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_document_t> Function(
+    ffi.Pointer<sk_wstream_t>,
+    ffi.Pointer<sk_document_pdf_metadata_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_document_t>
+sk_document_create_pdf_from_stream_with_metadata(
+  ffi.Pointer<sk_wstream_t> stream,
+  ffi.Pointer<sk_document_pdf_metadata_t> metadata,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_canvas_t> Function(
+    ffi.Pointer<sk_document_t>,
+    ffi.Float,
+    ffi.Float,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_canvas_t> sk_document_begin_page(
+  ffi.Pointer<sk_document_t> document,
+  double width,
+  double height,
+  ffi.Pointer<sk_rect_t> content,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
+external void sk_document_end_page(
+  ffi.Pointer<sk_document_t> document,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
+external void sk_document_close(
+  ffi.Pointer<sk_document_t> document,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_document_t>)>(isLeaf: true)
+external void sk_document_abort(
+  ffi.Pointer<sk_document_t> document,
+);
+
+@ffi.Native<ffi.Size Function()>(isLeaf: true)
+external int sk_codec_min_buffered_bytes_needed();
+
+@ffi.Native<
+  ffi.Pointer<sk_codec_t> Function(
+    ffi.Pointer<sk_stream_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_codec_t> sk_codec_new_from_stream(
+  ffi.Pointer<sk_stream_t> stream,
+  ffi.Pointer<ffi.UnsignedInt> result,
+);
+
+@ffi.Native<ffi.Pointer<sk_codec_t> Function(ffi.Pointer<sk_data_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_codec_t> sk_codec_new_from_data(
+  ffi.Pointer<sk_data_t> data,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
+external void sk_codec_destroy(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+@ffi.Native<ffi.Pointer<sk_imageinfo_t> Function(ffi.Pointer<sk_codec_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imageinfo_t> sk_codec_get_info(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
+  symbol: 'sk_codec_get_origin',
+  isLeaf: true,
+)
+external int _sk_codec_get_origin(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+sk_encodedorigin_t sk_codec_get_origin(
+  ffi.Pointer<sk_codec_t> codec,
+) => sk_encodedorigin_t.fromValue(
+  _sk_codec_get_origin(
+    codec,
   ),
 );
 
-@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_pixmap_t>)>(
-  symbol: 'sk_pixmap_get_alpha_type',
-  isLeaf: true,
-)
-external int _sk_pixmap_get_alpha_type(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_codec_t>, ffi.Float, ffi.Pointer<sk_isize_t>)
+>(isLeaf: true)
+external void sk_codec_get_scaled_dimensions(
+  ffi.Pointer<sk_codec_t> codec,
+  double desiredScale,
+  ffi.Pointer<sk_isize_t> dimensions,
 );
 
-sk_alphatype_t sk_pixmap_get_alpha_type(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-) => sk_alphatype_t.fromValue(
-  _sk_pixmap_get_alpha_type(
-    cpixmap,
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external bool sk_codec_get_valid_subset(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_irect_t> desiredSubset,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
+  symbol: 'sk_codec_get_encoded_format',
+  isLeaf: true,
+)
+external int _sk_codec_get_encoded_format(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+sk_encoded_image_format_t sk_codec_get_encoded_format(
+  ffi.Pointer<sk_codec_t> codec,
+) => sk_encoded_image_format_t.fromValue(
+  _sk_codec_get_encoded_format(
+    codec,
   ),
 );
 
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external bool sk_pixmap_is_opaque(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
 @ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_pixmap_t>, ffi.Pointer<sk_irect_t>)
->(isLeaf: true)
-external void sk_pixmap_get_bounds(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_irect_t> bounds,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_get_row_bytes_as_pixels(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Int Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_get_shift_per_pixel(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Size Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external int sk_pixmap_compute_byte_size(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Pointer<sk_colorspace_t> Function(ffi.Pointer<sk_pixmap_t>)>(
-  isLeaf: true,
-)
-external ffi.Pointer<sk_colorspace_t> sk_pixmap_get_colorspace(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_pixmap_t>)>(isLeaf: true)
-external bool sk_pixmap_compute_is_opaque(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-);
-
-@ffi.Native<sk_color_t Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external int sk_pixmap_get_pixel_color(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Void Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Int,
-    ffi.Int,
-    ffi.Pointer<sk_color4f_t>,
-  )
->(isLeaf: true)
-external void sk_pixmap_get_pixel_color4f(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-  ffi.Pointer<sk_color4f_t> color,
-);
-
-@ffi.Native<ffi.Float Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)>(
-  isLeaf: true,
-)
-external double sk_pixmap_get_pixel_alphaf(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_pixmap_get_addr(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint8> sk_pixmap_get_addr8(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr16(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint32> sk_pixmap_get_addr32(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint64> sk_pixmap_get_addr64(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint16> sk_pixmap_get_addr_f16(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Void> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Void> sk_pixmap_get_writeable_addr(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint8> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint8> sk_pixmap_get_writeable_addr8(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr16(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint32> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint32> sk_pixmap_get_writeable_addr32(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint64> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint64> sk_pixmap_get_writeable_addr64(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Pointer<ffi.Uint16> Function(ffi.Pointer<sk_pixmap_t>, ffi.Int, ffi.Int)
->(isLeaf: true)
-external ffi.Pointer<ffi.Uint16> sk_pixmap_get_writeable_addr_f16(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int x,
-  int y,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
+  ffi.UnsignedInt Function(
+    ffi.Pointer<sk_codec_t>,
     ffi.Pointer<sk_imageinfo_t>,
     ffi.Pointer<ffi.Void>,
     ffi.Size,
+    ffi.Pointer<sk_codec_options_t>,
+  )
+>(symbol: 'sk_codec_get_pixels', isLeaf: true)
+external int _sk_codec_get_pixels(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  ffi.Pointer<sk_codec_options_t> options,
+);
+
+sk_codec_result_t sk_codec_get_pixels(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  ffi.Pointer<sk_codec_options_t> options,
+) => sk_codec_result_t.fromValue(
+  _sk_codec_get_pixels(
+    codec,
+    info,
+    pixels,
+    rowBytes,
+    options,
+  ),
+);
+
+@ffi.Native<
+  ffi.UnsignedInt Function(
+    ffi.Pointer<sk_codec_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Size,
+    ffi.Pointer<sk_codec_options_t>,
+  )
+>(symbol: 'sk_codec_start_incremental_decode', isLeaf: true)
+external int _sk_codec_start_incremental_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  ffi.Pointer<sk_codec_options_t> options,
+);
+
+sk_codec_result_t sk_codec_start_incremental_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<ffi.Void> pixels,
+  int rowBytes,
+  ffi.Pointer<sk_codec_options_t> options,
+) => sk_codec_result_t.fromValue(
+  _sk_codec_start_incremental_decode(
+    codec,
+    info,
+    pixels,
+    rowBytes,
+    options,
+  ),
+);
+
+@ffi.Native<
+  ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<ffi.Int>)
+>(symbol: 'sk_codec_incremental_decode', isLeaf: true)
+external int _sk_codec_incremental_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<ffi.Int> rowsDecoded,
+);
+
+sk_codec_result_t sk_codec_incremental_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<ffi.Int> rowsDecoded,
+) => sk_codec_result_t.fromValue(
+  _sk_codec_incremental_decode(
+    codec,
+    rowsDecoded,
+  ),
+);
+
+@ffi.Native<
+  ffi.UnsignedInt Function(
+    ffi.Pointer<sk_codec_t>,
+    ffi.Pointer<sk_imageinfo_t>,
+    ffi.Pointer<sk_codec_options_t>,
+  )
+>(symbol: 'sk_codec_start_scanline_decode', isLeaf: true)
+external int _sk_codec_start_scanline_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_codec_options_t> options,
+);
+
+sk_codec_result_t sk_codec_start_scanline_decode(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_imageinfo_t> info,
+  ffi.Pointer<sk_codec_options_t> options,
+) => sk_codec_result_t.fromValue(
+  _sk_codec_start_scanline_decode(
+    codec,
+    info,
+    options,
+  ),
+);
+
+@ffi.Native<
+  ffi.Int Function(
+    ffi.Pointer<sk_codec_t>,
+    ffi.Pointer<ffi.Void>,
     ffi.Int,
+    ffi.Size,
+  )
+>(isLeaf: true)
+external int sk_codec_get_scanlines(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<ffi.Void> dst,
+  int countLines,
+  int rowBytes,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_codec_t>, ffi.Int)>(isLeaf: true)
+external bool sk_codec_skip_scanlines(
+  ffi.Pointer<sk_codec_t> codec,
+  int countLines,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_codec_t>)>(
+  symbol: 'sk_codec_get_scanline_order',
+  isLeaf: true,
+)
+external int _sk_codec_get_scanline_order(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+sk_codec_scanline_order_t sk_codec_get_scanline_order(
+  ffi.Pointer<sk_codec_t> codec,
+) => sk_codec_scanline_order_t.fromValue(
+  _sk_codec_get_scanline_order(
+    codec,
+  ),
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
+external int sk_codec_next_scanline(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>, ffi.Int)>(isLeaf: true)
+external int sk_codec_output_scanline(
+  ffi.Pointer<sk_codec_t> codec,
+  int inputScanline,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
+external int sk_codec_get_frame_count(
+  ffi.Pointer<sk_codec_t> codec,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_codec_t>, ffi.Pointer<sk_codec_frameinfo_t>)
+>(isLeaf: true)
+external void sk_codec_get_frame_info(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<sk_codec_frameinfo_t> frameInfo,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_codec_t>,
     ffi.Int,
+    ffi.Pointer<sk_codec_frameinfo_t>,
   )
 >(isLeaf: true)
-external bool sk_pixmap_read_pixels(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_imageinfo_t> dstInfo,
-  ffi.Pointer<ffi.Void> dstPixels,
-  int dstRowBytes,
-  int srcX,
-  int srcY,
+external bool sk_codec_get_frame_info_for_index(
+  ffi.Pointer<sk_codec_t> codec,
+  int index,
+  ffi.Pointer<sk_codec_frameinfo_t> frameInfo,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_codec_t>)>(isLeaf: true)
+external int sk_codec_get_repetition_count(
+  ffi.Pointer<sk_codec_t> codec,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Int,
-    ffi.Int,
+  ffi.Pointer<sk_image_t> Function(
+    ffi.Pointer<sk_codec_t>,
+    ffi.Pointer<ffi.UnsignedInt>,
   )
 >(isLeaf: true)
-external bool sk_pixmap_read_pixels_to_pixmap(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_pixmap_t> dst,
-  int srcX,
-  int srcY,
+external ffi.Pointer<sk_image_t> sk_codecs_deferred_image(
+  ffi.Pointer<sk_codec_t> codec,
+  ffi.Pointer<ffi.UnsignedInt> alphaType,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
+external void sk_unicode_ref(
+  ffi.Pointer<sk_unicode_t> unicode,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_unicode_t>)>(isLeaf: true)
+external void sk_unicode_unref(
+  ffi.Pointer<sk_unicode_t> unicode,
+);
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu();
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_icu4x();
+
+@ffi.Native<ffi.Pointer<sk_unicode_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_unicode_t> sk_unicode_make_libgrapheme();
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Char>)>(isLeaf: true)
+external bool sk_icu_load_data(
+  ffi.Pointer<ffi.Char> data_path,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external bool sk_icu_set_data(
+  ffi.Pointer<ffi.Void> data,
+);
+
+@ffi.Native<ffi.Void Function()>(isLeaf: true)
+external void sk_linker_keep_alive();
+
+@ffi.Native<ffi.Pointer<sk_region_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_region_t> sk_region_new();
+
+@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_region_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_region_t> sk_region_new_from_region(
+  ffi.Pointer<sk_region_t> region,
+);
+
+@ffi.Native<ffi.Pointer<sk_region_t> Function(ffi.Pointer<sk_irect_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_region_t> sk_region_new_from_rect(
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external void sk_region_delete(
+  ffi.Pointer<sk_region_t> r,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external bool sk_region_is_empty(
+  ffi.Pointer<sk_region_t> r,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external bool sk_region_is_rect(
+  ffi.Pointer<sk_region_t> r,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external bool sk_region_is_complex(
+  ffi.Pointer<sk_region_t> r,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_sampling_options_t>,
-  )
+  ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
 >(isLeaf: true)
-external bool sk_pixmap_scale_pixels(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_pixmap_t> dst,
-  ffi.Pointer<sk_sampling_options_t> sampling,
+external void sk_region_get_bounds(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
-    sk_color_t,
-    ffi.Pointer<sk_irect_t>,
-  )
+  ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_path_t>)
 >(isLeaf: true)
-external bool sk_pixmap_erase_color(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  int color,
-  ffi.Pointer<sk_irect_t> subset,
+external void sk_region_get_boundary_path(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_path_t> path,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_color4f_t>,
-    ffi.Pointer<sk_irect_t>,
-  )
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_path_builder_t>)
 >(isLeaf: true)
-external bool sk_pixmap_erase_color4f(
-  ffi.Pointer<sk_pixmap_t> cpixmap,
-  ffi.Pointer<sk_color4f_t> color,
-  ffi.Pointer<sk_irect_t> subset,
+external bool sk_region_add_boundary_path(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_path_builder_t> pathBuilder,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external int sk_region_compute_region_complexity(
+  ffi.Pointer<sk_region_t> r,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>)>(isLeaf: true)
+external bool sk_region_set_empty(
+  ffi.Pointer<sk_region_t> r,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_wstream_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_webpencoder_options_t>,
-  )
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
 >(isLeaf: true)
-external bool sk_webpencoder_encode(
-  ffi.Pointer<sk_wstream_t> dst,
-  ffi.Pointer<sk_pixmap_t> src,
-  ffi.Pointer<sk_webpencoder_options_t> options,
+external bool sk_region_set_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
 );
 
 @ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_wstream_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_jpegencoder_options_t>,
-  )
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>, ffi.Int)
 >(isLeaf: true)
-external bool sk_jpegencoder_encode(
-  ffi.Pointer<sk_wstream_t> dst,
-  ffi.Pointer<sk_pixmap_t> src,
-  ffi.Pointer<sk_jpegencoder_options_t> options,
-);
-
-@ffi.Native<
-  ffi.Bool Function(
-    ffi.Pointer<sk_wstream_t>,
-    ffi.Pointer<sk_pixmap_t>,
-    ffi.Pointer<sk_pngencoder_options_t>,
-  )
->(isLeaf: true)
-external bool sk_pngencoder_encode(
-  ffi.Pointer<sk_wstream_t> dst,
-  ffi.Pointer<sk_pixmap_t> src,
-  ffi.Pointer<sk_pngencoder_options_t> options,
-);
-
-@ffi.Native<
-  ffi.Void Function(ffi.Pointer<ffi.Uint32>, ffi.Pointer<ffi.Uint32>, ffi.Int)
->(isLeaf: true)
-external void sk_swizzle_swap_rb(
-  ffi.Pointer<ffi.Uint32> dest,
-  ffi.Pointer<ffi.Uint32> src,
+external bool sk_region_set_rects(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rects,
   int count,
 );
 
-@ffi.Native<sk_color_t Function(sk_pmcolor_t)>(isLeaf: true)
-external int sk_color_unpremultiply(
-  int pmcolor,
-);
-
-@ffi.Native<sk_pmcolor_t Function(sk_color_t)>(isLeaf: true)
-external int sk_color_premultiply(
-  int color,
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
+>(isLeaf: true)
+external bool sk_region_set_region(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> region,
 );
 
 @ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_pmcolor_t>, ffi.Int, ffi.Pointer<sk_color_t>)
+  ffi.Bool Function(
+    ffi.Pointer<sk_region_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_region_t>,
+  )
 >(isLeaf: true)
-external void sk_color_unpremultiply_array(
-  ffi.Pointer<sk_pmcolor_t> pmcolors,
-  int size,
-  ffi.Pointer<sk_color_t> colors,
+external bool sk_region_set_path(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_path_t> t,
+  ffi.Pointer<sk_region_t> clip,
 );
 
 @ffi.Native<
-  ffi.Void Function(ffi.Pointer<sk_color_t>, ffi.Int, ffi.Pointer<sk_pmcolor_t>)
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
 >(isLeaf: true)
-external void sk_color_premultiply_array(
-  ffi.Pointer<sk_color_t> colors,
-  int size,
-  ffi.Pointer<sk_pmcolor_t> pmcolors,
+external bool sk_region_intersects_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
+>(isLeaf: true)
+external bool sk_region_intersects(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> src,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external bool sk_region_contains_point(
+  ffi.Pointer<sk_region_t> r,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external bool sk_region_contains_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
+>(isLeaf: true)
+external bool sk_region_contains(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> region,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external bool sk_region_quick_contains(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external bool sk_region_quick_reject_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_region_t>, ffi.Pointer<sk_region_t>)
+>(isLeaf: true)
+external bool sk_region_quick_reject(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> region,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_t>, ffi.Int, ffi.Int)>(
+  isLeaf: true,
+)
+external void sk_region_translate(
+  ffi.Pointer<sk_region_t> r,
+  int x,
+  int y,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_region_t>,
+    ffi.Pointer<sk_irect_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_region_op_rect', isLeaf: true)
+external bool _sk_region_op_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+  int op,
+);
+
+bool sk_region_op_rect(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_irect_t> rect,
+  sk_region_op_t op,
+) => _sk_region_op_rect(
+  r,
+  rect,
+  op.value,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_region_t>,
+    ffi.Pointer<sk_region_t>,
+    ffi.UnsignedInt,
+  )
+>(symbol: 'sk_region_op', isLeaf: true)
+external bool _sk_region_op(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> region,
+  int op,
+);
+
+bool sk_region_op(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<sk_region_t> region,
+  sk_region_op_t op,
+) => _sk_region_op(
+  r,
+  region,
+  op.value,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>)>(
+  isLeaf: true,
+)
+external int sk_region_write_to_memory(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<ffi.Void> buffer,
+);
+
+@ffi.Native<
+  ffi.Size Function(ffi.Pointer<sk_region_t>, ffi.Pointer<ffi.Void>, ffi.Size)
+>(isLeaf: true)
+external int sk_region_read_from_memory(
+  ffi.Pointer<sk_region_t> r,
+  ffi.Pointer<ffi.Void> buffer,
+  int length,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_region_iterator_t> Function(ffi.Pointer<sk_region_t>)
+>(isLeaf: true)
+external ffi.Pointer<sk_region_iterator_t> sk_region_iterator_new(
+  ffi.Pointer<sk_region_t> region,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
+external void sk_region_iterator_delete(
+  ffi.Pointer<sk_region_iterator_t> iter,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
+external bool sk_region_iterator_rewind(
+  ffi.Pointer<sk_region_iterator_t> iter,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
+external bool sk_region_iterator_done(
+  ffi.Pointer<sk_region_iterator_t> iter,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_iterator_t>)>(isLeaf: true)
+external void sk_region_iterator_next(
+  ffi.Pointer<sk_region_iterator_t> iter,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_region_iterator_t>, ffi.Pointer<sk_irect_t>)
+>(isLeaf: true)
+external void sk_region_iterator_rect(
+  ffi.Pointer<sk_region_iterator_t> iter,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_region_cliperator_t> Function(
+    ffi.Pointer<sk_region_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_region_cliperator_t> sk_region_cliperator_new(
+  ffi.Pointer<sk_region_t> region,
+  ffi.Pointer<sk_irect_t> clip,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_cliperator_t>)>(
+  isLeaf: true,
+)
+external void sk_region_cliperator_delete(
+  ffi.Pointer<sk_region_cliperator_t> iter,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_region_cliperator_t>)>(
+  isLeaf: true,
+)
+external bool sk_region_cliperator_done(
+  ffi.Pointer<sk_region_cliperator_t> iter,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_cliperator_t>)>(
+  isLeaf: true,
+)
+external void sk_region_cliperator_next(
+  ffi.Pointer<sk_region_cliperator_t> iter,
 );
 
 @ffi.Native<
   ffi.Void Function(
-    ffi.Pointer<ffi.Int>,
-    ffi.Pointer<ffi.Int>,
+    ffi.Pointer<sk_region_cliperator_t>,
+    ffi.Pointer<sk_irect_t>,
+  )
+>(isLeaf: true)
+external void sk_region_cliperator_rect(
+  ffi.Pointer<sk_region_cliperator_t> iter,
+  ffi.Pointer<sk_irect_t> rect,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_region_spanerator_t> Function(
+    ffi.Pointer<sk_region_t>,
+    ffi.Int,
+    ffi.Int,
+    ffi.Int,
+  )
+>(isLeaf: true)
+external ffi.Pointer<sk_region_spanerator_t> sk_region_spanerator_new(
+  ffi.Pointer<sk_region_t> region,
+  int y,
+  int left,
+  int right,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_region_spanerator_t>)>(
+  isLeaf: true,
+)
+external void sk_region_spanerator_delete(
+  ffi.Pointer<sk_region_spanerator_t> iter,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_region_spanerator_t>,
     ffi.Pointer<ffi.Int>,
     ffi.Pointer<ffi.Int>,
   )
 >(isLeaf: true)
-external void sk_color_get_bit_shift(
-  ffi.Pointer<ffi.Int> a,
-  ffi.Pointer<ffi.Int> r,
-  ffi.Pointer<ffi.Int> g,
-  ffi.Pointer<ffi.Int> b,
+external bool sk_region_spanerator_next(
+  ffi.Pointer<sk_region_spanerator_t> iter,
+  ffi.Pointer<ffi.Int> left,
+  ffi.Pointer<ffi.Int> right,
+);
+
+@ffi.Native<ffi.Pointer<sk_paint_t> Function()>(isLeaf: true)
+external ffi.Pointer<sk_paint_t> sk_paint_new();
+
+@ffi.Native<ffi.Pointer<sk_paint_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_paint_t> sk_paint_clone(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external void sk_paint_delete(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external void sk_paint_reset(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_is_antialias(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
+external void sk_paint_set_antialias(
+  ffi.Pointer<sk_paint_t> arg0,
+  bool arg1,
+);
+
+@ffi.Native<
+  ffi.Bool Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_paint_t>)
+>(isLeaf: true)
+external bool sk_paint_equals(
+  ffi.Pointer<sk_paint_t> a,
+  ffi.Pointer<sk_paint_t> b,
+);
+
+@ffi.Native<ffi.Int64 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external int sk_paint_get_hash(
+  ffi.Pointer<sk_paint_t> paint,
+);
+
+@ffi.Native<sk_color_t Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external int sk_paint_get_color(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_color4f_t>)
+>(isLeaf: true)
+external void sk_paint_get_color4f(
+  ffi.Pointer<sk_paint_t> paint,
+  ffi.Pointer<sk_color4f_t> color,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, sk_color_t)>(
+  isLeaf: true,
+)
+external void sk_paint_set_color(
+  ffi.Pointer<sk_paint_t> arg0,
+  int arg1,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_color4f_t>,
+    ffi.Pointer<sk_colorspace_t>,
+  )
+>(isLeaf: true)
+external void sk_paint_set_color4f(
+  ffi.Pointer<sk_paint_t> paint,
+  ffi.Pointer<sk_color4f_t> color,
+  ffi.Pointer<sk_colorspace_t> colorspace,
+);
+
+@ffi.Native<ffi.Uint8 Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external int sk_paint_get_alpha(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external double sk_paint_get_alpha_f(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Uint8)>(isLeaf: true)
+external void sk_paint_set_alpha(
+  ffi.Pointer<sk_paint_t> arg0,
+  int a,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
+external void sk_paint_set_alpha_f(
+  ffi.Pointer<sk_paint_t> arg0,
+  double a,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
+  symbol: 'sk_paint_get_style',
+  isLeaf: true,
+)
+external int _sk_paint_get_style(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+sk_paint_style_t sk_paint_get_style(
+  ffi.Pointer<sk_paint_t> arg0,
+) => sk_paint_style_t.fromValue(
+  _sk_paint_get_style(
+    arg0,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_paint_set_style',
+  isLeaf: true,
+)
+external void _sk_paint_set_style(
+  ffi.Pointer<sk_paint_t> arg0,
+  int arg1,
+);
+
+void sk_paint_set_style(
+  ffi.Pointer<sk_paint_t> arg0,
+  sk_paint_style_t arg1,
+) => _sk_paint_set_style(
+  arg0,
+  arg1.value,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
+external void sk_paint_set_stroke(
+  ffi.Pointer<sk_paint_t> arg0,
+  bool isStroke,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external double sk_paint_get_stroke_width(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
+external void sk_paint_set_stroke_width(
+  ffi.Pointer<sk_paint_t> arg0,
+  double width,
+);
+
+@ffi.Native<ffi.Float Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external double sk_paint_get_stroke_miter(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Float)>(isLeaf: true)
+external void sk_paint_set_stroke_miter(
+  ffi.Pointer<sk_paint_t> arg0,
+  double miter,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
+  symbol: 'sk_paint_get_stroke_cap',
+  isLeaf: true,
+)
+external int _sk_paint_get_stroke_cap(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+sk_stroke_cap_t sk_paint_get_stroke_cap(
+  ffi.Pointer<sk_paint_t> arg0,
+) => sk_stroke_cap_t.fromValue(
+  _sk_paint_get_stroke_cap(
+    arg0,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_paint_set_stroke_cap',
+  isLeaf: true,
+)
+external void _sk_paint_set_stroke_cap(
+  ffi.Pointer<sk_paint_t> arg0,
+  int arg1,
+);
+
+void sk_paint_set_stroke_cap(
+  ffi.Pointer<sk_paint_t> arg0,
+  sk_stroke_cap_t arg1,
+) => _sk_paint_set_stroke_cap(
+  arg0,
+  arg1.value,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
+  symbol: 'sk_paint_get_stroke_join',
+  isLeaf: true,
+)
+external int _sk_paint_get_stroke_join(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+sk_stroke_join_t sk_paint_get_stroke_join(
+  ffi.Pointer<sk_paint_t> arg0,
+) => sk_stroke_join_t.fromValue(
+  _sk_paint_get_stroke_join(
+    arg0,
+  ),
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_paint_set_stroke_join',
+  isLeaf: true,
+)
+external void _sk_paint_set_stroke_join(
+  ffi.Pointer<sk_paint_t> arg0,
+  int arg1,
+);
+
+void sk_paint_set_stroke_join(
+  ffi.Pointer<sk_paint_t> arg0,
+  sk_stroke_join_t arg1,
+) => _sk_paint_set_stroke_join(
+  arg0,
+  arg1.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_shader_t>)
+>(isLeaf: true)
+external void sk_paint_set_shader(
+  ffi.Pointer<sk_paint_t> arg0,
+  ffi.Pointer<sk_shader_t> arg1,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_maskfilter_t>)
+>(isLeaf: true)
+external void sk_paint_set_maskfilter(
+  ffi.Pointer<sk_paint_t> arg0,
+  ffi.Pointer<sk_maskfilter_t> arg1,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.UnsignedInt)>(
+  symbol: 'sk_paint_set_blendmode',
+  isLeaf: true,
+)
+external void _sk_paint_set_blendmode(
+  ffi.Pointer<sk_paint_t> arg0,
+  int arg1,
+);
+
+void sk_paint_set_blendmode(
+  ffi.Pointer<sk_paint_t> arg0,
+  sk_blendmode_t arg1,
+) => _sk_paint_set_blendmode(
+  arg0,
+  arg1.value,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_blender_t>)
+>(isLeaf: true)
+external void sk_paint_set_blender(
+  ffi.Pointer<sk_paint_t> paint,
+  ffi.Pointer<sk_blender_t> blender,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_is_dither(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Bool)>(isLeaf: true)
+external void sk_paint_set_dither(
+  ffi.Pointer<sk_paint_t> arg0,
+  bool arg1,
+);
+
+@ffi.Native<ffi.Pointer<sk_shader_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_shader_t> sk_paint_get_shader(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.Pointer<sk_maskfilter_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_maskfilter_t> sk_paint_get_maskfilter(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_colorfilter_t>)
+>(isLeaf: true)
+external void sk_paint_set_colorfilter(
+  ffi.Pointer<sk_paint_t> arg0,
+  ffi.Pointer<sk_colorfilter_t> arg1,
+);
+
+@ffi.Native<ffi.Pointer<sk_colorfilter_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_colorfilter_t> sk_paint_get_colorfilter(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_imagefilter_t>)
+>(isLeaf: true)
+external void sk_paint_set_imagefilter(
+  ffi.Pointer<sk_paint_t> arg0,
+  ffi.Pointer<sk_imagefilter_t> arg1,
+);
+
+@ffi.Native<ffi.Pointer<sk_imagefilter_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_imagefilter_t> sk_paint_get_imagefilter(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+@ffi.Native<ffi.UnsignedInt Function(ffi.Pointer<sk_paint_t>)>(
+  symbol: 'sk_paint_get_blendmode',
+  isLeaf: true,
+)
+external int _sk_paint_get_blendmode(
+  ffi.Pointer<sk_paint_t> arg0,
+);
+
+sk_blendmode_t sk_paint_get_blendmode(
+  ffi.Pointer<sk_paint_t> arg0,
+) => sk_blendmode_t.fromValue(
+  _sk_paint_get_blendmode(
+    arg0,
+  ),
+);
+
+@ffi.Native<ffi.Pointer<sk_blender_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_blender_t> sk_paint_get_blender(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<ffi.Pointer<sk_path_effect_t> Function(ffi.Pointer<sk_paint_t>)>(
+  isLeaf: true,
+)
+external ffi.Pointer<sk_path_effect_t> sk_paint_get_path_effect(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(ffi.Pointer<sk_paint_t>, ffi.Pointer<sk_path_effect_t>)
+>(isLeaf: true)
+external void sk_paint_set_path_effect(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_path_effect_t> effect,
+);
+
+@ffi.Native<
+  ffi.Bool Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_path_t>,
+    ffi.Pointer<sk_path_builder_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_matrix_t>,
+  )
+>(isLeaf: true)
+external bool sk_paint_get_fill_path(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_path_t> src,
+  ffi.Pointer<sk_path_builder_t> dst,
+  ffi.Pointer<sk_rect_t> cullRect,
+  ffi.Pointer<sk_matrix_t> cmatrix,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_nothing_to_draw(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<sk_paint_t>)>(isLeaf: true)
+external bool sk_paint_can_compute_fast_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_paint_compute_fast_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_rect_t> orig,
+  ffi.Pointer<sk_rect_t> result,
+);
+
+@ffi.Native<
+  ffi.Void Function(
+    ffi.Pointer<sk_paint_t>,
+    ffi.Pointer<sk_rect_t>,
+    ffi.Pointer<sk_rect_t>,
+  )
+>(isLeaf: true)
+external void sk_paint_compute_fast_stroke_bounds(
+  ffi.Pointer<sk_paint_t> cpaint,
+  ffi.Pointer<sk_rect_t> orig,
+  ffi.Pointer<sk_rect_t> result,
 );
 
 final class sk_refcnt_t extends ffi.Opaque {}
@@ -14158,8 +14158,7 @@ enum sk_colortype_t {
   R16G16_UNORM_SK_COLORTYPE(24),
   R16G16B16A16_UNORM_SK_COLORTYPE(25),
   SRGBA_8888_SK_COLORTYPE(26),
-  R8_UNORM_SK_COLORTYPE(27)
-  ;
+  R8_UNORM_SK_COLORTYPE(27);
 
   final int value;
   const sk_colortype_t(this.value);
@@ -14201,8 +14200,7 @@ enum sk_alphatype_t {
   UNKNOWN_SK_ALPHATYPE(0),
   OPAQUE_SK_ALPHATYPE(1),
   PREMUL_SK_ALPHATYPE(2),
-  UNPREMUL_SK_ALPHATYPE(3)
-  ;
+  UNPREMUL_SK_ALPHATYPE(3);
 
   final int value;
   const sk_alphatype_t(this.value);
@@ -14221,8 +14219,7 @@ enum sk_pixelgeometry_t {
   RGB_H_SK_PIXELGEOMETRY(1),
   BGR_H_SK_PIXELGEOMETRY(2),
   RGB_V_SK_PIXELGEOMETRY(3),
-  BGR_V_SK_PIXELGEOMETRY(4)
-  ;
+  BGR_V_SK_PIXELGEOMETRY(4);
 
   final int value;
   const sk_pixelgeometry_t(this.value);
@@ -14239,8 +14236,7 @@ enum sk_pixelgeometry_t {
 
 enum sk_surfaceprops_flags_t {
   NONE_SK_SURFACE_PROPS_FLAGS(0),
-  USE_DEVICE_INDEPENDENT_FONTS_SK_SURFACE_PROPS_FLAGS(1)
-  ;
+  USE_DEVICE_INDEPENDENT_FONTS_SK_SURFACE_PROPS_FLAGS(1);
 
   final int value;
   const sk_surfaceprops_flags_t(this.value);
@@ -14256,8 +14252,7 @@ enum sk_surfaceprops_flags_t {
 
 enum sk_surface_content_change_mode_t {
   DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE(0),
-  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE(1)
-  ;
+  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE(1);
 
   final int value;
   const sk_surface_content_change_mode_t(this.value);
@@ -14274,8 +14269,7 @@ enum sk_surface_content_change_mode_t {
 
 enum sk_imagedecodingstrategy_t {
   IMAGE_DECODING_LAZY_DECODE(0),
-  IMAGE_DECODING_PRE_DECODE(1)
-  ;
+  IMAGE_DECODING_PRE_DECODE(1);
 
   final int value;
   const sk_imagedecodingstrategy_t(this.value);
@@ -14418,8 +14412,7 @@ enum sk_blendmode_t {
   HUE_SK_BLENDMODE(25),
   SATURATION_SK_BLENDMODE(26),
   COLOR_SK_BLENDMODE(27),
-  LUMINOSITY_SK_BLENDMODE(28)
-  ;
+  LUMINOSITY_SK_BLENDMODE(28);
 
   final int value;
   const sk_blendmode_t(this.value);
@@ -14596,8 +14589,7 @@ final class sk_document_t extends ffi.Opaque {}
 enum sk_point_mode_t {
   POINTS_SK_POINT_MODE(0),
   LINES_SK_POINT_MODE(1),
-  POLYGON_SK_POINT_MODE(2)
-  ;
+  POLYGON_SK_POINT_MODE(2);
 
   final int value;
   const sk_point_mode_t(this.value);
@@ -14613,8 +14605,7 @@ enum sk_point_mode_t {
 enum sk_text_align_t {
   LEFT_SK_TEXT_ALIGN(0),
   CENTER_SK_TEXT_ALIGN(1),
-  RIGHT_SK_TEXT_ALIGN(2)
-  ;
+  RIGHT_SK_TEXT_ALIGN(2);
 
   final int value;
   const sk_text_align_t(this.value);
@@ -14631,8 +14622,7 @@ enum sk_text_encoding_t {
   UTF8_SK_TEXT_ENCODING(0),
   UTF16_SK_TEXT_ENCODING(1),
   UTF32_SK_TEXT_ENCODING(2),
-  GLYPH_ID_SK_TEXT_ENCODING(3)
-  ;
+  GLYPH_ID_SK_TEXT_ENCODING(3);
 
   final int value;
   const sk_text_encoding_t(this.value);
@@ -14650,8 +14640,7 @@ enum sk_path_filltype_t {
   WINDING_SK_PATH_FILLTYPE(0),
   EVENODD_SK_PATH_FILLTYPE(1),
   INVERSE_WINDING_SK_PATH_FILLTYPE(2),
-  INVERSE_EVENODD_SK_PATH_FILLTYPE(3)
-  ;
+  INVERSE_EVENODD_SK_PATH_FILLTYPE(3);
 
   final int value;
   const sk_path_filltype_t(this.value);
@@ -14668,8 +14657,7 @@ enum sk_path_filltype_t {
 enum sk_font_style_slant_t {
   UPRIGHT_SK_FONT_STYLE_SLANT(0),
   ITALIC_SK_FONT_STYLE_SLANT(1),
-  OBLIQUE_SK_FONT_STYLE_SLANT(2)
-  ;
+  OBLIQUE_SK_FONT_STYLE_SLANT(2);
 
   final int value;
   const sk_font_style_slant_t(this.value);
@@ -14686,8 +14674,7 @@ enum sk_color_channel_t {
   R_SK_COLOR_CHANNEL(0),
   G_SK_COLOR_CHANNEL(1),
   B_SK_COLOR_CHANNEL(2),
-  A_SK_COLOR_CHANNEL(3)
-  ;
+  A_SK_COLOR_CHANNEL(3);
 
   final int value;
   const sk_color_channel_t(this.value);
@@ -14719,8 +14706,7 @@ enum sk_region_op_t {
   REVERSE_DIFFERENCE_SK_REGION_OP(4),
 
   /// !< replace the dst region with the op region
-  REPLACE_SK_REGION_OP(5)
-  ;
+  REPLACE_SK_REGION_OP(5);
 
   final int value;
   const sk_region_op_t(this.value);
@@ -14738,8 +14724,7 @@ enum sk_region_op_t {
 
 enum sk_clipop_t {
   DIFFERENCE_SK_CLIPOP(0),
-  INTERSECT_SK_CLIPOP(1)
-  ;
+  INTERSECT_SK_CLIPOP(1);
 
   final int value;
   const sk_clipop_t(this.value);
@@ -14766,8 +14751,7 @@ enum sk_encoded_image_format_t {
   DNG_SK_ENCODED_FORMAT(10),
   HEIF_SK_ENCODED_FORMAT(11),
   AVIF_SK_ENCODED_FORMAT(12),
-  JPEGXL_SK_ENCODED_FORMAT(13)
-  ;
+  JPEGXL_SK_ENCODED_FORMAT(13);
 
   final int value;
   const sk_encoded_image_format_t(this.value);
@@ -14801,8 +14785,7 @@ enum sk_encodedorigin_t {
   LEFT_TOP_SK_ENCODED_ORIGIN(5),
   RIGHT_TOP_SK_ENCODED_ORIGIN(6),
   RIGHT_BOTTOM_SK_ENCODED_ORIGIN(7),
-  LEFT_BOTTOM_SK_ENCODED_ORIGIN(8)
-  ;
+  LEFT_BOTTOM_SK_ENCODED_ORIGIN(8);
 
   static const DEFAULT_SK_ENCODED_ORIGIN = TOP_LEFT_SK_ENCODED_ORIGIN;
 
@@ -14840,8 +14823,7 @@ enum sk_codec_result_t {
   COULD_NOT_REWIND_SK_CODEC_RESULT(7),
   INTERNAL_ERROR_SK_CODEC_RESULT(8),
   UNIMPLEMENTED_SK_CODEC_RESULT(9),
-  OUT_OF_MEMORY_SK_CODEC_RESULT(10)
-  ;
+  OUT_OF_MEMORY_SK_CODEC_RESULT(10);
 
   final int value;
   const sk_codec_result_t(this.value);
@@ -14864,8 +14846,7 @@ enum sk_codec_result_t {
 
 enum sk_codec_zero_initialized_t {
   YES_SK_CODEC_ZERO_INITIALIZED(0),
-  NO_SK_CODEC_ZERO_INITIALIZED(1)
-  ;
+  NO_SK_CODEC_ZERO_INITIALIZED(1);
 
   final int value;
   const sk_codec_zero_initialized_t(this.value);
@@ -14900,8 +14881,7 @@ final class sk_codec_options_t extends ffi.Struct {
 
 enum sk_codec_scanline_order_t {
   TOP_DOWN_SK_CODEC_SCANLINE_ORDER(0),
-  BOTTOM_UP_SK_CODEC_SCANLINE_ORDER(1)
-  ;
+  BOTTOM_UP_SK_CODEC_SCANLINE_ORDER(1);
 
   final int value;
   const sk_codec_scanline_order_t(this.value);
@@ -14922,8 +14902,7 @@ enum sk_path_verb_t {
   CONIC_SK_PATH_VERB(3),
   CUBIC_SK_PATH_VERB(4),
   CLOSE_SK_PATH_VERB(5),
-  DONE_SK_PATH_VERB(6)
-  ;
+  DONE_SK_PATH_VERB(6);
 
   final int value;
   const sk_path_verb_t(this.value);
@@ -14946,8 +14925,7 @@ final class sk_path_rawiterator_t extends ffi.Opaque {}
 
 enum sk_path_add_mode_t {
   APPEND_SK_PATH_ADD_MODE(0),
-  EXTEND_SK_PATH_ADD_MODE(1)
-  ;
+  EXTEND_SK_PATH_ADD_MODE(1);
 
   final int value;
   const sk_path_add_mode_t(this.value);
@@ -14963,8 +14941,7 @@ enum sk_path_segment_mask_t {
   LINE_SK_PATH_SEGMENT_MASK(1),
   QUAD_SK_PATH_SEGMENT_MASK(2),
   CONIC_SK_PATH_SEGMENT_MASK(4),
-  CUBIC_SK_PATH_SEGMENT_MASK(8)
-  ;
+  CUBIC_SK_PATH_SEGMENT_MASK(8);
 
   final int value;
   const sk_path_segment_mask_t(this.value);
@@ -14983,8 +14960,7 @@ enum sk_path_segment_mask_t {
 enum sk_path_effect_1d_style_t {
   TRANSLATE_SK_PATH_EFFECT_1D_STYLE(0),
   ROTATE_SK_PATH_EFFECT_1D_STYLE(1),
-  MORPH_SK_PATH_EFFECT_1D_STYLE(2)
-  ;
+  MORPH_SK_PATH_EFFECT_1D_STYLE(2);
 
   final int value;
   const sk_path_effect_1d_style_t(this.value);
@@ -15001,8 +14977,7 @@ enum sk_path_effect_1d_style_t {
 
 enum sk_path_effect_trim_mode_t {
   NORMAL_SK_PATH_EFFECT_TRIM_MODE(0),
-  INVERTED_SK_PATH_EFFECT_TRIM_MODE(1)
-  ;
+  INVERTED_SK_PATH_EFFECT_TRIM_MODE(1);
 
   final int value;
   const sk_path_effect_trim_mode_t(this.value);
@@ -15022,8 +14997,7 @@ final class sk_stroke_rec_t extends ffi.Opaque {}
 
 enum sk_stroke_rec_init_style_t {
   HAIRLINE_SK_STROKE_REC_INIT_STYLE(0),
-  FILL_SK_STROKE_REC_INIT_STYLE(1)
-  ;
+  FILL_SK_STROKE_REC_INIT_STYLE(1);
 
   final int value;
   const sk_stroke_rec_init_style_t(this.value);
@@ -15041,8 +15015,7 @@ enum sk_stroke_rec_style_t {
   HAIRLINE_SK_STROKE_REC_STYLE(0),
   FILL_SK_STROKE_REC_STYLE(1),
   STROKE_SK_STROKE_REC_STYLE(2),
-  STROKE_AND_FILL_SK_STROKE_REC_STYLE(3)
-  ;
+  STROKE_AND_FILL_SK_STROKE_REC_STYLE(3);
 
   final int value;
   const sk_stroke_rec_style_t(this.value);
@@ -15059,8 +15032,7 @@ enum sk_stroke_rec_style_t {
 enum sk_stroke_cap_t {
   BUTT_SK_STROKE_CAP(0),
   ROUND_SK_STROKE_CAP(1),
-  SQUARE_SK_STROKE_CAP(2)
-  ;
+  SQUARE_SK_STROKE_CAP(2);
 
   final int value;
   const sk_stroke_cap_t(this.value);
@@ -15076,8 +15048,7 @@ enum sk_stroke_cap_t {
 enum sk_stroke_join_t {
   MITER_SK_STROKE_JOIN(0),
   ROUND_SK_STROKE_JOIN(1),
-  BEVEL_SK_STROKE_JOIN(2)
-  ;
+  BEVEL_SK_STROKE_JOIN(2);
 
   final int value;
   const sk_stroke_join_t(this.value);
@@ -15094,8 +15065,7 @@ enum sk_shader_tilemode_t {
   CLAMP_SK_SHADER_TILEMODE(0),
   REPEAT_SK_SHADER_TILEMODE(1),
   MIRROR_SK_SHADER_TILEMODE(2),
-  DECAL_SK_SHADER_TILEMODE(3)
-  ;
+  DECAL_SK_SHADER_TILEMODE(3);
 
   final int value;
   const sk_shader_tilemode_t(this.value);
@@ -15120,8 +15090,7 @@ enum sk_blurstyle_t {
   OUTER_SK_BLUR_STYLE(2),
 
   /// !< fuzzy inside, nothing outside
-  INNER_SK_BLUR_STYLE(3)
-  ;
+  INNER_SK_BLUR_STYLE(3);
 
   final int value;
   const sk_blurstyle_t(this.value);
@@ -15137,8 +15106,7 @@ enum sk_blurstyle_t {
 
 enum sk_path_direction_t {
   CW_SK_PATH_DIRECTION(0),
-  CCW_SK_PATH_DIRECTION(1)
-  ;
+  CCW_SK_PATH_DIRECTION(1);
 
   final int value;
   const sk_path_direction_t(this.value);
@@ -15152,8 +15120,7 @@ enum sk_path_direction_t {
 
 enum sk_path_builder_arc_size_t {
   SMALL_SK_PATH_BUILDER_ARC_SIZE(0),
-  LARGE_SK_PATH_BUILDER_ARC_SIZE(1)
-  ;
+  LARGE_SK_PATH_BUILDER_ARC_SIZE(1);
 
   final int value;
   const sk_path_builder_arc_size_t(this.value);
@@ -15170,8 +15137,7 @@ enum sk_path_builder_arc_size_t {
 enum sk_paint_style_t {
   FILL_SK_PAINT_STYLE(0),
   STROKE_SK_PAINT_STYLE(1),
-  STROKE_AND_FILL_SK_PAINT_STYLE(2)
-  ;
+  STROKE_AND_FILL_SK_PAINT_STYLE(2);
 
   final int value;
   const sk_paint_style_t(this.value);
@@ -15188,8 +15154,7 @@ enum sk_font_hinting_t {
   NONE_SK_FONT_HINTING(0),
   SLIGHT_SK_FONT_HINTING(1),
   NORMAL_SK_FONT_HINTING(2),
-  FULL_SK_FONT_HINTING(3)
-  ;
+  FULL_SK_FONT_HINTING(3);
 
   final int value;
   const sk_font_hinting_t(this.value);
@@ -15206,8 +15171,7 @@ enum sk_font_hinting_t {
 enum sk_font_edging_t {
   ALIAS_SK_FONT_EDGING(0),
   ANTIALIAS_SK_FONT_EDGING(1),
-  SUBPIXEL_ANTIALIAS_SK_FONT_EDGING(2)
-  ;
+  SUBPIXEL_ANTIALIAS_SK_FONT_EDGING(2);
 
   final int value;
   const sk_font_edging_t(this.value);
@@ -15224,8 +15188,7 @@ final class sk_pixelref_factory_t extends ffi.Opaque {}
 
 enum gr_surfaceorigin_t {
   TOP_LEFT_GR_SURFACE_ORIGIN(0),
-  BOTTOM_LEFT_GR_SURFACE_ORIGIN(1)
-  ;
+  BOTTOM_LEFT_GR_SURFACE_ORIGIN(1);
 
   final int value;
   const gr_surfaceorigin_t(this.value);
@@ -15273,8 +15236,7 @@ enum gr_backend_t {
   VULKAN_GR_BACKEND(1),
   METAL_GR_BACKEND(2),
   DIRECT3D_GR_BACKEND(3),
-  UNSUPPORTED_GR_BACKEND(5)
-  ;
+  UNSUPPORTED_GR_BACKEND(5);
 
   final int value;
   const gr_backend_t(this.value);
@@ -15517,8 +15479,7 @@ enum sk_pathop_t {
   INTERSECT_SK_PATHOP(1),
   UNION_SK_PATHOP(2),
   XOR_SK_PATHOP(3),
-  REVERSE_DIFFERENCE_SK_PATHOP(4)
-  ;
+  REVERSE_DIFFERENCE_SK_PATHOP(4);
 
   final int value;
   const sk_pathop_t(this.value);
@@ -15538,8 +15499,7 @@ final class sk_opbuilder_t extends ffi.Opaque {}
 enum sk_lattice_recttype_t {
   DEFAULT_SK_LATTICE_RECT_TYPE(0),
   TRANSPARENT_SK_LATTICE_RECT_TYPE(1),
-  FIXED_COLOR_SK_LATTICE_RECT_TYPE(2)
-  ;
+  FIXED_COLOR_SK_LATTICE_RECT_TYPE(2);
 
   final int value;
   const sk_lattice_recttype_t(this.value);
@@ -15575,8 +15535,7 @@ final class sk_pathmeasure_t extends ffi.Opaque {}
 enum sk_pathmeasure_matrixflags_t {
   GET_POSITION_SK_PATHMEASURE_MATRIXFLAGS(1),
   GET_TANGENT_SK_PATHMEASURE_MATRIXFLAGS(2),
-  GET_POS_AND_TAN_SK_PATHMEASURE_MATRIXFLAGS(3)
-  ;
+  GET_POS_AND_TAN_SK_PATHMEASURE_MATRIXFLAGS(3);
 
   final int value;
   const sk_pathmeasure_matrixflags_t(this.value);
@@ -15647,8 +15606,7 @@ typedef sk_glyph_path_proc =
 
 enum sk_image_caching_hint_t {
   ALLOW_SK_IMAGE_CACHING_HINT(0),
-  DISALLOW_SK_IMAGE_CACHING_HINT(1)
-  ;
+  DISALLOW_SK_IMAGE_CACHING_HINT(1);
 
   final int value;
   const sk_image_caching_hint_t(this.value);
@@ -15666,8 +15624,7 @@ enum sk_texture_compression_type_t {
   NONE_SK_TEXTURE_COMPRESSION_TYPE(0),
   ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(1),
   BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(2),
-  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(3)
-  ;
+  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(3);
 
   final int value;
   const sk_texture_compression_type_t(this.value);
@@ -15685,8 +15642,7 @@ enum sk_texture_compression_type_t {
 
 enum sk_bitmap_allocflags_t {
   NONE_SK_BITMAP_ALLOC_FLAGS(0),
-  ZERO_PIXELS_SK_BITMAP_ALLOC_FLAGS(1)
-  ;
+  ZERO_PIXELS_SK_BITMAP_ALLOC_FLAGS(1);
 
   final int value;
   const sk_bitmap_allocflags_t(this.value);
@@ -15756,8 +15712,7 @@ final class sk_document_pdf_metadata_t extends ffi.Struct {
 enum sk_codecanimation_disposalmethod_t {
   KEEP_SK_CODEC_ANIMATION_DISPOSAL_METHOD(1),
   RESTORE_BG_COLOR_SK_CODEC_ANIMATION_DISPOSAL_METHOD(2),
-  RESTORE_PREVIOUS_SK_CODEC_ANIMATION_DISPOSAL_METHOD(3)
-  ;
+  RESTORE_PREVIOUS_SK_CODEC_ANIMATION_DISPOSAL_METHOD(3);
 
   final int value;
   const sk_codecanimation_disposalmethod_t(this.value);
@@ -15775,8 +15730,7 @@ enum sk_codecanimation_disposalmethod_t {
 
 enum sk_codecanimation_blend_t {
   SRC_OVER_SK_CODEC_ANIMATION_BLEND(0),
-  SRC_SK_CODEC_ANIMATION_BLEND(1)
-  ;
+  SRC_SK_CODEC_ANIMATION_BLEND(1);
 
   final int value;
   const sk_codecanimation_blend_t(this.value);
@@ -15828,8 +15782,7 @@ final class sk_svgcanvas_t extends ffi.Opaque {}
 enum sk_vertices_vertex_mode_t {
   TRIANGLES_SK_VERTICES_VERTEX_MODE(0),
   TRIANGLE_STRIP_SK_VERTICES_VERTEX_MODE(1),
-  TRIANGLE_FAN_SK_VERTICES_VERTEX_MODE(2)
-  ;
+  TRIANGLE_FAN_SK_VERTICES_VERTEX_MODE(2);
 
   final int value;
   const sk_vertices_vertex_mode_t(this.value);
@@ -15929,8 +15882,7 @@ final class sk_colorspace_icc_profile_t extends ffi.Opaque {}
 enum sk_highcontrastconfig_invertstyle_t {
   NO_INVERT_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(0),
   INVERT_BRIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(1),
-  INVERT_LIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(2)
-  ;
+  INVERT_LIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(2);
 
   final int value;
   const sk_highcontrastconfig_invertstyle_t(this.value);
@@ -15967,8 +15919,7 @@ enum sk_pngencoder_filterflags_t {
   UP_SK_PNGENCODER_FILTER_FLAGS(32),
   AVG_SK_PNGENCODER_FILTER_FLAGS(64),
   PAETH_SK_PNGENCODER_FILTER_FLAGS(128),
-  ALL_SK_PNGENCODER_FILTER_FLAGS(248)
-  ;
+  ALL_SK_PNGENCODER_FILTER_FLAGS(248);
 
   final int value;
   const sk_pngencoder_filterflags_t(this.value);
@@ -16001,8 +15952,7 @@ final class sk_pngencoder_options_t extends ffi.Struct {
 enum sk_jpegencoder_downsample_t {
   DOWNSAMPLE_420_SK_JPEGENCODER_DOWNSAMPLE(0),
   DOWNSAMPLE_422_SK_JPEGENCODER_DOWNSAMPLE(1),
-  DOWNSAMPLE_444_SK_JPEGENCODER_DOWNSAMPLE(2)
-  ;
+  DOWNSAMPLE_444_SK_JPEGENCODER_DOWNSAMPLE(2);
 
   final int value;
   const sk_jpegencoder_downsample_t(this.value);
@@ -16019,8 +15969,7 @@ enum sk_jpegencoder_downsample_t {
 
 enum sk_jpegencoder_alphaoption_t {
   IGNORE_SK_JPEGENCODER_ALPHA_OPTION(0),
-  BLEND_ON_BLACK_SK_JPEGENCODER_ALPHA_OPTION(1)
-  ;
+  BLEND_ON_BLACK_SK_JPEGENCODER_ALPHA_OPTION(1);
 
   final int value;
   const sk_jpegencoder_alphaoption_t(this.value);
@@ -16060,8 +16009,7 @@ final class sk_jpegencoder_options_t extends ffi.Struct {
 
 enum sk_webpencoder_compression_t {
   LOSSY_SK_WEBPENCODER_COMPTRESSION(0),
-  LOSSLESS_SK_WEBPENCODER_COMPTRESSION(1)
-  ;
+  LOSSLESS_SK_WEBPENCODER_COMPTRESSION(1);
 
   final int value;
   const sk_webpencoder_compression_t(this.value);
@@ -16094,8 +16042,7 @@ enum sk_rrect_type_t {
   OVAL_SK_RRECT_TYPE(2),
   SIMPLE_SK_RRECT_TYPE(3),
   NINE_PATCH_SK_RRECT_TYPE(4),
-  COMPLEX_SK_RRECT_TYPE(5)
-  ;
+  COMPLEX_SK_RRECT_TYPE(5);
 
   final int value;
   const sk_rrect_type_t(this.value);
@@ -16115,8 +16062,7 @@ enum sk_rrect_corner_t {
   UPPER_LEFT_SK_RRECT_CORNER(0),
   UPPER_RIGHT_SK_RRECT_CORNER(1),
   LOWER_RIGHT_SK_RRECT_CORNER(2),
-  LOWER_LEFT_SK_RRECT_CORNER(3)
-  ;
+  LOWER_LEFT_SK_RRECT_CORNER(3);
 
   final int value;
   const sk_rrect_corner_t(this.value);
@@ -16184,8 +16130,7 @@ enum sk_runtimeeffect_uniform_type_t {
   INT_SK_RUNTIMEEFFECT_UNIFORM_TYPE(7),
   INT2_SK_RUNTIMEEFFECT_UNIFORM_TYPE(8),
   INT3_SK_RUNTIMEEFFECT_UNIFORM_TYPE(9),
-  INT4_SK_RUNTIMEEFFECT_UNIFORM_TYPE(10)
-  ;
+  INT4_SK_RUNTIMEEFFECT_UNIFORM_TYPE(10);
 
   final int value;
   const sk_runtimeeffect_uniform_type_t(this.value);
@@ -16212,8 +16157,7 @@ enum sk_runtimeeffect_uniform_type_t {
 enum sk_runtimeeffect_child_type_t {
   SHADER_SK_RUNTIMEEFFECT_CHILD_TYPE(0),
   COLOR_FILTER_SK_RUNTIMEEFFECT_CHILD_TYPE(1),
-  BLENDER_SK_RUNTIMEEFFECT_CHILD_TYPE(2)
-  ;
+  BLENDER_SK_RUNTIMEEFFECT_CHILD_TYPE(2);
 
   final int value;
   const sk_runtimeeffect_child_type_t(this.value);
@@ -16234,8 +16178,7 @@ enum sk_runtimeeffect_uniform_flags_t {
   COLOR_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(2),
   VERTEX_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(4),
   FRAGMENT_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(8),
-  HALF_PRECISION_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(16)
-  ;
+  HALF_PRECISION_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(16);
 
   final int value;
   const sk_runtimeeffect_uniform_flags_t(this.value);
@@ -16297,8 +16240,7 @@ final class sk_runtimeeffect_child_t extends ffi.Struct {
 
 enum sk_filter_mode_t {
   NEAREST_SK_FILTER_MODE(0),
-  LINEAR_SK_FILTER_MODE(1)
-  ;
+  LINEAR_SK_FILTER_MODE(1);
 
   final int value;
   const sk_filter_mode_t(this.value);
@@ -16313,8 +16255,7 @@ enum sk_filter_mode_t {
 enum sk_mipmap_mode_t {
   NONE_SK_MIPMAP_MODE(0),
   NEAREST_SK_MIPMAP_MODE(1),
-  LINEAR_SK_MIPMAP_MODE(2)
-  ;
+  LINEAR_SK_MIPMAP_MODE(2);
 
   final int value;
   const sk_mipmap_mode_t(this.value);
@@ -16329,8 +16270,7 @@ enum sk_mipmap_mode_t {
 
 enum sk_imagefilter_map_direction_t {
   FORWARD_SK_IMAGEFILTER_MAP_DIRECTION(0),
-  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION(1)
-  ;
+  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION(1);
 
   final int value;
   const sk_imagefilter_map_direction_t(this.value);
@@ -16376,8 +16316,7 @@ enum sk_canvas_savelayerrec_flags_t {
   NONE_SK_CANVAS_SAVELAYERREC_FLAGS(0),
   PRESERVE_LCD_TEXT_SK_CANVAS_SAVELAYERREC_FLAGS(2),
   INITIALIZE_WITH_PREVIOUS_SK_CANVAS_SAVELAYERREC_FLAGS(4),
-  F16_COLOR_TYPE_SK_CANVAS_SAVELAYERREC_FLAGS(16)
-  ;
+  F16_COLOR_TYPE_SK_CANVAS_SAVELAYERREC_FLAGS(16);
 
   final int value;
   const sk_canvas_savelayerrec_flags_t(this.value);
@@ -16423,8 +16362,7 @@ final class sksg_invalidation_controller_t extends ffi.Opaque {}
 
 enum skottie_animation_renderflags_t {
   SKIP_TOP_LEVEL_ISOLATION(1),
-  DISABLE_TOP_LEVEL_CLIPPING(2)
-  ;
+  DISABLE_TOP_LEVEL_CLIPPING(2);
 
   final int value;
   const skottie_animation_renderflags_t(this.value);
@@ -16442,8 +16380,7 @@ enum skottie_animation_renderflags_t {
 enum skottie_animation_builder_flags_t {
   NONE_SKOTTIE_ANIMATION_BUILDER_FLAGS(0),
   DEFER_IMAGE_LOADING_SKOTTIE_ANIMATION_BUILDER_FLAGS(1),
-  PREFER_EMBEDDED_FONTS_SKOTTIE_ANIMATION_BUILDER_FLAGS(2)
-  ;
+  PREFER_EMBEDDED_FONTS_SKOTTIE_ANIMATION_BUILDER_FLAGS(2);
 
   final int value;
   const skottie_animation_builder_flags_t(this.value);
@@ -16536,8 +16473,7 @@ final class sk_text_style_t extends ffi.Opaque {}
 
 enum sk_paragraph_affinity_t {
   UPSTREAM_SK_PARAGRAPH_AFFINITY(0),
-  DOWNSTREAM_SK_PARAGRAPH_AFFINITY(1)
-  ;
+  DOWNSTREAM_SK_PARAGRAPH_AFFINITY(1);
 
   final int value;
   const sk_paragraph_affinity_t(this.value);
@@ -16557,8 +16493,7 @@ enum sk_paragraph_rect_height_style_t {
   INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE(2),
   INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE(3),
   INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE(4),
-  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(5)
-  ;
+  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(5);
 
   final int value;
   const sk_paragraph_rect_height_style_t(this.value);
@@ -16579,8 +16514,7 @@ enum sk_paragraph_rect_height_style_t {
 
 enum sk_paragraph_rect_width_style_t {
   TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE(0),
-  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE(1)
-  ;
+  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE(1);
 
   final int value;
   const sk_paragraph_rect_width_style_t(this.value);
@@ -16601,8 +16535,7 @@ enum sk_paragraph_text_align_t {
   CENTER_SK_PARAGRAPH_TEXT_ALIGN(2),
   JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN(3),
   START_SK_PARAGRAPH_TEXT_ALIGN(4),
-  END_SK_PARAGRAPH_TEXT_ALIGN(5)
-  ;
+  END_SK_PARAGRAPH_TEXT_ALIGN(5);
 
   final int value;
   const sk_paragraph_text_align_t(this.value);
@@ -16622,8 +16555,7 @@ enum sk_paragraph_text_align_t {
 
 enum sk_paragraph_text_direction_t {
   RTL_SK_PARAGRAPH_TEXT_DIRECTION(0),
-  LTR_SK_PARAGRAPH_TEXT_DIRECTION(1)
-  ;
+  LTR_SK_PARAGRAPH_TEXT_DIRECTION(1);
 
   final int value;
   const sk_paragraph_text_direction_t(this.value);
@@ -16639,8 +16571,7 @@ enum sk_paragraph_text_direction_t {
 
 enum sk_paragraph_text_baseline_t {
   ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE(0),
-  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE(1)
-  ;
+  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE(1);
 
   final int value;
   const sk_paragraph_text_baseline_t(this.value);
@@ -16658,8 +16589,7 @@ enum sk_paragraph_text_height_behavior_t {
   ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(0),
   DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(1),
   DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(2),
-  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(3)
-  ;
+  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(3);
 
   final int value;
   const sk_paragraph_text_height_behavior_t(this.value);
@@ -16678,8 +16608,7 @@ enum sk_paragraph_text_height_behavior_t {
 
 enum sk_paragraph_line_metric_style_t {
   TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE(0),
-  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE(1)
-  ;
+  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE(1);
 
   final int value;
   const sk_paragraph_line_metric_style_t(this.value);
@@ -16695,8 +16624,7 @@ enum sk_paragraph_line_metric_style_t {
 }
 
 enum sk_paragraph_visitor_flag_t {
-  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG(1)
-  ;
+  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG(1);
 
   final int value;
   const sk_paragraph_visitor_flag_t(this.value);
@@ -16837,8 +16765,7 @@ enum sk_text_decoration_t {
   NO_SK_TEXT_DECORATION(0),
   UNDERLINE_SK_TEXT_DECORATION(1),
   OVERLINE_SK_TEXT_DECORATION(2),
-  LINE_THROUGH_SK_TEXT_DECORATION(4)
-  ;
+  LINE_THROUGH_SK_TEXT_DECORATION(4);
 
   final int value;
   const sk_text_decoration_t(this.value);
@@ -16857,8 +16784,7 @@ enum sk_text_decoration_style_t {
   DOUBLE_SK_TEXT_DECORATION_STYLE(1),
   DOTTED_SK_TEXT_DECORATION_STYLE(2),
   DASHED_SK_TEXT_DECORATION_STYLE(3),
-  WAVY_SK_TEXT_DECORATION_STYLE(4)
-  ;
+  WAVY_SK_TEXT_DECORATION_STYLE(4);
 
   final int value;
   const sk_text_decoration_style_t(this.value);
@@ -16877,8 +16803,7 @@ enum sk_text_decoration_style_t {
 
 enum sk_text_decoration_mode_t {
   GAPS_SK_TEXT_DECORATION_MODE(0),
-  THROUGH_SK_TEXT_DECORATION_MODE(1)
-  ;
+  THROUGH_SK_TEXT_DECORATION_MODE(1);
 
   final int value;
   const sk_text_decoration_mode_t(this.value);
@@ -16901,8 +16826,7 @@ enum sk_text_style_attribute_t {
   SHADOW_SK_TEXT_STYLE_ATTRIBUTE(5),
   DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE(6),
   LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE(7),
-  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE(8)
-  ;
+  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE(8);
 
   final int value;
   const sk_text_style_attribute_t(this.value);
@@ -16929,8 +16853,7 @@ enum sk_paragraph_placeholder_alignment_t {
   BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(2),
   TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(3),
   BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(4),
-  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(5)
-  ;
+  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(5);
 
   final int value;
   const sk_paragraph_placeholder_alignment_t(this.value);
@@ -17058,8 +16981,7 @@ final class skgpu_graphite_insert_recording_info_t extends ffi.Struct {
 
 enum sk_image_rescale_gamma_t {
   SK_IMAGE_RESCALE_GAMMA_SRC(0),
-  SK_IMAGE_RESCALE_GAMMA_LINEAR(1)
-  ;
+  SK_IMAGE_RESCALE_GAMMA_LINEAR(1);
 
   final int value;
   const sk_image_rescale_gamma_t(this.value);
@@ -17077,8 +16999,7 @@ enum sk_image_rescale_mode_t {
   SK_IMAGE_RESCALE_MODE_NEAREST(0),
   SK_IMAGE_RESCALE_MODE_LINEAR(1),
   SK_IMAGE_RESCALE_MODE_REPEATED_LINEAR(2),
-  SK_IMAGE_RESCALE_MODE_REPEATED_CUBIC(3)
-  ;
+  SK_IMAGE_RESCALE_MODE_REPEATED_CUBIC(3);
 
   final int value;
   const sk_image_rescale_mode_t(this.value);
