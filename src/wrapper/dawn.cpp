@@ -167,16 +167,17 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
   },
                                         static_cast<void*>(nullptr));
 
+  wgpu::AdapterInfo adapterInfo;
+  adapter.GetInfo(&adapterInfo);
   std::vector<wgpu::FeatureName> features;
-  #ifdef SK_DAWN_USE_D3D11
-  features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
-  #endif
-  #ifdef SK_DAWN_USE_D3D12
-  features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D12Resource);
-  #endif
-  #ifdef SK_DAWN_USE_D3D
-  features.push_back(wgpu::FeatureName::SharedFenceDXGISharedHandle);
-  #endif
+  if (adapterInfo.backendType == wgpu::BackendType::D3D11) {
+    features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
+    features.push_back(wgpu::FeatureName::SharedFenceDXGISharedHandle);
+  }
+  if (adapterInfo.backendType == wgpu::BackendType::D3D12) {
+    features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D12Resource);
+    features.push_back(wgpu::FeatureName::SharedFenceDXGISharedHandle);
+  }
   deviceDesc.requiredFeatures = features.data();
   deviceDesc.requiredFeatureCount = features.size();
 
@@ -465,7 +466,7 @@ sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void
   dawn::native::opengl::ExternalImageDescriptorEGLImage eglImageDesc;
   std::memset(&eglImageDesc, 0, sizeof(eglImageDesc));
   WGPUTextureDescriptor desc = {
-      .label = label ? wgpu::StringView(label, strlen(label)) : wgpu::StringView(),
+      .label = {label, label != nullptr ? strlen(label) : 0},
       .usage = WGPUTextureUsage_TextureBinding | WGPUTextureUsage_RenderAttachment,
       .dimension = WGPUTextureDimension_2D,
       .size = {width, height, 1},
