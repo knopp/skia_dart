@@ -24,8 +24,7 @@ SK_C_API void sk_filestream_close(sk_stream_filestream_t* cstream);
 
 SK_C_API sk_stream_memorystream_t* sk_memorystream_new(void);
 SK_C_API sk_stream_memorystream_t* sk_memorystream_new_with_length(size_t length);
-SK_C_API sk_stream_me
-morystream_t* sk_memorystream_new_with_data(const void* data, size_t length, bool copyData);
+SK_C_API sk_stream_memorystream_t* sk_memorystream_new_with_data(const void* data, size_t length, bool copyData);
 SK_C_API sk_stream_memorystream_t* sk_memorystream_new_with_skdata(sk_data_t* data);
 SK_C_API void sk_memorystream_set_memory(sk_stream_memorystream_t* cmemorystream, const void* data, size_t length, bool copyData);
 SK_C_API void sk_memorystream_set_data(sk_stream_memorystream_t* cmemorystream, sk_data_t* data);
