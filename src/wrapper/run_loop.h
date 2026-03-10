@@ -10,8 +10,8 @@ class RunLoop {
   // Initializes the run loop with Dart FFI data.
   static void initialize(void* dart_api_dl_data);
 
-  // Schedules the callback to be called on isoalte with given handle.
-  // The handle for isoalte can be obtained in Dart through RunLoop.instance.handle.
+  // Schedules the callback to be called on isolate with given handle.
+  // The handle for isolate can be obtained in Dart through RunLoop.instance.handle.
   // Returns true if the callback was successfully scheduled,
   // false otherwise (i.e. the isolate was already shut down).
   static bool schedule(int64_t isolate_handle, void (*callback)(void*), void* callback_data);
@@ -31,14 +31,14 @@ class RunLoop {
   // If the object has a registered isolate handle, schedules the destroyer to be
   // called on that isolate. Otherwise calls the destroyer directly.
   template <typename T>
-  static void destroy(T* object, void (*destroyer)(T*)) {
-    destroy_(static_cast<void*>(object), reinterpret_cast<void (*)(void*)>(destroyer));
+  static bool destroy(T* object, void (*destroyer)(T*)) {
+    return destroy_(static_cast<void*>(object), reinterpret_cast<void (*)(void*)>(destroyer));
   }
 
  private:
   static void set_isolate_handle_(const void* object, int64_t handle);
   static std::optional<int64_t> get_isolate_handle_(const void* object);
-  static void destroy_(void* object, void (*destroyer)(void*));
+  static bool destroy_(void* object, void (*destroyer)(void*));
 
   static std::atomic_bool initialized_;
 

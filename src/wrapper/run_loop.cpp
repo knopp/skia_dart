@@ -25,7 +25,7 @@ bool RunLoop::schedule(int64_t handle, void (*callback)(void*), void* callback_d
   data[1] = reinterpret_cast<uintptr_t>(callback_data);
 
   Dart_CObject object = {};
-  object.type = Dart_CObject_kExternalTypedData;
+  object.type = Dart_CObject_kTypedData;
   object.value.as_external_typed_data.type = Dart_TypedData_kUint64;
   object.value.as_external_typed_data.length = 2;
   object.value.as_external_typed_data.data = reinterpret_cast<uint8_t*>(data);
@@ -47,7 +47,7 @@ std::optional<int64_t> RunLoop::get_isolate_handle_(const void* object) {
   return std::nullopt;
 }
 
-void RunLoop::destroy_(void* object, void (*destroyer)(void*)) {
+bool RunLoop::destroy_(void* object, void (*destroyer)(void*)) {
   std::optional<int64_t> handle;
   {
     std::lock_guard<std::mutex> lock(object_to_handle_mutex_);
@@ -58,8 +58,9 @@ void RunLoop::destroy_(void* object, void (*destroyer)(void*)) {
     }
   }
   if (handle) {
-    schedule(*handle, destroyer, object);
+    return schedule(*handle, destroyer, object);
   } else {
     destroyer(object);
+    return true;
   }
 }
