@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Specifies the style of blur to apply with [SkMaskFilter.blur].
 ///

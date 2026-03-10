@@ -1,4 +1,4 @@
-part of '../../skia_dart.dart';
+part of '../skia_dart_library.dart';
 
 enum SkParagraphAffinity {
   upstream(sk_paragraph_affinity_t.UPSTREAM_SK_PARAGRAPH_AFFINITY),

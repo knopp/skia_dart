@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 enum GrBackend {
   openGL(gr_backend_t.OPENGL_GR_BACKEND),

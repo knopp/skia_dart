@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Describes the LCD subpixel geometry of a display.
 ///
@@ -260,6 +260,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
       colorType._value,
       colorSpace?._ptr ?? nullptr,
       props?._ptr ?? nullptr,
+      RunLoop.instance.handle,
     );
     if (ptr == nullptr) {
       return null;
@@ -295,6 +296,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
       colorType._value,
       colorSpace?._ptr ?? nullptr,
       props?._ptr ?? nullptr,
+      RunLoop.instance.handle,
     );
     if (ptr == nullptr) {
       return null;
@@ -331,6 +333,7 @@ class SkSurface with _NativeMixin<sk_surface_t> {
       origin._value,
       props?._ptr ?? nullptr,
       shouldCreateWithMips,
+      RunLoop.instance.handle,
     );
     if (ptr == nullptr) {
       return null;

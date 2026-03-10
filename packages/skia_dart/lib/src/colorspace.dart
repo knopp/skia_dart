@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Describes a color space.
 class SkColorSpace with _NativeMixin<sk_colorspace_t> {
