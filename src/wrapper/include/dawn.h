@@ -36,8 +36,12 @@ SK_C_API sk_wgpu_instance_t* sk_wgpu_create_instance(void);
 SK_C_API void sk_wgpu_instance_release(sk_wgpu_instance_t* instance);
 SK_C_API void sk_wgpu_instance_process_events(sk_wgpu_instance_t* instance);
 
+typedef struct {
+  void* egl_display;
+} sk_wgpu_adapter_request_t;
+
 // Adapter - request adapter from instance with specified backend
-SK_C_API sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance, sk_wgpu_backend_type_t backend_type);
+SK_C_API sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance, sk_wgpu_backend_type_t backend_type, const sk_wgpu_adapter_request_t* request);
 SK_C_API void sk_wgpu_adapter_release(sk_wgpu_adapter_t* adapter);
 
 // Device - request default device from adapter (needs instance for waiting)
@@ -70,6 +74,9 @@ SK_C_API void* sk_wgpu_device_copy_d3d11on12_device(sk_wgpu_device_t* device);
 SK_C_API void* sk_wgpu_device_copy_d3d12_command_queue(sk_wgpu_device_t* device);
 SK_C_API void sk_wgpu_com_add_ref(void* com_object);
 SK_C_API void sk_wgpu_com_release(void* com_object);
+
+// EGL
+SK_C_API sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, const char* label);
 
 SK_C_PLUS_PLUS_END_GUARD
 
