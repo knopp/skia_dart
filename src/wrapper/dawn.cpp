@@ -1,23 +1,37 @@
 #include "wrapper/include/dawn.h"
 
 #ifdef SK_DAWN
+
+  #ifdef __linux__
+    #define SK_DAWN_USE_EGL
+    #define SK_DAWN_USE_VULKAN
+  #endif
+
+  #ifdef _WIN32
+    #define SK_DAWN_USE_D3D
+    #define SK_DAWN_USE_D3D11
+    #define SK_DAWN_USE_D3D12
+  #endif
+
   #include <mutex>
 
   #include "dawn/dawn_proc.h"
   #include "dawn/native/DawnNative.h"
   #include "dawn/webgpu.h"
   #include "dawn/webgpu_cpp.h"
-  #ifdef _WIN32
+  #ifdef SK_DAWN_USE_D3D11
     #include <d3d11_4.h>
 
     #include "dawn/native/D3D11Backend.h"
-    #include "dawn/native/D3D12Backend.h"
-    #include "dawn/native/DawnNative.h"
   #endif
-  #ifdef __linux__
+  #ifdef SK_DAWN_USE_D3D12
+    #include "dawn/native/D3D12Backend.h"
+  #endif
+  #ifdef SK_DAWN_USE_EGL
     #include <EGL/egl.h>
     #include <EGL/eglext.h>
-    #include <unistd.h>
+
+    #include <cstring>
 
     #include "dawn/native/OpenGLBackend.h"
   #endif
@@ -54,11 +68,13 @@ sk_wgpu_instance_t* sk_wgpu_create_instance(void) {
   desc.requiredFeatureCount = 1;
   desc.requiredFeatures = features;
 
-  const char* allowUnsafeApisToggle = "allow_unsafe_apis";
-  wgpu::DawnTogglesDescriptor unsafeInstanceTogglesDesc = {};
-  unsafeInstanceTogglesDesc.enabledToggleCount = 1;
-  unsafeInstanceTogglesDesc.enabledToggles = &allowUnsafeApisToggle;
-  desc.nextInChain = &unsafeInstanceTogglesDesc;
+  std::vector<const char*> toggles;
+  toggles.push_back("allow_unsafe_apis");
+
+  wgpu::DawnTogglesDescriptor togglesDescriptor = {};
+  togglesDescriptor.enabledToggleCount = toggles.size();
+  togglesDescriptor.enabledToggles = toggles.data();
+  desc.nextInChain = &togglesDescriptor;
 
   auto instance = wgpu::CreateInstance(&desc);
   return reinterpret_cast<sk_wgpu_instance_t*>(instance.MoveToCHandle());
@@ -69,83 +85,54 @@ sk_wgpu_instance_t* sk_wgpu_create_instance(void) {
 
 void sk_wgpu_instance_release(sk_wgpu_instance_t* instance) {
 #ifdef SK_DAWN
-  wgpuInstanceRelease(reinterpret_cast<WGPUInstance>(instance));
+  wgpu::Instance::Acquire(reinterpret_cast<WGPUInstance>(instance));
 #endif
 }
 
 void sk_wgpu_instance_process_events(sk_wgpu_instance_t* instance) {
 #ifdef SK_DAWN
-  wgpuInstanceProcessEvents(reinterpret_cast<WGPUInstance>(instance));
+  wgpu::Instance(reinterpret_cast<WGPUInstance>(instance)).ProcessEvents();
 #endif
 }
 
 // Adapter
 
+sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance_, sk_wgpu_backend_type_t backend_type, const sk_wgpu_adapter_request_t* request) {
 #ifdef SK_DAWN
-namespace {
-struct AdapterRequestContext {
-  WGPUAdapter adapter = nullptr;
+  wgpu::Instance instance(reinterpret_cast<WGPUInstance>(instance_));
+  wgpu::RequestAdapterOptions options;
+  options.backendType = static_cast<wgpu::BackendType>(backend_type);
+
+  wgpu::Adapter adapter;
   bool done = false;
-};
 
-void adapter_request_callback(WGPURequestAdapterStatus status, WGPUAdapter adapter, WGPUStringView message, void* userdata1, void* userdata2) {
-  auto* ctx = static_cast<AdapterRequestContext*>(userdata1);
-  if (status == WGPURequestAdapterStatus_Success) {
-    ctx->adapter = adapter;
-  } else {
-    fprintf(stderr, "Failed to request WGPU adapter: %.*s\n", (int)message.length, message.data);
-  }
-  ctx->done = true;
-}
-}  // namespace
-#endif
-
-sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance, sk_wgpu_backend_type_t backend_type) {
-#ifdef SK_DAWN
-  WGPUInstance wgpuInstance = reinterpret_cast<WGPUInstance>(instance);
-
-  WGPURequestAdapterOptions options = WGPU_REQUEST_ADAPTER_OPTIONS_INIT;
-  options.backendType = static_cast<WGPUBackendType>(backend_type);
-
-  AdapterRequestContext ctx;
-  WGPURequestAdapterCallbackInfo callbackInfo = WGPU_REQUEST_ADAPTER_CALLBACK_INFO_INIT;
-  callbackInfo.mode = WGPUCallbackMode_AllowProcessEvents;
-  callbackInfo.callback = adapter_request_callback;
-  callbackInfo.userdata1 = &ctx;
-
-  #ifdef __linux__
+  #ifdef SK_DAWN_USE_EGL
   dawn::native::opengl::RequestAdapterOptionsGetGLProc
       adapter_options_get_gl_proc = {};
   if (backend_type == SK_WGPU_BACKEND_TYPE_OPENGLES) {
-    options.featureLevel = WGPUFeatureLevel_Compatibility;
+    options.featureLevel = wgpu::FeatureLevel::Compatibility;
     adapter_options_get_gl_proc.getProc = eglGetProcAddress;
 
-    // TODO(Knopp) This is to get tests to pass right now. It needs to be
-    // removed and only be called during testing.
-    EGLDisplay display = eglGetPlatformDisplay(
-        EGL_PLATFORM_SURFACELESS_MESA,
-        EGL_DEFAULT_DISPLAY,
-        NULL);
-
-    if (!eglInitialize(display, nullptr, nullptr)) {
-      fprintf(stderr, "Failed to initialize EGL display\n");
-      return nullptr;
-    }
-
-    adapter_options_get_gl_proc.display = display ? display : EGL_NO_DISPLAY;
-    options.nextInChain = reinterpret_cast<WGPUChainedStruct*>(&adapter_options_get_gl_proc);
+    adapter_options_get_gl_proc.display = reinterpret_cast<EGLDisplay>(request->egl_display);
+    options.nextInChain = &adapter_options_get_gl_proc;
   }
   #endif
 
-  WGPUFuture future = wgpuInstanceRequestAdapter(wgpuInstance, &options, callbackInfo);
+  auto future = instance.RequestAdapter(&options, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestAdapterStatus status, wgpu::Adapter adapter_, const char* message) {
+    if (status == wgpu::RequestAdapterStatus::Success) {
+      adapter = adapter_;
+    } else {
+      fprintf(stderr, "Failed to request WGPU adapter: %s\n", message);
+    }
+    done = true;
+  });
 
-  // Wait for the adapter request to complete
-  WGPUFutureWaitInfo waitInfo = {future, false};
-  while (!ctx.done) {
-    wgpuInstanceWaitAny(wgpuInstance, 1, &waitInfo, UINT64_MAX);
+  while (!done) {
+    instance.WaitAny(future, UINT64_MAX);
   }
 
-  return reinterpret_cast<sk_wgpu_adapter_t*>(ctx.adapter);
+  return reinterpret_cast<sk_wgpu_adapter_t*>(adapter.MoveToCHandle());
+
 #else
   (void)backend_type;
   return nullptr;
@@ -154,76 +141,74 @@ sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance
 
 void sk_wgpu_adapter_release(sk_wgpu_adapter_t* adapter) {
 #ifdef SK_DAWN
-  wgpuAdapterRelease(reinterpret_cast<WGPUAdapter>(adapter));
+  wgpu::Adapter::Acquire(reinterpret_cast<WGPUAdapter>(adapter));
 #endif
 }
 
 // Device
 
+sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, sk_wgpu_adapter_t* adapter_) {
 #ifdef SK_DAWN
-namespace {
-struct DeviceRequestContext {
-  WGPUDevice device = nullptr;
-  bool done = false;
-};
+  wgpu::Instance instance(reinterpret_cast<WGPUInstance>(instance_));
+  wgpu::Adapter adapter(reinterpret_cast<WGPUAdapter>(adapter_));
 
-void device_request_callback(WGPURequestDeviceStatus status, WGPUDevice device, WGPUStringView message, void* userdata1, void* userdata2) {
-  auto* ctx = static_cast<DeviceRequestContext*>(userdata1);
-  if (status == WGPURequestDeviceStatus_Success) {
-    ctx->device = device;
-  } else {
-    fprintf(stderr, "Failed to request WGPU device: %.*s\n", (int)message.length, message.data);
-  }
-  ctx->done = true;
-}
+  wgpu::DeviceDescriptor deviceDesc;
+  deviceDesc.SetDeviceLostCallback(wgpu::CallbackMode::AllowProcessEvents,
+                                   [](wgpu::Device device,
+                                      wgpu::DeviceLostReason reason,
+                                      wgpu::StringView message) {
+                                     // TODO(knopp): Handle this on dart side.
+                                   });
 
-static void device_lost_callback(WGPUDevice const* device, WGPUDeviceLostReason reason, WGPUStringView message, WGPU_NULLABLE void* userdata1, WGPU_NULLABLE void* userdata2) {
-  // TODO(knopp): Handle this on dart side.
-}
-}  // namespace
-#endif
-
-sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance, sk_wgpu_adapter_t* adapter) {
-#ifdef SK_DAWN
-  WGPUInstance wgpuInstance = reinterpret_cast<WGPUInstance>(instance);
-  WGPUAdapter wgpuAdapter = reinterpret_cast<WGPUAdapter>(adapter);
-
-  DeviceRequestContext ctx;
-  WGPURequestDeviceCallbackInfo callbackInfo = WGPU_REQUEST_DEVICE_CALLBACK_INFO_INIT;
-  callbackInfo.mode = WGPUCallbackMode_AllowProcessEvents;
-  callbackInfo.callback = device_request_callback;
-  callbackInfo.userdata1 = &ctx;
-
-  WGPUDeviceLostCallbackInfo deviceLostInfo = WGPU_DEVICE_LOST_CALLBACK_INFO_INIT;
-  deviceLostInfo.mode = WGPUCallbackMode_AllowProcessEvents;
-  deviceLostInfo.callback = device_lost_callback;
-
-  WGPUDeviceDescriptor deviceDesc = WGPU_DEVICE_DESCRIPTOR_INIT;
-  deviceDesc.deviceLostCallbackInfo = deviceLostInfo;
-
-  WGPUUncapturedErrorCallbackInfo errorInfo = WGPU_UNCAPTURED_ERROR_CALLBACK_INFO_INIT;
-  errorInfo.callback = [](WGPUDevice const* device, WGPUErrorType type, WGPUStringView message, WGPU_NULLABLE void* userdata1, WGPU_NULLABLE void* userdata2) {
+  deviceDesc.SetUncapturedErrorCallback([](const wgpu::Device& device,
+                                           wgpu::ErrorType errorType,
+                                           wgpu::StringView message, void* data) {
     fprintf(stderr, "WGPU Uncaptured error: %.*s\n", (int)message.length, message.data);
-  };
-  deviceDesc.uncapturedErrorCallbackInfo = errorInfo;
+  },
+                                        static_cast<void*>(nullptr));
 
-  std::vector<WGPUFeatureName> features;
-  // features.push_back(WGPUFeatureName_SharedTextureMemoryD3D12Resource);
-  // features.push_back(WGPUFeatureName_SharedTextureMemoryD3D11Texture2D);
-  // features.push_back(WGPUFeatureName_SharedFenceDXGISharedHandle);
-
+  std::vector<wgpu::FeatureName> features;
+  #ifdef SK_DAWN_USE_D3D11
+  features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
+  #endif
+  #ifdef SK_DAWN_USE_D3D12
+  features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D12Resource);
+  #endif
+  #ifdef SK_DAWN_USE_D3D
+  features.push_back(wgpu::FeatureName::SharedFenceDXGISharedHandle);
+  #endif
   deviceDesc.requiredFeatures = features.data();
   deviceDesc.requiredFeatureCount = features.size();
 
-  WGPUFuture future = wgpuAdapterRequestDevice(wgpuAdapter, &deviceDesc, callbackInfo);
+  std::vector<const char*> toggles;
+  #ifdef SK_DAWN_USE_EGL
+  // Needed at least until raster isolate can be pinned to a particular thread.
+  // Otherwise the thread check may fail.
+  toggles.push_back("gl_allow_context_on_multi_threads");
+  #endif
 
-  // Wait for the device request to complete
-  WGPUFutureWaitInfo waitInfo = {future, false};
-  while (!ctx.done) {
-    wgpuInstanceWaitAny(wgpuInstance, 1, &waitInfo, UINT64_MAX);
+  wgpu::DawnTogglesDescriptor togglesDescriptor = {};
+  togglesDescriptor.enabledToggleCount = toggles.size();
+  togglesDescriptor.enabledToggles = toggles.data();
+  deviceDesc.nextInChain = &togglesDescriptor;
+
+  wgpu::Device device;
+  bool done = false;
+
+  auto future = adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestDeviceStatus status, wgpu::Device device_, const char* message) {
+    if (status == wgpu::RequestDeviceStatus::Success) {
+      device = device_;
+    } else {
+      fprintf(stderr, "Failed to request WGPU device: %s\n", message);
+    }
+    done = true;
+  });
+
+  while (!done) {
+    instance.WaitAny(future, UINT64_MAX);
   }
+  return reinterpret_cast<sk_wgpu_device_t*>(device.MoveToCHandle());
 
-  return reinterpret_cast<sk_wgpu_device_t*>(ctx.device);
 #else
   return nullptr;
 #endif
@@ -245,8 +230,8 @@ void sk_wgpu_device_release(sk_wgpu_device_t* device) {
 
 sk_wgpu_queue_t* sk_wgpu_device_get_queue(sk_wgpu_device_t* device) {
 #ifdef SK_DAWN
-  WGPUQueue queue = wgpuDeviceGetQueue(reinterpret_cast<WGPUDevice>(device));
-  return reinterpret_cast<sk_wgpu_queue_t*>(queue);
+  wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
+  return reinterpret_cast<sk_wgpu_queue_t*>(wgpuDevice.GetQueue().MoveToCHandle());
 #else
   return nullptr;
 #endif
@@ -350,7 +335,7 @@ void sk_wgpu_shared_texture_memory_release(sk_wgpu_shared_texture_memory_t* text
 }
 
 sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_d3d12_resource(sk_wgpu_device_t* device, void* dx12_resource, const char* label) {
-#if defined SK_DAWN and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D12
   wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
   ID3D12Resource* d3d12Resource = reinterpret_cast<ID3D12Resource*>(dx12_resource);
 
@@ -371,7 +356,7 @@ sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_d3d12
 }
 
 SK_C_API sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_d3d11_texture(sk_wgpu_device_t* device, void* dx11_texture, const char* label) {
-#if defined SK_DAWN and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D11
   wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
   ID3D11Texture2D* d3d11Texture = reinterpret_cast<ID3D11Texture2D*>(dx11_texture);
 
@@ -392,7 +377,7 @@ SK_C_API sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_f
 }
 
 void* sk_wgpu_device_copy_d3d12_device(sk_wgpu_device_t* device) {
-#if defined SK_DAWN_ and defined _WIN32
+#if defined SK_DAWN_ and defined SK_DAWN_USE_D3D12
   if (!device) {
     return 0;
   }
@@ -407,7 +392,7 @@ void* sk_wgpu_device_copy_d3d12_device(sk_wgpu_device_t* device) {
 }
 
 void* sk_wgpu_device_copy_d3d11_device(sk_wgpu_device_t* device) {
-#if defined SK_DAWN and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D11
   if (!device) {
     return 0;
   }
@@ -422,7 +407,7 @@ void* sk_wgpu_device_copy_d3d11_device(sk_wgpu_device_t* device) {
 }
 
 void* sk_wgpu_device_copy_d3d11on12_device(sk_wgpu_device_t* device) {
-#if defined SK_DAWN_ and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D12
   if (!device) {
     return 0;
   }
@@ -437,7 +422,7 @@ void* sk_wgpu_device_copy_d3d11on12_device(sk_wgpu_device_t* device) {
 }
 
 SK_C_API void* sk_wgpu_device_copy_d3d12_command_queue(sk_wgpu_device_t* device) {
-#if defined SK_DAWN_ and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D12
   if (!device) {
     return 0;
   }
@@ -452,7 +437,7 @@ SK_C_API void* sk_wgpu_device_copy_d3d12_command_queue(sk_wgpu_device_t* device)
 }
 
 void sk_wgpu_com_add_ref(void* com_object) {
-#if defined SK_DAWN and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D
   if (!com_object) {
     return;
   }
@@ -464,7 +449,7 @@ void sk_wgpu_com_add_ref(void* com_object) {
 }
 
 void sk_wgpu_com_release(void* com_object) {
-#if defined SK_DAWN and defined _WIN32
+#if defined SK_DAWN and defined SK_DAWN_USE_D3D
   if (!com_object) {
     return;
   }
@@ -472,5 +457,29 @@ void sk_wgpu_com_release(void* com_object) {
   unknown->Release();
 #else
   (void)com_object;
+#endif
+}
+
+sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, const char* label) {
+#if defined SK_DAWN && defined SK_DAWN_USE_EGL
+  dawn::native::opengl::ExternalImageDescriptorEGLImage eglImageDesc;
+  std::memset(&eglImageDesc, 0, sizeof(eglImageDesc));
+  WGPUTextureDescriptor desc = {
+      .label = {label, strlen(label)},
+      .usage = WGPUTextureUsage_TextureBinding | WGPUTextureUsage_RenderAttachment,
+      .dimension = WGPUTextureDimension_2D,
+      .size = {width, height, 1},
+      .format = WGPUTextureFormat_RGBA8Unorm,
+      .mipLevelCount = 1,
+      .sampleCount = 1,
+  };
+  eglImageDesc.cTextureDescriptor = &desc;
+  eglImageDesc.isInitialized = true;
+  eglImageDesc.image = reinterpret_cast<EGLImage>(egl_image);
+  wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
+  WGPUTexture texture = dawn::native::opengl::WrapExternalEGLImage(wgpuDevice.Get(), &eglImageDesc);
+  return reinterpret_cast<sk_wgpu_texture_t*>(texture);
+#else
+  return nullptr;
 #endif
 }
