@@ -34,7 +34,7 @@ source_set("run_loop") {
     "wrapper/run_loop.cpp",
     "wrapper/run_loop.h",
   ]
-  public = [ "wrapper/run_loop/run_loop.h" ]
+  public = [ "wrapper/run_loop.h" ]
   deps = [ ":dart" ]
 }
 
