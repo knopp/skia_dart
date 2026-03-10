@@ -208,7 +208,7 @@ extension Win32 on WgpuDevice {
       labelPtr.cast(),
     );
     if (labelPtr != nullptr) {
-      ffi.calloc.free(labelPtr);
+      ffi.malloc.free(labelPtr);
     }
 
     return WgpuSharedTextureMemory._(ptr);
@@ -227,7 +227,7 @@ extension Win32 on WgpuDevice {
       labelPtr.cast(),
     );
     if (labelPtr != nullptr) {
-      ffi.calloc.free(labelPtr);
+      ffi.malloc.free(labelPtr);
     }
 
     return WgpuSharedTextureMemory._(ptr);
@@ -258,7 +258,7 @@ extension Egl on WgpuDevice {
       return WgpuTexture._(ptr);
     } finally {
       if (labelPtr != nullptr) {
-        ffi.calloc.free(labelPtr);
+        ffi.malloc.free(labelPtr);
       }
     }
   }
