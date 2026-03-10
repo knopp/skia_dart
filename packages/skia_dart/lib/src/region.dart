@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// The logical operations that can be performed when combining two regions.
 enum SkRegionOp {

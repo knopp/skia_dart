@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dawn_dart/dawn_dart.dart';
 import 'package:skia_dart/skia_dart.dart';
+import 'package:skia_dart/src/skia_dart_library.dart' show RunLoop;
 import 'package:test/test.dart';
 
 import 'goldens.dart';
@@ -155,6 +156,13 @@ void main() {
           recorder.dispose();
         });
 
+        test('GraphiteRecorder is isolate bound', () {
+          final recorder = context.makeRecorder();
+          final handle = RunLoop.instance.getObjectHandle(recorder);
+          expect(handle, isNonZero);
+          expect(handle, equals(RunLoop.instance.handle));
+        });
+
         test('GraphiteRecorder.makeRenderTarget', () {
           SkAutoDisposeScope.run(() {
             final recorder = context.makeRecorder();
@@ -265,6 +273,23 @@ void main() {
             final pixmap = SkPixmap();
             expect(bitmap!.peekPixels(pixmap), isTrue);
             expect(Goldens.verify(pixmap), isTrue);
+          });
+        });
+
+        test('GraphiteRecorder.makeRenderTarget surface is isolate bound', () {
+          SkAutoDisposeScope.run(() {
+            final recorder = context.makeRecorder();
+
+            final imageInfo = SkImageInfo(
+              width: 100,
+              height: 100,
+              colorType: SkColorType.rgba8888,
+              alphaType: SkAlphaType.premul,
+            );
+            final surface = recorder.makeRenderTarget(imageInfo);
+            final handle = RunLoop.instance.getObjectHandle(surface!);
+            expect(handle, isNonZero);
+            expect(handle, equals(RunLoop.instance.handle));
           });
         });
 

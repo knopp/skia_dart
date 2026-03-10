@@ -15,6 +15,29 @@ config("android_page_size") {
   }
 }
 
+source_set("dart") {
+  sources = [
+    "wrapper/dart/dart_api.h",
+    "wrapper/dart/dart_api_dl.c",
+    "wrapper/dart/dart_api_dl.h",
+    "wrapper/dart/dart_native_api.h",
+  ]
+  public = [
+    "wrapper/dart/dart_api.h",
+    "wrapper/dart/dart_api_dl.h",
+    "wrapper/dart/dart_native_api.h",
+  ]
+}
+
+source_set("run_loop") {
+  sources = [
+    "wrapper/run_loop.cpp",
+    "wrapper/run_loop.h",
+  ]
+  public = [ "wrapper/run_loop/run_loop.h" ]
+  deps = [ ":dart" ]
+}
+
 source_set("skia_c_wrapper") {
   sources = [
     "wrapper/gr_context.cpp",
@@ -92,6 +115,7 @@ source_set("skia_c_wrapper") {
     "wrapper/sk_pixmap.cpp",
     "wrapper/sk_region.cpp",
     "wrapper/sk_rrect.cpp",
+    "wrapper/sk_run_loop.cpp",
     "wrapper/sk_runtimeeffect.cpp",
     "wrapper/sk_runtimeeffect.h",
     "wrapper/sk_shader.cpp",
@@ -142,6 +166,7 @@ source_set("skia_c_wrapper") {
     "wrapper/include/sk_pixmap.h",
     "wrapper/include/sk_region.h",
     "wrapper/include/sk_rrect.h",
+    "wrapper/include/sk_run_loop.h",
     "wrapper/include/sk_runtimeeffect.h",
     "wrapper/include/sk_shader.h",
     "wrapper/include/sk_shaper.h",
@@ -166,12 +191,13 @@ source_set("skia_c_wrapper") {
     "//third_party/externals/dawn/include/",
   ]
   deps = [
+    ":run_loop",
     "//:skia",
     "//modules/jsonreader",
+    "//modules/skparagraph",
     "//modules/skresources",
     "//modules/skshaper",
     "//modules/skunicode",
-    "//modules/skparagraph",
 
     # "//modules/skottie",
     "//modules/sksg",
@@ -224,7 +250,10 @@ shared_library("dawn_dart") {
     "SK_DAWN",
     "SKIA_IMPLEMENTATION",
   ]
-  deps = [ "//third_party/dawn" ]
+  deps = [
+    ":run_loop",
+    "//third_party/dawn",
+  ]
   configs += [ ":android_page_size" ]
   if (is_linux) {
     libs = [ "EGL" ]

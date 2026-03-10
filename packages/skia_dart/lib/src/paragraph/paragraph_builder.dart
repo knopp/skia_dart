@@ -1,4 +1,4 @@
-part of '../../skia_dart.dart';
+part of '../skia_dart_library.dart';
 
 /// Where to vertically align the placeholder relative to the surrounding text.
 enum SkPlaceholderAlignment {

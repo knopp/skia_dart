@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Holds four 32-bit integer coordinates describing the upper and lower bounds
 /// of a rectangle.

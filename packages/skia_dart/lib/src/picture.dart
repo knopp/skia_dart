@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Records drawing commands made to an [SkCanvas] for later playback.
 ///

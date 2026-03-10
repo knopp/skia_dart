@@ -1,4 +1,4 @@
-part of '../../skia_dart.dart';
+part of '../skia_dart_library.dart';
 
 class SkFontCollection with _NativeMixin<sk_font_collection_t> {
   SkFontCollection() : this._(sk_font_collection_new());

@@ -1,4 +1,4 @@
-part of '../../skia_dart.dart';
+part of '../skia_dart_library.dart';
 
 enum SkParagraphTextAlign {
   left(sk_paragraph_text_align_t.LEFT_SK_PARAGRAPH_TEXT_ALIGN),

@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 class SkUnicode with _NativeMixin<sk_unicode_t> {
   SkUnicode._(Pointer<sk_unicode_t> ptr) {

@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Blends are operators that take in two colors (source, destination) and
 /// return a new color. Many of these operate the same on all 4 components:

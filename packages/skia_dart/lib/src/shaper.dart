@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// A range within UTF-8 text.
 class SkShaperUtf8Range {
