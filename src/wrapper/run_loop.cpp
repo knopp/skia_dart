@@ -5,6 +5,7 @@
 std::atomic_bool RunLoop::initialized_ = false;
 
 std::unordered_map<const void*, int64_t> RunLoop::object_to_handle_;
+std::unordered_map<const void*, int64_t> RunLoop::object_ref_count_;
 std::mutex RunLoop::object_to_handle_mutex_;
 
 void RunLoop::initialize(void* dart_api_dl_data) {
@@ -36,6 +37,19 @@ bool RunLoop::schedule(int64_t handle, void (*callback)(void*), void* callback_d
 void RunLoop::set_isolate_handle_(const void* object, int64_t handle) {
   std::lock_guard<std::mutex> lock(object_to_handle_mutex_);
   object_to_handle_[object] = handle;
+
+  auto insert = object_ref_count_.insert({object, 1});
+  if (!insert.second) {
+    insert.first->second++;
+  }
+}
+
+void RunLoop::ref_isolate_handle_(const void* object) {
+  std::lock_guard<std::mutex> lock(object_to_handle_mutex_);
+  auto it = object_ref_count_.find(object);
+  if (it != object_ref_count_.end()) {
+    it->second++;
+  }
 }
 
 std::optional<int64_t> RunLoop::get_isolate_handle_(const void* object) {
@@ -47,18 +61,24 @@ std::optional<int64_t> RunLoop::get_isolate_handle_(const void* object) {
   return std::nullopt;
 }
 
-bool RunLoop::destroy_(void* object, void (*destroyer)(void*)) {
+bool RunLoop::destroy_(const void* object, void (*destroyer)(const void*)) {
   std::optional<int64_t> handle;
   {
     std::lock_guard<std::mutex> lock(object_to_handle_mutex_);
     auto it = object_to_handle_.find(object);
     if (it != object_to_handle_.end()) {
       handle = it->second;
-      object_to_handle_.erase(it);
+      auto ref_it = object_ref_count_.find(object);
+      --ref_it->second;
+      bool last_ref = ref_it->second == 0;
+      if (last_ref) {
+        object_ref_count_.erase(ref_it);
+        object_to_handle_.erase(it);
+      }
     }
   }
   if (handle) {
-    return schedule(*handle, destroyer, object);
+    return schedule(*handle, reinterpret_cast<void (*)(void*)>(destroyer), const_cast<void*>(object));
   } else {
     destroyer(object);
     return true;

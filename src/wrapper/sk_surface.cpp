@@ -33,6 +33,12 @@
 
 // surface
 
+namespace {
+bool isGPUSurface(const SkSurface* surface) {
+  return surface->recorder() || surface->recordingContext();
+}
+}  // namespace
+
 sk_surface_t* sk_surface_new_null(int width, int height) {
   return ToSurface(SkSurfaces::Null(width, height).release());
 }
@@ -75,16 +81,30 @@ void sk_surface_notify_content_will_change(sk_surface_t* surface, sk_surface_con
   AsSurface(surface)->notifyContentWillChange(static_cast<SkSurface::ContentChangeMode>(mode));
 }
 
-sk_image_t* sk_surface_new_image_snapshot(sk_surface_t* csurf) {
-  return ToImage(AsSurface(csurf)->makeImageSnapshot().release());
+sk_image_t* sk_surface_new_image_snapshot(sk_surface_t* surface, int64_t run_loop_handle) {
+  auto image = ToImage(AsSurface(surface)->makeImageSnapshot().release());
+  if (isGPUSurface(AsSurface(surface))) {
+    RunLoop::set_isolate_handle(image, run_loop_handle);
+  } else {
+    fprintf(stderr, "No recorder!\n");
+  }
+  return image;
 }
 
-sk_image_t* sk_surface_new_image_snapshot_with_crop(sk_surface_t* surface, const sk_irect_t* bounds) {
-  return ToImage(AsSurface(surface)->makeImageSnapshot(*AsIRect(bounds)).release());
+sk_image_t* sk_surface_new_image_snapshot_with_crop(sk_surface_t* surface, const sk_irect_t* bounds, int64_t run_loop_handle) {
+  auto image = ToImage(AsSurface(surface)->makeImageSnapshot(*AsIRect(bounds)).release());
+  if (isGPUSurface(AsSurface(surface))) {
+    RunLoop::set_isolate_handle(image, run_loop_handle);
+  }
+  return image;
 }
 
-sk_image_t* sk_surface_make_temporary_image(sk_surface_t* surface) {
-  return ToImage(AsSurface(surface)->makeTemporaryImage().release());
+sk_image_t* sk_surface_make_temporary_image(sk_surface_t* surface, int64_t run_loop_handle) {
+  auto image = ToImage(AsSurface(surface)->makeTemporaryImage().release());
+  if (isGPUSurface(AsSurface(surface))) {
+    RunLoop::set_isolate_handle(image, run_loop_handle);
+  }
+  return image;
 }
 
 sk_surface_t* sk_surface_new_backend_render_target(gr_recording_context_t* context, const gr_backendrendertarget_t* target, gr_surfaceorigin_t origin, sk_colortype_t colorType, sk_colorspace_t* colorspace, const sk_surfaceprops_t* props, int64_t run_loop_handle) {
@@ -126,7 +146,9 @@ void sk_surface_draw(sk_surface_t* surface, sk_canvas_t* canvas, float x, float 
 }
 
 sk_surface_t* sk_surface_make_surface(sk_surface_t* surface, const sk_imageinfo_t* imageInfo) {
-  return ToSurface(AsSurface(surface)->makeSurface(*AsImageInfo(imageInfo)).release());
+  auto result = ToSurface(AsSurface(surface)->makeSurface(*AsImageInfo(imageInfo)).release());
+  RunLoop::copy_isolate_handle(surface, result);
+  return result;
 }
 
 bool sk_surface_peek_pixels(sk_surface_t* surface, sk_pixmap_t* pixmap) {

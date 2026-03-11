@@ -8023,29 +8023,33 @@ void sk_surface_notify_content_will_change(
   mode.value,
 );
 
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
-  isLeaf: true,
-)
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
+>(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot(
   ffi.Pointer<sk_surface_t> arg0,
+  int run_loop_handle,
 );
 
 @ffi.Native<
   ffi.Pointer<sk_image_t> Function(
     ffi.Pointer<sk_surface_t>,
     ffi.Pointer<sk_irect_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot_with_crop(
   ffi.Pointer<sk_surface_t> surface,
   ffi.Pointer<sk_irect_t> bounds,
+  int run_loop_handle,
 );
 
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
-  isLeaf: true,
-)
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
+>(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_make_temporary_image(
   ffi.Pointer<sk_surface_t> surface,
+  int run_loop_handle,
 );
 
 @ffi.Native<
