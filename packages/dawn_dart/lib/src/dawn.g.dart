@@ -31,17 +31,20 @@ external void sk_wgpu_instance_process_events(
   ffi.Pointer<sk_wgpu_adapter_t> Function(
     ffi.Pointer<sk_wgpu_instance_t>,
     ffi.UnsignedInt,
+    ffi.Pointer<sk_wgpu_adapter_request_t>,
   )
 >(symbol: 'sk_wgpu_instance_request_adapter')
 external ffi.Pointer<sk_wgpu_adapter_t> _sk_wgpu_instance_request_adapter(
   ffi.Pointer<sk_wgpu_instance_t> instance,
   int backend_type,
+  ffi.Pointer<sk_wgpu_adapter_request_t> request,
 );
 
 ffi.Pointer<sk_wgpu_adapter_t> sk_wgpu_instance_request_adapter(
   ffi.Pointer<sk_wgpu_instance_t> instance,
   sk_wgpu_backend_type_t backend_type,
-) => _sk_wgpu_instance_request_adapter(instance, backend_type.value);
+  ffi.Pointer<sk_wgpu_adapter_request_t> request,
+) => _sk_wgpu_instance_request_adapter(instance, backend_type.value, request);
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_wgpu_adapter_t>)>()
 external void sk_wgpu_adapter_release(ffi.Pointer<sk_wgpu_adapter_t> adapter);
@@ -175,6 +178,23 @@ external void sk_wgpu_com_add_ref(ffi.Pointer<ffi.Void> com_object);
 @ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>()
 external void sk_wgpu_com_release(ffi.Pointer<ffi.Void> com_object);
 
+@ffi.Native<
+  ffi.Pointer<sk_wgpu_texture_t> Function(
+    ffi.Pointer<sk_wgpu_device_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Uint32,
+    ffi.Uint32,
+    ffi.Pointer<ffi.Char>,
+  )
+>()
+external ffi.Pointer<sk_wgpu_texture_t> sk_wgpu_texture_from_egl_image(
+  ffi.Pointer<sk_wgpu_device_t> device,
+  ffi.Pointer<ffi.Void> egl_image,
+  int width,
+  int height,
+  ffi.Pointer<ffi.Char> label,
+);
+
 final class sk_wgpu_instance_t extends ffi.Opaque {}
 
 final class sk_wgpu_adapter_t extends ffi.Opaque {}
@@ -219,3 +239,7 @@ enum sk_wgpu_backend_type_t {
 
 typedef sk_dawn_proctable_t = ffi.Void;
 typedef Dartsk_dawn_proctable_t = void;
+
+final class sk_wgpu_adapter_request_t extends ffi.Struct {
+  external ffi.Pointer<ffi.Void> egl_display;
+}
