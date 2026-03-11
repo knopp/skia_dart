@@ -12,14 +12,17 @@
 #include "include/core/SkImage.h"
 #include "include/core/SkSurface.h"
 #include "include/gpu/ganesh/gl/GrGLBackendSurface.h"
-#include "include/gpu/ganesh/mtl/GrMtlBackendSurface.h"
-#include "include/gpu/ganesh/vk/GrVkBackendSurface.h"
 #include "wrapper/run_loop.h"
 #include "wrapper/sk_types_priv.h"
 
 #ifdef SK_METAL
   #include "include/gpu/ganesh/mtl/GrMtlBackendContext.h"
+  #include "include/gpu/ganesh/mtl/GrMtlBackendSurface.h"
   #include "include/gpu/ganesh/mtl/GrMtlDirectContext.h"
+#endif
+
+#ifdef SK_VULAN
+  #include "include/gpu/ganesh/vk/GrVkBackendSurface.h"
 #endif
 
 // GrRecordingContext
@@ -263,7 +266,7 @@ gr_backendtexture_t *gr_backendtexture_new_vulkan(int width, int height, const g
 }
 
 gr_backendtexture_t *gr_backendtexture_new_metal(int width, int height, bool mipmapped, const gr_mtl_textureinfo_t *mtlInfo, int64_t runLoopHandle) {
-#if defined (SK_GANESH) && defined(SK_METAL)
+#if defined(SK_GANESH) && defined(SK_METAL)
   auto texture = ToGrBackendTexture(new GrBackendTexture(GrBackendTextures::MakeMtl(width, height, (skgpu::Mipmapped)mipmapped, AsGrMtlTextureInfo(mtlInfo))));
   RunLoop::set_isolate_handle(texture, runLoopHandle);
   return texture;
