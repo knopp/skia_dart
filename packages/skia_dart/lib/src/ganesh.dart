@@ -266,6 +266,9 @@ class GrBackendTexture with _NativeMixin<gr_backendtexture_t> {
     bool mipmapped,
     Pointer<Void> texture,
   ) {
+    if (texture == nullptr) {
+      throw ArgumentError.notNull('texture');
+    }
     final mtlInfo = ffi.calloc<gr_mtl_textureinfo_t>();
     try {
       mtlInfo.ref.fTexture = texture;
@@ -320,6 +323,9 @@ class GrBackendRenderTarget with _NativeMixin<gr_backendrendertarget_t> {
     int height,
     Pointer<Void> texture,
   ) {
+    if (texture == nullptr) {
+      throw ArgumentError.notNull('texture');
+    }
     final mtlInfo = ffi.calloc<gr_mtl_textureinfo_t>();
     try {
       mtlInfo.ref.fTexture = texture;

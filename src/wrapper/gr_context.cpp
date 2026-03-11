@@ -314,12 +314,12 @@ gr_backendrendertarget_t *gr_backendrendertarget_new_vulkan(int width, int heigh
   return SK_ONLY_VULKAN(ToGrBackendRenderTarget(new GrBackendRenderTarget(GrBackendRenderTargets::MakeVk(width, height, *AsGrVkImageInfo(vkImageInfo)))), nullptr);
 }
 
-gr_backendrendertarget_t *gr_backendrendertarget_new_metal(int width, int height, const gr_mtl_textureinfo_t *mtlInfo, int64_t run_loop_handle) {
-  //   return SK_ONLY_METAL(ToGrBackendRenderTarget(new GrBackendRenderTarget(
-  //                            width, height, AsGrMtlTextureInfo(mtlInfo))),
-  //                        nullptr);
-  // TODO(knopp)
+gr_backendrendertarget_t *gr_backendrendertarget_new_metal(int width, int height, const gr_mtl_textureinfo_t *mtlInfo) {
+#if defined SK_GANESH && defined(SK_METAL)
+  return ToGrBackendRenderTarget(new GrBackendRenderTarget(GrBackendRenderTargets::MakeMtl(width, height, AsGrMtlTextureInfo(mtlInfo))));
+#else
   return nullptr;
+#endif
 }
 
 gr_backendrendertarget_t *gr_backendrendertarget_new_direct3d(int width, int height, const gr_d3d_textureresourceinfo_t *d3dInfo) {

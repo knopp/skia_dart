@@ -217,21 +217,28 @@ void main() {
         });
 
         test(
-          'GrBackendRenderTarget.newMetal returns null for invalid texture',
+          'GrBackendRenderTarget.newMetal throws ArgumentError for invalid texture',
           () {
             SkAutoDisposeScope.run(() {
-              final target = GrBackendRenderTarget.newMetal(100, 100, nullptr);
-              expect(target, isNull);
+              expect(
+                () => GrBackendRenderTarget.newMetal(100, 100, nullptr),
+                throwsArgumentError,
+              );
             });
           },
         );
 
-        test('GrBackendTexture.newMetal returns null for invalid texture', () {
-          SkAutoDisposeScope.run(() {
-            final texture = GrBackendTexture.newMetal(100, 100, false, nullptr);
-            expect(texture, isNull);
-          });
-        });
+        test(
+          'GrBackendTexture.newMetal  throws ArgumentError for invalid texture',
+          () {
+            SkAutoDisposeScope.run(() {
+              expect(
+                () => GrBackendTexture.newMetal(100, 100, false, nullptr),
+                throwsArgumentError,
+              );
+            });
+          },
+        );
       },
     );
   }
