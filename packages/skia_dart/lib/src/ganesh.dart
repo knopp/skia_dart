@@ -274,6 +274,7 @@ class GrBackendTexture with _NativeMixin<gr_backendtexture_t> {
         height,
         mipmapped,
         mtlInfo,
+        RunLoop.instance.handle,
       );
       if (ptr == nullptr) {
         return null;

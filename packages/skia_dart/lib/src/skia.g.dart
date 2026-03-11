@@ -12465,6 +12465,7 @@ external bool gr_vk_extensions_has_extension(
     ffi.Int,
     ffi.Bool,
     ffi.Pointer<gr_gl_textureinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
@@ -12472,6 +12473,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_gl_textureinfo_t> glInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12479,12 +12481,14 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
     ffi.Int,
     ffi.Int,
     ffi.Pointer<gr_vk_imageinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_vulkan(
   int width,
   int height,
   ffi.Pointer<gr_vk_imageinfo_t> vkInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12493,6 +12497,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_vulkan(
     ffi.Int,
     ffi.Bool,
     ffi.Pointer<gr_mtl_textureinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
@@ -12500,6 +12505,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_mtl_textureinfo_t> mtlInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12507,12 +12513,14 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
     ffi.Int,
     ffi.Int,
     ffi.Pointer<gr_d3d_textureresourceinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_direct3d(
   int width,
   int height,
   ffi.Pointer<gr_d3d_textureresourceinfo_t> d3dInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<gr_backendtexture_t>)>(isLeaf: true)

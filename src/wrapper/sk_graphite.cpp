@@ -121,7 +121,9 @@ void skgpu_graphite_context_check_async_work_completion(skgpu_graphite_context_t
 skgpu_graphite_recorder_t* skgpu_graphite_context_make_recorder(skgpu_graphite_context_t* context, int64_t run_loop_handle) {
 #ifdef SK_GRAPHITE
   auto recorder = ToGraphiteRecorder(AsGraphiteContext(context)->makeRecorder().release());
-  RunLoop::set_isolate_handle(recorder, run_loop_handle);
+  if (recorder) {
+    RunLoop::set_isolate_handle(recorder, run_loop_handle);
+  }
   return recorder;
 #else
   return nullptr;
@@ -191,7 +193,9 @@ SK_C_API void skgpu_graphite_backend_texture_delete(skgpu_graphite_backend_textu
 sk_surface_t* skgpu_graphite_surface_make_render_target(skgpu_graphite_recorder_t* recorder, const sk_imageinfo_t* imageInfo, bool mipmapped, const sk_surfaceprops_t* props, int64_t run_loop_handle) {
 #ifdef SK_GRAPHITE
   auto surface = ToSurface(SkSurfaces::RenderTarget(AsGraphiteRecorder(recorder), *AsImageInfo(imageInfo), mipmapped ? skgpu::Mipmapped::kYes : skgpu::Mipmapped::kNo, AsSurfaceProps(props)).release());
-  RunLoop::set_isolate_handle(surface, run_loop_handle);
+  if (surface) {
+    RunLoop::set_isolate_handle(surface, run_loop_handle);
+  }
   return surface;
 #else
   return nullptr;
@@ -202,7 +206,9 @@ sk_surface_t* skgpu_graphite_surface_wrap_backend_texture(skgpu_graphite_recorde
 #ifdef SK_GRAPHITE
   std::string_view label_view(label ? label : "");
   auto surface = ToSurface(SkSurfaces::WrapBackendTexture(AsGraphiteRecorder(recorder), *AsGraphiteBackendTexture(backendTexture), (SkColorType)color_type, sk_ref_sp(AsColorSpace(color_space)), AsSurfaceProps(props), nullptr, nullptr, label_view).release());
-  RunLoop::set_isolate_handle(surface, run_loop_handle);
+  if (surface) {
+    RunLoop::set_isolate_handle(surface, run_loop_handle);
+  }
   return surface;
 #else
   return nullptr;
