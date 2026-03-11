@@ -242,30 +242,30 @@ bool gr_vk_extensions_has_extension(gr_vk_extensions_t *extensions, const char *
 
 // GrBackendTexture
 
-gr_backendtexture_t *gr_backendtexture_new_gl(int width, int height, bool mipmapped, const gr_gl_textureinfo_t *glInfo, int64_t run_loop_handle) {
+gr_backendtexture_t *gr_backendtexture_new_gl(int width, int height, bool mipmapped, const gr_gl_textureinfo_t *glInfo, int64_t runLoopHandle) {
 #if defined SK_GANESH
   auto texture = ToGrBackendTexture(new GrBackendTexture(GrBackendTextures::MakeGL(width, height, (skgpu::Mipmapped)mipmapped, *AsGrGLTextureInfo(glInfo))));
-  RunLoop::set_isolate_handle(texture, run_loop_handle);
+  RunLoop::set_isolate_handle(texture, runLoopHandle);
   return texture;
 #else
   return nullptr;
 #endif
 }
 
-gr_backendtexture_t *gr_backendtexture_new_vulkan(int width, int height, const gr_vk_imageinfo_t *vkInfo, int64_t run_loop_handle) {
+gr_backendtexture_t *gr_backendtexture_new_vulkan(int width, int height, const gr_vk_imageinfo_t *vkInfo, int64_t runLoopHandle) {
 #if defined(SK_GANESH) && defined(SK_VULKAN)
   auto texture = ToGrBackendTexture(new GrBackendTexture(GrBackendTextures::MakeVk(width, height, *AsGrVkImageInfo(vkInfo))));
-  RunLoop::set_isolate_handle(texture, run_loop_handle);
+  RunLoop::set_isolate_handle(texture, runLoopHandle);
   return texture;
 #else
   return nullptr;
 #endif
 }
 
-gr_backendtexture_t *gr_backendtexture_new_metal(int width, int height, bool mipmapped, const gr_mtl_textureinfo_t *mtlInfo, int64_t run_loop_handle) {
+gr_backendtexture_t *gr_backendtexture_new_metal(int width, int height, bool mipmapped, const gr_mtl_textureinfo_t *mtlInfo, int64_t runLoopHandle) {
 #ifdef SK_GANESH
   auto texture = ToGrBackendTexture(new GrBackendTexture(GrBackendTextures::MakeMtl(width, height, (skgpu::Mipmapped)mipmapped, AsGrMtlTextureInfo(mtlInfo))));
-  RunLoop::set_isolate_handle(texture, run_loop_handle);
+  RunLoop::set_isolate_handle(texture, runLoopHandle);
   return texture;
 #else
   return nullptr;
@@ -276,7 +276,7 @@ gr_backendtexture_t *gr_backendtexture_new_direct3d(int width, int height, const
   return SK_ONLY_DIRECT3D(ToGrBackendTexture(new GrBackendTexture(width, height, *AsGrD3DTextureResourceInfo(d3dInfo))), nullptr);
 }
 
-void gr_backendtexture_delete(gr_backendtexture_t *texture, int64_t run_loop_handle) {
+void gr_backendtexture_delete(gr_backendtexture_t *texture, int64_t runLoopHandle) {
   SK_ONLY_GPU(delete AsGrBackendTexture(texture));
 }
 
