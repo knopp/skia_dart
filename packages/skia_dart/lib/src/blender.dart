@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// [SkBlender] represents a custom blend function in the Skia pipeline. A
 /// blender combines a source color (the result of our paint) and destination

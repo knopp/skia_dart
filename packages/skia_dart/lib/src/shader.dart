@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Specifies how a shader handles coordinates outside its natural bounds.
 ///

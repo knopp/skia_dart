@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dawn_dart/dawn_dart.dart';
 import 'package:skia_dart/skia_dart.dart';
+import 'package:skia_dart/src/skia_dart_library.dart' show RunLoop;
 import 'package:test/test.dart';
 
 import 'goldens.dart';
@@ -155,6 +156,12 @@ void main() {
           recorder.dispose();
         });
 
+        test('GraphiteRecorder is isolate bound', () {
+          final recorder = context.makeRecorder();
+          final handle = RunLoop.instance.getObjectHandle(recorder);
+          expect(handle, equals(RunLoop.instance.handle));
+        });
+
         test('GraphiteRecorder.makeRenderTarget', () {
           SkAutoDisposeScope.run(() {
             final recorder = context.makeRecorder();
@@ -265,6 +272,88 @@ void main() {
             final pixmap = SkPixmap();
             expect(bitmap!.peekPixels(pixmap), isTrue);
             expect(Goldens.verify(pixmap), isTrue);
+          });
+        });
+
+        test('SkSurface produced image is isolate bound', () {
+          SkAutoDisposeScope.run(() {
+            final recorder = context.makeRecorder();
+            final props = SkSurfaceProps(
+              geometry: SkPixelGeometry.rgbHorizontal,
+            );
+            final surface = recorder.makeRenderTarget(
+              SkImageInfo(
+                width: 100,
+                height: 100,
+                colorType: SkColorType.rgba8888,
+                alphaType: SkAlphaType.premul,
+              ),
+              props: props,
+            );
+            expect(surface, isNotNull);
+
+            {
+              final image = surface!.makeImageSnapshot()!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+            {
+              final image = surface.makeImageSnapshotWithCrop(
+                SkIRect.fromWH(10, 10),
+              )!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+            {
+              final image = surface.makeTemporaryImage()!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+          });
+        });
+
+        test('SkSurface.makeSurface preserves handle', () {
+          SkAutoDisposeScope.run(() {
+            final recorder = context.makeRecorder();
+            final surface = recorder.makeRenderTarget(
+              SkImageInfo(
+                width: 100,
+                height: 100,
+                colorType: SkColorType.rgba8888,
+                alphaType: SkAlphaType.premul,
+              ),
+            );
+            expect(surface, isNotNull);
+
+            final newSurface = surface!.makeSurface(
+              SkImageInfo(
+                width: 50,
+                height: 50,
+                colorType: SkColorType.rgba8888,
+                alphaType: SkAlphaType.premul,
+              ),
+            )!;
+
+            final handle = RunLoop.instance.getObjectHandle(surface);
+            final newHandle = RunLoop.instance.getObjectHandle(newSurface!);
+            expect(newHandle, isNotNull);
+            expect(handle, equals(newHandle));
+          });
+        });
+
+        test('GraphiteRecorder.makeRenderTarget surface is isolate bound', () {
+          SkAutoDisposeScope.run(() {
+            final recorder = context.makeRecorder();
+
+            final imageInfo = SkImageInfo(
+              width: 100,
+              height: 100,
+              colorType: SkColorType.rgba8888,
+              alphaType: SkAlphaType.premul,
+            );
+            final surface = recorder.makeRenderTarget(imageInfo);
+            final handle = RunLoop.instance.getObjectHandle(surface!);
+            expect(handle, equals(RunLoop.instance.handle));
           });
         });
 

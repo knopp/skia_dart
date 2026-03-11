@@ -13,14 +13,18 @@
 #include "include/core/SkPicture.h"
 #include "include/core/SkTextureCompressionType.h"
 #include "include/gpu/ganesh/SkImageGanesh.h"
+#include "wrapper/run_loop.h"
 #include "wrapper/sk_types_priv.h"
 
 void sk_image_ref(const sk_image_t* cimage) {
+  RunLoop::ref_isolate_handle(cimage);
   AsImage(cimage)->ref();
 }
 
 void sk_image_unref(const sk_image_t* cimage) {
-  SkSafeUnref(AsImage(cimage));
+  RunLoop::destroy<sk_image_t>(cimage, [](auto* image) {
+    AsImage(image)->unref();
+  });
 }
 
 sk_imageinfo_t* sk_image_get_info(const sk_image_t* image) {

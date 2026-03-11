@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 class GraphiteSubmitInfo {
   final bool syncToCpu;
@@ -93,6 +93,7 @@ class GraphiteRecorder extends SkRecorder
       info._ptr,
       mipmapped,
       props?._ptr ?? nullptr,
+      RunLoop.instance.handle,
     );
     if (ptr == nullptr) {
       return null;
@@ -115,6 +116,7 @@ class GraphiteRecorder extends SkRecorder
       colorSpace?._ptr ?? nullptr,
       props?._ptr ?? nullptr,
       labelPtr.cast(),
+      RunLoop.instance.handle,
     );
     if (labelPtr != nullptr) {
       ffi.malloc.free(labelPtr);
@@ -317,7 +319,10 @@ class GraphiteContext with _NativeMixin<skgpu_graphite_context_t> {
   }
 
   GraphiteRecorder makeRecorder() {
-    final ptr = skgpu_graphite_context_make_recorder(_ptr);
+    final ptr = skgpu_graphite_context_make_recorder(
+      _ptr,
+      RunLoop.instance.handle,
+    );
     return GraphiteRecorder._(ptr);
   }
 

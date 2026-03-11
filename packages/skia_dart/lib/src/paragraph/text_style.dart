@@ -1,4 +1,4 @@
-part of '../../skia_dart.dart';
+part of '../skia_dart_library.dart';
 
 enum SkTextDecorationStyle {
   solid(sk_text_decoration_style_t.SOLID_SK_TEXT_DECORATION_STYLE),

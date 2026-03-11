@@ -32,7 +32,7 @@ SK_C_API void skgpu_graphite_context_check_async_work_completion(skgpu_graphite_
 
 // Recorder
 
-SK_C_API skgpu_graphite_recorder_t* skgpu_graphite_context_make_recorder(skgpu_graphite_context_t* context);
+SK_C_API skgpu_graphite_recorder_t* skgpu_graphite_context_make_recorder(skgpu_graphite_context_t* context, int64_t runLoopHandle);
 SK_C_API void skgpu_graphite_recorder_delete(skgpu_graphite_recorder_t* recorder);
 
 SK_C_API skgpu_graphite_recording_t* skgpu_graphite_recorder_snap(skgpu_graphite_recorder_t* recorder);
@@ -53,8 +53,8 @@ SK_C_API skgpu_graphite_backend_texture_t* skgpu_graphite_backend_texture_create
 SK_C_API skgpu_graphite_backend_texture_t* skgpu_graphite_backend_texture_create_dawn(void* texture);
 SK_C_API void skgpu_graphite_backend_texture_delete(skgpu_graphite_backend_texture_t* backend_texture);
 
-SK_C_API sk_surface_t* skgpu_graphite_surface_make_render_target(skgpu_graphite_recorder_t* recorder, const sk_imageinfo_t* imageInfo, bool mipmapped, const sk_surfaceprops_t* props);
-SK_C_API sk_surface_t* skgpu_graphite_surface_wrap_backend_texture(skgpu_graphite_recorder_t* recorder, const skgpu_graphite_backend_texture_t* backendTexture, sk_colortype_t color_type, sk_colorspace_t* color_space, const sk_surfaceprops_t* props, const char* label);
+SK_C_API sk_surface_t* skgpu_graphite_surface_make_render_target(skgpu_graphite_recorder_t* recorder, const sk_imageinfo_t* imageInfo, bool mipmapped, const sk_surfaceprops_t* props, int64_t runLoopHandle);
+SK_C_API sk_surface_t* skgpu_graphite_surface_wrap_backend_texture(skgpu_graphite_recorder_t* recorder, const skgpu_graphite_backend_texture_t* backendTexture, sk_colortype_t color_type, sk_colorspace_t* color_space, const sk_surfaceprops_t* props, const char* label, int64_t runLoopHandle);
 
 typedef void (*skgpu_graphite_async_rescale_and_read_pixels_callback)(void* context, bool success, const sk_bitmap_t* result);
 

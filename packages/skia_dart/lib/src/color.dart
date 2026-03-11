@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// 8-bit type for an alpha value.
 ///

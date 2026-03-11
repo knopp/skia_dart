@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'dart:io';
 
 import 'package:skia_dart/skia_dart.dart';
+import 'package:skia_dart/src/skia_dart_library.dart' show RunLoop;
 import 'package:test/test.dart';
 
 import 'goldens.dart';
@@ -125,6 +126,37 @@ void main() {
           });
         });
 
+        test('SkSurface produced image is isolate bound', () {
+          SkAutoDisposeScope.run(() {
+            final surface = SkSurface.newRenderTarget(
+              context,
+              SkImageInfo(
+                width: 100,
+                height: 100,
+                colorType: SkColorType.rgba8888,
+                alphaType: SkAlphaType.premul,
+              ),
+            )!;
+            {
+              final image = surface.makeImageSnapshot()!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+            {
+              final image = surface.makeImageSnapshotWithCrop(
+                SkIRect.fromWH(10, 10),
+              )!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+            {
+              final image = surface.makeTemporaryImage()!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+          });
+        });
+
         test('SkSurface.newRenderTarget with props', () {
           SkAutoDisposeScope.run(() {
             final props = SkSurfaceProps(
@@ -185,21 +217,28 @@ void main() {
         });
 
         test(
-          'GrBackendRenderTarget.newMetal returns null for invalid texture',
+          'GrBackendRenderTarget.newMetal throws ArgumentError for invalid texture',
           () {
             SkAutoDisposeScope.run(() {
-              final target = GrBackendRenderTarget.newMetal(100, 100, nullptr);
-              expect(target, isNull);
+              expect(
+                () => GrBackendRenderTarget.newMetal(100, 100, nullptr),
+                throwsArgumentError,
+              );
             });
           },
         );
 
-        test('GrBackendTexture.newMetal returns null for invalid texture', () {
-          SkAutoDisposeScope.run(() {
-            final texture = GrBackendTexture.newMetal(100, 100, false, nullptr);
-            expect(texture, isNull);
-          });
-        });
+        test(
+          'GrBackendTexture.newMetal  throws ArgumentError for invalid texture',
+          () {
+            SkAutoDisposeScope.run(() {
+              expect(
+                () => GrBackendTexture.newMetal(100, 100, false, nullptr),
+                throwsArgumentError,
+              );
+            });
+          },
+        );
       },
     );
   }

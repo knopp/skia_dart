@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// PNG filter flags that control which filtering strategies to use.
 ///

@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// [SkBitmap] describes a two-dimensional raster pixel array. [SkBitmap] is built on
 /// [SkImageInfo], containing integer [SkImageInfo.width] and [SkImageInfo.height],

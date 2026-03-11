@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Specifies the geometry drawn at the beginning and end of strokes.
 ///

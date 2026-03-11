@@ -1,6 +1,6 @@
 // ignore_for_file: unused_element
 
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 extension _SkPoint on SkPoint {
   static final List<Pointer<sk_point_t>> pool = List.generate(

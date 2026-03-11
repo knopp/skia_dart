@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Format of the encoded data.
 enum SkEncodedImageFormat {

@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Initial style for creating an [SkStrokeRec].
 enum SkStrokeRecInitStyle {

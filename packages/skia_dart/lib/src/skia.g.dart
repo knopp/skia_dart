@@ -4261,11 +4261,13 @@ external void skgpu_graphite_context_check_async_work_completion(
 @ffi.Native<
   ffi.Pointer<skgpu_graphite_recorder_t> Function(
     ffi.Pointer<skgpu_graphite_context_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<skgpu_graphite_recorder_t>
 skgpu_graphite_context_make_recorder(
   ffi.Pointer<skgpu_graphite_context_t> context,
+  int run_loop_handle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
@@ -4352,6 +4354,7 @@ external void skgpu_graphite_backend_texture_delete(
     ffi.Pointer<sk_imageinfo_t>,
     ffi.Bool,
     ffi.Pointer<sk_surfaceprops_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
@@ -4359,6 +4362,7 @@ external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
   ffi.Pointer<sk_imageinfo_t> imageInfo,
   bool mipmapped,
   ffi.Pointer<sk_surfaceprops_t> props,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -4369,6 +4373,7 @@ external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
     ffi.Pointer<sk_colorspace_t>,
     ffi.Pointer<sk_surfaceprops_t>,
     ffi.Pointer<ffi.Char>,
+    ffi.Int64,
   )
 >(symbol: 'skgpu_graphite_surface_wrap_backend_texture', isLeaf: true)
 external ffi.Pointer<sk_surface_t> _skgpu_graphite_surface_wrap_backend_texture(
@@ -4378,6 +4383,7 @@ external ffi.Pointer<sk_surface_t> _skgpu_graphite_surface_wrap_backend_texture(
   ffi.Pointer<sk_colorspace_t> color_space,
   ffi.Pointer<sk_surfaceprops_t> props,
   ffi.Pointer<ffi.Char> label,
+  int run_loop_handle,
 );
 
 ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
@@ -4387,6 +4393,7 @@ ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
   ffi.Pointer<sk_colorspace_t> color_space,
   ffi.Pointer<sk_surfaceprops_t> props,
   ffi.Pointer<ffi.Char> label,
+  int run_loop_handle,
 ) => _skgpu_graphite_surface_wrap_backend_texture(
   recorder,
   backendTexture,
@@ -4394,6 +4401,7 @@ ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
   color_space,
   props,
   label,
+  run_loop_handle,
 );
 
 @ffi.Native<
@@ -7848,6 +7856,7 @@ external ffi.Pointer<sk_surface_t> sk_surface_new_raster_direct(
     ffi.UnsignedInt,
     ffi.Pointer<sk_colorspace_t>,
     ffi.Pointer<sk_surfaceprops_t>,
+    ffi.Int64,
   )
 >(symbol: 'sk_surface_new_backend_texture', isLeaf: true)
 external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_texture(
@@ -7858,6 +7867,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_texture(
   int colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
+  int run_loop_handle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
@@ -7868,6 +7878,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
   sk_colortype_t colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
+  int run_loop_handle,
 ) => _sk_surface_new_backend_texture(
   context,
   texture,
@@ -7876,6 +7887,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
   colorType.value,
   colorspace,
   props,
+  run_loop_handle,
 );
 
 @ffi.Native<
@@ -7886,6 +7898,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
     ffi.UnsignedInt,
     ffi.Pointer<sk_colorspace_t>,
     ffi.Pointer<sk_surfaceprops_t>,
+    ffi.Int64,
   )
 >(symbol: 'sk_surface_new_backend_render_target', isLeaf: true)
 external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_render_target(
@@ -7895,6 +7908,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_render_target(
   int colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
+  int run_loop_handle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
@@ -7904,6 +7918,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
   sk_colortype_t colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
+  int run_loop_handle,
 ) => _sk_surface_new_backend_render_target(
   context,
   target,
@@ -7911,6 +7926,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
   colorType.value,
   colorspace,
   props,
+  run_loop_handle,
 );
 
 @ffi.Native<
@@ -7922,6 +7938,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
     ffi.UnsignedInt,
     ffi.Pointer<sk_surfaceprops_t>,
     ffi.Bool,
+    ffi.Int64,
   )
 >(symbol: 'sk_surface_new_render_target', isLeaf: true)
 external ffi.Pointer<sk_surface_t> _sk_surface_new_render_target(
@@ -7932,6 +7949,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_render_target(
   int origin,
   ffi.Pointer<sk_surfaceprops_t> props,
   bool shouldCreateWithMips,
+  int run_loop_handle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
@@ -7942,6 +7960,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
   gr_surfaceorigin_t origin,
   ffi.Pointer<sk_surfaceprops_t> props,
   bool shouldCreateWithMips,
+  int run_loop_handle,
 ) => _sk_surface_new_render_target(
   context,
   budgeted,
@@ -7950,6 +7969,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
   origin.value,
   props,
   shouldCreateWithMips,
+  run_loop_handle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_surface_t>)>(isLeaf: true)
@@ -8003,29 +8023,33 @@ void sk_surface_notify_content_will_change(
   mode.value,
 );
 
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
-  isLeaf: true,
-)
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
+>(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot(
   ffi.Pointer<sk_surface_t> arg0,
+  int run_loop_handle,
 );
 
 @ffi.Native<
   ffi.Pointer<sk_image_t> Function(
     ffi.Pointer<sk_surface_t>,
     ffi.Pointer<sk_irect_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot_with_crop(
   ffi.Pointer<sk_surface_t> surface,
   ffi.Pointer<sk_irect_t> bounds,
+  int run_loop_handle,
 );
 
-@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
-  isLeaf: true,
-)
+@ffi.Native<
+  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
+>(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_make_temporary_image(
   ffi.Pointer<sk_surface_t> surface,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12441,6 +12465,7 @@ external bool gr_vk_extensions_has_extension(
     ffi.Int,
     ffi.Bool,
     ffi.Pointer<gr_gl_textureinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
@@ -12448,6 +12473,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_gl_textureinfo_t> glInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12455,12 +12481,14 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
     ffi.Int,
     ffi.Int,
     ffi.Pointer<gr_vk_imageinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_vulkan(
   int width,
   int height,
   ffi.Pointer<gr_vk_imageinfo_t> vkInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12469,6 +12497,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_vulkan(
     ffi.Int,
     ffi.Bool,
     ffi.Pointer<gr_mtl_textureinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
@@ -12476,6 +12505,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_mtl_textureinfo_t> mtlInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12483,12 +12513,14 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
     ffi.Int,
     ffi.Int,
     ffi.Pointer<gr_d3d_textureresourceinfo_t>,
+    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_direct3d(
   int width,
   int height,
   ffi.Pointer<gr_d3d_textureresourceinfo_t> d3dInfo,
+  int run_loop_handle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<gr_backendtexture_t>)>(isLeaf: true)
@@ -12668,6 +12700,19 @@ gr_backend_t gr_backendrendertarget_get_backend(
 external bool gr_backendrendertarget_get_gl_framebufferinfo(
   ffi.Pointer<gr_backendrendertarget_t> rendertarget,
   ffi.Pointer<gr_gl_framebufferinfo_t> glInfo,
+);
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<ffi.Void>)>(isLeaf: true)
+external void sk_run_loop_initialize(
+  ffi.Pointer<ffi.Void> dart_api_dl_data,
+);
+
+@ffi.Native<ffi.Bool Function(ffi.Pointer<ffi.Void>, ffi.Pointer<ffi.Int64>)>(
+  isLeaf: true,
+)
+external bool sk_run_loop_get_isolate_handle(
+  ffi.Pointer<ffi.Void> object,
+  ffi.Pointer<ffi.Int64> handle,
 );
 
 @ffi.Native<ffi.Void Function()>(isLeaf: true)
@@ -14158,8 +14203,7 @@ enum sk_colortype_t {
   R16G16_UNORM_SK_COLORTYPE(24),
   R16G16B16A16_UNORM_SK_COLORTYPE(25),
   SRGBA_8888_SK_COLORTYPE(26),
-  R8_UNORM_SK_COLORTYPE(27)
-  ;
+  R8_UNORM_SK_COLORTYPE(27);
 
   final int value;
   const sk_colortype_t(this.value);
@@ -14201,8 +14245,7 @@ enum sk_alphatype_t {
   UNKNOWN_SK_ALPHATYPE(0),
   OPAQUE_SK_ALPHATYPE(1),
   PREMUL_SK_ALPHATYPE(2),
-  UNPREMUL_SK_ALPHATYPE(3)
-  ;
+  UNPREMUL_SK_ALPHATYPE(3);
 
   final int value;
   const sk_alphatype_t(this.value);
@@ -14221,8 +14264,7 @@ enum sk_pixelgeometry_t {
   RGB_H_SK_PIXELGEOMETRY(1),
   BGR_H_SK_PIXELGEOMETRY(2),
   RGB_V_SK_PIXELGEOMETRY(3),
-  BGR_V_SK_PIXELGEOMETRY(4)
-  ;
+  BGR_V_SK_PIXELGEOMETRY(4);
 
   final int value;
   const sk_pixelgeometry_t(this.value);
@@ -14239,8 +14281,7 @@ enum sk_pixelgeometry_t {
 
 enum sk_surfaceprops_flags_t {
   NONE_SK_SURFACE_PROPS_FLAGS(0),
-  USE_DEVICE_INDEPENDENT_FONTS_SK_SURFACE_PROPS_FLAGS(1)
-  ;
+  USE_DEVICE_INDEPENDENT_FONTS_SK_SURFACE_PROPS_FLAGS(1);
 
   final int value;
   const sk_surfaceprops_flags_t(this.value);
@@ -14256,8 +14297,7 @@ enum sk_surfaceprops_flags_t {
 
 enum sk_surface_content_change_mode_t {
   DISCARD_SK_SURFACE_CONTENT_CHANGE_MODE(0),
-  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE(1)
-  ;
+  RETAIN_SK_SURFACE_CONTENT_CHANGE_MODE(1);
 
   final int value;
   const sk_surface_content_change_mode_t(this.value);
@@ -14274,8 +14314,7 @@ enum sk_surface_content_change_mode_t {
 
 enum sk_imagedecodingstrategy_t {
   IMAGE_DECODING_LAZY_DECODE(0),
-  IMAGE_DECODING_PRE_DECODE(1)
-  ;
+  IMAGE_DECODING_PRE_DECODE(1);
 
   final int value;
   const sk_imagedecodingstrategy_t(this.value);
@@ -14418,8 +14457,7 @@ enum sk_blendmode_t {
   HUE_SK_BLENDMODE(25),
   SATURATION_SK_BLENDMODE(26),
   COLOR_SK_BLENDMODE(27),
-  LUMINOSITY_SK_BLENDMODE(28)
-  ;
+  LUMINOSITY_SK_BLENDMODE(28);
 
   final int value;
   const sk_blendmode_t(this.value);
@@ -14596,8 +14634,7 @@ final class sk_document_t extends ffi.Opaque {}
 enum sk_point_mode_t {
   POINTS_SK_POINT_MODE(0),
   LINES_SK_POINT_MODE(1),
-  POLYGON_SK_POINT_MODE(2)
-  ;
+  POLYGON_SK_POINT_MODE(2);
 
   final int value;
   const sk_point_mode_t(this.value);
@@ -14613,8 +14650,7 @@ enum sk_point_mode_t {
 enum sk_text_align_t {
   LEFT_SK_TEXT_ALIGN(0),
   CENTER_SK_TEXT_ALIGN(1),
-  RIGHT_SK_TEXT_ALIGN(2)
-  ;
+  RIGHT_SK_TEXT_ALIGN(2);
 
   final int value;
   const sk_text_align_t(this.value);
@@ -14631,8 +14667,7 @@ enum sk_text_encoding_t {
   UTF8_SK_TEXT_ENCODING(0),
   UTF16_SK_TEXT_ENCODING(1),
   UTF32_SK_TEXT_ENCODING(2),
-  GLYPH_ID_SK_TEXT_ENCODING(3)
-  ;
+  GLYPH_ID_SK_TEXT_ENCODING(3);
 
   final int value;
   const sk_text_encoding_t(this.value);
@@ -14650,8 +14685,7 @@ enum sk_path_filltype_t {
   WINDING_SK_PATH_FILLTYPE(0),
   EVENODD_SK_PATH_FILLTYPE(1),
   INVERSE_WINDING_SK_PATH_FILLTYPE(2),
-  INVERSE_EVENODD_SK_PATH_FILLTYPE(3)
-  ;
+  INVERSE_EVENODD_SK_PATH_FILLTYPE(3);
 
   final int value;
   const sk_path_filltype_t(this.value);
@@ -14668,8 +14702,7 @@ enum sk_path_filltype_t {
 enum sk_font_style_slant_t {
   UPRIGHT_SK_FONT_STYLE_SLANT(0),
   ITALIC_SK_FONT_STYLE_SLANT(1),
-  OBLIQUE_SK_FONT_STYLE_SLANT(2)
-  ;
+  OBLIQUE_SK_FONT_STYLE_SLANT(2);
 
   final int value;
   const sk_font_style_slant_t(this.value);
@@ -14686,8 +14719,7 @@ enum sk_color_channel_t {
   R_SK_COLOR_CHANNEL(0),
   G_SK_COLOR_CHANNEL(1),
   B_SK_COLOR_CHANNEL(2),
-  A_SK_COLOR_CHANNEL(3)
-  ;
+  A_SK_COLOR_CHANNEL(3);
 
   final int value;
   const sk_color_channel_t(this.value);
@@ -14719,8 +14751,7 @@ enum sk_region_op_t {
   REVERSE_DIFFERENCE_SK_REGION_OP(4),
 
   /// !< replace the dst region with the op region
-  REPLACE_SK_REGION_OP(5)
-  ;
+  REPLACE_SK_REGION_OP(5);
 
   final int value;
   const sk_region_op_t(this.value);
@@ -14738,8 +14769,7 @@ enum sk_region_op_t {
 
 enum sk_clipop_t {
   DIFFERENCE_SK_CLIPOP(0),
-  INTERSECT_SK_CLIPOP(1)
-  ;
+  INTERSECT_SK_CLIPOP(1);
 
   final int value;
   const sk_clipop_t(this.value);
@@ -14766,8 +14796,7 @@ enum sk_encoded_image_format_t {
   DNG_SK_ENCODED_FORMAT(10),
   HEIF_SK_ENCODED_FORMAT(11),
   AVIF_SK_ENCODED_FORMAT(12),
-  JPEGXL_SK_ENCODED_FORMAT(13)
-  ;
+  JPEGXL_SK_ENCODED_FORMAT(13);
 
   final int value;
   const sk_encoded_image_format_t(this.value);
@@ -14801,8 +14830,7 @@ enum sk_encodedorigin_t {
   LEFT_TOP_SK_ENCODED_ORIGIN(5),
   RIGHT_TOP_SK_ENCODED_ORIGIN(6),
   RIGHT_BOTTOM_SK_ENCODED_ORIGIN(7),
-  LEFT_BOTTOM_SK_ENCODED_ORIGIN(8)
-  ;
+  LEFT_BOTTOM_SK_ENCODED_ORIGIN(8);
 
   static const DEFAULT_SK_ENCODED_ORIGIN = TOP_LEFT_SK_ENCODED_ORIGIN;
 
@@ -14840,8 +14868,7 @@ enum sk_codec_result_t {
   COULD_NOT_REWIND_SK_CODEC_RESULT(7),
   INTERNAL_ERROR_SK_CODEC_RESULT(8),
   UNIMPLEMENTED_SK_CODEC_RESULT(9),
-  OUT_OF_MEMORY_SK_CODEC_RESULT(10)
-  ;
+  OUT_OF_MEMORY_SK_CODEC_RESULT(10);
 
   final int value;
   const sk_codec_result_t(this.value);
@@ -14864,8 +14891,7 @@ enum sk_codec_result_t {
 
 enum sk_codec_zero_initialized_t {
   YES_SK_CODEC_ZERO_INITIALIZED(0),
-  NO_SK_CODEC_ZERO_INITIALIZED(1)
-  ;
+  NO_SK_CODEC_ZERO_INITIALIZED(1);
 
   final int value;
   const sk_codec_zero_initialized_t(this.value);
@@ -14900,8 +14926,7 @@ final class sk_codec_options_t extends ffi.Struct {
 
 enum sk_codec_scanline_order_t {
   TOP_DOWN_SK_CODEC_SCANLINE_ORDER(0),
-  BOTTOM_UP_SK_CODEC_SCANLINE_ORDER(1)
-  ;
+  BOTTOM_UP_SK_CODEC_SCANLINE_ORDER(1);
 
   final int value;
   const sk_codec_scanline_order_t(this.value);
@@ -14922,8 +14947,7 @@ enum sk_path_verb_t {
   CONIC_SK_PATH_VERB(3),
   CUBIC_SK_PATH_VERB(4),
   CLOSE_SK_PATH_VERB(5),
-  DONE_SK_PATH_VERB(6)
-  ;
+  DONE_SK_PATH_VERB(6);
 
   final int value;
   const sk_path_verb_t(this.value);
@@ -14946,8 +14970,7 @@ final class sk_path_rawiterator_t extends ffi.Opaque {}
 
 enum sk_path_add_mode_t {
   APPEND_SK_PATH_ADD_MODE(0),
-  EXTEND_SK_PATH_ADD_MODE(1)
-  ;
+  EXTEND_SK_PATH_ADD_MODE(1);
 
   final int value;
   const sk_path_add_mode_t(this.value);
@@ -14963,8 +14986,7 @@ enum sk_path_segment_mask_t {
   LINE_SK_PATH_SEGMENT_MASK(1),
   QUAD_SK_PATH_SEGMENT_MASK(2),
   CONIC_SK_PATH_SEGMENT_MASK(4),
-  CUBIC_SK_PATH_SEGMENT_MASK(8)
-  ;
+  CUBIC_SK_PATH_SEGMENT_MASK(8);
 
   final int value;
   const sk_path_segment_mask_t(this.value);
@@ -14983,8 +15005,7 @@ enum sk_path_segment_mask_t {
 enum sk_path_effect_1d_style_t {
   TRANSLATE_SK_PATH_EFFECT_1D_STYLE(0),
   ROTATE_SK_PATH_EFFECT_1D_STYLE(1),
-  MORPH_SK_PATH_EFFECT_1D_STYLE(2)
-  ;
+  MORPH_SK_PATH_EFFECT_1D_STYLE(2);
 
   final int value;
   const sk_path_effect_1d_style_t(this.value);
@@ -15001,8 +15022,7 @@ enum sk_path_effect_1d_style_t {
 
 enum sk_path_effect_trim_mode_t {
   NORMAL_SK_PATH_EFFECT_TRIM_MODE(0),
-  INVERTED_SK_PATH_EFFECT_TRIM_MODE(1)
-  ;
+  INVERTED_SK_PATH_EFFECT_TRIM_MODE(1);
 
   final int value;
   const sk_path_effect_trim_mode_t(this.value);
@@ -15022,8 +15042,7 @@ final class sk_stroke_rec_t extends ffi.Opaque {}
 
 enum sk_stroke_rec_init_style_t {
   HAIRLINE_SK_STROKE_REC_INIT_STYLE(0),
-  FILL_SK_STROKE_REC_INIT_STYLE(1)
-  ;
+  FILL_SK_STROKE_REC_INIT_STYLE(1);
 
   final int value;
   const sk_stroke_rec_init_style_t(this.value);
@@ -15041,8 +15060,7 @@ enum sk_stroke_rec_style_t {
   HAIRLINE_SK_STROKE_REC_STYLE(0),
   FILL_SK_STROKE_REC_STYLE(1),
   STROKE_SK_STROKE_REC_STYLE(2),
-  STROKE_AND_FILL_SK_STROKE_REC_STYLE(3)
-  ;
+  STROKE_AND_FILL_SK_STROKE_REC_STYLE(3);
 
   final int value;
   const sk_stroke_rec_style_t(this.value);
@@ -15059,8 +15077,7 @@ enum sk_stroke_rec_style_t {
 enum sk_stroke_cap_t {
   BUTT_SK_STROKE_CAP(0),
   ROUND_SK_STROKE_CAP(1),
-  SQUARE_SK_STROKE_CAP(2)
-  ;
+  SQUARE_SK_STROKE_CAP(2);
 
   final int value;
   const sk_stroke_cap_t(this.value);
@@ -15076,8 +15093,7 @@ enum sk_stroke_cap_t {
 enum sk_stroke_join_t {
   MITER_SK_STROKE_JOIN(0),
   ROUND_SK_STROKE_JOIN(1),
-  BEVEL_SK_STROKE_JOIN(2)
-  ;
+  BEVEL_SK_STROKE_JOIN(2);
 
   final int value;
   const sk_stroke_join_t(this.value);
@@ -15094,8 +15110,7 @@ enum sk_shader_tilemode_t {
   CLAMP_SK_SHADER_TILEMODE(0),
   REPEAT_SK_SHADER_TILEMODE(1),
   MIRROR_SK_SHADER_TILEMODE(2),
-  DECAL_SK_SHADER_TILEMODE(3)
-  ;
+  DECAL_SK_SHADER_TILEMODE(3);
 
   final int value;
   const sk_shader_tilemode_t(this.value);
@@ -15120,8 +15135,7 @@ enum sk_blurstyle_t {
   OUTER_SK_BLUR_STYLE(2),
 
   /// !< fuzzy inside, nothing outside
-  INNER_SK_BLUR_STYLE(3)
-  ;
+  INNER_SK_BLUR_STYLE(3);
 
   final int value;
   const sk_blurstyle_t(this.value);
@@ -15137,8 +15151,7 @@ enum sk_blurstyle_t {
 
 enum sk_path_direction_t {
   CW_SK_PATH_DIRECTION(0),
-  CCW_SK_PATH_DIRECTION(1)
-  ;
+  CCW_SK_PATH_DIRECTION(1);
 
   final int value;
   const sk_path_direction_t(this.value);
@@ -15152,8 +15165,7 @@ enum sk_path_direction_t {
 
 enum sk_path_builder_arc_size_t {
   SMALL_SK_PATH_BUILDER_ARC_SIZE(0),
-  LARGE_SK_PATH_BUILDER_ARC_SIZE(1)
-  ;
+  LARGE_SK_PATH_BUILDER_ARC_SIZE(1);
 
   final int value;
   const sk_path_builder_arc_size_t(this.value);
@@ -15170,8 +15182,7 @@ enum sk_path_builder_arc_size_t {
 enum sk_paint_style_t {
   FILL_SK_PAINT_STYLE(0),
   STROKE_SK_PAINT_STYLE(1),
-  STROKE_AND_FILL_SK_PAINT_STYLE(2)
-  ;
+  STROKE_AND_FILL_SK_PAINT_STYLE(2);
 
   final int value;
   const sk_paint_style_t(this.value);
@@ -15188,8 +15199,7 @@ enum sk_font_hinting_t {
   NONE_SK_FONT_HINTING(0),
   SLIGHT_SK_FONT_HINTING(1),
   NORMAL_SK_FONT_HINTING(2),
-  FULL_SK_FONT_HINTING(3)
-  ;
+  FULL_SK_FONT_HINTING(3);
 
   final int value;
   const sk_font_hinting_t(this.value);
@@ -15206,8 +15216,7 @@ enum sk_font_hinting_t {
 enum sk_font_edging_t {
   ALIAS_SK_FONT_EDGING(0),
   ANTIALIAS_SK_FONT_EDGING(1),
-  SUBPIXEL_ANTIALIAS_SK_FONT_EDGING(2)
-  ;
+  SUBPIXEL_ANTIALIAS_SK_FONT_EDGING(2);
 
   final int value;
   const sk_font_edging_t(this.value);
@@ -15224,8 +15233,7 @@ final class sk_pixelref_factory_t extends ffi.Opaque {}
 
 enum gr_surfaceorigin_t {
   TOP_LEFT_GR_SURFACE_ORIGIN(0),
-  BOTTOM_LEFT_GR_SURFACE_ORIGIN(1)
-  ;
+  BOTTOM_LEFT_GR_SURFACE_ORIGIN(1);
 
   final int value;
   const gr_surfaceorigin_t(this.value);
@@ -15273,8 +15281,7 @@ enum gr_backend_t {
   VULKAN_GR_BACKEND(1),
   METAL_GR_BACKEND(2),
   DIRECT3D_GR_BACKEND(3),
-  UNSUPPORTED_GR_BACKEND(5)
-  ;
+  UNSUPPORTED_GR_BACKEND(5);
 
   final int value;
   const gr_backend_t(this.value);
@@ -15517,8 +15524,7 @@ enum sk_pathop_t {
   INTERSECT_SK_PATHOP(1),
   UNION_SK_PATHOP(2),
   XOR_SK_PATHOP(3),
-  REVERSE_DIFFERENCE_SK_PATHOP(4)
-  ;
+  REVERSE_DIFFERENCE_SK_PATHOP(4);
 
   final int value;
   const sk_pathop_t(this.value);
@@ -15538,8 +15544,7 @@ final class sk_opbuilder_t extends ffi.Opaque {}
 enum sk_lattice_recttype_t {
   DEFAULT_SK_LATTICE_RECT_TYPE(0),
   TRANSPARENT_SK_LATTICE_RECT_TYPE(1),
-  FIXED_COLOR_SK_LATTICE_RECT_TYPE(2)
-  ;
+  FIXED_COLOR_SK_LATTICE_RECT_TYPE(2);
 
   final int value;
   const sk_lattice_recttype_t(this.value);
@@ -15575,8 +15580,7 @@ final class sk_pathmeasure_t extends ffi.Opaque {}
 enum sk_pathmeasure_matrixflags_t {
   GET_POSITION_SK_PATHMEASURE_MATRIXFLAGS(1),
   GET_TANGENT_SK_PATHMEASURE_MATRIXFLAGS(2),
-  GET_POS_AND_TAN_SK_PATHMEASURE_MATRIXFLAGS(3)
-  ;
+  GET_POS_AND_TAN_SK_PATHMEASURE_MATRIXFLAGS(3);
 
   final int value;
   const sk_pathmeasure_matrixflags_t(this.value);
@@ -15647,8 +15651,7 @@ typedef sk_glyph_path_proc =
 
 enum sk_image_caching_hint_t {
   ALLOW_SK_IMAGE_CACHING_HINT(0),
-  DISALLOW_SK_IMAGE_CACHING_HINT(1)
-  ;
+  DISALLOW_SK_IMAGE_CACHING_HINT(1);
 
   final int value;
   const sk_image_caching_hint_t(this.value);
@@ -15666,8 +15669,7 @@ enum sk_texture_compression_type_t {
   NONE_SK_TEXTURE_COMPRESSION_TYPE(0),
   ETC2_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(1),
   BC1_RGB8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(2),
-  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(3)
-  ;
+  BC1_RGBA8_UNORM_SK_TEXTURE_COMPRESSION_TYPE(3);
 
   final int value;
   const sk_texture_compression_type_t(this.value);
@@ -15685,8 +15687,7 @@ enum sk_texture_compression_type_t {
 
 enum sk_bitmap_allocflags_t {
   NONE_SK_BITMAP_ALLOC_FLAGS(0),
-  ZERO_PIXELS_SK_BITMAP_ALLOC_FLAGS(1)
-  ;
+  ZERO_PIXELS_SK_BITMAP_ALLOC_FLAGS(1);
 
   final int value;
   const sk_bitmap_allocflags_t(this.value);
@@ -15756,8 +15757,7 @@ final class sk_document_pdf_metadata_t extends ffi.Struct {
 enum sk_codecanimation_disposalmethod_t {
   KEEP_SK_CODEC_ANIMATION_DISPOSAL_METHOD(1),
   RESTORE_BG_COLOR_SK_CODEC_ANIMATION_DISPOSAL_METHOD(2),
-  RESTORE_PREVIOUS_SK_CODEC_ANIMATION_DISPOSAL_METHOD(3)
-  ;
+  RESTORE_PREVIOUS_SK_CODEC_ANIMATION_DISPOSAL_METHOD(3);
 
   final int value;
   const sk_codecanimation_disposalmethod_t(this.value);
@@ -15775,8 +15775,7 @@ enum sk_codecanimation_disposalmethod_t {
 
 enum sk_codecanimation_blend_t {
   SRC_OVER_SK_CODEC_ANIMATION_BLEND(0),
-  SRC_SK_CODEC_ANIMATION_BLEND(1)
-  ;
+  SRC_SK_CODEC_ANIMATION_BLEND(1);
 
   final int value;
   const sk_codecanimation_blend_t(this.value);
@@ -15828,8 +15827,7 @@ final class sk_svgcanvas_t extends ffi.Opaque {}
 enum sk_vertices_vertex_mode_t {
   TRIANGLES_SK_VERTICES_VERTEX_MODE(0),
   TRIANGLE_STRIP_SK_VERTICES_VERTEX_MODE(1),
-  TRIANGLE_FAN_SK_VERTICES_VERTEX_MODE(2)
-  ;
+  TRIANGLE_FAN_SK_VERTICES_VERTEX_MODE(2);
 
   final int value;
   const sk_vertices_vertex_mode_t(this.value);
@@ -15929,8 +15927,7 @@ final class sk_colorspace_icc_profile_t extends ffi.Opaque {}
 enum sk_highcontrastconfig_invertstyle_t {
   NO_INVERT_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(0),
   INVERT_BRIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(1),
-  INVERT_LIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(2)
-  ;
+  INVERT_LIGHTNESS_SK_HIGH_CONTRAST_CONFIG_INVERT_STYLE(2);
 
   final int value;
   const sk_highcontrastconfig_invertstyle_t(this.value);
@@ -15967,8 +15964,7 @@ enum sk_pngencoder_filterflags_t {
   UP_SK_PNGENCODER_FILTER_FLAGS(32),
   AVG_SK_PNGENCODER_FILTER_FLAGS(64),
   PAETH_SK_PNGENCODER_FILTER_FLAGS(128),
-  ALL_SK_PNGENCODER_FILTER_FLAGS(248)
-  ;
+  ALL_SK_PNGENCODER_FILTER_FLAGS(248);
 
   final int value;
   const sk_pngencoder_filterflags_t(this.value);
@@ -16001,8 +15997,7 @@ final class sk_pngencoder_options_t extends ffi.Struct {
 enum sk_jpegencoder_downsample_t {
   DOWNSAMPLE_420_SK_JPEGENCODER_DOWNSAMPLE(0),
   DOWNSAMPLE_422_SK_JPEGENCODER_DOWNSAMPLE(1),
-  DOWNSAMPLE_444_SK_JPEGENCODER_DOWNSAMPLE(2)
-  ;
+  DOWNSAMPLE_444_SK_JPEGENCODER_DOWNSAMPLE(2);
 
   final int value;
   const sk_jpegencoder_downsample_t(this.value);
@@ -16019,8 +16014,7 @@ enum sk_jpegencoder_downsample_t {
 
 enum sk_jpegencoder_alphaoption_t {
   IGNORE_SK_JPEGENCODER_ALPHA_OPTION(0),
-  BLEND_ON_BLACK_SK_JPEGENCODER_ALPHA_OPTION(1)
-  ;
+  BLEND_ON_BLACK_SK_JPEGENCODER_ALPHA_OPTION(1);
 
   final int value;
   const sk_jpegencoder_alphaoption_t(this.value);
@@ -16060,8 +16054,7 @@ final class sk_jpegencoder_options_t extends ffi.Struct {
 
 enum sk_webpencoder_compression_t {
   LOSSY_SK_WEBPENCODER_COMPTRESSION(0),
-  LOSSLESS_SK_WEBPENCODER_COMPTRESSION(1)
-  ;
+  LOSSLESS_SK_WEBPENCODER_COMPTRESSION(1);
 
   final int value;
   const sk_webpencoder_compression_t(this.value);
@@ -16094,8 +16087,7 @@ enum sk_rrect_type_t {
   OVAL_SK_RRECT_TYPE(2),
   SIMPLE_SK_RRECT_TYPE(3),
   NINE_PATCH_SK_RRECT_TYPE(4),
-  COMPLEX_SK_RRECT_TYPE(5)
-  ;
+  COMPLEX_SK_RRECT_TYPE(5);
 
   final int value;
   const sk_rrect_type_t(this.value);
@@ -16115,8 +16107,7 @@ enum sk_rrect_corner_t {
   UPPER_LEFT_SK_RRECT_CORNER(0),
   UPPER_RIGHT_SK_RRECT_CORNER(1),
   LOWER_RIGHT_SK_RRECT_CORNER(2),
-  LOWER_LEFT_SK_RRECT_CORNER(3)
-  ;
+  LOWER_LEFT_SK_RRECT_CORNER(3);
 
   final int value;
   const sk_rrect_corner_t(this.value);
@@ -16184,8 +16175,7 @@ enum sk_runtimeeffect_uniform_type_t {
   INT_SK_RUNTIMEEFFECT_UNIFORM_TYPE(7),
   INT2_SK_RUNTIMEEFFECT_UNIFORM_TYPE(8),
   INT3_SK_RUNTIMEEFFECT_UNIFORM_TYPE(9),
-  INT4_SK_RUNTIMEEFFECT_UNIFORM_TYPE(10)
-  ;
+  INT4_SK_RUNTIMEEFFECT_UNIFORM_TYPE(10);
 
   final int value;
   const sk_runtimeeffect_uniform_type_t(this.value);
@@ -16212,8 +16202,7 @@ enum sk_runtimeeffect_uniform_type_t {
 enum sk_runtimeeffect_child_type_t {
   SHADER_SK_RUNTIMEEFFECT_CHILD_TYPE(0),
   COLOR_FILTER_SK_RUNTIMEEFFECT_CHILD_TYPE(1),
-  BLENDER_SK_RUNTIMEEFFECT_CHILD_TYPE(2)
-  ;
+  BLENDER_SK_RUNTIMEEFFECT_CHILD_TYPE(2);
 
   final int value;
   const sk_runtimeeffect_child_type_t(this.value);
@@ -16234,8 +16223,7 @@ enum sk_runtimeeffect_uniform_flags_t {
   COLOR_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(2),
   VERTEX_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(4),
   FRAGMENT_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(8),
-  HALF_PRECISION_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(16)
-  ;
+  HALF_PRECISION_SK_RUNTIMEEFFECT_UNIFORM_FLAGS(16);
 
   final int value;
   const sk_runtimeeffect_uniform_flags_t(this.value);
@@ -16297,8 +16285,7 @@ final class sk_runtimeeffect_child_t extends ffi.Struct {
 
 enum sk_filter_mode_t {
   NEAREST_SK_FILTER_MODE(0),
-  LINEAR_SK_FILTER_MODE(1)
-  ;
+  LINEAR_SK_FILTER_MODE(1);
 
   final int value;
   const sk_filter_mode_t(this.value);
@@ -16313,8 +16300,7 @@ enum sk_filter_mode_t {
 enum sk_mipmap_mode_t {
   NONE_SK_MIPMAP_MODE(0),
   NEAREST_SK_MIPMAP_MODE(1),
-  LINEAR_SK_MIPMAP_MODE(2)
-  ;
+  LINEAR_SK_MIPMAP_MODE(2);
 
   final int value;
   const sk_mipmap_mode_t(this.value);
@@ -16329,8 +16315,7 @@ enum sk_mipmap_mode_t {
 
 enum sk_imagefilter_map_direction_t {
   FORWARD_SK_IMAGEFILTER_MAP_DIRECTION(0),
-  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION(1)
-  ;
+  REVERSE_SK_IMAGEFILTER_MAP_DIRECTION(1);
 
   final int value;
   const sk_imagefilter_map_direction_t(this.value);
@@ -16376,8 +16361,7 @@ enum sk_canvas_savelayerrec_flags_t {
   NONE_SK_CANVAS_SAVELAYERREC_FLAGS(0),
   PRESERVE_LCD_TEXT_SK_CANVAS_SAVELAYERREC_FLAGS(2),
   INITIALIZE_WITH_PREVIOUS_SK_CANVAS_SAVELAYERREC_FLAGS(4),
-  F16_COLOR_TYPE_SK_CANVAS_SAVELAYERREC_FLAGS(16)
-  ;
+  F16_COLOR_TYPE_SK_CANVAS_SAVELAYERREC_FLAGS(16);
 
   final int value;
   const sk_canvas_savelayerrec_flags_t(this.value);
@@ -16423,8 +16407,7 @@ final class sksg_invalidation_controller_t extends ffi.Opaque {}
 
 enum skottie_animation_renderflags_t {
   SKIP_TOP_LEVEL_ISOLATION(1),
-  DISABLE_TOP_LEVEL_CLIPPING(2)
-  ;
+  DISABLE_TOP_LEVEL_CLIPPING(2);
 
   final int value;
   const skottie_animation_renderflags_t(this.value);
@@ -16442,8 +16425,7 @@ enum skottie_animation_renderflags_t {
 enum skottie_animation_builder_flags_t {
   NONE_SKOTTIE_ANIMATION_BUILDER_FLAGS(0),
   DEFER_IMAGE_LOADING_SKOTTIE_ANIMATION_BUILDER_FLAGS(1),
-  PREFER_EMBEDDED_FONTS_SKOTTIE_ANIMATION_BUILDER_FLAGS(2)
-  ;
+  PREFER_EMBEDDED_FONTS_SKOTTIE_ANIMATION_BUILDER_FLAGS(2);
 
   final int value;
   const skottie_animation_builder_flags_t(this.value);
@@ -16536,8 +16518,7 @@ final class sk_text_style_t extends ffi.Opaque {}
 
 enum sk_paragraph_affinity_t {
   UPSTREAM_SK_PARAGRAPH_AFFINITY(0),
-  DOWNSTREAM_SK_PARAGRAPH_AFFINITY(1)
-  ;
+  DOWNSTREAM_SK_PARAGRAPH_AFFINITY(1);
 
   final int value;
   const sk_paragraph_affinity_t(this.value);
@@ -16557,8 +16538,7 @@ enum sk_paragraph_rect_height_style_t {
   INCLUDE_LINE_SPACING_MIDDLE_SK_PARAGRAPH_RECT_HEIGHT_STYLE(2),
   INCLUDE_LINE_SPACING_TOP_SK_PARAGRAPH_RECT_HEIGHT_STYLE(3),
   INCLUDE_LINE_SPACING_BOTTOM_SK_PARAGRAPH_RECT_HEIGHT_STYLE(4),
-  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(5)
-  ;
+  STRUT_SK_PARAGRAPH_RECT_HEIGHT_STYLE(5);
 
   final int value;
   const sk_paragraph_rect_height_style_t(this.value);
@@ -16579,8 +16559,7 @@ enum sk_paragraph_rect_height_style_t {
 
 enum sk_paragraph_rect_width_style_t {
   TIGHT_SK_PARAGRAPH_RECT_WIDTH_STYLE(0),
-  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE(1)
-  ;
+  MAX_SK_PARAGRAPH_RECT_WIDTH_STYLE(1);
 
   final int value;
   const sk_paragraph_rect_width_style_t(this.value);
@@ -16601,8 +16580,7 @@ enum sk_paragraph_text_align_t {
   CENTER_SK_PARAGRAPH_TEXT_ALIGN(2),
   JUSTIFY_SK_PARAGRAPH_TEXT_ALIGN(3),
   START_SK_PARAGRAPH_TEXT_ALIGN(4),
-  END_SK_PARAGRAPH_TEXT_ALIGN(5)
-  ;
+  END_SK_PARAGRAPH_TEXT_ALIGN(5);
 
   final int value;
   const sk_paragraph_text_align_t(this.value);
@@ -16622,8 +16600,7 @@ enum sk_paragraph_text_align_t {
 
 enum sk_paragraph_text_direction_t {
   RTL_SK_PARAGRAPH_TEXT_DIRECTION(0),
-  LTR_SK_PARAGRAPH_TEXT_DIRECTION(1)
-  ;
+  LTR_SK_PARAGRAPH_TEXT_DIRECTION(1);
 
   final int value;
   const sk_paragraph_text_direction_t(this.value);
@@ -16639,8 +16616,7 @@ enum sk_paragraph_text_direction_t {
 
 enum sk_paragraph_text_baseline_t {
   ALPHABETIC_SK_PARAGRAPH_TEXT_BASELINE(0),
-  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE(1)
-  ;
+  IDEOGRAPHIC_SK_PARAGRAPH_TEXT_BASELINE(1);
 
   final int value;
   const sk_paragraph_text_baseline_t(this.value);
@@ -16658,8 +16634,7 @@ enum sk_paragraph_text_height_behavior_t {
   ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(0),
   DISABLE_FIRST_ASCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(1),
   DISABLE_LAST_DESCENT_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(2),
-  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(3)
-  ;
+  DISABLE_ALL_SK_PARAGRAPH_TEXT_HEIGHT_BEHAVIOR(3);
 
   final int value;
   const sk_paragraph_text_height_behavior_t(this.value);
@@ -16678,8 +16653,7 @@ enum sk_paragraph_text_height_behavior_t {
 
 enum sk_paragraph_line_metric_style_t {
   TYPOGRAPHIC_SK_PARAGRAPH_LINE_METRIC_STYLE(0),
-  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE(1)
-  ;
+  CSS_SK_PARAGRAPH_LINE_METRIC_STYLE(1);
 
   final int value;
   const sk_paragraph_line_metric_style_t(this.value);
@@ -16695,8 +16669,7 @@ enum sk_paragraph_line_metric_style_t {
 }
 
 enum sk_paragraph_visitor_flag_t {
-  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG(1)
-  ;
+  WHITE_SPACE_SK_PARAGRAPH_VISITOR_FLAG(1);
 
   final int value;
   const sk_paragraph_visitor_flag_t(this.value);
@@ -16837,8 +16810,7 @@ enum sk_text_decoration_t {
   NO_SK_TEXT_DECORATION(0),
   UNDERLINE_SK_TEXT_DECORATION(1),
   OVERLINE_SK_TEXT_DECORATION(2),
-  LINE_THROUGH_SK_TEXT_DECORATION(4)
-  ;
+  LINE_THROUGH_SK_TEXT_DECORATION(4);
 
   final int value;
   const sk_text_decoration_t(this.value);
@@ -16857,8 +16829,7 @@ enum sk_text_decoration_style_t {
   DOUBLE_SK_TEXT_DECORATION_STYLE(1),
   DOTTED_SK_TEXT_DECORATION_STYLE(2),
   DASHED_SK_TEXT_DECORATION_STYLE(3),
-  WAVY_SK_TEXT_DECORATION_STYLE(4)
-  ;
+  WAVY_SK_TEXT_DECORATION_STYLE(4);
 
   final int value;
   const sk_text_decoration_style_t(this.value);
@@ -16877,8 +16848,7 @@ enum sk_text_decoration_style_t {
 
 enum sk_text_decoration_mode_t {
   GAPS_SK_TEXT_DECORATION_MODE(0),
-  THROUGH_SK_TEXT_DECORATION_MODE(1)
-  ;
+  THROUGH_SK_TEXT_DECORATION_MODE(1);
 
   final int value;
   const sk_text_decoration_mode_t(this.value);
@@ -16901,8 +16871,7 @@ enum sk_text_style_attribute_t {
   SHADOW_SK_TEXT_STYLE_ATTRIBUTE(5),
   DECORATIONS_SK_TEXT_STYLE_ATTRIBUTE(6),
   LETTER_SPACING_SK_TEXT_STYLE_ATTRIBUTE(7),
-  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE(8)
-  ;
+  WORD_SPACING_SK_TEXT_STYLE_ATTRIBUTE(8);
 
   final int value;
   const sk_text_style_attribute_t(this.value);
@@ -16929,8 +16898,7 @@ enum sk_paragraph_placeholder_alignment_t {
   BELOW_BASELINE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(2),
   TOP_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(3),
   BOTTOM_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(4),
-  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(5)
-  ;
+  MIDDLE_SK_PARAGRAPH_PLACEHOLDER_ALIGNMENT(5);
 
   final int value;
   const sk_paragraph_placeholder_alignment_t(this.value);
@@ -17058,8 +17026,7 @@ final class skgpu_graphite_insert_recording_info_t extends ffi.Struct {
 
 enum sk_image_rescale_gamma_t {
   SK_IMAGE_RESCALE_GAMMA_SRC(0),
-  SK_IMAGE_RESCALE_GAMMA_LINEAR(1)
-  ;
+  SK_IMAGE_RESCALE_GAMMA_LINEAR(1);
 
   final int value;
   const sk_image_rescale_gamma_t(this.value);
@@ -17077,8 +17044,7 @@ enum sk_image_rescale_mode_t {
   SK_IMAGE_RESCALE_MODE_NEAREST(0),
   SK_IMAGE_RESCALE_MODE_LINEAR(1),
   SK_IMAGE_RESCALE_MODE_REPEATED_LINEAR(2),
-  SK_IMAGE_RESCALE_MODE_REPEATED_CUBIC(3)
-  ;
+  SK_IMAGE_RESCALE_MODE_REPEATED_CUBIC(3);
 
   final int value;
   const sk_image_rescale_mode_t(this.value);

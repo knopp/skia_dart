@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// Selects if an array of points are drawn as discrete points, as lines, or as
 /// an open polygon.

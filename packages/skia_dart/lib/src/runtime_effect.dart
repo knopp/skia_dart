@@ -1,4 +1,4 @@
-part of '../skia_dart.dart';
+part of 'skia_dart_library.dart';
 
 /// The data type of a uniform variable in an SkSL runtime effect.
 ///
