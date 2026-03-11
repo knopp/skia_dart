@@ -37,6 +37,10 @@
   #endif
 #endif
 
+#if defined Success // X11
+  #undef Success
+#endif
+
 // Instance
 
 void* sk_wgpu_dawn_proc_table() {
