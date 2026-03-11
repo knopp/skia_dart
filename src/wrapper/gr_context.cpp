@@ -263,7 +263,7 @@ gr_backendtexture_t *gr_backendtexture_new_vulkan(int width, int height, const g
 }
 
 gr_backendtexture_t *gr_backendtexture_new_metal(int width, int height, bool mipmapped, const gr_mtl_textureinfo_t *mtlInfo, int64_t runLoopHandle) {
-#ifdef SK_GANESH
+#if defined (SK_GANESH) && defined(SK_METAL)
   auto texture = ToGrBackendTexture(new GrBackendTexture(GrBackendTextures::MakeMtl(width, height, (skgpu::Mipmapped)mipmapped, AsGrMtlTextureInfo(mtlInfo))));
   RunLoop::set_isolate_handle(texture, runLoopHandle);
   return texture;
