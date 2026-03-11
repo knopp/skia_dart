@@ -6,10 +6,10 @@
   "ios_arm64_graphite_libskia_dart.dylib": "4611f7b6b658be338579a50e7d5ca51f99497bc4e9cdc093c8c73f2b20bcd860",
   "ios_sim_arm64_graphite_libskia_dart.dylib": "03bf045b8abf28199c4cebcd97660726eb8a8a0b08940af9200e9ff4fa92092f",
   "ios_sim_x64_graphite_libskia_dart.dylib": "68fdb47386e6c17d93a3c44bb1edeb9dc5c917fcbfd7654cae415f8a4621b5b1",
-  "linux_arm64_graphite_libskia_dart.so": "bb8cb14c16e3a5a06bcfa2cdfc02794aa4d441bada24daf100da71fe00f08485",
-  "linux_x64_graphite_libskia_dart.so": "0a1ae314daf93f51b8f55e0bad6728541cb4e4de7b656088ceb52b58a4b0a8fc",
+  "linux_arm64_graphite_libskia_dart.so": "c6c9f7534c86875973b7cff88d1f14a5747e19b747a05e47fb5eb8301475cd3f",
+  "linux_x64_graphite_libskia_dart.so": "129a213e4f71118d2582417328e96074a21dd34ec942bc4aa9ef3e2d4b8e0810",
   "mac_arm64_graphite_libskia_dart.dylib": "59495ff23e94184acaf7dd15f20bfda2c9b2757a007d101dd235035aa1288d6f",
   "mac_x64_graphite_libskia_dart.dylib": "86ab5d90a00b4a58297f860f0e85e61451dc2e1df3bc0afc72d3682b069c4489",
-  "win_arm64_graphite_skia_dart.dll": "5e3c30c5588800facb22ab6edda6f73d5d1e18492155bf89ac6fe6b993c4e5b4",
-  "win_x64_graphite_skia_dart.dll": "6362098e25f6a271f78b253e0edca8a969606bbf0898b1e809df08f771c25c62"
+  "win_arm64_graphite_skia_dart.dll": "3c5f0aba1351c9bba02430378cbea93058d74a14997b16dcc0e7e175eda3fce8",
+  "win_x64_graphite_skia_dart.dll": "cfc24d10bee4fc8c3b2d76a868423b2199515d23d9800451faffe973a5a583c3"
 }
