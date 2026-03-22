@@ -312,6 +312,8 @@ struct FenceExport {
   virtual void resize(size_t count) {
     exportInfo.resize(count);
   }
+
+  virtual ~FenceExport() = default;
 };
 
 struct FenceExportSyncFD : FenceExport {
