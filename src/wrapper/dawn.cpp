@@ -183,8 +183,6 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
   wgpu::AdapterInfo adapterInfo;
   adapter.GetInfo(&adapterInfo);
 
-  fprintf(stderr, "Adapter %s\n", adapterInfo.device.data);
-
   std::vector<wgpu::FeatureName> features;
   if (adapterInfo.backendType == wgpu::BackendType::D3D11) {
     features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
