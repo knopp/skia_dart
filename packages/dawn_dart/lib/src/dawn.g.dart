@@ -82,6 +82,25 @@ external void sk_wgpu_texture_add_ref(ffi.Pointer<sk_wgpu_texture_t> texture);
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_wgpu_texture_t>)>()
 external void sk_wgpu_texture_release(ffi.Pointer<sk_wgpu_texture_t> texture);
 
+@ffi.Native<ffi.Pointer<sk_wgpu_fence_export_t> Function()>()
+external ffi.Pointer<sk_wgpu_fence_export_t> sk_wgpu_fence_export_new_sync_fd();
+
+@ffi.Native<ffi.Void Function(ffi.Pointer<sk_wgpu_fence_export_t>)>()
+external void sk_wgpu_fence_export_free(
+  ffi.Pointer<sk_wgpu_fence_export_t> fence_export,
+);
+
+@ffi.Native<ffi.Size Function(ffi.Pointer<sk_wgpu_fence_export_t>)>()
+external int sk_wgpu_fence_export_fence_count(
+  ffi.Pointer<sk_wgpu_fence_export_t> fence_export,
+);
+
+@ffi.Native<ffi.Int Function(ffi.Pointer<sk_wgpu_fence_export_t>, ffi.Size)>()
+external int sk_wgpu_fence_export_get_sync_fd(
+  ffi.Pointer<sk_wgpu_fence_export_t> fence_export,
+  int index,
+);
+
 @ffi.Native<
   ffi.Pointer<sk_wgpu_texture_t> Function(
     ffi.Pointer<sk_wgpu_shared_texture_memory_t>,
@@ -106,22 +125,28 @@ external void sk_wgpu_shared_texture_memory_release(
   ffi.Bool Function(
     ffi.Pointer<sk_wgpu_shared_texture_memory_t>,
     ffi.Pointer<sk_wgpu_texture_t>,
+    ffi.Pointer<sk_wgpu_shared_texture_memory_vulkan_layout>,
   )
 >()
 external bool sk_wgpu_shared_texture_memory_begin_access(
   ffi.Pointer<sk_wgpu_shared_texture_memory_t> texture_memory,
   ffi.Pointer<sk_wgpu_texture_t> texture,
+  ffi.Pointer<sk_wgpu_shared_texture_memory_vulkan_layout> vk_layout,
 );
 
 @ffi.Native<
   ffi.Bool Function(
     ffi.Pointer<sk_wgpu_shared_texture_memory_t>,
     ffi.Pointer<sk_wgpu_texture_t>,
+    ffi.Pointer<sk_wgpu_shared_texture_memory_vulkan_layout>,
+    ffi.Pointer<sk_wgpu_fence_export_t>,
   )
 >()
 external bool sk_wgpu_shared_texture_memory_end_access(
   ffi.Pointer<sk_wgpu_shared_texture_memory_t> texture_memory,
   ffi.Pointer<sk_wgpu_texture_t> texture,
+  ffi.Pointer<sk_wgpu_shared_texture_memory_vulkan_layout> vk_layout_out,
+  ffi.Pointer<sk_wgpu_fence_export_t> fence_export,
 );
 
 @ffi.Native<
@@ -184,6 +209,7 @@ external void sk_wgpu_com_release(ffi.Pointer<ffi.Void> com_object);
     ffi.Pointer<ffi.Void>,
     ffi.Uint32,
     ffi.Uint32,
+    ffi.Bool,
     ffi.Pointer<ffi.Char>,
   )
 >()
@@ -192,6 +218,35 @@ external ffi.Pointer<sk_wgpu_texture_t> sk_wgpu_texture_from_egl_image(
   ffi.Pointer<ffi.Void> egl_image,
   int width,
   int height,
+  bool is_initialized,
+  ffi.Pointer<ffi.Char> label,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_wgpu_shared_texture_memory_t> Function(
+    ffi.Pointer<sk_wgpu_device_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Char>,
+  )
+>()
+external ffi.Pointer<sk_wgpu_shared_texture_memory_t>
+sk_wgpu_import_shared_texture_memory_from_egl_image(
+  ffi.Pointer<sk_wgpu_device_t> device,
+  ffi.Pointer<ffi.Void> egl_image,
+  ffi.Pointer<ffi.Char> label,
+);
+
+@ffi.Native<
+  ffi.Pointer<sk_wgpu_shared_texture_memory_t> Function(
+    ffi.Pointer<sk_wgpu_device_t>,
+    ffi.Pointer<ffi.Void>,
+    ffi.Pointer<ffi.Char>,
+  )
+>()
+external ffi.Pointer<sk_wgpu_shared_texture_memory_t>
+sk_wgpu_shared_texture_memory_from_gbm_bo(
+  ffi.Pointer<sk_wgpu_device_t> device,
+  ffi.Pointer<ffi.Void> bo,
   ffi.Pointer<ffi.Char> label,
 );
 
@@ -243,3 +298,13 @@ typedef Dartsk_dawn_proctable_t = void;
 final class sk_wgpu_adapter_request_t extends ffi.Struct {
   external ffi.Pointer<ffi.Void> egl_display;
 }
+
+final class sk_wgpu_shared_texture_memory_vulkan_layout extends ffi.Struct {
+  @ffi.Uint32()
+  external int new_layout;
+
+  @ffi.Uint32()
+  external int old_layout;
+}
+
+final class sk_wgpu_fence_export_t extends ffi.Opaque {}

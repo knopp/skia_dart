@@ -239,6 +239,7 @@ extension Egl on WgpuDevice {
     Pointer<Void> eglImage, {
     required int width,
     required int height,
+    required bool isInitialized,
     String? label,
   }) {
     final labelPtr = label != null
@@ -250,12 +251,64 @@ extension Egl on WgpuDevice {
         eglImage,
         width,
         height,
+        isInitialized,
         labelPtr.cast(),
       );
       if (ptr == nullptr) {
         return null;
       }
       return WgpuTexture._(ptr);
+    } finally {
+      if (labelPtr != nullptr) {
+        ffi.malloc.free(labelPtr);
+      }
+    }
+  }
+
+  // This doesn't seem to be currently implemented by Dawn.
+  WgpuSharedTextureMemory? importSharedTextureMemoryFromEglImage(
+    Pointer<Void> eglImage, {
+    String? label,
+  }) {
+    final labelPtr = label != null
+        ? label.toNativeUtf8().cast<Int8>()
+        : nullptr;
+    try {
+      final ptr = sk_wgpu_import_shared_texture_memory_from_egl_image(
+        _ptr,
+        eglImage,
+        labelPtr.cast(),
+      );
+      if (ptr == nullptr) {
+        return null;
+      }
+      return WgpuSharedTextureMemory._(ptr);
+    } finally {
+      if (labelPtr != nullptr) {
+        ffi.malloc.free(labelPtr);
+      }
+    }
+  }
+}
+
+extension Drm on WgpuDevice {
+  WgpuSharedTextureMemory? importSharedTextureMemoryFromGbmBo(
+    Pointer<Void> bo, {
+    String? label,
+  }) {
+    final labelPtr = label != null
+        ? label.toNativeUtf8().cast<Int8>()
+        : nullptr;
+    try {
+      final ptr = sk_wgpu_shared_texture_memory_from_gbm_bo(
+        _ptr,
+        bo,
+        labelPtr.cast(),
+      );
+      if (ptr == nullptr) {
+        return null;
+      }
+      return WgpuSharedTextureMemory._(ptr);
     } finally {
       if (labelPtr != nullptr) {
         ffi.malloc.free(labelPtr);
@@ -291,6 +344,47 @@ bool wgpuInitialize() {
   return sk_wgpu_init();
 }
 
+class WgpuSharedTextureMemoryVulkanLayout {
+  WgpuSharedTextureMemoryVulkanLayout({this.newLayout = 0, this.oldLayout = 0});
+
+  int newLayout;
+  int oldLayout;
+}
+
+class WgpuSharedFenceExportInfo with _NativeMixin<sk_wgpu_fence_export_t> {
+  WgpuSharedFenceExportInfo._(Pointer<sk_wgpu_fence_export_t> ptr) {
+    _attach(ptr, _finalizer);
+  }
+
+  void dispose() {
+    _dispose(sk_wgpu_fence_export_free, _finalizer);
+  }
+
+  int get fenceCount => sk_wgpu_fence_export_fence_count(_ptr);
+
+  static final _finalizer = _createFinalizer();
+
+  static NativeFinalizer _createFinalizer() {
+    final Pointer<
+      NativeFunction<Void Function(Pointer<sk_wgpu_fence_export_t>)>
+    >
+    ptr = Native.addressOf(sk_wgpu_fence_export_free);
+    return NativeFinalizer(ptr.cast());
+  }
+}
+
+class WgpuSharedFenceExportInfoSyncFd extends WgpuSharedFenceExportInfo {
+  WgpuSharedFenceExportInfoSyncFd()
+    : super._(sk_wgpu_fence_export_new_sync_fd());
+
+  int getSyncFd(int index) {
+    if (index < 0 || index >= fenceCount) {
+      throw RangeError.index(index, this, 'index', null, fenceCount);
+    }
+    return sk_wgpu_fence_export_get_sync_fd(_ptr, index);
+  }
+}
+
 class WgpuSharedTextureMemory
     with _NativeMixin<sk_wgpu_shared_texture_memory_t> {
   WgpuSharedTextureMemory._(Pointer<sk_wgpu_shared_texture_memory_t> ptr) {
@@ -309,12 +403,58 @@ class WgpuSharedTextureMemory
     return WgpuTexture._(ptr);
   }
 
-  bool beginAccess(WgpuTexture texture) {
-    return sk_wgpu_shared_texture_memory_begin_access(_ptr, texture._ptr);
+  bool beginAccess(
+    WgpuTexture texture, {
+    WgpuSharedTextureMemoryVulkanLayout? vkLayout,
+  }) {
+    Pointer<sk_wgpu_shared_texture_memory_vulkan_layout> vkLayoutPtr = nullptr;
+    if (vkLayout != null) {
+      vkLayoutPtr = ffi.calloc<sk_wgpu_shared_texture_memory_vulkan_layout>();
+      vkLayoutPtr.ref
+        ..new_layout = vkLayout.newLayout
+        ..old_layout = vkLayout.oldLayout;
+    }
+    try {
+      return sk_wgpu_shared_texture_memory_begin_access(
+        _ptr,
+        texture._ptr,
+        vkLayoutPtr,
+      );
+    } finally {
+      if (vkLayoutPtr != nullptr) {
+        ffi.calloc.free(vkLayoutPtr);
+      }
+    }
   }
 
-  bool endAccess(WgpuTexture texture) {
-    return sk_wgpu_shared_texture_memory_end_access(_ptr, texture._ptr);
+  bool endAccess(
+    WgpuTexture texture, {
+    WgpuSharedTextureMemoryVulkanLayout? vkLayoutOut,
+    WgpuSharedFenceExportInfoSyncFd? fenceExport,
+  }) {
+    Pointer<sk_wgpu_shared_texture_memory_vulkan_layout> vkLayoutOutPtr =
+        nullptr;
+    if (vkLayoutOut != null) {
+      vkLayoutOutPtr = ffi
+          .calloc<sk_wgpu_shared_texture_memory_vulkan_layout>();
+    }
+    try {
+      final result = sk_wgpu_shared_texture_memory_end_access(
+        _ptr,
+        texture._ptr,
+        vkLayoutOutPtr,
+        fenceExport?._ptr ?? nullptr,
+      );
+      if (vkLayoutOutPtr != nullptr) {
+        vkLayoutOut!.newLayout = vkLayoutOutPtr.ref.new_layout;
+        vkLayoutOut.oldLayout = vkLayoutOutPtr.ref.old_layout;
+      }
+      return result;
+    } finally {
+      if (vkLayoutOutPtr != nullptr) {
+        ffi.calloc.free(vkLayoutOutPtr);
+      }
+    }
   }
 
   static final _finalizer = _createFinalizer();

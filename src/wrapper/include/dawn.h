@@ -57,12 +57,25 @@ SK_C_API void sk_wgpu_queue_release(sk_wgpu_queue_t* queue);
 SK_C_API void sk_wgpu_texture_add_ref(sk_wgpu_texture_t* texture);
 SK_C_API void sk_wgpu_texture_release(sk_wgpu_texture_t* texture);
 
+typedef struct {
+  uint32_t new_layout;
+  uint32_t old_layout;
+} sk_wgpu_shared_texture_memory_vulkan_layout;
+
+typedef struct sk_wgpu_fence_export_t sk_wgpu_fence_export_t;
+
+SK_C_API sk_wgpu_fence_export_t* sk_wgpu_fence_export_new_sync_fd();
+SK_C_API void sk_wgpu_fence_export_free(sk_wgpu_fence_export_t* fence_export);
+SK_C_API size_t sk_wgpu_fence_export_fence_count(sk_wgpu_fence_export_t* fence_export);
+
+SK_C_API int sk_wgpu_fence_export_get_sync_fd(sk_wgpu_fence_export_t* fence_export, size_t index);
+
 // Texture memory
 SK_C_API sk_wgpu_texture_t* sk_wgpu_shared_texture_memory_create_texture(sk_wgpu_shared_texture_memory_t* texture_memory);
 SK_C_API void sk_wgpu_shared_texture_memory_add_ref(sk_wgpu_shared_texture_memory_t* texture_memory);
 SK_C_API void sk_wgpu_shared_texture_memory_release(sk_wgpu_shared_texture_memory_t* texture_memory);
-SK_C_API bool sk_wgpu_shared_texture_memory_begin_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture);
-SK_C_API bool sk_wgpu_shared_texture_memory_end_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture);
+SK_C_API bool sk_wgpu_shared_texture_memory_begin_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture, const sk_wgpu_shared_texture_memory_vulkan_layout* vk_layout);
+SK_C_API bool sk_wgpu_shared_texture_memory_end_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture, sk_wgpu_shared_texture_memory_vulkan_layout* vk_layout_out, sk_wgpu_fence_export_t* fence_export);
 
 // DirectX
 
@@ -76,7 +89,11 @@ SK_C_API void sk_wgpu_com_add_ref(void* com_object);
 SK_C_API void sk_wgpu_com_release(void* com_object);
 
 // EGL
-SK_C_API sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, const char* label);
+SK_C_API sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, bool is_initialized, const char* label);
+SK_C_API sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_egl_image(sk_wgpu_device_t* device, void* egl_image, const char* label);
+
+// DRM
+SK_C_API sk_wgpu_shared_texture_memory_t* sk_wgpu_shared_texture_memory_from_gbm_bo(sk_wgpu_device_t* device, void* bo, const char* label);
 
 SK_C_PLUS_PLUS_END_GUARD
 

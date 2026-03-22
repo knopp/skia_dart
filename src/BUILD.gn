@@ -256,7 +256,10 @@ shared_library("dawn_dart") {
   ]
   configs += [ ":android_page_size" ]
   if (is_linux) {
-    libs = [ "EGL" ]
+    libs = [
+      "EGL",
+      "gbm",
+    ]
   }
 }
 
