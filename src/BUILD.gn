@@ -229,7 +229,9 @@ source_set("skia_c_wrapper") {
 shared_library("skia_dart") {
   include_dirs = [ "." ]
   deps = [ ":skia_c_wrapper" ]
-  configs += [ ":android_page_size" ]
+  configs += [
+    ":android_page_size",
+  ]
   if (is_mac) {
     ldflags = [
       "-flto=thin",
@@ -245,6 +247,7 @@ shared_library("dawn_dart") {
     "wrapper/dawn.cpp",
     "wrapper/include/dawn.h",
   ]
+  configs += [ ":skia_host_debug_config" ]
   include_dirs = [ "." ]
   defines = [
     "SK_DAWN",
