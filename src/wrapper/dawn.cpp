@@ -593,7 +593,7 @@ sk_wgpu_shared_texture_memory_t* sk_wgpu_shared_texture_memory_from_gbm_bo(sk_wg
   dmaBufDesc.planes = planes;
   assert(dmaBufDesc.planeCount <= GBM_MAX_PLANES);
   for (uint32_t plane = 0; plane < dmaBufDesc.planeCount; ++plane) {
-    planes[plane].fd = gbm_bo_get_fd(bo);
+    planes[plane].fd = gbm_bo_get_fd_for_plane(bo, plane);
     planes[plane].stride = gbm_bo_get_stride_for_plane(bo, plane);
     planes[plane].offset = gbm_bo_get_offset(bo, plane);
   }
