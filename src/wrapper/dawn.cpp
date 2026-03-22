@@ -543,7 +543,6 @@ void sk_wgpu_com_release(void* com_object) {
 sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, bool is_initialized, const char* label) {
 #if defined SK_DAWN && defined SK_DAWN_USE_EGL
   dawn::native::opengl::ExternalImageDescriptorEGLImage eglImageDesc;
-  std::memset(&eglImageDesc, 0, sizeof(eglImageDesc));
   WGPUTextureDescriptor desc = {
       .label = {label, label != nullptr ? strlen(label) : 0},
       .usage = WGPUTextureUsage_TextureBinding | WGPUTextureUsage_RenderAttachment,
@@ -567,7 +566,6 @@ sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void
 sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_egl_image(sk_wgpu_device_t* device, void* egl_image, const char* label) {
 #if defined SK_DAWN && defined SK_DAWN_USE_EGL
   wgpu::SharedTextureMemoryEGLImageDescriptor eglImageDesc;
-  std::memset(&eglImageDesc, 0, sizeof(eglImageDesc));
   eglImageDesc.image = reinterpret_cast<EGLImage>(egl_image);
 
   wgpu::SharedTextureMemoryDescriptor desc;
