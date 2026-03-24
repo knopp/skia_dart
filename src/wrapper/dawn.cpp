@@ -4,6 +4,10 @@
   #ifdef __linux__
     #define SK_DAWN_USE_EGL
     #define SK_DAWN_USE_VULKAN
+  #endif
+
+  // Linux but not android
+  #if defined __linux__ && !defined __ANDROID__
     #define SK_DAWN_USE_DRM
   #endif
 
