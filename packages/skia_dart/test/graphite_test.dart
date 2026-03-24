@@ -335,7 +335,7 @@ void main() {
             )!;
 
             final handle = RunLoop.instance.getObjectHandle(surface);
-            final newHandle = RunLoop.instance.getObjectHandle(newSurface!);
+            final newHandle = RunLoop.instance.getObjectHandle(newSurface);
             expect(newHandle, isNotNull);
             expect(handle, equals(newHandle));
           });

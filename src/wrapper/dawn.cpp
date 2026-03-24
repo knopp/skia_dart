@@ -1,10 +1,10 @@
 #include "wrapper/include/dawn.h"
 
 #ifdef SK_DAWN
-
   #ifdef __linux__
     #define SK_DAWN_USE_EGL
     #define SK_DAWN_USE_VULKAN
+    #define SK_DAWN_USE_DRM
   #endif
 
   #ifdef _WIN32
@@ -37,7 +37,16 @@
   #endif
 #endif
 
-#if defined Success // X11
+#ifdef SK_DAWN_USE_DRM
+  #include <gbm.h>
+  #include <unistd.h>
+#endif
+
+#ifdef SK_DAWN_USE_VULKAN
+  #include <vulkan/vulkan.h>
+#endif
+
+#if defined Success  // X11
   #undef Success
 #endif
 
@@ -173,6 +182,7 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
 
   wgpu::AdapterInfo adapterInfo;
   adapter.GetInfo(&adapterInfo);
+
   std::vector<wgpu::FeatureName> features;
   if (adapterInfo.backendType == wgpu::BackendType::D3D11) {
     features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D11Texture2D);
@@ -181,6 +191,10 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
   if (adapterInfo.backendType == wgpu::BackendType::D3D12) {
     features.push_back(wgpu::FeatureName::SharedTextureMemoryD3D12Resource);
     features.push_back(wgpu::FeatureName::SharedFenceDXGISharedHandle);
+  }
+  if (adapterInfo.backendType == wgpu::BackendType::Vulkan) {
+    features.push_back(wgpu::FeatureName::SharedFenceSyncFD);
+    features.push_back(wgpu::FeatureName::SharedTextureMemoryDmaBuf);
   }
   deviceDesc.requiredFeatures = features.data();
   deviceDesc.requiredFeatureCount = features.size();
@@ -270,58 +284,117 @@ sk_wgpu_texture_t* sk_wgpu_shared_texture_memory_create_texture(sk_wgpu_shared_t
 #endif
 }
 
-bool sk_wgpu_shared_texture_memory_begin_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture) {
+bool sk_wgpu_shared_texture_memory_begin_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture, const sk_wgpu_shared_texture_memory_vulkan_layout* vk_layout) {
 #ifdef SK_DAWN
   wgpu::SharedTextureMemory textureMemorty(reinterpret_cast<WGPUSharedTextureMemory>(texture_memory));
   wgpu::Texture wgpuTexture(reinterpret_cast<WGPUTexture>(texture));
   wgpu::SharedTextureMemoryBeginAccessDescriptor desc = {};
+
+  if (vk_layout) {
+    wgpu::SharedTextureMemoryVkImageLayoutBeginState vkLayoutDesc = {};
+    vkLayoutDesc.newLayout = vk_layout->new_layout;
+    vkLayoutDesc.oldLayout = vk_layout->old_layout;
+    desc.nextInChain = &vkLayoutDesc;
+  }
+
   return textureMemorty.BeginAccess(wgpuTexture, &desc);
 #endif
   return false;
 }
 
-bool sk_wgpu_shared_texture_memory_end_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture) {
+#ifdef SK_DAWN
+namespace {
+struct FenceExport {
+  std::vector<wgpu::SharedFenceExportInfo> exportInfo;
+
+  virtual void resize(size_t count) {
+    exportInfo.resize(count);
+  }
+
+  virtual ~FenceExport() = default;
+};
+
+struct FenceExportSyncFD : FenceExport {
+  std::vector<wgpu::SharedFenceSyncFDExportInfo> syncFDExportInfo;
+
+  FenceExportSyncFD() {
+  }
+
+  void resize(size_t count) override {
+    FenceExport::resize(count);
+    syncFDExportInfo.resize(count);
+    for (size_t i = 0; i < count; ++i) {
+      exportInfo[i].nextInChain = &syncFDExportInfo[i];
+    }
+  }
+};
+
+}  // namespace
+#endif
+
+sk_wgpu_fence_export_t* sk_wgpu_fence_export_new_sync_fd() {
+#ifdef SK_DAWN
+  auto exportInfo = new FenceExportSyncFD();
+  return reinterpret_cast<sk_wgpu_fence_export_t*>(exportInfo);
+#else
+  return nullptr;
+#endif
+}
+
+void sk_wgpu_fence_export_free(sk_wgpu_fence_export_t* fence_export) {
+#ifdef SK_DAWN
+  auto exportInfo = reinterpret_cast<FenceExport*>(fence_export);
+  delete exportInfo;
+#endif
+}
+
+size_t sk_wgpu_fence_export_fence_count(sk_wgpu_fence_export_t* fence_export) {
+#ifdef SK_DAWN
+  auto exportInfo = reinterpret_cast<FenceExport*>(fence_export);
+  return exportInfo->exportInfo.size();
+#else
+  return 0;
+#endif
+}
+
+int sk_wgpu_fence_export_get_sync_fd(sk_wgpu_fence_export_t* fence_export, size_t index) {
+#ifdef SK_DAWN
+  auto exportInfo = reinterpret_cast<FenceExportSyncFD*>(fence_export);
+  if (index >= exportInfo->syncFDExportInfo.size()) {
+    return -1;
+  }
+  return exportInfo->syncFDExportInfo[index].handle;
+#else
+  return -1;
+#endif
+}
+
+bool sk_wgpu_shared_texture_memory_end_access(sk_wgpu_shared_texture_memory_t* texture_memory, sk_wgpu_texture_t* texture, sk_wgpu_shared_texture_memory_vulkan_layout* vk_layout_out, sk_wgpu_fence_export_t* fence_export) {
 #ifdef SK_DAWN
   wgpu::SharedTextureMemory textureMemorty(reinterpret_cast<WGPUSharedTextureMemory>(texture_memory));
   wgpu::Texture wgpuTexture(reinterpret_cast<WGPUTexture>(texture));
   wgpu::SharedTextureMemoryEndAccessState desc = {};
+
+  wgpu::SharedTextureMemoryVkImageLayoutEndState vkLayoutDesc = {};
+  if (vk_layout_out) {
+    desc.nextInChain = &vkLayoutDesc;
+  }
+
   auto res = textureMemorty.EndAccess(wgpuTexture, &desc);
-  #if 0
-  for (size_t i = 0; i < desc.fenceCount; ++i) {
-    wgpu::SharedFenceDXGISharedHandleExportInfo dxgi;
-    wgpu::SharedFenceExportInfo info;
-    info.nextInChain = &dxgi;
-    desc.fences[i].ExportInfo(&info);
 
-    Microsoft::WRL::ComPtr<ID3D11Device5> device5;
-    auto hr = ___device.As(&device5);
-    if (FAILED(hr)) {
-      fprintf(stderr, "Couldn't query device5\n");
-    }
+  FenceExport* fenceExport = reinterpret_cast<FenceExport*>(fence_export);
 
-    Microsoft::WRL::ComPtr<ID3D11Fence> fence;
-    hr = device5->OpenSharedFence(dxgi.handle, IID_PPV_ARGS(&fence));
-    if (FAILED(hr)) {
-      fprintf(stderr, "OpenSharedFence failed: 0x%08lx\n", hr);
-    }
-
-    auto value = fence->GetCompletedValue();
-    if (value != desc.signaledValues[i]) {
-      // fprintf(stderr, "Have fence %llu\n", value);
-      // Create an event for signaling
-      HANDLE hEvent = CreateEvent(nullptr, FALSE, FALSE, nullptr);
-      if (hEvent) {
-        // Set the fence to signal the event when it reaches waitValue
-        HRESULT hr = fence->SetEventOnCompletion(desc.signaledValues[i], hEvent);
-        if (SUCCEEDED(hr)) {
-          // Wait for the event (blocks CPU thread)
-          WaitForSingleObject(hEvent, INFINITE);
-        }
-        CloseHandle(hEvent);
-      }
+  if (fenceExport != nullptr) {
+    fenceExport->resize(desc.fenceCount);
+    for (size_t i = 0; i < desc.fenceCount; ++i) {
+      desc.fences[i].ExportInfo(&fenceExport->exportInfo[i]);
     }
   }
-  #endif
+
+  if (vk_layout_out) {
+    vk_layout_out->new_layout = vkLayoutDesc.newLayout;
+    vk_layout_out->old_layout = vkLayoutDesc.oldLayout;
+  }
   return res;
 #endif
   return false;
@@ -465,10 +538,9 @@ void sk_wgpu_com_release(void* com_object) {
 #endif
 }
 
-sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, const char* label) {
+sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void* egl_image, uint32_t width, uint32_t height, bool is_initialized, const char* label) {
 #if defined SK_DAWN && defined SK_DAWN_USE_EGL
   dawn::native::opengl::ExternalImageDescriptorEGLImage eglImageDesc;
-  std::memset(&eglImageDesc, 0, sizeof(eglImageDesc));
   WGPUTextureDescriptor desc = {
       .label = {label, label != nullptr ? strlen(label) : 0},
       .usage = WGPUTextureUsage_TextureBinding | WGPUTextureUsage_RenderAttachment,
@@ -479,11 +551,60 @@ sk_wgpu_texture_t* sk_wgpu_texture_from_egl_image(sk_wgpu_device_t* device, void
       .sampleCount = 1,
   };
   eglImageDesc.cTextureDescriptor = &desc;
-  eglImageDesc.isInitialized = true;
+  eglImageDesc.isInitialized = is_initialized;
   eglImageDesc.image = reinterpret_cast<EGLImage>(egl_image);
   wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
   WGPUTexture texture = dawn::native::opengl::WrapExternalEGLImage(wgpuDevice.Get(), &eglImageDesc);
   return reinterpret_cast<sk_wgpu_texture_t*>(texture);
+#else
+  return nullptr;
+#endif
+}
+
+sk_wgpu_shared_texture_memory_t* sk_wgpu_import_shared_texture_memory_from_egl_image(sk_wgpu_device_t* device, void* egl_image, const char* label) {
+#if defined SK_DAWN && defined SK_DAWN_USE_EGL
+  wgpu::SharedTextureMemoryEGLImageDescriptor eglImageDesc;
+  eglImageDesc.image = reinterpret_cast<EGLImage>(egl_image);
+
+  wgpu::SharedTextureMemoryDescriptor desc;
+  desc.label = {label, label != nullptr ? strlen(label) : 0};
+  desc.nextInChain = &eglImageDesc;
+
+  wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
+  auto textureMemory = wgpuDevice.ImportSharedTextureMemory(&desc);
+
+  return reinterpret_cast<sk_wgpu_shared_texture_memory_t*>(textureMemory.MoveToCHandle());
+#else
+  return nullptr;
+#endif
+}
+
+sk_wgpu_shared_texture_memory_t* sk_wgpu_shared_texture_memory_from_gbm_bo(sk_wgpu_device_t* device, void* bo_, const char* label) {
+#if defined SK_DAWN && defined SK_DAWN_USE_DRM
+  gbm_bo* bo = reinterpret_cast<gbm_bo*>(bo_);
+  wgpu::SharedTextureMemoryDmaBufDescriptor dmaBufDesc;
+  dmaBufDesc.size = {gbm_bo_get_width(bo), gbm_bo_get_height(bo)};
+  dmaBufDesc.drmFormat = gbm_bo_get_format(bo);
+  dmaBufDesc.drmModifier = gbm_bo_get_modifier(bo);
+  wgpu::SharedTextureMemoryDmaBufPlane planes[GBM_MAX_PLANES];
+  dmaBufDesc.planeCount = gbm_bo_get_plane_count(bo);
+  dmaBufDesc.planes = planes;
+  assert(dmaBufDesc.planeCount <= GBM_MAX_PLANES);
+  for (uint32_t plane = 0; plane < dmaBufDesc.planeCount; ++plane) {
+    planes[plane].fd = gbm_bo_get_fd_for_plane(bo, plane);
+    planes[plane].stride = gbm_bo_get_stride_for_plane(bo, plane);
+    planes[plane].offset = gbm_bo_get_offset(bo, plane);
+  }
+  wgpu::SharedTextureMemoryDescriptor desc;
+  desc.label = {label, label != nullptr ? strlen(label) : 0};
+  desc.nextInChain = &dmaBufDesc;
+
+  wgpu::Device wgpuDevice(reinterpret_cast<WGPUDevice>(device));
+  auto textureMemory = wgpuDevice.ImportSharedTextureMemory(&desc);
+  for (uint32_t plane = 0; plane < dmaBufDesc.planeCount; ++plane) {
+    close(planes[plane].fd);
+  }
+  return reinterpret_cast<sk_wgpu_shared_texture_memory_t*>(textureMemory.MoveToCHandle());
 #else
   return nullptr;
 #endif
