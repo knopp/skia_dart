@@ -4,6 +4,10 @@
   #ifdef __linux__
     #define SK_DAWN_USE_EGL
     #define SK_DAWN_USE_VULKAN
+  #endif
+
+  // Linux but not android
+  #if defined __linux__ && !defined __ANDROID__
     #define SK_DAWN_USE_DRM
   #endif
 
@@ -38,6 +42,7 @@
 #endif
 
 #ifdef SK_DAWN_USE_DRM
+  #include <dlfcn.h>
   #include <gbm.h>
   #include <unistd.h>
 #endif
@@ -48,6 +53,25 @@
 
 #if defined Success  // X11
   #undef Success
+#endif
+
+#ifdef SK_DAWN_USE_DRM
+namespace {
+
+int sk_gbm_bo_get_plane_fd_compat(gbm_bo* bo, uint32_t plane) {
+  if (plane != 0) {
+    using GetFdForPlaneProc = int (*)(gbm_bo*, int);
+    static const GetFdForPlaneProc get_fd_for_plane =
+        reinterpret_cast<GetFdForPlaneProc>(dlsym(RTLD_DEFAULT, "gbm_bo_get_fd_for_plane"));
+
+    if (get_fd_for_plane != nullptr) {
+      return get_fd_for_plane(bo, static_cast<int>(plane));
+    }
+  }
+  return gbm_bo_get_fd(bo);
+}
+
+}  // namespace
 #endif
 
 // Instance
@@ -591,7 +615,7 @@ sk_wgpu_shared_texture_memory_t* sk_wgpu_shared_texture_memory_from_gbm_bo(sk_wg
   dmaBufDesc.planes = planes;
   assert(dmaBufDesc.planeCount <= GBM_MAX_PLANES);
   for (uint32_t plane = 0; plane < dmaBufDesc.planeCount; ++plane) {
-    planes[plane].fd = gbm_bo_get_fd_for_plane(bo, plane);
+    planes[plane].fd = sk_gbm_bo_get_plane_fd_compat(bo, plane);
     planes[plane].stride = gbm_bo_get_stride_for_plane(bo, plane);
     planes[plane].offset = gbm_bo_get_offset(bo, plane);
   }
