@@ -4267,7 +4267,7 @@ external void skgpu_graphite_context_check_async_work_completion(
 external ffi.Pointer<skgpu_graphite_recorder_t>
 skgpu_graphite_context_make_recorder(
   ffi.Pointer<skgpu_graphite_context_t> context,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<skgpu_graphite_recorder_t>)>(
@@ -4362,7 +4362,7 @@ external ffi.Pointer<sk_surface_t> skgpu_graphite_surface_make_render_target(
   ffi.Pointer<sk_imageinfo_t> imageInfo,
   bool mipmapped,
   ffi.Pointer<sk_surfaceprops_t> props,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<
@@ -4383,7 +4383,7 @@ external ffi.Pointer<sk_surface_t> _skgpu_graphite_surface_wrap_backend_texture(
   ffi.Pointer<sk_colorspace_t> color_space,
   ffi.Pointer<sk_surfaceprops_t> props,
   ffi.Pointer<ffi.Char> label,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
@@ -4393,7 +4393,7 @@ ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
   ffi.Pointer<sk_colorspace_t> color_space,
   ffi.Pointer<sk_surfaceprops_t> props,
   ffi.Pointer<ffi.Char> label,
-  int run_loop_handle,
+  int runLoopHandle,
 ) => _skgpu_graphite_surface_wrap_backend_texture(
   recorder,
   backendTexture,
@@ -4401,7 +4401,7 @@ ffi.Pointer<sk_surface_t> skgpu_graphite_surface_wrap_backend_texture(
   color_space,
   props,
   label,
-  run_loop_handle,
+  runLoopHandle,
 );
 
 @ffi.Native<
@@ -7867,7 +7867,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_texture(
   int colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
@@ -7878,7 +7878,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
   sk_colortype_t colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
-  int run_loop_handle,
+  int runLoopHandle,
 ) => _sk_surface_new_backend_texture(
   context,
   texture,
@@ -7887,7 +7887,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_texture(
   colorType.value,
   colorspace,
   props,
-  run_loop_handle,
+  runLoopHandle,
 );
 
 @ffi.Native<
@@ -7908,7 +7908,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_backend_render_target(
   int colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
@@ -7918,7 +7918,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
   sk_colortype_t colorType,
   ffi.Pointer<sk_colorspace_t> colorspace,
   ffi.Pointer<sk_surfaceprops_t> props,
-  int run_loop_handle,
+  int runLoopHandle,
 ) => _sk_surface_new_backend_render_target(
   context,
   target,
@@ -7926,7 +7926,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_backend_render_target(
   colorType.value,
   colorspace,
   props,
-  run_loop_handle,
+  runLoopHandle,
 );
 
 @ffi.Native<
@@ -7949,7 +7949,7 @@ external ffi.Pointer<sk_surface_t> _sk_surface_new_render_target(
   int origin,
   ffi.Pointer<sk_surfaceprops_t> props,
   bool shouldCreateWithMips,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
@@ -7960,7 +7960,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
   gr_surfaceorigin_t origin,
   ffi.Pointer<sk_surfaceprops_t> props,
   bool shouldCreateWithMips,
-  int run_loop_handle,
+  int runLoopHandle,
 ) => _sk_surface_new_render_target(
   context,
   budgeted,
@@ -7969,7 +7969,7 @@ ffi.Pointer<sk_surface_t> sk_surface_new_render_target(
   origin.value,
   props,
   shouldCreateWithMips,
-  run_loop_handle,
+  runLoopHandle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_surface_t>)>(isLeaf: true)
@@ -8023,33 +8023,29 @@ void sk_surface_notify_content_will_change(
   mode.value,
 );
 
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
->(isLeaf: true)
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
+  isLeaf: true,
+)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot(
   ffi.Pointer<sk_surface_t> arg0,
-  int run_loop_handle,
 );
 
 @ffi.Native<
   ffi.Pointer<sk_image_t> Function(
     ffi.Pointer<sk_surface_t>,
     ffi.Pointer<sk_irect_t>,
-    ffi.Int64,
   )
 >(isLeaf: true)
 external ffi.Pointer<sk_image_t> sk_surface_new_image_snapshot_with_crop(
   ffi.Pointer<sk_surface_t> surface,
   ffi.Pointer<sk_irect_t> bounds,
-  int run_loop_handle,
 );
 
-@ffi.Native<
-  ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>, ffi.Int64)
->(isLeaf: true)
+@ffi.Native<ffi.Pointer<sk_image_t> Function(ffi.Pointer<sk_surface_t>)>(
+  isLeaf: true,
+)
 external ffi.Pointer<sk_image_t> sk_surface_make_temporary_image(
   ffi.Pointer<sk_surface_t> surface,
-  int run_loop_handle,
 );
 
 @ffi.Native<
@@ -12473,7 +12469,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_gl(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_gl_textureinfo_t> glInfo,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<
@@ -12488,7 +12484,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_vulkan(
   int width,
   int height,
   ffi.Pointer<gr_vk_imageinfo_t> vkInfo,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<
@@ -12505,7 +12501,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_metal(
   int height,
   bool mipmapped,
   ffi.Pointer<gr_mtl_textureinfo_t> mtlInfo,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<
@@ -12520,7 +12516,7 @@ external ffi.Pointer<gr_backendtexture_t> gr_backendtexture_new_direct3d(
   int width,
   int height,
   ffi.Pointer<gr_d3d_textureresourceinfo_t> d3dInfo,
-  int run_loop_handle,
+  int runLoopHandle,
 );
 
 @ffi.Native<ffi.Void Function(ffi.Pointer<gr_backendtexture_t>)>(isLeaf: true)
@@ -14197,13 +14193,14 @@ enum sk_colortype_t {
   RGBA_F32_SK_COLORTYPE(18),
   R8G8_UNORM_SK_COLORTYPE(19),
   A16_FLOAT_SK_COLORTYPE(20),
-  R16G16_FLOAT_SK_COLORTYPE(21),
-  A16_UNORM_SK_COLORTYPE(22),
-  R16_UNORM_SK_COLORTYPE(23),
-  R16G16_UNORM_SK_COLORTYPE(24),
-  R16G16B16A16_UNORM_SK_COLORTYPE(25),
-  SRGBA_8888_SK_COLORTYPE(26),
-  R8_UNORM_SK_COLORTYPE(27);
+  R16_FLOAT_SK_COLORTYPE(21),
+  R16G16_FLOAT_SK_COLORTYPE(22),
+  A16_UNORM_SK_COLORTYPE(23),
+  R16_UNORM_SK_COLORTYPE(24),
+  R16G16_UNORM_SK_COLORTYPE(25),
+  R16G16B16A16_UNORM_SK_COLORTYPE(26),
+  SRGBA_8888_SK_COLORTYPE(27),
+  R8_UNORM_SK_COLORTYPE(28);
 
   final int value;
   const sk_colortype_t(this.value);
@@ -14230,13 +14227,14 @@ enum sk_colortype_t {
     18 => RGBA_F32_SK_COLORTYPE,
     19 => R8G8_UNORM_SK_COLORTYPE,
     20 => A16_FLOAT_SK_COLORTYPE,
-    21 => R16G16_FLOAT_SK_COLORTYPE,
-    22 => A16_UNORM_SK_COLORTYPE,
-    23 => R16_UNORM_SK_COLORTYPE,
-    24 => R16G16_UNORM_SK_COLORTYPE,
-    25 => R16G16B16A16_UNORM_SK_COLORTYPE,
-    26 => SRGBA_8888_SK_COLORTYPE,
-    27 => R8_UNORM_SK_COLORTYPE,
+    21 => R16_FLOAT_SK_COLORTYPE,
+    22 => R16G16_FLOAT_SK_COLORTYPE,
+    23 => A16_UNORM_SK_COLORTYPE,
+    24 => R16_UNORM_SK_COLORTYPE,
+    25 => R16G16_UNORM_SK_COLORTYPE,
+    26 => R16G16B16A16_UNORM_SK_COLORTYPE,
+    27 => SRGBA_8888_SK_COLORTYPE,
+    28 => R8_UNORM_SK_COLORTYPE,
     _ => throw ArgumentError('Unknown value for sk_colortype_t: $value'),
   };
 }
@@ -17007,6 +17005,13 @@ final class skgpu_graphite_recording_t extends ffi.Opaque {}
 
 final class skgpu_graphite_backend_texture_t extends ffi.Opaque {}
 
+typedef skgpu_finished_procFunction =
+    ffi.Void Function(ffi.Pointer<ffi.Void>, ffi.Bool);
+typedef Dartskgpu_finished_procFunction =
+    void Function(ffi.Pointer<ffi.Void>, bool);
+typedef skgpu_finished_proc =
+    ffi.Pointer<ffi.NativeFunction<skgpu_finished_procFunction>>;
+
 final class skgpu_graphite_submit_info_t extends ffi.Struct {
   @ffi.Bool()
   external bool fSyncToCpu;
@@ -17016,6 +17021,10 @@ final class skgpu_graphite_submit_info_t extends ffi.Struct {
 
   @ffi.Uint64()
   external int fFrameID;
+
+  external skgpu_finished_proc fFinishedProc;
+
+  external ffi.Pointer<ffi.Void> fFinishedContext;
 }
 
 final class skgpu_graphite_insert_recording_info_t extends ffi.Struct {

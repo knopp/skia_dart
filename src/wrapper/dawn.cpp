@@ -23,6 +23,7 @@
   #include "dawn/native/DawnNative.h"
   #include "dawn/webgpu.h"
   #include "dawn/webgpu_cpp.h"
+
   #ifdef SK_DAWN_USE_D3D11
     #include <d3d11_4.h>
 
@@ -155,11 +156,11 @@ sk_wgpu_adapter_t* sk_wgpu_instance_request_adapter(sk_wgpu_instance_t* instance
   }
   #endif
 
-  auto future = instance.RequestAdapter(&options, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestAdapterStatus status, wgpu::Adapter adapter_, const char* message) {
+  auto future = instance.RequestAdapter(&options, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestAdapterStatus status, wgpu::Adapter adapter_, wgpu::StringView message) {
     if (status == wgpu::RequestAdapterStatus::Success) {
       adapter = adapter_;
     } else {
-      fprintf(stderr, "Failed to request WGPU adapter: %s\n", message);
+      fprintf(stderr, "Failed to request WGPU adapter: %.*s\n", (int)message.length, message.data);
     }
     done = true;
   });
@@ -191,7 +192,7 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
 
   wgpu::DeviceDescriptor deviceDesc;
   deviceDesc.SetDeviceLostCallback(wgpu::CallbackMode::AllowProcessEvents,
-                                   [](wgpu::Device device,
+                                   [](const wgpu::Device& device,
                                       wgpu::DeviceLostReason reason,
                                       wgpu::StringView message) {
                                      // TODO(knopp): Handle this on dart side.
@@ -238,11 +239,11 @@ sk_wgpu_device_t* sk_wgpu_adapter_request_device(sk_wgpu_instance_t* instance_, 
   wgpu::Device device;
   bool done = false;
 
-  auto future = adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestDeviceStatus status, wgpu::Device device_, const char* message) {
+  auto future = adapter.RequestDevice(&deviceDesc, wgpu::CallbackMode::AllowProcessEvents, [&](wgpu::RequestDeviceStatus status, wgpu::Device device_, wgpu::StringView message) {
     if (status == wgpu::RequestDeviceStatus::Success) {
       device = device_;
     } else {
-      fprintf(stderr, "Failed to request WGPU device: %s\n", message);
+      fprintf(stderr, "Failed to request WGPU device: %.*s\n", (int)message.length, message.data);
     }
     done = true;
   });

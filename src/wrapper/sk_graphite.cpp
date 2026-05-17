@@ -270,11 +270,23 @@ void skgpu_graphite_async_rescale_and_read_pixels_from_image(skgpu_graphite_cont
 }
 
 sk_image_t* skgpu_graphite_surface_as_image(sk_surface_t* surface) {
-  return SK_ONLY_GRAPHITE(ToImage(SkSurfaces::AsImage(sk_ref_sp(AsSurface(surface))).release()), nullptr);
+#ifdef SK_GRAPHITE
+  auto image = ToImage(SkSurfaces::AsImage(sk_ref_sp(AsSurface(surface))).release());
+  if (image) {
+    RunLoop::copy_isolate_handle(surface, image);
+  }
+  return image;
+#else
+  return nullptr;
+#endif
 }
 
 sk_image_t* skgpu_graphite_surface_as_image_copy(sk_surface_t* surface, const sk_irect_t* subset, bool mipmapped) {
-  return SK_ONLY_GRAPHITE(ToImage(SkSurfaces::AsImageCopy(sk_ref_sp(AsSurface(surface)), AsIRect(subset), mipmapped ? skgpu::Mipmapped::kYes : skgpu::Mipmapped::kNo).release()), nullptr);
+  auto image = ToImage(SkSurfaces::AsImageCopy(sk_ref_sp(AsSurface(surface)), AsIRect(subset), mipmapped ? skgpu::Mipmapped::kYes : skgpu::Mipmapped::kNo).release());
+  if (image) {
+    RunLoop::copy_isolate_handle(surface, image);
+  }
+  return image;
 }
 
 skgpu_graphite_recorder_t* skgpu_graphite_surface_get_recorder(const sk_surface_t* surface) {

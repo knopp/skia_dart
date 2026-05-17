@@ -309,6 +309,16 @@ void main() {
               final handle = RunLoop.instance.getObjectHandle(image);
               expect(handle, equals(RunLoop.instance.handle));
             }
+            {
+              final image = surfaceAsImage(surface)!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
+            {
+              final image = surfaceAsImageCopy(surface, null, false)!;
+              final handle = RunLoop.instance.getObjectHandle(image);
+              expect(handle, equals(RunLoop.instance.handle));
+            }
           });
         });
 

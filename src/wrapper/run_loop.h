@@ -26,8 +26,8 @@ class RunLoop {
     set_isolate_handle_(object, handle);
   }
 
-  template <typename T>
-  static void copy_isolate_handle(const T* src, const T* dst) {
+  template <typename Src, typename Dst>
+  static void copy_isolate_handle(const Src* src, const Dst* dst) {
     if (auto handle = get_isolate_handle(src)) {
       set_isolate_handle(dst, *handle);
     }

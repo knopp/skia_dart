@@ -13,14 +13,14 @@
 #include "include/core/SkClipOp.h"
 #include "include/core/SkImage.h"
 #include "include/core/SkImageFilter.h"
-#include "include/core/SkTextureCompressionType.h"
 #include "include/core/SkPathBuilder.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/core/SkRRect.h"
-#include "include/core/SkStrokeRec.h"
 #include "include/core/SkRegion.h"
 #include "include/core/SkShader.h"
+#include "include/core/SkStrokeRec.h"
 #include "include/core/SkSurface.h"
+#include "include/core/SkTextureCompressionType.h"
 #include "include/core/SkTileMode.h"
 #include "include/core/SkTypeface.h"
 #include "include/core/SkVertices.h"
@@ -239,9 +239,10 @@ static_assert((int)SkColorType::kRGBA_F16Norm_SkColorType == (int)RGBA_F16_NORM_
 static_assert((int)SkColorType::kRGBA_F16_SkColorType == (int)RGBA_F16_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kRGBA_F32_SkColorType == (int)RGBA_F32_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kR8G8_unorm_SkColorType == (int)R8G8_UNORM_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
+static_assert((int)SkColorType::kA16_float_SkColorType == (int)A16_FLOAT_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
+static_assert((int)SkColorType::kR16_float_SkColorType == (int)R16_FLOAT_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kA16_unorm_SkColorType == (int)A16_UNORM_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kR16G16_unorm_SkColorType == (int)R16G16_UNORM_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
-static_assert((int)SkColorType::kA16_float_SkColorType == (int)A16_FLOAT_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kR16G16_float_SkColorType == (int)R16G16_FLOAT_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kR16G16B16A16_unorm_SkColorType == (int)R16G16B16A16_UNORM_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
 static_assert((int)SkColorType::kSRGBA_8888_SkColorType == (int)SRGBA_8888_SK_COLORTYPE, ASSERT_MSG(SkColorType, sk_colortype_t));
