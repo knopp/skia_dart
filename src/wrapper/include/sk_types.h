@@ -113,6 +113,7 @@ typedef enum {
   // READONLY
   R8G8_UNORM_SK_COLORTYPE,
   A16_FLOAT_SK_COLORTYPE,
+  R16_FLOAT_SK_COLORTYPE,
   R16G16_FLOAT_SK_COLORTYPE,
   A16_UNORM_SK_COLORTYPE,
   R16_UNORM_SK_COLORTYPE,
@@ -1388,10 +1389,14 @@ typedef struct skgpu_graphite_recorder_t skgpu_graphite_recorder_t;
 typedef struct skgpu_graphite_recording_t skgpu_graphite_recording_t;
 typedef struct skgpu_graphite_backend_texture_t skgpu_graphite_backend_texture_t;
 
+typedef void (*skgpu_finished_proc)(void* finishedContext, bool);
+
 typedef struct {
   bool fSyncToCpu;
   bool fMarkBoundary;
   uint64_t fFrameID;
+  skgpu_finished_proc fFinishedProc;
+  void* fFinishedContext;
 } skgpu_graphite_submit_info_t;
 
 typedef struct {

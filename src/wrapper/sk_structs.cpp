@@ -7,7 +7,6 @@
  * found in the LICENSE file.
  */
 
-#include "wrapper/sk_types_priv.h"
 #include "include/codec/SkCodec.h"
 #include "include/core/SkCanvas.h"
 #include "include/core/SkDocument.h"
@@ -22,6 +21,7 @@
 #include "include/docs/SkPDFDocument.h"
 #include "include/effects/SkHighContrastFilter.h"
 #include "include/effects/SkRuntimeEffect.h"
+#include "wrapper/sk_types_priv.h"
 
 #if defined(SK_GANESH)
   #include "include/gpu/ganesh/gl/GrGLTypes.h"

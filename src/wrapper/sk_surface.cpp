@@ -33,12 +33,6 @@
 
 // surface
 
-namespace {
-bool isGPUSurface(const SkSurface* surface) {
-  return surface->recorder() || surface->recordingContext();
-}
-}  // namespace
-
 sk_surface_t* sk_surface_new_null(int width, int height) {
   return ToSurface(SkSurfaces::Null(width, height).release());
 }
@@ -81,26 +75,26 @@ void sk_surface_notify_content_will_change(sk_surface_t* surface, sk_surface_con
   AsSurface(surface)->notifyContentWillChange(static_cast<SkSurface::ContentChangeMode>(mode));
 }
 
-sk_image_t* sk_surface_new_image_snapshot(sk_surface_t* surface, int64_t runLoopHandle) {
+sk_image_t* sk_surface_new_image_snapshot(sk_surface_t* surface) {
   auto image = ToImage(AsSurface(surface)->makeImageSnapshot().release());
-  if (surface && isGPUSurface(AsSurface(surface))) {
-    RunLoop::set_isolate_handle(image, runLoopHandle);
+  if (image) {
+    RunLoop::copy_isolate_handle(surface, image);
   }
   return image;
 }
 
-sk_image_t* sk_surface_new_image_snapshot_with_crop(sk_surface_t* surface, const sk_irect_t* bounds, int64_t runLoopHandle) {
+sk_image_t* sk_surface_new_image_snapshot_with_crop(sk_surface_t* surface, const sk_irect_t* bounds) {
   auto image = ToImage(AsSurface(surface)->makeImageSnapshot(*AsIRect(bounds)).release());
-  if (surface && isGPUSurface(AsSurface(surface))) {
-    RunLoop::set_isolate_handle(image, runLoopHandle);
+  if (image) {
+    RunLoop::copy_isolate_handle(surface, image);
   }
   return image;
 }
 
-sk_image_t* sk_surface_make_temporary_image(sk_surface_t* surface, int64_t runLoopHandle) {
+sk_image_t* sk_surface_make_temporary_image(sk_surface_t* surface) {
   auto image = ToImage(AsSurface(surface)->makeTemporaryImage().release());
-  if (surface && isGPUSurface(AsSurface(surface))) {
-    RunLoop::set_isolate_handle(image, runLoopHandle);
+  if (image) {
+    RunLoop::copy_isolate_handle(surface, image);
   }
   return image;
 }
