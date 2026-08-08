@@ -14,7 +14,7 @@ jobs:
             config: mac_arm64_graphite
           - os: windows-latest
             config: win_x64_graphite
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             config: linux_x64_graphite
 
     runs-on: ${{ matrix.os }}
