@@ -34,8 +34,7 @@ enum SkPathDirection {
   cw(sk_path_direction_t.CW_SK_PATH_DIRECTION),
 
   /// Counter-clockwise direction.
-  ccw(sk_path_direction_t.CCW_SK_PATH_DIRECTION)
-  ;
+  ccw(sk_path_direction_t.CCW_SK_PATH_DIRECTION);
 
   /// The default direction (clockwise).
   static const SkPathDirection default_ = SkPathDirection.cw;
@@ -587,12 +586,6 @@ class SkPath with _NativeMixin<sk_path_t> {
 
   /// Returns the approximate byte size of the path in memory.
   int get approximateBytesUsed => sk_path_approximate_bytes_used(_ptr);
-
-  /// Updates the internal bounds cache.
-  ///
-  /// Call to prepare the path for drawing from multiple threads, avoiding a
-  /// race condition where each draw separately computes the bounds.
-  void updateBoundsCache() => sk_path_update_bounds_cache(_ptr);
 
   /// Returns the bounds of the path's points.
   ///

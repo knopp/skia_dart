@@ -9,11 +9,11 @@
 
 #include "wrapper/include/sk_path.h"
 
-#include "wrapper/sk_types_priv.h"
 #include "include/core/SkPath.h"
 #include "include/core/SkPathMeasure.h"
 #include "include/pathops/SkPathOps.h"
 #include "include/utils/SkParsePath.h"
+#include "wrapper/sk_types_priv.h"
 
 sk_path_t* sk_path_new(void) {
   return ToPath(new SkPath());
@@ -169,10 +169,6 @@ const float* sk_path_get_conic_weights(const sk_path_t* path, int* count) {
 
 size_t sk_path_approximate_bytes_used(const sk_path_t* path) {
   return AsPath(path)->approximateBytesUsed();
-}
-
-void sk_path_update_bounds_cache(const sk_path_t* path) {
-  AsPath(path)->updateBoundsCache();
 }
 
 void sk_path_get_bounds(const sk_path_t* cpath, sk_rect_t* crect) {

@@ -56,7 +56,6 @@ SK_C_API const uint8_t* sk_path_get_verbs(const sk_path_t* path, int* count);
 SK_C_API const float* sk_path_get_conic_weights(const sk_path_t* path, int* count);
 
 SK_C_API size_t sk_path_approximate_bytes_used(const sk_path_t* path);
-SK_C_API void sk_path_update_bounds_cache(const sk_path_t* path);
 
 SK_C_API void sk_path_get_bounds(const sk_path_t*, sk_rect_t*);
 SK_C_API void sk_path_compute_tight_bounds(const sk_path_t*, sk_rect_t*);

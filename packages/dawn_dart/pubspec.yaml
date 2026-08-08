@@ -13,8 +13,8 @@ dependencies:
   ffi: ^2.1.5
   convert: ^3.1.2
   crypto: ^3.0.6
-  hooks: ^1.0.0
-  code_assets: ^1.0.0
+  hooks: ^2.0.2
+  code_assets: ^1.2.1
 
 hooks:
   build:
