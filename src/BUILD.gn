@@ -229,9 +229,13 @@ source_set("skia_c_wrapper") {
 shared_library("skia_dart") {
   include_dirs = [ "." ]
   deps = [ ":skia_c_wrapper" ]
-  configs += [
-    ":android_page_size",
-  ]
+  configs += [ ":android_page_size" ]
+  if (is_linux) {
+    inputs = [ "wrapper/native_exports_linux.map" ]
+    ldflags =
+        [ "-Wl,--version-script=" +
+          rebase_path("wrapper/native_exports_linux.map", root_build_dir) ]
+  }
   if (is_mac) {
     ldflags = [
       "-flto=thin",
@@ -259,6 +263,12 @@ shared_library("dawn_dart") {
   ]
   configs += [ ":android_page_size" ]
   if (is_linux) {
+    inputs = [ "wrapper/native_exports_linux.map" ]
+    ldflags =
+        [ "-Wl,--version-script=" +
+          rebase_path("wrapper/native_exports_linux.map", root_build_dir) ]
+  }
+  if (is_linux) {
     libs = [
       "EGL",
       "gbm",
@@ -274,4 +284,10 @@ shared_library("dawn_dart_stub") {
   include_dirs = [ "." ]
   defines = [ "SKIA_IMPLEMENTATION" ]
   configs += [ ":android_page_size" ]
+  if (is_linux) {
+    inputs = [ "wrapper/native_exports_linux.map" ]
+    ldflags =
+        [ "-Wl,--version-script=" +
+          rebase_path("wrapper/native_exports_linux.map", root_build_dir) ]
+  }
 }

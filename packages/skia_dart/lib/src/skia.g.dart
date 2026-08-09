@@ -2475,11 +2475,6 @@ external int sk_path_approximate_bytes_used(
   ffi.Pointer<sk_path_t> path,
 );
 
-@ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>)>(isLeaf: true)
-external void sk_path_update_bounds_cache(
-  ffi.Pointer<sk_path_t> path,
-);
-
 @ffi.Native<ffi.Void Function(ffi.Pointer<sk_path_t>, ffi.Pointer<sk_rect_t>)>(
   isLeaf: true,
 )

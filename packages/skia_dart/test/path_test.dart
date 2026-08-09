@@ -118,7 +118,7 @@ void main() {
         expect(bounds.height, greaterThanOrEqualTo(0));
         expect(tight.width, greaterThanOrEqualTo(0));
         expect(tight.height, greaterThanOrEqualTo(0));
-        fromPath.updateBoundsCache();
+
         expect(fromPath.approximateBytesUsed, greaterThan(0));
         expect(
           fromPath.conservativelyContainsRect(SkRect.fromLTRB(1, 1, 2, 2)),
