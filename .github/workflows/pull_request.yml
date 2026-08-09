@@ -120,16 +120,8 @@ jobs:
         run: rm -rf test/failed_goldens
 
       - name: Run tests
-        id: tests
         working-directory: packages/skia_dart
         run: ../../flutter_zero/bin/dart -Dfailed-golden-output-dir=test/failed_goldens test
-
-      - name: Setup upterm session after Linux test failure
-        if: ${{ failure() && runner.os == 'Linux' && steps.tests.outcome == 'failure' }}
-        uses: owenthereal/action-upterm@v1
-        timeout-minutes: 60
-        with:
-          wait-timeout-minutes: 60
 
       - name: Upload failed golden artifacts
         if: always()
