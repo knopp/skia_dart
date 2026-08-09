@@ -195,9 +195,6 @@ enum SkPathMeasureMatrixFlags {
 /// inside or outside the geometry. [SkPath] also describes the winding rule
 /// used to fill overlapping contours.
 ///
-/// Internally, [SkPath] lazily computes metrics like bounds and convexity.
-/// Call [updateBoundsCache] to make [SkPath] thread safe.
-///
 /// Example:
 /// ```dart
 /// final path = SkPath()
