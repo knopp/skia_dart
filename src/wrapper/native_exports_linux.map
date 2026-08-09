@@ -1,0 +1,9 @@
+{
+  global:
+    gr_*;
+    sk_*;
+    skgpu_*;
+
+  local:
+    *;
+};
