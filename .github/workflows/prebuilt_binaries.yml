@@ -69,7 +69,7 @@ jobs:
                   if .value.target_cpu == "arm64" then
                     "windows-11-arm"
                   else
-                    "windows-2022"
+                    "windows-latest"
                   end
                 elif .value.target_os == "linux" then
                   if .value.target_cpu == "arm64" then
